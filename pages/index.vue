@@ -1,13 +1,14 @@
-<template lang="">
+<template>
   <div>
-      index page
+    <Index />
   </div>
 </template>
 <script>
+import Index from '~/components/index/index'
+
 export default {
-  
+  components: {
+    Index,
+  },
 }
 </script>
-<style lang="">
-  
-</style>
