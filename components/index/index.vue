@@ -30,90 +30,55 @@
       </div>
 
       <!-- Section Two -->
-      <div class="tab-height mt-20">
+      <div class="mt-20">
         <button :class="videosTab ? 'active' : ''" @click="videosBtn" class="focus:outline-none tap-button">Videos</button>
         <button :class="templatesTab ? 'active' : ''" @click="templatesBtn" class="focus:outline-none tap-button">Templates</button>
         <button :class="experiencesTab ? 'active' : ''" @click="experiencesBtn" class="focus:outline-none tap-button">Real Experiences</button>
         <button :class="memesTab ? 'active' : ''" @click="memesBtn" class="focus:outline-none tap-button">Memes</button>
         <button :class="storiesTab ? 'active' : ''" @click="storiesBtn" class="focus:outline-none tap-button">Stories</button>
         
-        <div class="h-full tab-content lg:pt-8 pt-4">
+        <div class="h-full tab-content lg:py-8 py-3">
 
-          <div v-if="videosTab" class="grid grid-cols-4 lg:gap-8 gap-4">
-            <div v-for="(video, i) in videos" :key="i" class="video"> 
-              <div class="video-show">
-                <img class="video-img" :src="require(`~/assets/videos/${video.url}`)" alt="Image">
-                <p class="video-duration">{{ video.duration }}</p>
-              </div>
-              <div class="p-2">
-                <p class="font-bold text-xl video-title-color">{{ video.title }}</p>
-                <p class="video-details-color">{{ video.view }} views  •  {{ video.time }} min ago</p>
-              </div>
-            </div>
+          <div v-if="videosTab">
+            <Videos />
           </div>
 
-          <div v-if="templatesTab" class="grid grid-cols-4 lg:gap-8 gap-4">
-            <div class="bg-red-200"> 
-              Templates Tab <br>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi animi praesentium accusantium et magnam commodi.
-            </div>
-            <div class="bg-red-200"> 
-              Remplates Tab <br>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi animi praesentium accusantium et magnam commodi.
-            </div>
+          <div v-if="templatesTab">
+            <Templates />
           </div>
 
-          <div v-if="experiencesTab" class="grid grid-cols-4 lg:gap-8 gap-4">
-            <div class="bg-red-200"> 
-              Experiences Tab <br>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi animi praesentium accusantium et magnam commodi.
-            </div>
-            <div class="bg-red-200"> 
-              Experiences Tab <br>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi animi praesentium accusantium et magnam commodi.
-            </div>
-          </div>
-          
-          <div v-if="memesTab" class="grid grid-cols-4 lg:gap-8 gap-4">
-            <div class="bg-red-200"> 
-              Memes Tab <br>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi animi praesentium accusantium et magnam commodi.
-            </div>
-            <div class="bg-red-200"> 
-              Memes Tab <br>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi animi praesentium accusantium et magnam commodi.
-            </div>
+          <div v-if="experiencesTab">
+            <Experiences />
           </div>
 
-          <div v-if="storiesTab" class="grid grid-cols-4 lg:gap-8 gap-4">
-            <div class="bg-red-200"> 
-              Stories Tab <br>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi animi praesentium accusantium et magnam commodi.
-            </div>
-            <div class="bg-red-200"> 
-              Stories Tab <br>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi animi praesentium accusantium et magnam commodi.
-            </div>
+          <div v-if="memesTab">
+            <Memes />
           </div>
 
+          <div v-if="storiesTab">
+            <Stories />
+          </div>
         </div>
       </div>
-    </div>
-
-    <!-- Section Three -->
-    <div class="lg:mx-20 mx-3 lg:my-8 my-3">
-      <Paginate />
     </div>
 
   </div>
 </template>
 
 <script>
-import Paginate from '~/components/common/paginate.vue';
+import Videos from '~/components/index/tabs/videos.vue';
+import Templates from '~/components/index/tabs/templates.vue';
+import Experiences from '~/components/index/tabs/experiences.vue';
+import Memes from '~/components/index/tabs/memes.vue';
+import Stories from '~/components/index/tabs/stories.vue';
 
 export default {
   components: {
-    Paginate,
+    Videos,
+    Templates,
+    Experiences,
+    Memes,
+    Stories,
   },
   data: () => ({
     videosTab: true,
@@ -121,17 +86,6 @@ export default {
     experiencesTab: false,
     memesTab: false,
     storiesTab: false,
-
-    videos: [
-      {url: 'img-one.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-      {url: 'img-two.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-      {url: 'img-three.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-      {url: 'img-four.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-      {url: 'img-five.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-      {url: 'img-six.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-      {url: 'img-seven.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-      {url: 'img-eight.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-    ]
   }),
   methods: {
     videosBtn(){
@@ -224,9 +178,6 @@ export default {
     font-weight: bold;
     margin-top: 54px;
   }
-  .tab-height {
-    height: 550px;
-  }
 
   /* Section Two */
   .tap-button {
@@ -246,33 +197,6 @@ export default {
     border-top: 2px solid #163A24;
     margin-top: -2px;
     overflow: auto;
-  }
-
-  /* Videos */
-  .video {
-    border: 2px solid #163A24;
-  }
-  .video-img {
-    width: 100%;
-    height: 154px;
-  }
-  .video-title-color {
-    color: #163A24;
-  }
-  .video-details-color {
-    color: #6A8173;
-  }
-  .video-show {
-    position: relative;
-  }
-  .video-duration {
-    color: white;
-    background: #0A1A10;
-    padding: 3px 10px;
-    display: inline;
-    position: absolute;
-    left: 10px;
-    bottom: 10px;
   }
 </style>
 
