@@ -2,7 +2,7 @@
   <div>
     <div class="w-full lg:px-20 lg:py-5 p-3">
       <div class="grid grid-cols-12 gap-2">
-        <div class="lg:col-span-5 col-span-12">
+        <div class="col-span-5">
           <n-link to="" class="">
             <img class="inline h-5 mx-2" src="~/assets/icons/wallet.png" alt="Icon">S-Wallet
           </n-link>
@@ -19,10 +19,10 @@
         <div class="">
           <!-- Offset -->
         </div>
-        <div class="lg:col-span-3 col-span-12">
+        <div class="col-span-3">
           <div class="flex justify-end">
-            <div class="border search-border pl-3 py-1 rounded-l-full">
-              <button class="flex items-center focus:outline-none dropdown">All<img class="h-5 mr-3" src="~/assets/icons/drop_down.png" alt="Icon">
+            <div class="border search-border px-2 py-1 rounded-l-full">
+              <button class="flex items-center focus:outline-none dropdown">All<img class="h-5" src="~/assets/icons/drop_down.png" alt="Icon">
                 <div class="searchOptions">
                   <ul>
                     <li v-for="(search, i) in searchs" :key="i"><n-link :to="search.url">{{ search.name }}</n-link></li>
@@ -30,9 +30,9 @@
                 </div>
               </button>
             </div>
-            <div class="flex items-center border search-border px-2 py-1 -ml1 rounded-r-full w-full">
-              <img class="h-5 mr-2" src="~/assets/icons/search.png" alt="Icon">
-              <input class="focus:outline-none" type="text" placeholder="Search anything">
+            <div class="flex items-center border search-border px-2 py-1 -ml1 rounded-r-full">
+              <img class="h-5" src="~/assets/icons/search.png" alt="Icon">
+              <input class="focus:outline-none w-full" type="text" placeholder="Search anything">
             </div>
           </div>
         </div>
@@ -93,6 +93,7 @@ export default {
   padding: 5px;
   border: 1px solid #B4BDB2;
   border-radius: 5px;
+  z-index: 9999;
 }
 .dropdown:hover .searchOptions {
   display: block;
