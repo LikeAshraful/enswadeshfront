@@ -6,13 +6,13 @@
             <img class="px-2" src="~/assets/icons/arrow-right.png" alt="Icon">
             <p>Go To Market</p>
         </div>
-        <div class="markets lg:px-20 px-3">
+        <div class="cities lg:px-20 px-3">
             <p class="title-color text-4xl font-black">Where do you want to go ?</p>
-            <div :style="{ backgroundImage: `url(${backgroundImagePath})` }" class="background flex grid grid-cols-6 lg:gap-6 md:gap-3 pt-6 pb-12">
+            <div :style="{ backgroundImage: `url(${backgroundImagePath})` }" class="background grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
                 
                 <n-link v-for="(division, i) in divisions" :key="i" :to="division.url">
                     <div class="border-2 division-box rounded-xl">
-                        <div :class="division.bg" class="img-box h-32 rounded-xl">
+                        <div :class="division.bg" class="img-box h-32 rounded-t-xl">
                             <img class="cloud h-10" src="~/assets/img/cloud.png" alt="Image">
                             <img class="building h-12" src="~/assets/img/building.png" alt="Image">
                         </div>
@@ -33,7 +33,7 @@ export default {
     data:() => ({
         backgroundImagePath,
         divisions: [
-            {url: '', bg: 'bg-sky', name: 'DHAKA'},
+            {url: '/markets', bg: 'bg-sky', name: 'DHAKA'},
             {url: '', bg: 'bg-pink', name: 'SYLHET'},
             {url: '', bg: 'bg-blue', name: 'CHITTAGONG'},
             {url: '', bg: 'bg-sky', name: 'BARISHAL'},
@@ -46,39 +46,39 @@ export default {
 }
 </script>
 <style>
-    .markets .title-color {
+    .cities .title-color {
         color: #163A24;
     }
-    .markets .background {
+    .cities .background {
         background-size:  cover;
     }
-    .markets .division-box {
+    .cities .division-box {
         border-color: #163A24;
         -webkit-box-shadow: 3px 3px 1px 2px #163A24; 
         box-shadow: 3px 3px 1px 2px #163A24;
     }
-    .markets .division-box .img-box{
+    .cities .division-box .img-box{
         position: relative;
     }
-    .markets .division-box .cloud {
+    .cities .division-box .cloud {
         position: absolute;
         top: 10px;
         left: 50%;
         transform: translateX(-50%);
     }
-    .markets .division-box .building {
+    .cities .division-box .building {
         position: absolute;
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
     }
-    .markets .bg-sky {
+    .cities .bg-sky {
         background: #DFFCFF;
     }
-    .markets .bg-pink {
+    .cities .bg-pink {
         background: #FFE6ED;
     }
-    .markets .bg-blue {
+    .cities .bg-blue {
         background: #E7E6FF;
     }
 </style>

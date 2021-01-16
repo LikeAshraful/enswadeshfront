@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="w-full lg:px-20 p-3 text-center">
-      <n-link to="/markets">
+      <n-link to="/cities">
         <img class="inline h-5 mx-2" src="~/assets/icons/market.png" alt="Icon"> Market
       </n-link>
       <n-link to="" class="pl-6">

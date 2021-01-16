@@ -1,14 +1,14 @@
 <template>
     <div>
-        <Markets />
+        <Cities />
     </div>
 </template>
 <script>
-import Markets from '~/components/markets/index.vue';
+import Cities from '~/components/cities.vue';
 
 export default {
     components: {
-        Markets,
+        Cities,
     }    
 }
 </script>
