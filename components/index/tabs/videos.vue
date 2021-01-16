@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="grid grid-cols-4 lg:gap-8 gap-4">
+        <div class="grid lg:grid-cols-4 grid-cols-3 lg:gap-8 gap-3">
             <div v-for="(video, i) in videos" :key="i" class="video"> 
                 <div class="video-show">
                     <img class="video-img" :src="require(`~/assets/videos/${video.url}`)" alt="Image">

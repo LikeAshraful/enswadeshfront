@@ -2,29 +2,29 @@
   <div>
     <div class="lg:px-20 lg:pt-20 p-3">
       <!-- Section One -->
-      <div class="grid grid-cols-4 lg:gap-8 gap-4">
-        <div class="col-span-2 -2 box-height border-2 box-border-color box-shadow rounded-xl">
+      <div class="grid lg:grid-cols-4 grid-cols-3 lg:gap-8 gap-4">
+        <div class="lg:col-span-2 -2 box-height border-2 box-border-color box-shadow rounded-xl">
           <div class="bg-market rounded-t-xl">
             <img class="market-img" src="~/assets/img/market.png" alt="Image">
           </div>
           <div class="flex flex-wrap items-center justify-center">
-            <n-link to="" class="button lg:px-10 px-4 lg:py-2 py-1">Go To Market</n-link>
+            <n-link to="/cities" class="button lg:px-8 px-4 lg:py-2 py-1">Go To Market</n-link>
           </div>
         </div>
-        <div class="border-2 box-height border-2 box-border-color box-shadow rounded-xl">
+        <div class="border-2 box-height box-border-color box-shadow rounded-xl">
           <div class="commingsoon-one rounded-t-xl">
-            <img class="comingsoon-img" src="~/assets/img/comingsoon.png" alt="Image">
+            <img class="comingsoon-img" src="~/assets/img/full-building.png" alt="Image">
           </div>
           <div class="flex flex-wrap items-center justify-center">
-            <n-link to="" class="button lg:px-10 px-4 lg:py-2 py-1">Coming Soon</n-link>
+            <n-link to="" class="button lg:px-8 px-4 lg:py-2 py-1">Coming Soon</n-link>
           </div>
         </div>
-        <div class="border-2 box-height border-2 box-border-color box-shadow rounded-xl">
+        <div class="border-2 box-height box-border-color box-shadow rounded-xl">
           <div class="commingsoon-two rounded-t-xl">
-            <img class="comingsoon-img" src="~/assets/img/comingsoon.png" alt="Image">
+            <img class="comingsoon-img" src="~/assets/img/full-building.png" alt="Image">
           </div>
           <div class="flex flex-wrap items-center justify-center">
-            <n-link to="" class="button lg:px-10 px-4 lg:py-2 py-1">Coming Soon</n-link>
+            <n-link to="" class="button lg:px-8 px-4 lg:py-2 py-1">Coming Soon</n-link>
           </div>
         </div>
       </div>

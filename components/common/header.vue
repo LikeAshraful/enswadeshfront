@@ -14,7 +14,7 @@
           </n-link>
         </div>
         <div class="col-span-2 text-center">
-          <p class="font-serif text-4xl">Swadesh</p>
+          <n-link to="/" class="font-serif text-4xl">Swadesh</n-link>
         </div>
         <div class="">
           <!-- Offset -->
@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="w-full lg:px-20 p-3 text-center">
-      <n-link to="">
+      <n-link to="/cities">
         <img class="inline h-5 mx-2" src="~/assets/icons/market.png" alt="Icon"> Market
       </n-link>
       <n-link to="" class="pl-6">
