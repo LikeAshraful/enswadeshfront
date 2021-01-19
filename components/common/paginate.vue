@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="h-10 flex flex-wrap justify-center">
-            <button class="paginate-btn h-full w-10 mx-2 rounded">
+            <button class="border border-gray-1 h-full w-10 mx-2 rounded">
                 <img src="~/assets/icons/back.png" alt="Icon">
             </button>
-            <button v-for="(button, i) in buttons" :key="i" class="paginate-btn h-full w-10 mx-2 rounded">{{ button }}</button>
-            <button class="paginate-btn h-full w-10 mx-2 rounded">
+            <button v-for="(button, i) in buttons" :key="i" class="border border-gray-1 h-full w-10 mx-2 rounded">{{ button }}</button>
+            <button class="border border-gray-1 h-full w-10 mx-2 rounded">
                 <img src="~/assets/icons/next.png" alt="Icon">
             </button>
         </div>
@@ -25,9 +25,3 @@ export default {
     })
 }
 </script>
-<style>
-    .paginate-btn {
-        color: #163A24;
-        border: 1px solid #E5EBE7;
-    }
-</style>
