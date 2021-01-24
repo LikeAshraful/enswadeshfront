@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="lg:px-20 lg:pt-20 p-3">
+    <div class="lg:pt-20 p-3">
       <!-- Section One -->
       <div class="grid lg:grid-cols-4 grid-cols-3 lg:gap-8 gap-4">
         <div class="lg:col-span-2 -2 h-96 border-2 border-green-4 border-r-8 border-b-8 rounded-xl">

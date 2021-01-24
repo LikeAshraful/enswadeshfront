@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Breadcrumbs -->
-        <div class="flex py-3 lg:px-20 px-3">
+        <div class="flex py-3 px-3">
             <n-link to="/" class="text-blue-1">Home</n-link>
                 <i class="px-2 ri-arrow-right-s-fill"></i>
             <n-link to="/cities" class="text-blue-1">Go To Market</n-link>
@@ -16,9 +16,16 @@
         </div>
         <!-- End Breadcrumbs -->
         <!-- Shop Details -->
-        <div class="shop market lg:px-20 px-3 lg:py-6 py-3 grid grid-cols-2 gap-3">
-            <div>
+        <div class="shop market px-3 lg:py-6 py-3 grid grid-cols-2 gap-3">
+            <div class="relative">
                 <img class="h-64 w-full rounded-lg" src="~/assets/img/shopping-mall.png" alt="Image">
+                
+                <button style="margin-top:" class="w-10 h-10 items-center text-white text-2xl font-bold focus:outline-none rounded-full absolute right-0 ml-2">
+                    <i class="ri-arrow-right-line"></i>
+                </button>
+                <button style="margin-top:" class="w-10 h-10 items-center text-white text-2xl font-bold focus:outline-none rounded-full absolute left-0 ml-2">
+                    <i class="ri-arrow-left-line"></i>
+                </button>
             </div>
             <div>
                 <p class="font-bold text-xl">Shop name goes to here</p>
@@ -59,7 +66,7 @@
         </div>
         <!-- End Shop Details -->
         <!-- Products Section -->
-        <div class="markets lg:px-20 px-3">
+        <div class="markets px-3">
             <div class="grid lg:grid-cols-4 grid-cols-3 gap-4 my-5">
                 <!-- Filter -->
                 <div>
@@ -88,7 +95,7 @@
                     </div>
                     <!-- End All Products -->
                     <!-- Paginate -->
-                    <div class="lg:px-20 px-3 pb-8">
+                    <div class="px-3 pb-8">
                         <Paginate/>
                     </div>
                     <!-- End Paginate -->

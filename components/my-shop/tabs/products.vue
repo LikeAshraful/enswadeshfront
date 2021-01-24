@@ -16,9 +16,13 @@
             </div>
             <!-- End Filter -->
             <div class="lg:col-span-3 col-span-2">
-                <!-- Top Markets -->
-                <div class="text-right mb-4">
-                    <n-link to="" class="bg-orange-1 text-white font-bold rounded-lg py-2 px-4">Add Product</n-link>
+                <!-- Product tables -->
+                <div class="flex justify-between font-bold mb-4">
+                    <div class="flex items-center border border-gray-2 rounded-full px-3">
+                        <i class="ri-search-line mr-2"></i>
+                        <input class="focus:outline-none" type="text" placeholder="Search products">
+                    </div>
+                    <n-link to="" class="bg-orange-1 text-white rounded-lg py-2 px-4">Add Product</n-link>
                 </div>
                 <table class="w-full text-left mb-6">
                     <thead>
@@ -49,9 +53,9 @@
                         </tr>
                     </tbody>
                 </table>
-                <!-- End Top Markets -->
+                <!-- End Product tables -->
                 <!-- Paginate -->
-                <div class="lg:px-20 px-3 pb-8">
+                <div class="px-3 pb-8">
                     <Paginate/>
                 </div>
                 <!-- End Paginate -->
