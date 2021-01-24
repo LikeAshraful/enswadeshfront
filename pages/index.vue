@@ -1,14 +1,19 @@
 <template>
   <div>
-    <Index />
+    <div class="lg:pt-20 p-3">
+      <menus></menus>
+      <tab></tab>
+    </div>
   </div>
 </template>
 <script>
-import Index from '~/components/index/index'
+import Menus from '../components/home/menus.vue'
+import Tab from '../components/home/tab.vue'
 
 export default {
   components: {
-    Index,
+    Menus,
+    Tab,
   },
 }
 </script>
