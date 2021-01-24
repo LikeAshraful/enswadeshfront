@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-footer w-full p-3 lg:p-20">
+    <div class="bg-green-4 w-full p-3 lg:p-20">
       <div class="grid lg:grid-cols-6 grid-cols-2 gap-3 text-white">
         <div class="">
           <p class="block">Menu Name</p>
@@ -19,27 +19,32 @@
         <div class="col-span-2">
           <p class="block">Stay in touch</p>
           <div class="flex border-b-2 border-white">
-            <input class="bg-footer w-full focus:outline-none" type="email" placeholder="Email Address">
-            <div class="border-2 border-color px-3 mb-2 rounded">
+            <input class="bg-green-4 w-full focus:outline-none" type="email" placeholder="Email Address">
+            <div class="border-2 border-orange-1 px-3 mb-2 rounded">
               <img class="h-6" src="~/assets/icons/right_arrow.png" alt="Button">
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="bg-copyright w-full p-3 lg:px-20 lg:py-6">
-      <div class="grid md:grid-cols-3 gap-3">
-        <div class="col-span-2 text-color">
+    <div class="bg-green-5 w-full p-3 lg:px-20 lg:py-6">
+      <div class="grid md:grid-cols-3 gap-3 items-center">
+        <div class="col-span-2 text-gray-2">
           <span>&copy; 2021 swadesh</span>
           <span class="pl-3">All Rights Reserved</span>
           <span class="pl-3">Privacy Policy</span>
           <span class="pl-3">Terms & Conditions</span>
         </div>
-        <div class="flex text-white">
-          <n-link to=""><span class="border-b-2 border-color">Facebook</span></n-link>
-          <n-link to="" class="pl-3"><span class="border-b-2 border-color">Instagram</span></n-link>
-          <n-link to="" class="pl-3"><span class="border-b-2 border-color">Twitter</span></n-link>
-          <n-link to="" class="ml-auto"><span class="bg-help py-3 px-5 rounded-3xl"><img class="mr-2 h-5 inline" src="~/assets/icons/icon_help.png" alt="Icon">Help</span></n-link>
+        <div class="flex text-white items-center">
+          <n-link to=""><span class="border-b-2 border-orange-1">Facebook</span></n-link>
+          <n-link to="" class="pl-3"><span class="border-b-2 border-orange-1">Instagram</span></n-link>
+          <n-link to="" class="pl-3"><span class="border-b-2 border-orange-1">Twitter</span></n-link>
+          <n-link to="" class="ml-auto bg-green-3 text-green-4 font-bold py-2 px-5 rounded-3xl">
+            <div class="flex">
+              <i class="ri-question-line"></i>
+              <span class="pl-2">Help</span>
+            </div>
+          </n-link>
         </div>
       </div>
     </div>
@@ -68,20 +73,3 @@ export default {
   })
 }
 </script>
-<style>
-  .bg-footer {
-    background: #163A24;
-  }
-  .bg-copyright {
-    background: #072914;
-  }
-  .border-color {
-    border-color: #F14F02;
-  }
-  .text-color {
-    color: #889689;
-  }
-  .bg-help {
-    background: #225937;
-  }
-</style>

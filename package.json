@@ -8,7 +8,8 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "lint": "npm run lint:js"
+    "lint": "npm run lint:js",
+    "build-css": "tailwindcss build node_modules/@nuxtjs/tailwindcss/lib/files/tailwind.css -o assets/css/style.css"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.5",
