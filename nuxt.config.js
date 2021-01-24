@@ -21,13 +21,20 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [    
+  buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: [],
+  modules: [
+    '@nuxtjs/axios',
+  ],
+
+  axios: {
+    // proxy: true
+    baseURL:"http://localhost:8000"
+  },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
