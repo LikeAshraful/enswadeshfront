@@ -51,16 +51,17 @@
                     <!-- All Markets -->
                     <p class="title-color text-2xl font-black">All Markets in Dhaka</p>
                     <div class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
-                        <n-link v-for="(market, i) in allMarkets" :key="i" :to="market.url">
+                        <div v-for="market of markets">
+                          <NuxtLink to="#">
                             <div class="border-2 division-box rounded-xl">
-                                <div :class="market.bg" class="img-box h-40 rounded-t-xl">
-                                    <img class="cloud h-12" src="~/assets/img/cloud.png" alt="Image">
-                                    <img class="building h-16" src="~/assets/img/building.png" alt="Image">
-                                    <p class="shop bg-black text-white inline px-1">{{ market.shop }} Shops</p>
+                                <div :class="market" class="img-box h-40 rounded-t-xl">
+                                    <img class="building h-16" :src="basePath + '/' + market.market_icon" alt="Image">
+                                    <!-- <p class="shop bg-black text-white inline px-1">{{ market }} Shops</p> -->
                                 </div>
-                                <p class="font-bold p-3">{{ market.name }}</p>
+                                <p class="font-bold p-3">{{ market.market_name }}</p>
                             </div>
-                        </n-link>
+                          </NuxtLink>
+                        </div>
                     </div>
                     <!-- End All Markets -->
                 </div>
@@ -70,8 +71,9 @@
 </template>
 <script>
 export default {
-    data: () => ({
-        locations: [
+    data (){
+      return {
+          locations: [
             {url: '', name: 'Badda'},
             {url: '', name: 'Bashundhara'},
             {url: '', name: 'Adabor'},
@@ -91,21 +93,36 @@ export default {
             {url: '', bg: 'bg-sky', shop:'50', name: 'Metro Shopping Mall'},
             {url: '', bg: 'bg-pink', shop:'40', name: 'Gulshan Pink City'},
         ],
-        allMarkets: [
-            {url: '', bg: 'bg-sky', shop:'115', name: 'Eastern Plaza Shopping'},
-            {url: '', bg: 'bg-pink', shop:'90', name: 'Metro Shopping Mall'},
-            {url: '', bg: 'bg-blue', shop:'75', name: 'Gulshan Pink City'},
-            {url: '', bg: 'bg-sky', shop:'50', name: 'Metro Shopping Mall'},
-            {url: '', bg: 'bg-pink', shop:'40', name: 'Gulshan Pink City'},
-            {url: '', bg: 'bg-blue', shop:'35', name: 'Eastern Plaza'},
-            {url: '', bg: 'bg-sky', shop:'115', name: 'Eastern Plaza Shopping'},
-            {url: '', bg: 'bg-pink', shop:'90', name: 'Metro Shopping Mall'},
-            {url: '', bg: 'bg-blue', shop:'75', name: 'Gulshan Pink City'},
-            {url: '', bg: 'bg-sky', shop:'50', name: 'Metro Shopping Mall'},
-            {url: '', bg: 'bg-pink', shop:'40', name: 'Gulshan Pink City'},
-            {url: '', bg: 'bg-blue', shop:'35', name: 'Eastern Plaza'},
-        ],
-    })
+
+        markets: [],
+        basePath: null,
+
+      }
+    },
+
+    mounted() {
+      this.loadMarket();
+      this.basePath = this.$axios.defaults.baseURL;
+    },
+
+
+
+    methods: {
+      async loadMarket() {
+        await this.$axios.$get(
+          'http://localhost:8000/api/markets'
+        ).then((res) => {
+          this.markets = res.data;
+        })
+      }
+    }
+
+    // async fetch() {
+    //   this.mountains = await fetch(
+    //     'https://api.nuxtjs.dev/mountains'
+    //   ).then(res => res.json())
+    // }
+
 }
 </script>
 <style>
@@ -123,7 +140,7 @@ export default {
     }
     .markets .division-box {
         border-color: #163A24;
-        -webkit-box-shadow: 3px 3px 1px 2px #163A24; 
+        -webkit-box-shadow: 3px 3px 1px 2px #163A24;
         box-shadow: 3px 3px 1px 2px #163A24;
     }
     .markets .division-box .img-box{
