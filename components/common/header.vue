@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="w-full lg:px-20 lg:py-5 p-3">
-      <div class="grid grid-cols-12 gap-2">
+    <div class="w-full lg:py-5 p-3">
+      <div class="lg:w-11/12 xl:w-10/12 w-full m-auto grid grid-cols-12 gap-2">
         <div class="col-span-5 font-bold">
           <n-link to="" class="">
             <img class="inline h-5 mx-2" src="~/assets/icons/wallet.png" alt="Icon">S-Wallet
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <div class="w-full lg:px-20 p-3 font-bold text-center">
+    <div class="lg:w-11/12 xl:w-10/12 w-full m-auto p-3 font-bold text-center">
       <n-link to="/cities">
         <img class="inline h-5 mx-2" src="~/assets/icons/market.png" alt="Icon"> Market
       </n-link>
