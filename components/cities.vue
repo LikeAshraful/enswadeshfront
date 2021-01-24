@@ -1,12 +1,12 @@
 <template>
     <div>
         <!-- Breadcrumbs -->
-        <div class="flex py-3 lg:px-20 px-3">
+        <div class="flex py-3 px-3">
             <n-link to="/" class="text-blue-1">Home</n-link>
             <img class="px-2" src="~/assets/icons/arrow-right.png" alt="Icon">
             <p>Go To Market</p>
         </div>
-        <div class="cities lg:px-20 px-3">
+        <div class="cities px-3">
             <p class="title-color text-4xl font-black">Where do you want to go ?</p>
             <div style="background-size: cover;" :style="{ backgroundImage: `url(${backgroundImagePath})` }" class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
                 

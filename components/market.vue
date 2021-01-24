@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Breadcrumbs -->
-        <div class="flex py-3 lg:px-20 px-3">
+        <div class="flex py-3 px-3">
             <n-link to="/" class="text-blue-1">Home</n-link>
                 <i class="px-2 ri-arrow-right-s-fill"></i>
             <n-link to="/cities" class="text-blue-1">Go To Market</n-link>
@@ -14,7 +14,7 @@
         </div>
         <!-- End Breadcrumbs -->
         <!-- Market Details -->
-        <div class="lg:px-20 px-3 lg:py-6 py-3 grid grid-cols-2 gap-3">
+        <div class="px-3 lg:py-6 py-3 grid grid-cols-2 gap-3">
             <div class="flex">
                 <img class="h-40 w-2/5 rounded-l-lg" src="~/assets/img/shopping-mall.png" alt="Image">
                 <div class="pl-3">
@@ -44,7 +44,7 @@
         </div>
         <!-- End Market Details -->
         <!-- Shops -->
-        <div class="lg:px-20 px-3">
+        <div class="px-3">
             <p class="font-bold text-2xl">Ground Floor</p>
             <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-3 py-8">
                 <n-link v-for="(shop, i) in shops" :key="i" :to="shop.url" class="">
@@ -57,7 +57,7 @@
         </div>
         <!-- End Shops -->
         <!-- Paginate -->
-        <div class="lg:px-20 px-3 pb-8">
+        <div class="px-3 pb-8">
             <Paginate/>
         </div>
         <!-- End Paginate -->
