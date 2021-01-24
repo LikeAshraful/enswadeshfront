@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Breadcrumbs -->
-        <div class="flex py-3 lg:px-20 px-3">
+        <div class="flex py-3 px-3">
             <n-link to="/" class="text-blue-1">Home</n-link>
             <img class="px-2" src="~/assets/icons/arrow-right.png" alt="Icon">
             <n-link to="/cities" class="text-blue-1">Go To Market</n-link>
@@ -10,7 +10,7 @@
         </div>
         <!-- End Breadcrumbs -->
         <!-- Markets Section -->
-        <div class="lg:px-20 px-3">
+        <div class="px-3">
             <div class="grid lg:grid-cols-4 grid-cols-3 gap-4 my-5">
                 <!-- Filter -->
                 <div>

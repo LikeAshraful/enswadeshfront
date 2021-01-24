@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Breadcrumbs -->
-        <div class="flex py-3 lg:px-20 px-3">
+        <div class="flex py-3 px-3">
             <n-link to="/" class="text-blue-1">Home</n-link>
                 <i class="px-2 ri-arrow-right-s-fill"></i>
             <n-link to="/my-shop" class="text-blue-1">My Shop</n-link>
@@ -10,9 +10,12 @@
         </div>
         <!-- End Breadcrumbs -->
         <!-- Shop Details -->
-        <div class="shop market lg:px-20 px-3 grid grid-cols-2 gap-3">
+        <div class="shop market px-3 grid grid-cols-2 gap-3">
             <div>
-                <img class="h-56 w-full rounded-lg" src="~/assets/img/shopping-mall.png" alt="Image">
+                <img class="h-56 w-full rounded-lg relative" src="~/assets/img/shopping-mall.png" alt="Image">
+                <button style="margin-top: -48px;" class="w-10 h-10 items-center border border-white bg-white opacity-50 focus:outline-none rounded-full absolute ml-2">
+                    <i class="ri-image-add-fill"></i>
+                </button>
             </div>
             <div>
                 <p class="font-bold text-xl">Shop name goes to here</p>
@@ -49,16 +52,22 @@
         </div>
         <!-- End Shop Details -->
         <!-- Photos -->
-        <div class="lg:px-20 px-3 relative">
-            <div class="grid lg:grid-cols-4 grid-cols-3 gap-4 my-5">
-                <div v-for="(photo, i) in photos" :key="i" class="">
+        <div class="px-3">
+            <div class="grid lg:grid-cols-4 grid-cols-3 gap-4 my-5 relative">
+                <div v-for="(photo, i) in photos" :key="i">
                     <img class="h-40 rounded-xl" :src="require(`~/assets/img/shops/${photo}.png`)" alt="">
                 </div>
+                <button style="right: -20px;" class="w-10 h-10 items-center border border-gray-2 bg-white focus:outline-none rounded-full absolute mt-16 ml-2">
+                    <i class="ri-arrow-right-line"></i>
+                </button>
+                <button style="left: -28px;" class="w-10 h-10 items-center border border-gray-2 bg-white focus:outline-none rounded-full absolute mt-16 ml-2">
+                    <i class="ri-arrow-left-line"></i>
+                </button>
             </div>
         </div>
         <!-- End Photos -->
         <!-- Tabs -->
-        <div class="lg:px-20 px-3">
+        <div class="px-3">
             <button @click="getProducts" :class="products ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" class="focus:outline-none font-bold px-6 py-2">Products</button>
             <button @click="getOrders" :class="orders ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''"  class="focus:outline-none font-bold px-6 py-2">Orders</button>
             <button @click="getTutorials" :class="tutorials ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''"  class="focus:outline-none font-bold px-6 py-2">Tutorials</button>
