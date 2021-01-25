@@ -9,7 +9,7 @@
         <div class="cities px-3">
             <p class="title-color text-4xl font-black">Where do you want to go ?</p>
             <div style="background-size: cover;" :style="{ backgroundImage: `url(${backgroundImagePath})` }" class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
-                
+
                 <n-link v-for="(division, i) in divisions" :key="i" :to="division.url">
                     <div class="border-2 border-r-4 border-b-4 border-green-4 rounded-xl">
                         <div :class="division.bg" class="px-2 pt-2 rounded-t-xl">
@@ -41,6 +41,6 @@ export default {
             {url: '', bg: 'bg-purple-1', name: 'KHULNA'},
             {url: '', bg: 'bg-gray-1', name: 'RANGPUR'},
         ]
-    }) 
+    })
 }
 </script>

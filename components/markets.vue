@@ -37,15 +37,17 @@
                         </div>
                     </div>
                     <div class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
-                        <n-link v-for="(market, i) in topMarkets" :key="i" :to="market.url">
+                        <div v-for="market of topMarkets">
+                          <NuxtLink :to="market.market_slug">
                             <div class="border-2 border-r-8 border-b-8 border-green-4 rounded-xl">
-                                <div :class="market.bg" class="rounded-t-xl pt-4 pxt-4 relative">
-                                    <img class="h-40 m-auto" src="~/assets/img/building.png" alt="Image">
-                                    <p style="margin-top: -30px;" class="shop bg-black text-white inline ml-2 px-1 absolute">{{ market.shop }} Shops</p>
+                                <div :class="market" class="img-box h-40 rounded-t-xl">
+                                    <img class="building w-full h-40 rounded-t-xl" :src="basePath + '/' + market.market_icon" alt="Image">
+                                    <p class="shop bg-black text-white inline px-1 ml-2 absolute" style="margin-top: -30px">{{ market.shop_count }} Shops</p>
                                 </div>
-                                <p class="font-bold p-3">{{ market.name }}</p>
+                                <p class="font-bold p-3">{{ market.market_name }}</p>
                             </div>
-                        </n-link>
+                          </NuxtLink>
+                        </div>
                     </div>
                     <!-- End Top Markets -->
                     <!-- All Markets -->
@@ -53,10 +55,10 @@
                     <div class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
                         <div v-for="market of markets">
                           <NuxtLink :to="market.market_slug">
-                            <div class="border-2 division-box rounded-xl">
+                            <div class="border-2 border-r-8 border-b-8 border-green-4 rounded-xl">
                                 <div :class="market" class="img-box h-40 rounded-t-xl">
                                     <img class="building w-full h-40 rounded-t-xl" :src="basePath + '/' + market.market_icon" alt="Image">
-                                    <!-- <p class="shop bg-black text-white inline px-1">{{ market }} Shops</p> -->
+                                    <p class="shop bg-black text-white inline px-1 ml-2 absolute" style="margin-top: -30px">{{ market.shop_count }} Shops</p>
                                 </div>
                                 <p class="font-bold p-3">{{ market.market_name }}</p>
                             </div>
@@ -86,14 +88,7 @@ export default {
             {url: '', name: 'Banani'},
             {url: '', name: 'Demra'},
         ],
-        topMarkets: [
-            {url: '/market', bg: 'bg-pink-1', shop:'115', name: 'Eastern Plaza Shopping'},
-            {url: '', bg: 'bg-purple-1', shop:'90', name: 'Metro Shopping Mall'},
-            {url: '', bg: 'bg-gray-1', shop:'75', name: 'Gulshan Pink City'},
-            {url: '', bg: 'bg-purple-1', shop:'90', name: 'Metro Shopping Mall'},
-            {url: '', bg: 'bg-gray-1', shop:'75', name: 'Gulshan Pink City'},
-            {url: '', bg: 'bg-pink-1', shop:'115', name: 'Eastern Plaza Shopping'},
-        ],
+        topMarkets: [],
 
         markets: [],
         basePath: null,
@@ -102,6 +97,7 @@ export default {
     },
 
     mounted() {
+      this.loadTopMarket();
       this.loadMarket();
       this.basePath = this.$axios.defaults.baseURL;
     },
@@ -109,6 +105,15 @@ export default {
 
 
     methods: {
+      async loadTopMarket() {
+        await this.$axios.$get(
+          'http://localhost:8000/api/markets/top'
+        ).then((res) => {
+          this.topMarkets = res.data;
+
+        })
+      },
+
       async loadMarket() {
         await this.$axios.$get(
           'http://localhost:8000/api/markets'
@@ -116,13 +121,8 @@ export default {
           this.markets = res.data;
         })
       }
-    }
 
-    // async fetch() {
-    //   this.mountains = await fetch(
-    //     'https://api.nuxtjs.dev/mountains'
-    //   ).then(res => res.json())
-    // }
+    }
 
 }
 </script>
