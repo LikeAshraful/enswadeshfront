@@ -1,14 +1,46 @@
 <template>
     <div>
-        <Cities />
+        <!-- Breadcrumbs -->
+        <div class="flex py-3 px-3">
+            <n-link to="/" class="text-blue-1">Home</n-link>
+            <img class="px-2" src="~/assets/icons/arrow-right.png" alt="Icon">
+            <p>Go To Market</p>
+        </div>
+        <div class="cities px-3">
+            <p class="title-color text-4xl font-black">Where do you want to go ?</p>
+            <div style="background-size: cover;" :style="{ backgroundImage: `url(${backgroundImagePath})` }" class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
+                
+                <n-link v-for="(division, i) in divisions" :key="i" :to="division.url">
+                    <div class="border-2 border-r-4 border-b-4 border-green-4 rounded-xl">
+                        <div :class="division.bg" class="px-2 pt-2 rounded-t-xl">
+                            <img class="h-24 m-auto" src="~/assets/img/building.png" alt="Image">
+                        </div>
+                        <div class="flex flex-wrap items-center justify-center">
+                            <p class="font-bold py-3 text-xl">{{ division.name }}</p>
+                        </div>
+                    </div>
+                </n-link>
+
+            </div>
+        </div>
     </div>
 </template>
 <script>
-import Cities from '~/components/cities.vue';
+import backgroundImagePath from '~/assets/img/city.png';
 
 export default {
-    components: {
-        Cities,
-    }    
+    data:() => ({
+        backgroundImagePath,
+        divisions: [
+            {url: '/markets', bg: 'bg-pink-1', name: 'DHAKA'},
+            {url: '', bg: 'bg-purple-1', name: 'SYLHET'},
+            {url: '', bg: 'bg-gray-1', name: 'CHITTAGONG'},
+            {url: '', bg: 'bg-purple-1', name: 'BARISHAL'},
+            {url: '', bg: 'bg-pink-1', name: 'MYMENSINGH'},
+            {url: '', bg: 'bg-gray-1', name: 'CHITTAGONG'},
+            {url: '', bg: 'bg-purple-1', name: 'KHULNA'},
+            {url: '', bg: 'bg-gray-1', name: 'RANGPUR'},
+        ]
+    }) 
 }
 </script>
