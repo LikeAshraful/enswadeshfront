@@ -31,7 +31,7 @@ export default {
                 {title: 'Go To Market', url: '/cities'},
                 {title: 'Dhaka', url: ''},
             ],
-            
+
             filterTitle: 'Filter by Location',
             filtersData: [
                 {url: '', name: 'Badda'},

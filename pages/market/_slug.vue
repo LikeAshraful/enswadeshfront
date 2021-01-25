@@ -22,11 +22,11 @@
     </div>
 </template>
 <script>
-import Breadcrumb from '../components/common/breadcrumb.vue';
+import Breadcrumb from '~/components/common/breadcrumb.vue';
 import Paginate from '~/components/common/paginate.vue';
-import Floors from '../components/market/floors.vue';
-import MarketDetails from '../components/market/details.vue';
-import Shops from '../components/market/shops.vue';
+import Floors from '~/components/market/floors.vue';
+import MarketDetails from '~/components/market/details.vue';
+import Shops from '~/components/market/shops.vue';
 
 export default {
     components: {
