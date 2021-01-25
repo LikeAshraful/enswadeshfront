@@ -18,8 +18,8 @@
     </div>
 </template>
 <script>
-import Breadcrumb from '../components/common/breadcrumb.vue';
-import DataFilter from '../components/common/filter.vue';
+import Breadcrumb from '~/components/common/breadcrumb.vue';
+import DataFilter from '~/components/common/filter.vue';
 import TopMarkets from '~/components/markets/top.vue';
 import AllMarkets from '~/components/markets/all.vue';
 
@@ -31,7 +31,7 @@ export default {
                 {title: 'Go To Market', url: '/cities'},
                 {title: 'Dhaka', url: ''},
             ],
-            
+
             filterTitle: 'Filter by Location',
             filtersData: [
                 {url: '', name: 'Badda'},
