@@ -13,7 +13,7 @@
                 <div v-for="(city, i) in cities.data" :key="i" :to="city.city_slug">
                   <NuxtLink  :to="{name:'markets', params:{slug: city.city_slug}}">
                     <div class="border-2 border-r-4 border-b-4 border-green-4 rounded-xl">
-                        <div :class="city.city_icon" class="px-2 pt-2 rounded-t-xl">
+                        <div class="px-2 pt-2 rounded-t-xl">
                             <img class="h-24 m-auto" src="~/assets/img/building.png" alt="Image">
                         </div>
                         <div class="flex flex-wrap items-center justify-center">

@@ -54,7 +54,7 @@
                     <p class="text-2xl font-bold">All Markets in Dhaka</p>
                     <div class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
                         <div v-for="market of markets">
-                          <NuxtLink :to="market.market_slug">
+                          <NuxtLink :to="{name:'market', params:{slug: market.market_slug}}">
                             <div class="border-2 border-r-8 border-b-8 border-green-4 rounded-xl">
                                 <div :class="market" class="img-box h-40 rounded-t-xl">
                                     <img class="building w-full h-40 rounded-t-xl" :src="basePath + '/' + market.market_icon" alt="Image">
