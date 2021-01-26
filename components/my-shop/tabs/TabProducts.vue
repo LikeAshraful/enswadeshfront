@@ -3,18 +3,8 @@
         <!-- Products Section -->
         <div class="grid lg:grid-cols-4 grid-cols-3 gap-4 my-5">
             <!-- Filter -->
-            <div>
-                <div class="rounded-t-lg p-1 bg-green-1 font-bold text-lg flex justify-between">
-                    <p class="">Categories</p>
-                    <n-link to="" class="text-orange-1 text-xl"><i class="ri-add-circle-line"></i></n-link>
-                </div>
-                <div class="rounded-b-lg py-2">
-                    <n-link :to="categorie.url" v-for="(categorie, i) in categories" :key="i" class="flex items-center p-2 hover:bg-green-1 duration-300">
-                        <p class="font-bold">{{ categorie.name }}</p>
-                    </n-link>
-                </div>
-            </div>
-            <!-- End Filter -->
+            <dataFilter :filtersData="filtersData" :filterTitle="filterTitle"/>
+
             <div class="lg:col-span-3 col-span-2">
                 <!-- Product tables -->
                 <div class="flex justify-between font-bold mb-4">
@@ -65,13 +55,17 @@
     </div>
 </template>
 <script>
-import Paginate from '~/components/common/paginate.vue';
+import DataFilter from '~/components/common/Filter.vue';
+import Paginate from '~/components/common/Paginate.vue';
+
 export default {
     components: {
-        Paginate
+        Paginate,
+        DataFilter,
     },
     data: () => ({
-        categories: [
+        filterTitle: 'Categories',
+        filtersData: [
             {url: '', name: 'Food'},
             {url: '', name: 'Groceries'},
             {url: '', name: 'Furniture'},
@@ -79,6 +73,7 @@ export default {
             {url: '', name: 'Electronics'},
             {url: '', name: 'Fashion'},
         ],
+
         items: [
             {id: '1', photo: 'img-1', title: 'Ceiling circle black electric deem lamp', categori: 'Home Decor', price: '1195', avl: '25'}, 
             {id: '2', photo: 'img-2', title: 'Ceiling circle black electric deem lamp', categori: 'Home Decor', price: '1195', avl: '25'}, 

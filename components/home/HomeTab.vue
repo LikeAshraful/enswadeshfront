@@ -10,34 +10,34 @@
         <div style="margin-top: -2px;" class="h-full border-t-2 border-green-4 lg:py-8 py-3">
 
           <div v-if="videosTab">
-            <Videos />
+            <videos></videos>
           </div>
 
           <div v-if="templatesTab">
-            <Templates />
+            <templates></templates>
           </div>
 
           <div v-if="experiencesTab">
-            <Experiences />
+            <experiences></experiences>
           </div>
 
           <div v-if="memesTab">
-            <Memes />
+            <memes></memes>
           </div>
 
           <div v-if="storiesTab">
-            <Stories />
+            <stories></stories>
           </div>
         </div>
       </div>
     </div>
 </template>
 <script>
-import Videos from './tabs/videos.vue';
-import Templates from './tabs/templates.vue';
-import Experiences from './tabs/experiences.vue';
-import Memes from './tabs/memes.vue';
-import Stories from './tabs/stories.vue';
+import Videos from '~/components/home/tabs/Videos.vue';
+import Templates from '~/components/home/tabs/Templates.vue';
+import Experiences from '~/components/home/tabs/Experiences.vue';
+import Memes from '~/components/home/tabs/Memes.vue';
+import Stories from '~/components/home/tabs/Stories.vue';
 
 export default {
   components: {
