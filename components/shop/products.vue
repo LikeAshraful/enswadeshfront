@@ -21,7 +21,7 @@
     </div>
 </template>
 <script>
-import Paginate from '~/components/common/paginate.vue';
+import Paginate from '~/components/common/Paginate.vue';
 
 export default {
     data:() => ({

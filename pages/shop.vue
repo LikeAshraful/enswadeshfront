@@ -1,13 +1,13 @@
 <template>
     <div>
         <!-- Breadcrumbs -->
-        <breadcrumb :breadCrumbs="breadCrumbs"/>
+        <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
         
         <div class="shop market px-3 lg:py-6 py-3 grid grid-cols-2 gap-3">
             <!-- Slider -->
-            <slider/>
+            <slider></slider>
             <!-- Shop Details -->
-            <shopDetails/>
+            <shopDetails></shopDetails>
         </div>
         
         <div class="markets px-3">
@@ -16,7 +16,7 @@
                 <dataFilter :filtersData="filtersData" :filterTitle="filterTitle"/>
                 <div class="lg:col-span-3 col-span-2">
                     <!-- All Products -->
-                    <products/>
+                    <products></products>
                 </div>
             </div>
         </div>
@@ -24,15 +24,17 @@
 </template>
 
 <script>
-import Slider from '~/components/shop/slider.vue';
-import shopDetails from '~/components/shop/details.vue';
-import DataFilter from '~/components/common/filter.vue';
-import Products from '~/components/shop/products.vue';
+import Breadcrumb from '~/components/common/Breadcrumb.vue';
+import Slider from '~/components/shop/Slider.vue';
+import ShopDetails from '~/components/shop/ShopDetails.vue';
+import DataFilter from '~/components/common/Filter.vue';
+import Products from '~/components/shop/Products.vue';
 
 export default {
     components: {
+        Breadcrumb,
         Slider,
-        shopDetails,
+        ShopDetails,
         DataFilter,
         Products,
     },
