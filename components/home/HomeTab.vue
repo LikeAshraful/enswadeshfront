@@ -1,13 +1,13 @@
 <template>
     <div>
-        <div class="lg:mt-20 md:mt-10">
-        <button :class="videosTab ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" @click="videosBtn" class="focus:outline-none font-bold lg:px-6 md:px-4 px-2 py-2">Videos</button>
-        <button :class="templatesTab ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" @click="templatesBtn" class="focus:outline-none font-bold lg:px-6 md:px-4 px-2 py-2">Templates</button>
-        <button :class="experiencesTab ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" @click="experiencesBtn" class="focus:outline-none font-bold lg:px-6 md:px-4 px-2 py-2">Real Experiences</button>
-        <button :class="memesTab ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" @click="memesBtn" class="focus:outline-none font-bold lg:px-6 md:px-4 px-2 py-2">Memes</button>
-        <button :class="storiesTab ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" @click="storiesBtn" class="focus:outline-none font-bold lg:px-6 md:px-4 px-2 py-2">Stories</button>
+        <div class="lg:mt-20 md:mt-10 sm:mt-6 mt-3">
+        <button :class="videosTab ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" @click="videosBtn" class="focus:outline-none sm:font-bold lg:px-6 md:px-4 sm:px-2 px-1 md:py-2 py-1">Videos</button>
+        <button :class="templatesTab ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" @click="templatesBtn" class="focus:outline-none sm:font-bold lg:px-6 md:px-4 sm:px-2 px-1 md:py-2 py-1">Templates</button>
+        <button :class="experiencesTab ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" @click="experiencesBtn" class="focus:outline-none sm:font-bold lg:px-6 md:px-4 sm:px-2 px-1 md:py-2 py-1">Real Experiences</button>
+        <button :class="memesTab ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" @click="memesBtn" class="focus:outline-none sm:font-bold lg:px-6 md:px-4 sm:px-2 px-1 md:py-2 py-1">Memes</button>
+        <button :class="storiesTab ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" @click="storiesBtn" class="focus:outline-none sm:font-bold lg:px-6 md:px-4 sm:px-2 px-1 md:py-2 py-1">Stories</button>
 
-        <div style="margin-top: -2px;" class="h-full border-t-2 border-green-4 xl:py-8 lg:py-4 py-2">
+        <div style="margin-top: -2px;" class="h-full border-t-2 border-green-4 xl:py-8 lg:py-4 md:py-2 py-1">
 
           <div v-if="videosTab">
             <videos></videos>

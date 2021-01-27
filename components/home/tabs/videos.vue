@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="grid lg:grid-cols-4 grid-cols-3 xl:gap-8 lg:gap-4 gap-2">
+        <div class="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 xl:gap-8 lg:gap-4 gap-2">
             <div v-for="(video, i) in videos" :key="i" class="border-2 border-green-4"> 
                 <div class="relative pb-2/3">
                     <img class="absolute h-full w-full object-cover" src="~/assets/videos/img-one.png" alt="Image">
