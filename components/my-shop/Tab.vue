@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Tabs -->
-        <div class="px-3">
+        <div class="">
             <button @click="getProducts" :class="products ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" class="focus:outline-none font-bold px-6 py-2">Products</button>
             <button @click="getOrders" :class="orders ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''"  class="focus:outline-none font-bold px-6 py-2">Orders</button>
             <button @click="getTutorials" :class="tutorials ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''"  class="focus:outline-none font-bold px-6 py-2">Tutorials</button>

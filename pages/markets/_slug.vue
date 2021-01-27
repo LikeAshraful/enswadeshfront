@@ -3,7 +3,7 @@
         <!-- Breadcrumbs -->
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
         <!-- Markets Section -->
-        <div class="px-3">
+        <div class="">
             <div class="grid lg:grid-cols-4 grid-cols-3 gap-4 my-5">
                 <!-- Filter -->
                 <data-filter :filtersData="filtersData" :filterTitle="filterTitle"></data-filter>

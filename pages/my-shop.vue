@@ -3,7 +3,7 @@
         <!-- Breadcrumbs -->
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
         
-        <div class="shop market px-3 grid grid-cols-2 gap-3">
+        <div class="shop market grid grid-cols-2 gap-3">
             <!-- Add photo -->
             <add-photo></add-photo>
 
