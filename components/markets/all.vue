@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- All Markets -->
-        <p class="text-2xl font-bold">All Markets in Dhaka</p>
+        <p class="text-2xl font-bold ">All Markets in {{ this.$route.params.city }} </p>
         <div class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
             <div v-for="(market, i) of markets" :key="i">
                 <NuxtLink :to="{name:'market-slug', params:{slug: market.market_slug}}">
@@ -36,10 +36,12 @@ export default {
 
 
 
+
+
     methods: {
       async loadMarket() {
         await this.$axios.$get(
-          'http://localhost:8000/api/markets'
+          'http://localhost:8000/api/markets/all-market-by-city/' + this.$route.params.id
         ).then((res) => {
           this.markets = res.data;
         })

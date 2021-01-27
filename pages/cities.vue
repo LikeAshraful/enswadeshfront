@@ -8,7 +8,7 @@
             <p class="title-color text-4xl font-black">Where do you want to go ?</p>
             <div style="background-size: cover;" :style="{ backgroundImage: `url(${backgroundImagePath})` }" class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
                 <div v-for="(city, i) in cities.data" :key="i">
-                  <NuxtLink :to="{name:'markets-slug', params:{slug: city.city_slug}}">
+                  <NuxtLink :to="{name:'markets-city-id', params:{city: city.city_slug, id: city.id }}">
                     <div class="border-2 border-r-4 border-b-4 border-green-4 rounded-xl">
                         <div class="px-2 pt-2 rounded-t-xl">
                             <img class="h-24 m-auto" src="~/assets/img/building.png" alt="Image">
