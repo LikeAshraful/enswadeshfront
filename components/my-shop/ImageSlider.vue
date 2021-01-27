@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="px-3">
+        <div class="">
             <div class="grid lg:grid-cols-4 grid-cols-3 gap-4 my-5 relative">
                 <div v-for="(photo, i) in photos" :key="i">
                     <img class="h-40 rounded-xl" :src="require(`~/assets/img/shops/${photo}.png`)" alt="">

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="bg-green-4 w-full p-3 lg:py-20">
-      <div class="lg:w-11/12 xl:w-10/12 w-full m-auto grid lg:grid-cols-6 grid-cols-2 gap-3 text-white">
+    <div class="bg-green-4 w-full lg:py-20 md:py-10 py-6">
+      <div class="max-w-screen-xl xl:px-10 px-2 m-auto grid lg:grid-cols-6 grid-cols-2 gap-3 text-white">
         <div class="">
           <p class="block">Menu Name</p>
           <n-link :to="menu.url" class="block" v-for="(menu, i) in menus" :key="i">{{ menu.name }}</n-link>
@@ -27,9 +27,9 @@
         </div>
       </div>
     </div>
-    <div class="bg-green-5 w-full p-3 lg:py-6">
-      <div class="lg:w-11/12 xl:w-10/12 w-full m-auto grid md:grid-cols-3 gap-3 items-center">
-        <div class="col-span-2 text-gray-2">
+    <div class="bg-green-5 w-full lg:py-6 md:py-4 py-2">
+      <div class="max-w-screen-xl xl:px-10 px-2 m-auto grid lg:grid-cols-3 lg:gap-3 items-center">
+        <div class="lg:col-span-2 text-gray-2">
           <span>&copy; 2021 swadesh</span>
           <span class="pl-3">All Rights Reserved</span>
           <span class="pl-3">Privacy Policy</span>

@@ -3,7 +3,7 @@
         <!-- Breadcrumbs -->
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
 
-        <div class="px-3 lg:py-6 py-3 grid grid-cols-2 gap-3">
+        <div class="lg:py-6 py-3 grid grid-cols-2 gap-3">
             <!-- Market Details -->
             <market-details></market-details>
             <!-- Market Floors -->
@@ -16,7 +16,7 @@
         <shops :shops="shops"></shops>
 
         <!-- Paginate -->
-        <div class="px-3 pb-8">
+        <div class="pb-8">
             <paginate></paginate>
         </div>
     </div>

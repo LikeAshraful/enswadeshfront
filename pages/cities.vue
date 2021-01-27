@@ -4,7 +4,7 @@
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
 
         <!-- All Cities -->
-        <div class="cities px-3">
+        <div class="cities">
             <p class="title-color text-4xl font-black">Where do you want to go ?</p>
             <div style="background-size: cover;" :style="{ backgroundImage: `url(${backgroundImagePath})` }" class="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
                 <div v-for="(city, i) in cities.data" :key="i">
