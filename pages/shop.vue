@@ -3,14 +3,14 @@
         <!-- Breadcrumbs -->
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
         
-        <div class="shop market px-3 lg:py-6 py-3 grid grid-cols-2 gap-3">
+        <div class="shop market lg:py-6 py-3 grid grid-cols-2 gap-3">
             <!-- Slider -->
             <slider></slider>
             <!-- Shop Details -->
             <shopDetails></shopDetails>
         </div>
         
-        <div class="markets px-3">
+        <div class="markets">
             <div class="grid lg:grid-cols-4 grid-cols-3 gap-4 my-5">
                 <!-- Filter -->
                 <dataFilter :filtersData="filtersData" :filterTitle="filterTitle"/>

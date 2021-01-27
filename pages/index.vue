@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="lg:pt-20 p-3">
+    <div class="lg:pt-20 pt-10">
       <menus></menus>
       <tab></tab>
     </div>
