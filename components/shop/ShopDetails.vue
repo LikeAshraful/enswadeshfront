@@ -12,7 +12,7 @@
                 <i class="ri-star-half-line"></i>
                 <p class="text-gray-2 ml-2">(4.5)</p>
             </div>
-            <div class="flex text-center gap-4 py-2">
+            <div class="flex text-center gap-4 pt-2">
                 <n-link to="">
                     <i class="rounded-lg bg-green-1 p-2 ri-message-2-fill"></i>
                     <p>Text us</p>
@@ -26,12 +26,12 @@
                     <p>Video call</p>
                 </n-link>
             </div>
-            <div class="my-5">
-                <n-link to="" class="w-full px-6 py-2 font-bold text-xl rounded-lg bg-green-3">Subscribe</n-link>
-                <n-link to="" class="w-full px-6 py-2 font-bold text-xl rounded-lg border-2 border-orange-1 ml-3">Invite Friend</n-link>
+            <div class="md:my-5 pt-2">
+                <n-link to="" class="w-full md:px-6 px-3 md:py-2 py-1 font-bold md:text-xl rounded-lg bg-green-3">Subscribe</n-link>
+                <n-link to="" class="w-full md:px-6 px-3 md:py-2 py-1 font-bold md:text-xl rounded-lg border-2 border-orange-1 md:ml-3 ml-1">Invite Friend</n-link>
             </div>
-            <div class="">
-                <div class="text-purple-2 border-2 border-purple-2 rounded-lg p-2">
+            <div class="pt-3">
+                <div class="text-purple-2 border-2 border-purple-2 rounded-lg md:p-2 p-1">
                     <p><strong>Note:</strong> Subscribe us & get 5% discount on every product</p>
                 </div>
             </div>

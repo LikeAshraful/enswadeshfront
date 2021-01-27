@@ -42,19 +42,21 @@
         </div>
       </div>
     </div>
-    <div class="max-w-screen-xl xl:px-10 px-2 sm:font-bold text-center">
-      <n-link to="/cities">
-        <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/market.png" alt="Icon"> Market
-      </n-link>
-      <n-link to="" class="sm:pl-6 pl-2">
-        <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/flash_sales.png" alt="Icon"> Flash Sales
-      </n-link>
-      <n-link to="" class="sm:pl-6 pl-2">
-        <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/festivals.png" alt="Icon"> Festivals
-      </n-link>
-      <n-link to="" class="sm:pl-6 pl-2">
-        <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/discount.png" alt="Icon"> Discount
-      </n-link>
+    <div class="max-w-screen-xl xl:px-10 px-2 m-auto sm:font-bold">
+      <div class="m-auto text-center">
+        <n-link to="/cities">
+          <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/market.png" alt="Icon"> Market
+        </n-link>
+        <n-link to="" class="sm:pl-6 pl-2">
+          <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/flash_sales.png" alt="Icon"> Flash Sales
+        </n-link>
+        <n-link to="" class="sm:pl-6 pl-2">
+          <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/festivals.png" alt="Icon"> Festivals
+        </n-link>
+        <n-link to="" class="sm:pl-6 pl-2">
+          <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/discount.png" alt="Icon"> Discount
+        </n-link>
+      </div>
     </div>
   </div>
 </template>

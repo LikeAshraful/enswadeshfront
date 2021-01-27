@@ -7,7 +7,7 @@
         <button :class="memesTab ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" @click="memesBtn" class="focus:outline-none sm:font-bold lg:px-6 md:px-4 sm:px-2 px-1 md:py-2 py-1">Memes</button>
         <button :class="storiesTab ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" @click="storiesBtn" class="focus:outline-none sm:font-bold lg:px-6 md:px-4 sm:px-2 px-1 md:py-2 py-1">Stories</button>
 
-        <div style="margin-top: -2px;" class="h-full border-t-2 border-green-4 xl:py-8 lg:py-4 md:py-2 py-1">
+        <div style="margin-top: -2px;" class="h-full border-t-2 border-green-4 xl:pt-8 lg:pt-4 md:pt-2 pt-1">
 
           <div v-if="videosTab">
             <videos></videos>
