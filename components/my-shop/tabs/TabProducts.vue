@@ -1,11 +1,11 @@
 <template>
     <div>
         <!-- Products Section -->
-        <div class="grid lg:grid-cols-4 grid-cols-3 gap-4 my-5">
+        <div class="grid lg:grid-cols-4 md:grid-cols-3 gap-4 my-5">
             <!-- Filter -->
             <dataFilter :filtersData="filtersData" :filterTitle="filterTitle"/>
 
-            <div class="lg:col-span-3 col-span-2">
+            <div class="lg:col-span-3 md:col-span-2">
                 <!-- Product tables -->
                 <div class="flex justify-between font-bold mb-4">
                     <div class="flex items-center border border-gray-2 rounded-full px-3">

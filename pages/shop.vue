@@ -3,18 +3,18 @@
         <!-- Breadcrumbs -->
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
         
-        <div class="shop market lg:py-6 py-3 grid grid-cols-2 gap-3">
+        <div class="lg:py-6 py-3 grid sm:grid-cols-2 gap-3">
             <!-- Slider -->
             <slider></slider>
             <!-- Shop Details -->
             <shopDetails></shopDetails>
         </div>
         
-        <div class="markets">
-            <div class="grid lg:grid-cols-4 grid-cols-3 gap-4 my-5">
+        <div class="">
+            <div class="grid lg:grid-cols-4 sm:grid-cols-3 gap-4 my-5">
                 <!-- Filter -->
                 <dataFilter :filtersData="filtersData" :filterTitle="filterTitle"/>
-                <div class="lg:col-span-3 col-span-2">
+                <div class="lg:col-span-3 sm:col-span-2">
                     <!-- All Products -->
                     <products></products>
                 </div>

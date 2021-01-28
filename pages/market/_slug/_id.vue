@@ -3,7 +3,7 @@
         <!-- Breadcrumbs -->
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
 
-        <div class="lg:py-6 py-3 grid grid-cols-2 gap-3">
+        <div class="lg:py-6 py-3 grid md:grid-cols-2 gap-3">
             <!-- Market Details -->
             <market-details></market-details>
             <!-- Market Floors -->
