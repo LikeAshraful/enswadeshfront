@@ -26,7 +26,7 @@ import Paginate from '~/components/common/Paginate.vue';
 export default {
     data:() => ({
         products: [
-            {url: '', photo: 'img-1', color: 'Black & White', price:'1195 BDT', name: 'Bedside white stand electric  deem lamp'},
+            {url: 'product-details', photo: 'img-1', color: 'Black & White', price:'1195 BDT', name: 'Bedside white stand electric  deem lamp'},
             {url: '', photo: 'img-2', color: 'Black & White', price:'1195 BDT', name: 'Ceiling pendanent red light'},
             {url: '', photo: 'img-3', color: 'Black & White', price:'1195 BDT', name: 'Ceiling circle black electric  deem lamp'},
             {url: '', photo: 'img-4', color: 'Black & White', price:'1195 BDT', name: 'Bedside white stand electric  deem lamp'},

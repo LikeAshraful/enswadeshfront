@@ -23,6 +23,7 @@ module.exports = {
         gray: {
           1: '#DFFCFF',
           2: '#85988C',
+          3: '#DCE2DE',
         },
         purple: {
           1: '#EAEEF8',
