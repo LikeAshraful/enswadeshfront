@@ -2,7 +2,7 @@
     <div>
         <div class="fixed inset-0 z-50 flex flex-col  justify-center items-center">
             <div class="w-full max-w-screen-sm text-right">
-                <n-link to="/shop" class="text-gray-1 text-2xl"><i class="ri-close-line"></i></n-link>
+                <button @click="closeModal" class="text-gray-1 text-2xl focus:outline-none"><i class="ri-close-line"></i></button>
             </div>
             <div class="max-w-screen-sm shadow-lg bg-white">
                 <div class="grid sm:grid-cols-2 gap-6 p-6">
@@ -11,7 +11,7 @@
                             <img class="absolute h-full w-full object-cover" src="~/assets/img/products/img-6.png" alt="Image">
                         </div>
 
-                         <div class="grid lg:grid-cols-4 gap-2 mt-2">
+                         <div class="grid grid-cols-4 gap-2 mt-2">
                             <div class="relative pb-3/4" v-for="(photo, i) in photos" :key="i">
                                 <img class="absolute h-full w-full object-cover" :src="require(`~/assets/img/products/${photo}.png`)" alt="">
                             </div>
@@ -92,6 +92,11 @@ export default {
             'img-2',
             'img-3',
         ]
-    })
+    }),
+    methods: {
+        closeModal(){
+            this.$emit('product-modal',false);
+        }
+    },
 }
 </script>

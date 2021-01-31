@@ -4,19 +4,19 @@
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
 
         <!-- Product Details -->
-        <div class="grid sm:grid-cols-7 gap-12 py-4">
-            <div class="col-span-2">
+        <div class="grid sm:grid-cols-7 lg:gap-12 md:gap-4 sm:gap-2 py-4">
+            <div class="sm:col-span-2">
                 <div class="relative pb-full">
                     <img class="absolute h-full w-full object-cover" src="~/assets/img/products/img-6.png" alt="Image">
                 </div>
 
-                    <div class="grid lg:grid-cols-4 gap-2 mt-2">
+                    <div class="grid grid-cols-4 gap-2 mt-2">
                     <div class="relative pb-3/4" v-for="(photo, i) in photos" :key="i">
                         <img class="absolute h-full w-full object-cover" :src="require(`~/assets/img/products/${photo}.png`)" alt="">
                     </div>
                 </div>
             </div>
-            <div class="col-span-3">
+            <div class="sm:col-span-3 sm:mt-0 mt-4">
                 <p class="font-bold text-2xl mb-2">Ceiling circle black electric deem lamp</p>
                 <p class="bg-green-4 px-2 py-1 text-white inline">
                     4.5<i class="ri-star-fill ml-2 text-yellow-2"></i>
@@ -73,7 +73,7 @@
                     <button class="focus:outline-none border rounded border-gray-3 py-1 font-bold px-2"><i class="ri-heart-line"></i></button>
                 </div>
             </div>
-            <div class="col-span-2">
+            <div class="sm:col-span-2 sm:mt-0 mt-4">
                 <p class="font-bold">Audio Description</p>
                 <div class="flex items-center">
                     <i class="ri-play-circle-fill mr-2 text-orange-1 text-xl"></i>
