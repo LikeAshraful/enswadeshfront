@@ -2,7 +2,7 @@
     <div>
         <div class="fixed inset-0 z-50 flex flex-col  justify-center items-center">
             <div class="w-full max-w-screen-sm text-right">
-                <button class="text-gray-1 text-2xl focus:outline-none"><i class="ri-close-line"></i></button>
+                <n-link to="/shop" class="text-gray-1 text-2xl"><i class="ri-close-line"></i></n-link>
             </div>
             <div class="max-w-screen-sm shadow-lg bg-white">
                 <div class="grid sm:grid-cols-2 gap-6 p-6">
@@ -66,7 +66,7 @@
                                     <i class="ri-add-fill"></i>
                                 </button>
                             </div>
-                            <n-link to="" class="border bg-green-1 border-gray-2 rounded py-1 w-full font-bold text-center">Buy now</n-link>
+                            <n-link to="" class="border bg-green-3 border-gray-2 rounded py-1 w-full font-bold text-center">Buy now</n-link>
                         </div>
                         <div class="flex gap-2 justify-between">
                             <button class="focus:outline-none border rounded border-gray-3 py-1 font-bold w-full">Add to bag</button>
@@ -76,7 +76,7 @@
                     </div>
                 </div>
                 <div class="border-t text-gray-3 mx-6 py-6 text-center">
-                    <button class="focus:outline-none border rounded border-gray-3 py-1 font-bold text-green-4 p-8">Show more details</button>
+                    <n-link to="/product-details-full" class="border rounded border-gray-3 py-1 font-bold text-green-4 p-8">Show more details</n-link>
                 </div>
             </div>
         </div>
@@ -95,6 +95,3 @@ export default {
     })
 }
 </script>
-<style lang="">
-    
-</style>
