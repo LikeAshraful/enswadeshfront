@@ -7,8 +7,8 @@
                 <n-link v-for="(shop, i) in shops" :key="i" :to="shop.url" class="">
                     <img class="h-16 w-full" :src="require(`~/assets/img/${shop.banner}.png`)" alt="Image">
                     <p style="margin-top: -48px;" class="w-full text-center font-bold text-white text-xl mb-5">{{ shop.shop_no }}</p>
-                    <img class="h-56 w-full" src="~/assets/img/shutter.png" alt="Image">
-                    <p class="w-full text-center font-bold text-xl">{{ shop.name }}</p>
+                    <img class="sm:h-56 h-40 w-full" src="~/assets/img/shutter.png" alt="Image">
+                    <p class="w-full text-center font-bold lg:text-xl">{{ shop.name }}</p>
                 </n-link>
             </div>
         </div>

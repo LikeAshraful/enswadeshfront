@@ -4,10 +4,13 @@
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
         <!-- Markets Section -->
         <div class="">
-            <div class="grid lg:grid-cols-4 grid-cols-3 gap-4 my-5">
+            <div class="grid lg:grid-cols-4 sm:grid-cols-3 gap-4 my-5">
                 <!-- Filter -->
-                <data-filter :filtersData="filtersData" :filterTitle="filterTitle"></data-filter>
-                <div class="lg:col-span-3 col-span-2">
+                <div>
+                    <data-filter :filtersData="filtersData" :filterTitle="filterTitle"></data-filter>
+                </div>
+
+                <div class="lg:col-span-3 sm:col-span-2">
                     <!-- Top Markets -->
                     <top-markets></top-markets>
                     <!-- All Markets -->

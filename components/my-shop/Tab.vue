@@ -2,12 +2,12 @@
     <div>
         <!-- Tabs -->
         <div class="">
-            <button @click="getProducts" :class="products ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" class="focus:outline-none font-bold px-6 py-2">Products</button>
-            <button @click="getOrders" :class="orders ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''"  class="focus:outline-none font-bold px-6 py-2">Orders</button>
-            <button @click="getTutorials" :class="tutorials ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''"  class="focus:outline-none font-bold px-6 py-2">Tutorials</button>
-            <button @click="getCalculate" :class="calculator ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''"  class="focus:outline-none font-bold px-6 py-2">Calculator</button>
+            <button @click="getProducts" :class="products ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''" class="focus:outline-none sm:font-bold lg:px-6 md:px-4 sm:px-2 px-1 md:py-2 py-1">Products</button>
+            <button @click="getOrders" :class="orders ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''"  class="focus:outline-none sm:font-bold lg:px-6 md:px-4 sm:px-2 px-1 md:py-2 py-1">Orders</button>
+            <button @click="getTutorials" :class="tutorials ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''"  class="focus:outline-none sm:font-bold lg:px-6 md:px-4 sm:px-2 px-1 md:py-2 py-1">Tutorials</button>
+            <button @click="getCalculate" :class="calculator ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white' : ''"  class="focus:outline-none sm:font-bold lg:px-6 md:px-4 sm:px-2 px-1 md:py-2 py-1">Calculator</button>
             
-            <div style="margin-top: -2px;" class="border-t-2 border-green-4 py-2">
+            <div style="margin-top: -2px;" class="border-t-2 border-green-4 xl:pt-8 lg:pt-4 md:pt-2 pt-1">
                 <div class="" v-if="products">
                     <products></products>
                 </div>
