@@ -33,9 +33,9 @@
           </div>
         </div>
         <div class="text-right lg:col-span-1 md:col-span-5 col-span-3">
-          <n-link to="">
+          <button @click="showLoginModal" class="focus:outline-none">
             <img class="inline h-5 mr-2" src="~/assets/icons/user.png" alt="Icon">
-          </n-link>
+          </button>
           <n-link to="">
             <img class="inline h-5" src="~/assets/icons/shopping.png" alt="Icon">
           </n-link>
@@ -58,10 +58,47 @@
         </n-link>
       </div>
     </div>
+
+    <!-- Login Modal -->
+    <login v-if="loginModal" v-on:closeLoginModal="closeLoginModal()" v-on:openRegistrationModal="openRegistrationModal()"></login>
+    
+    <!-- Registration Modal -->
+    <registration v-if="registrationModal" v-on:closeRegistrationModal="closeRegistrationModal()" v-on:openLoginModal="openLoginModal()"></registration>
+
   </div>
 </template>
 
 <script>
+import Login from '../auth/Login.vue';
+import Registration from '../auth/Registration.vue';
+
 export default {
+  components: {
+    Login,
+    Registration,
+  },
+  data:() => ({
+    loginModal: false,
+    registrationModal: false,
+  }),
+  methods: {
+    showLoginModal(){
+      this.loginModal = true;
+    },
+    closeLoginModal(){
+      this.loginModal = false;
+    },
+    openRegistrationModal(){
+      this.loginModal = false;
+      this.registrationModal = true;
+    },
+    closeRegistrationModal(){
+      this.registrationModal = false;
+    },
+    openLoginModal(){
+      this.loginModal = true;
+      this.registrationModal = false;
+    },
+  },
 }
 </script>
