@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <div class="lg:w-11/12 xl:w-10/12 w-full m-auto">
+    <div class="max-w-screen-xl xl:px-10 px-2 m-auto">
       <Nuxt />
     </div>
     <Footer />
@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import Header from '~/components/common/header.vue'
-import Footer from '~/components/common/footer.vue'
+import Header from '~/components/common/Header.vue'
+import Footer from '~/components/common/Footer.vue'
 
 export default {
   components: {

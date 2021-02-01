@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div class="lg:pt-20 p-3">
+    <div class="lg:pt-20 pt-10">
       <menus></menus>
       <tab></tab>
     </div>
   </div>
 </template>
 <script>
-import Menus from '../components/home/menus.vue'
-import Tab from '../components/home/tab.vue'
+import Menus from '~/components/home/Menus.vue'
+import Tab from '~/components/home/HomeTab.vue'
 
 export default {
   components: {

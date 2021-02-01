@@ -1,64 +1,104 @@
 <template>
   <div>
-    <div class="w-full lg:py-5 p-3">
-      <div class="lg:w-11/12 xl:w-10/12 w-full m-auto grid grid-cols-12 gap-2">
-        <div class="col-span-5 font-bold">
+    <div class="w-full lg:py-5">
+      <div class="lg:hidden text-center">
+        <n-link to="/" class="font-serif text-4xl">Swadesh</n-link>
+      </div>
+      <div class="max-w-screen-xl xl:px-10 px-2 m-auto grid grid-cols-12 gap-2">
+        <div class="lg:col-span-5 col-span-12 lg:text-left text-center font-bold">
           <n-link to="" class="">
-            <img class="inline h-5 mx-2" src="~/assets/icons/wallet.png" alt="Icon">S-Wallet
+            <img class="inline h-5 mr-1" src="~/assets/icons/wallet.png" alt="Icon">S-Wallet
           </n-link>
           <n-link to="" class="pl-3">
-            <img class="inline h-5 mx-2" src="~/assets/icons/earn.png" alt="Icon">Earn
+            <img class="inline h-5 mr-1" src="~/assets/icons/earn.png" alt="Icon">Earn
           </n-link>
           <n-link to="/my-shop" class="pl-3">
-            <img class="inline h-5 mx-2" src="~/assets/icons/shop.png" alt="Icon">My Shop
+            <img class="inline h-5 mr-1" src="~/assets/icons/shop.png" alt="Icon">My Shop
           </n-link>
         </div>
-        <div class="col-span-2 text-center">
+        <div class="col-span-2 lg:contents hidden text-center">
           <n-link to="/" class="font-serif text-4xl">Swadesh</n-link>
         </div>
-        <div class="">
-          <!-- Offset -->
-        </div>
-        <div class="col-span-3">
-          <div class="flex justify-end">
+        
+        <div class="lg:col-span-4 lg:col-start-8 md:col-span-5 md:col-start-2 col-span-9">
+          <div class="flex lg:justify-end">
             <div class="border border-gray-2 px-2 py-1 rounded-l-full">
               <button class="flex items-center focus:outline-none font-bold">All<img class="h-5" src="~/assets/icons/drop_down.png" alt="Icon">
               </button>
             </div>
-            <div style="margin-left: -1px;" class="flex items-center border border-gray-2 px-2 py-1 rounded-r-full">
+            <div style="margin-left: -1px;" class="flex items-center border border-gray-2 px-3 py-1 rounded-r-full overflow-hidden">
               <img class="h-4 mr-1" src="~/assets/icons/search.png" alt="Icon">
               <input class="focus:outline-none w-full font-bold" type="text" placeholder="Search anything">
             </div>
           </div>
         </div>
-        <div class="text-right">
-          <n-link to="">
+        <div class="text-right lg:col-span-1 md:col-span-5 col-span-3">
+          <button @click="showLoginModal" class="focus:outline-none">
             <img class="inline h-5 mr-2" src="~/assets/icons/user.png" alt="Icon">
-          </n-link>
+          </button>
           <n-link to="">
             <img class="inline h-5" src="~/assets/icons/shopping.png" alt="Icon">
           </n-link>
         </div>
       </div>
     </div>
-    <div class="lg:w-11/12 xl:w-10/12 w-full m-auto p-3 font-bold text-center">
-      <n-link to="/cities">
-        <img class="inline h-5 mx-2" src="~/assets/icons/market.png" alt="Icon"> Market
-      </n-link>
-      <n-link to="" class="pl-6">
-        <img class="inline h-5 mx-2" src="~/assets/icons/flash_sales.png" alt="Icon"> Flash Sales
-      </n-link>
-      <n-link to="" class="pl-6">
-        <img class="inline h-5 mx-2" src="~/assets/icons/festivals.png" alt="Icon"> Festivals
-      </n-link>
-      <n-link to="" class="pl-6">
-        <img class="inline h-5 mx-2" src="~/assets/icons/discount.png" alt="Icon"> Discount
-      </n-link>
+    <div class="max-w-screen-xl xl:px-10 px-2 m-auto sm:font-bold">
+      <div class="m-auto text-center">
+        <n-link to="/cities">
+          <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/market.png" alt="Icon"> Market
+        </n-link>
+        <n-link to="" class="sm:pl-6 pl-2">
+          <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/flash_sales.png" alt="Icon"> Flash Sales
+        </n-link>
+        <n-link to="" class="sm:pl-6 pl-2">
+          <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/festivals.png" alt="Icon"> Festivals
+        </n-link>
+        <n-link to="" class="sm:pl-6 pl-2">
+          <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/discount.png" alt="Icon"> Discount
+        </n-link>
+      </div>
     </div>
+
+    <!-- Login Modal -->
+    <login v-if="loginModal" v-on:closeLoginModal="closeLoginModal()" v-on:openRegistrationModal="openRegistrationModal()"></login>
+    
+    <!-- Registration Modal -->
+    <registration v-if="registrationModal" v-on:closeRegistrationModal="closeRegistrationModal()" v-on:openLoginModal="openLoginModal()"></registration>
+
   </div>
 </template>
 
 <script>
+import Login from '../auth/Login.vue';
+import Registration from '../auth/Registration.vue';
+
 export default {
+  components: {
+    Login,
+    Registration,
+  },
+  data:() => ({
+    loginModal: false,
+    registrationModal: false,
+  }),
+  methods: {
+    showLoginModal(){
+      this.loginModal = true;
+    },
+    closeLoginModal(){
+      this.loginModal = false;
+    },
+    openRegistrationModal(){
+      this.loginModal = false;
+      this.registrationModal = true;
+    },
+    closeRegistrationModal(){
+      this.registrationModal = false;
+    },
+    openLoginModal(){
+      this.loginModal = true;
+      this.registrationModal = false;
+    },
+  },
 }
 </script>

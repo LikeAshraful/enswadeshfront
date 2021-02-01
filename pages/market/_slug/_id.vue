@@ -1,32 +1,32 @@
 <template>
     <div>
         <!-- Breadcrumbs -->
-        <breadcrumb :breadCrumbs="breadCrumbs"/>
+        <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
 
-        <div class="px-3 lg:py-6 py-3 grid grid-cols-2 gap-3">
+        <div class="lg:py-6 py-3 grid md:grid-cols-2 gap-3">
             <!-- Market Details -->
-            <marketDetails/>
+            <market-details></market-details>
             <!-- Market Floors -->
             <div>
-                <floors :floors="floors"/>
+                <floors :floors="floors"></floors>
             </div>
         </div>
 
         <!-- Shops -->
-        <shops :shops="shops"/>
+        <shops :shops="shops"></shops>
 
         <!-- Paginate -->
-        <div class="px-3 pb-8">
-            <Paginate/>
+        <div class="pb-8">
+            <paginate></paginate>
         </div>
     </div>
 </template>
 <script>
-import Breadcrumb from '~/components/common/breadcrumb.vue';
-import Paginate from '~/components/common/paginate.vue';
-import Floors from '~/components/market/floors.vue';
-import MarketDetails from '~/components/market/details.vue';
-import Shops from '~/components/market/shops.vue';
+import Breadcrumb from '~/components/common/Breadcrumb.vue';
+import Paginate from '~/components/common/Paginate.vue';
+import Floors from '~/components/market/Floors.vue';
+import MarketDetails from '~/components/market/Details.vue';
+import Shops from '~/components/market/Shops.vue';
 
 export default {
     components: {

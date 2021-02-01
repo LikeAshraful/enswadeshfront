@@ -1,23 +1,21 @@
 <template>
   <div>
-    <div class="bg-green-4 w-full p-3 lg:py-20">
-      <div class="lg:w-11/12 xl:w-10/12 w-full m-auto grid lg:grid-cols-6 grid-cols-2 gap-3 text-white">
-        <div class="">
-          <p class="block">Menu Name</p>
+    <div class="bg-green-4 w-full lg:py-20 md:py-10 py-6">
+      <div class="max-w-screen-xl xl:px-10 px-2 m-auto grid lg:grid-cols-6 sm:grid-cols-2 gap-3 text-white">
+        <div class="py-3 lg:py-0">
+          <p class="block font-bold">Menu Name</p>
           <n-link :to="menu.url" class="block" v-for="(menu, i) in menus" :key="i">{{ menu.name }}</n-link>
         </div>
-        <div class="">
-          <p class="block">About Company</p>
+        <div class="py-3 lg:py-0">
+          <p class="block font-bold">About Company</p>
           <n-link :to="about.url" class="block" v-for="(about, i) in abouts" :key="i">{{ about.name }}</n-link>
         </div>
-        <div class="">
-          <p class="block">Contact us</p>
+        <div class="py-3 lg:py-0">
+          <p class="block font-bold">Contact us</p>
           <n-link :to="contact.url" class="block" v-for="(contact, i) in contacts" :key="i">{{ contact.name }}</n-link>
         </div>
-        <div class="">
-        </div>
-        <div class="col-span-2">
-          <p class="block">Stay in touch</p>
+        <div class="py-4 lg:py-0 lg:col-span-2 lg:col-start-5">
+          <p class="block font-bold">Stay in touch</p>
           <div class="flex border-b-2 border-white">
             <input class="bg-green-4 w-full focus:outline-none" type="email" placeholder="Email Address">
             <div class="border-2 border-orange-1 px-3 mb-2 rounded">
@@ -27,9 +25,9 @@
         </div>
       </div>
     </div>
-    <div class="bg-green-5 w-full p-3 lg:py-6">
-      <div class="lg:w-11/12 xl:w-10/12 w-full m-auto grid md:grid-cols-3 gap-3 items-center">
-        <div class="col-span-2 text-gray-2">
+    <div class="bg-green-5 w-full lg:py-6 md:py-4 py-2">
+      <div class="max-w-screen-xl xl:px-10 px-2 m-auto grid lg:grid-cols-3 lg:gap-3 items-center">
+        <div class="lg:col-span-2 text-gray-2">
           <span>&copy; 2021 swadesh</span>
           <span class="pl-3">All Rights Reserved</span>
           <span class="pl-3">Privacy Policy</span>

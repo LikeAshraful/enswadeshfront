@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-3">
+        <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-4 grid-cols-3 gap-3">
             <n-link v-for="(floor, i) in floors" :key="i" :to="floor.url">
                 <div :class="floor.active" class="border-2 border-gray-2 hover:bg-green-3 rounded-lg text-center p-2">
                     <p>{{ floor.shops }} Shops</p>
