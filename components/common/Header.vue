@@ -56,7 +56,7 @@
     </div>
 
     <!-- Card Modal -->
-    <card v-if="card"></card>
+    <card v-if="card" v-on:closeCard="closeCardModal()"></card>
 
     <!-- Login Modal -->
     <login v-if="loginModal" v-on:closeLoginModal="closeLoginModal()" v-on:openRegistrationModal="openRegistrationModal()"></login>
@@ -86,6 +86,9 @@ export default {
   methods: {
     showCardModal(){
       this.card = !this.card;
+    },
+    closeCardModal(){
+      this.card = false;
     },
     showLoginModal(){
       this.loginModal = true;

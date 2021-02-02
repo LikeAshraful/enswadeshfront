@@ -59,7 +59,7 @@
                     <tr class="border-t border-gray-3">
                         <td colspan="4">
                             <div class="mt-4">
-                                <n-link to="/card" class="border-2 border-green-3 rounded py-1 px-4 font-bold">View cart</n-link>
+                                <n-link to="/card"><button @click="closeCard" class="border-2 border-green-3 rounded py-1 px-4 font-bold focus:outline-none">View cart</button></n-link>
                                 <n-link to="" class="border-2 rounded bg-green-3 py-1 px-4 font-bold ml-3">Checkout</n-link>
                             </div>
                         </td>
@@ -73,6 +73,11 @@
 export default {
     data:() => ({
 
-    })
+    }),
+    methods: {
+        closeCard(){
+            this.$emit('closeCard');
+        }
+    },
 }
 </script>
