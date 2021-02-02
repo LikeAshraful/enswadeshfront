@@ -33,12 +33,8 @@
           </div>
         </div>
         <div class="text-right lg:col-span-1 md:col-span-5 col-span-3">
-          <button @click="showLoginModal" class="focus:outline-none">
-            <img class="inline h-5 mr-2" src="~/assets/icons/user.png" alt="Icon">
-          </button>
-          <n-link to="">
-            <img class="inline h-5" src="~/assets/icons/shopping.png" alt="Icon">
-          </n-link>
+          <button @click="showLoginModal" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button>
+          <button @click="showCardModal" :class="card ? 'text-orange-1':''" class="focus:outline-none text-xl ml-2"><i class="ri-shopping-bag-2-fill"></i></button>
         </div>
       </div>
     </div>
@@ -59,6 +55,9 @@
       </div>
     </div>
 
+    <!-- Card Modal -->
+    <card v-if="card"></card>
+
     <!-- Login Modal -->
     <login v-if="loginModal" v-on:closeLoginModal="closeLoginModal()" v-on:openRegistrationModal="openRegistrationModal()"></login>
     
@@ -70,18 +69,24 @@
 
 <script>
 import Login from '../auth/Login.vue';
+import Card from '../card/Short.vue';
 import Registration from '../auth/Registration.vue';
 
 export default {
   components: {
+    Card,
     Login,
     Registration,
   },
   data:() => ({
+    card: false,
     loginModal: false,
     registrationModal: false,
   }),
   methods: {
+    showCardModal(){
+      this.card = !this.card;
+    },
     showLoginModal(){
       this.loginModal = true;
     },
