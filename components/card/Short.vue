@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="fixed inset-0 z-50 flex flex-col items-end max-w-screen-xl xl:px-10 px-2 m-auto mt-24">
+        <div @click="closeCard" class="fixed inset-0 z-50 flex flex-col items-end max-w-screen-xl xl:px-10 px-2 m-auto mt-24">
             <div class="max-w-sm shadow-lg p-4 border border-gray-3 bg-white">
                 <p class="font-bold text-xl mb-6 text-center">Here's what's in your bag.</p>
                 <table v-if="!emplty">
@@ -71,6 +71,7 @@
                 </div>
             </div>
         </div>
+        <div @click="closeCard" class="fixed inset-0"></div>
     </div>
 </template>
 <script>
