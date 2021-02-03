@@ -40,7 +40,7 @@ export default {
 
     async fetch() {
       this.topMarkets = await fetch(
-        'http://localhost:8000/api/markets/top-market-by-city/' + this.$route.params.id
+        this.basePath + '/api/markets/top-market-by-city/' + this.$route.params.id
       ).then(res => res.json())
     }
 }

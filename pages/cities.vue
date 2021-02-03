@@ -31,18 +31,21 @@ export default {
     components: {
         Breadcrumb,
     },
-    data:() => ({
-        breadCrumbs: [
-            {title: 'Home', url: '/'},
-            {title: 'Go To Market', url: ''},
-        ],
+    data() {
+        return {
+          cities: [],
+          basePath: this.$axios.defaults.baseURL,
+          breadCrumbs: [
+              {title: 'Home', url: '/'},
+              {title: 'Go To Market', url: ''},
+          ],
+          backgroundImagePath,
+        };
+      },
 
-        backgroundImagePath,
-        cities: [],
-    }),
     async fetch() {
       this.cities = await fetch(
-        'http://localhost:8000/api/cities'
+        this.basePath + '/api/cities'
       ).then(res => res.json())
     }
 }

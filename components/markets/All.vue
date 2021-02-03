@@ -38,7 +38,7 @@ export default {
     methods: {
       async loadMarket() {
         await this.$axios.$get(
-          'http://localhost:8000/api/markets/all-market-by-city/' + this.$route.params.id
+          '/api/markets/all-market-by-city/' + this.$route.params.id
         ).then((res) => {
           this.markets = res.data;
         })
