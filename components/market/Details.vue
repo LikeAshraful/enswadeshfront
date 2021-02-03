@@ -10,7 +10,7 @@
                         <p class="text-gray-2">Registered Shop</p>
                     </div>
                     <div class="">
-                        <p>6</p>
+                        <p>{{market.total_floor}}</p>
                         <p class="text-gray-2">Total floor</p>
                     </div>
                 </div>
@@ -33,7 +33,6 @@ export default {
       this.basePath = this.$axios.defaults.baseURL;
     },
 
-
     methods: {
       async loadMarket() {
         await this.$axios.$get(
@@ -41,7 +40,9 @@ export default {
         ).then((res) => {
           this.market = res.data;
         })
-      }
+      },
+
+
     }
 }
 </script>
