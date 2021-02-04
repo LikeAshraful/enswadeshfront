@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div @click="closeCard" class="fixed inset-0 z-50 flex flex-col items-end max-w-screen-xl xl:px-10 px-2 m-auto mt-24">
+        <div class="fixed inset-0 z-50 flex flex-col items-end max-w-screen-xl xl:px-10 px-2 m-auto mt-24">
             <div class="max-w-sm shadow-lg p-4 border border-gray-3 bg-white">
                 <p class="font-bold text-xl mb-6 text-center">Here's what's in your bag.</p>
                 <table v-if="!emplty">
@@ -60,7 +60,8 @@
                         <td colspan="4">
                             <div class="mt-4">
                                 <n-link to="/card"><button @click="closeCard" class="border-2 border-green-3 rounded py-1 px-4 font-bold focus:outline-none">View cart</button></n-link>
-                                <n-link to="" class="border-2 rounded bg-green-3 py-1 px-4 font-bold ml-3">Checkout</n-link>
+
+                                <n-link to="/checkout"><button @click="closeCard" class="border-2 rounded bg-green-3 py-1 px-4 font-bold ml-3 focus:outline-none">Checkout</button></n-link>
                             </div>
                         </td>
                     </tr>
