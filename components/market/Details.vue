@@ -2,7 +2,7 @@
     <div>
         <div class="flex">
             <img class="h-40 w-2/5 rounded-l-lg" :src="imagepath + '/' + market.market_icon" alt="Image">
-            <div class="pl-3">
+            <div class="pl-3 w-full">
                 <p class="font-bold lg:text-2xl">{{market.market_name}}</p>
                 <div class="flex justify-around text-center font-bold mt-4">
                     <div class="">

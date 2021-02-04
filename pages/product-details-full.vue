@@ -101,13 +101,13 @@
         <div class="border-t text-gray-3 mb-4"></div>
 
         <!-- Tabs -->
-        <tab></tab>
+        <tab :showTab="showTab" :tabs="tabs"></tab>
 
     </div>
 </template>
 <script>
 import Breadcrumb from '~/components/common/Breadcrumb.vue';
-import Tab from '~/components/common/commonTab.vue';
+import Tab from '~/components/common/Tab.vue';
 
 export default {
     components: {
@@ -126,6 +126,14 @@ export default {
             {title: '...', url: '/'},
             {title: 'Shop name goes to here', url: '/shop'},
             {title: 'Product name goes to here', url: ''},
+        ],
+        
+        showTab: 'Information',
+        tabs:[
+            {name: 'Information',view: 'Information'},
+            {name: 'Features',view: 'Features'},
+            {name: 'Images',view: 'Images'},
+            {name: 'Reviews',view: 'Reviews'},
         ],
     })
 }

@@ -55,7 +55,9 @@
                             <td class="text-right mt-2">৳ 4,830</td>
                         </tr>
                     </table>
-                    <button class="py-1 w-full text-center font-bold bg-green-3 border rounded my-4 focus:outline-none">Checkout Securly</button>
+
+                    <n-link to="/checkout" class="py-1 block text-center font-bold bg-green-3 border rounded my-4">Checkout Securly</n-link>
+                    
                     <n-link to="/shop" class="text-center font-bold text-blue-1 block">Continue Shopping</n-link>
 
                     <div class="border-t border-gray-4 my-3"></div>

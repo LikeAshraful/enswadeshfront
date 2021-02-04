@@ -25,9 +25,9 @@
                             <div class="mb-3">
                                 <label class="font-bold" for="name">Password</label>
                                 <div class="relative mb-1">
-                                    <input class="focus:outline-none w-full border rounded border-gray-3 px-2 py-1 pr-6" id="name" :type="password ? 'text':'password' " placeholder="Enter your password">
-                                    <i v-if="showEye" @click="show" class="ri-eye-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
-                                    <i v-if="hideEye" @click="hide" class="ri-eye-off-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
+                                    <input class="focus:outline-none w-full border rounded border-gray-3 px-2 py-1 pr-6" id="name" :type="show ? 'text':'password' " placeholder="Enter your password">
+                                    <i v-if="!show" @click="showPassword" class="ri-eye-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
+                                    <i v-if="show" @click="showPassword" class="ri-eye-off-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
                                 </div>
                                 <n-link to="" class="text-blue-1">Forgot password?</n-link>
                             </div>
@@ -59,9 +59,7 @@
 <script>
 export default {
     data:() => ({
-        password: false,
-        showEye: true,
-        hideEye: false,
+        show: false,
     }),
     methods: {
         closeLoginModal(){
@@ -70,15 +68,8 @@ export default {
         openRegistrationModal(){
             this.$emit('openRegistrationModal');
         },
-        show(){
-            this.password = true,
-            this.showEye = false;
-            this.hideEye = true;
-        },
-        hide(){
-            this.password = false,
-            this.showEye = true;
-            this.hideEye = false;
+        showPassword(){
+            this.show = !this.show;
         },
     },
 }
