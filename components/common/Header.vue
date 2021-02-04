@@ -91,12 +91,13 @@ import Card from '../card/Short.vue';
 import Registration from '../auth/Registration.vue';
 
 export default {
-  data:() => ({
-    card: false,
-    active: '',
-    loginModal: false,
-    registrationModal: false,
-  }),
+  data() {
+    return {
+      card: false,
+      loginModal: false,
+      registrationModal: false,
+    }
+  },
 
   components: {
     Card,
