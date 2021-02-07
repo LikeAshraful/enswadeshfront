@@ -60,7 +60,8 @@
                         <td colspan="4">
                             <div class="mt-4">
                                 <n-link to="/card"><button @click="closeCard" class="border-2 border-green-3 rounded py-1 px-4 font-bold focus:outline-none">View cart</button></n-link>
-                                <n-link to="" class="border-2 rounded bg-green-3 py-1 px-4 font-bold ml-3">Checkout</n-link>
+
+                                <n-link to="/checkout"><button @click="closeCard" class="border-2 rounded bg-green-3 py-1 px-4 font-bold ml-3 focus:outline-none">Checkout</button></n-link>
                             </div>
                         </td>
                     </tr>
@@ -71,6 +72,7 @@
                 </div>
             </div>
         </div>
+        <div @click="closeCard" class="fixed inset-0"></div>
     </div>
 </template>
 <script>

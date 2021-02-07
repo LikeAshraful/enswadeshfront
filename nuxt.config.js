@@ -33,7 +33,7 @@ export default {
 
   axios: {
     // proxy: true
-    baseURL:"http://localhost:8000"
+    baseURL:process.env.BASE_URL
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

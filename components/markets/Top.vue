@@ -13,7 +13,9 @@
             </div>
         </div>
         <div class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
-            <div v-for="(market, i) in topMarkets.data" :key="i">
+          <loader v-if="isLoading"></loader>
+          <template v-else>
+            <div v-for="(market, i) in topMarkets" :key="i">
               <NuxtLink  :to="{name:'market-slug-id', params:{slug: market.market_slug, id: market.id }}">
                   <div class="border-2 md:border-r-8 border-r-4 md:border-b-8 border-b-4 border-green-4 rounded-xl">
                       <div class="rounded-t-xl relative pb-2/3">
@@ -24,6 +26,7 @@
                   </div>
                 </NuxtLink>
             </div>
+          </template>
         </div>
         <!-- End Top Markets -->
     </div>
@@ -35,13 +38,25 @@ export default {
       return {
         topMarkets: [],
         basePath: this.$axios.defaults.baseURL,
+        isLoading: true,
       }
     },
 
-    async fetch() {
-      this.topMarkets = await fetch(
-        this.basePath + '/api/markets/top-market-by-city/' + this.$route.params.id
-      ).then(res => res.json())
+    mounted() {
+      this.loadMarket();
+      this.basePath = this.$axios.defaults.baseURL;
+    },
+
+
+    methods: {
+      async loadMarket() {
+        await this.$axios.$get(
+          '/api/markets/top-market-by-city/' + this.$route.params.id
+        ).then((res) => {
+          this.topMarkets = res.data;
+          this.isLoading = false;
+        })
+      }
     }
 }
 </script>

@@ -9,7 +9,7 @@
             <div style="background-size: cover;" :style="{ backgroundImage: `url(${backgroundImagePath})` }" class="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
                 <loader v-if="isLoading"></loader>
                 <template v-else>
-                <div v-for="(city, i) in cities.data" :key="i">
+                <div v-for="(city, i) in cities" :key="i">
                     <NuxtLink :to="{name:'markets-city-id', params:{city: city.city_slug, id: city.id }}">
                         <div class="border-2 border-r-4 border-b-4 border-green-4 rounded-xl">
                             <div class="px-2 pt-2 bg-pink-1 rounded-t-xl">
@@ -46,15 +46,23 @@ export default {
               {title: 'Go To Market', url: ''},
           ],
           backgroundImagePath,
-
         };
       },
 
-    async fetch() {
-      this.cities = await fetch(
-        this.basePath + '/api/cities'
-      ).then(res => res.json())
-      this.isLoading = false
+    mounted() {
+      this.loadData();
+    },
+
+    methods: {
+      async loadData() {
+        await this.$axios.$get(
+          '/api/cities'
+        ).then((res) => {
+          this.cities = res.data;
+          console.log(this.cities);
+          this.isLoading = false;
+        })
+      }
     }
 }
 </script>

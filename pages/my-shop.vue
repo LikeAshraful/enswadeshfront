@@ -15,7 +15,7 @@
         <image-slider></image-slider>
 
         <!-- Tabs -->
-        <tab></tab>
+        <tab :showTab="showTab" :tabs="tabs"></tab>
         
     </div>
 </template>
@@ -25,7 +25,7 @@ import Breadcrumb from '~/components/common/Breadcrumb.vue';
 import ImageSlider from '~/components/my-shop/ImageSlider.vue';
 import AddPhoto from '~/components/my-shop/AddPhoto.vue';
 import MyShopDetails from '~/components/my-shop/MyShopDetails.vue';
-import Tab from '~/components/my-shop/Tab.vue';
+import Tab from '~/components/common/Tab.vue';
 
 export default {
     components: {
@@ -41,6 +41,13 @@ export default {
             {title: 'Home', url: '/'},
             {title: 'My Shop', url: '/my-shop'},
             {title: 'Shop name goes to here', url: ''},
+        ],
+        showTab: 'Products',
+        tabs:[
+            {name: 'Products',view: 'Products'},
+            {name: 'Orders',view: 'Orders'},
+            {name: 'Tutorials',view: 'Tutorials'},
+            {name: 'Calculator',view: 'Calculator'},
         ],
     }),
 }
