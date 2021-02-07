@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p class="rounded-t-lg p-2 bg-green-1 font-bold">{{ filterTitle }}</p>
+        <p class="rounded-t-lg title">{{ filterTitle }}</p>
         <div class="rounded-b-lg py-2">
           <div v-for="(filter, i) in filtersData" :key="i">
             <NuxtLink to="#" class="flex items-center p-2 hover:bg-green-1 duration-300">

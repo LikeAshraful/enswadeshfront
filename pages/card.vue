@@ -47,7 +47,7 @@
                             <td class="text-right mt-2">৳ 50</td>
                         </tr>
                         <tr>
-                            <td><input class="border border-gray-3 rounded py-1 px-2 w-full mt-2" type="text" placeholder="Enter Coupon Code"></td>
+                            <td><input class="input-field focus:outline-none mt-2" type="text" placeholder="Enter Coupon Code"></td>
                             <td class="text-right"><button class="bg-orange-1 rounded text-white py-1 px-3 mt-2">Apply</button></td>
                         </tr>
                         <tr>
