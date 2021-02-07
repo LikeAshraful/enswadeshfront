@@ -3,6 +3,8 @@
         <!-- All Markets -->
         <p class="text-2xl font-bold capitalize">All Markets in {{ this.$route.params.city }} </p>
         <div class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 sm:gap-3 gap-2 pt-6 pb-12">
+          <loader v-if="isLoading"></loader>
+          <template v-else>
             <div v-for="(market, i) of markets" :key="i">
                 <NuxtLink :to="{name:'market-slug-id', params:{slug: market.market_slug, id: market.id }}">
                 <div class="border-2 md:border-r-8 border-r-4 md:border-b-8 border-b-4 border-green-4 rounded-xl">
@@ -16,6 +18,7 @@
                 </div>
                 </NuxtLink>
             </div>
+          </template>
         </div>
         <!-- End All Markets -->
     </div>
@@ -26,6 +29,7 @@ export default {
       return {
         markets: [],
         basePath: null,
+        isLoading:true,
       }
     },
 
@@ -41,6 +45,7 @@ export default {
           '/api/markets/all-market-by-city/' + this.$route.params.id
         ).then((res) => {
           this.markets = res.data;
+          this.isLoading = false;
         })
       }
     }

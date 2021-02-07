@@ -39,16 +39,16 @@ export default {
     data() {
        return {
           basePath: this.$axios.defaults.baseURL,
+          floors: [],
+          shops: [],
 
           breadCrumbs: [
               {title: 'Home', url: '/'},
               {title: 'Go To Market', url: '/cities'},
               {title: 'Dhaka', url: '/markets'},
-              {title: 'Eastern Plaza Shopping Complex', url: '/market'},
+              {title: this.$route.params.slug, url: this.$route.path},
               {title: 'Grand Floor', url: ''},
           ],
-          floors: [],
-          shops: [],
        }
     },
     mounted() {
