@@ -59,9 +59,9 @@
                     <tr class="border-t border-gray-3">
                         <td colspan="4">
                             <div class="mt-4">
-                                <n-link to="/card"><button @click="closeCard" class="border-2 border-green-3 rounded py-1 px-4 font-bold focus:outline-none">View cart</button></n-link>
+                                <n-link to="/card"><button @click="closeCard" class="btn border-green-3 focus:outline-none">View cart</button></n-link>
 
-                                <n-link to="/checkout"><button @click="closeCard" class="border-2 rounded bg-green-3 py-1 px-4 font-bold ml-3 focus:outline-none">Checkout</button></n-link>
+                                <n-link to="/checkout"><button @click="closeCard" class="btn bg-green-3 ml-4 focus:outline-none">Checkout</button></n-link>
                             </div>
                         </td>
                     </tr>
