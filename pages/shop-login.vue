@@ -1,6 +1,9 @@
 <template>
     <div>
-        <p class="font-bold text-3xl my-4">Login your swades account to add your shop</p>
+        <!-- Breadcrumbs -->
+        <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
+
+        <p class="font-bold text-3xl mb-4">Login your swades account to add your shop</p>
         <div class="bg-green-1">
             <p class="py-2 font-bold max-w-sm m-auto">Account Information</p>
         </div>
@@ -22,15 +25,27 @@
             
             <div class="border-t text-gray-3 mb-6"></div>
             
-            <p>Don't have an account? <n-link to="/shop-create" class="ml-2 text-orange-1 font-bold">Create account</n-link></p>
+            <p class="text-center">Don't have an account? <n-link to="/shop-create" class="ml-2 text-orange-1 font-bold">Create account</n-link></p>
         </div>
     </div>
 </template>
 <script>
+import Breadcrumb from '~/components/common/Breadcrumb.vue';
 export default {
     data:() => ({
         show: false,
+        breadCrumbs: [
+            {title: 'Home', url: '/'},
+            {title: 'Go To Market', url: '/cities'},
+            {title: 'Dhaka', url: '/markets'},
+            {title: 'Eastern Plaza Shopping Complex', url: '/market'},
+            {title: 'Grand Floor', url: '/market'},
+            {title: 'Shop name goes to here', url: ''},
+        ],
     }),
+    components:{
+        Breadcrumb,
+    },
     methods: {
         showPassword(){
             this.show = !this.show;
