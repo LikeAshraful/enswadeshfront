@@ -107,7 +107,7 @@
                         <label for="geteway">Payment gateway</label>
                     </div>
                 </div>
-                <button class="p-2 bg-green-3 font-bold text-center w-full focus:outline-none border-2 rounded mt-4">Place Order</button>
+                <n-link to="/order-complete" class="p-2 bg-green-3 font-bold text-center block border rounded mt-4">Place Order</n-link>
             </div>
         </div>
         
@@ -131,8 +131,7 @@ export default {
 
             breadCrumbs: [
                 {title: 'Shopping bag', url: '/card'},
-                {title: 'Checkout', url: '/checkout'},
-                {title: 'Order complete', url: ''},
+                {title: 'Checkout', url: ''},
             ],
             products: [
                 {img: 'img-6.png', name: 'Ceiling circle black...', quan: '1', price: '1195'},
