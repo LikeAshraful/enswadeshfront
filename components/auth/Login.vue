@@ -17,38 +17,36 @@
                         </div>
                     </div>
                     <div class="sm:col-span-4 p-8">
-                        <form method="post">
-                            <div class="mb-2">
-                                <label class="font-bold" for="name">Email or mobile phone number</label>
-                                <input class="focus:outline-none w-full border rounded border-gray-3 px-2 py-1" id="name" type="text" placeholder="hello@example.com">
+                        <div class="mb-2">
+                            <label class="font-bold" for="name">Email or mobile phone number</label>
+                            <input class="focus:outline-none w-full border rounded border-gray-3 px-2 py-1" id="name" type="text" placeholder="hello@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="font-bold" for="name">Password</label>
+                            <div class="relative mb-1">
+                                <input class="focus:outline-none w-full border rounded border-gray-3 px-2 py-1 pr-6" id="name" :type="show ? 'text':'password' " placeholder="Enter your password">
+                                <i v-if="!show" @click="showPassword" class="ri-eye-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
+                                <i v-if="show" @click="showPassword" class="ri-eye-off-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
                             </div>
-                            <div class="mb-3">
-                                <label class="font-bold" for="name">Password</label>
-                                <div class="relative mb-1">
-                                    <input class="focus:outline-none w-full border rounded border-gray-3 px-2 py-1 pr-6" id="name" :type="show ? 'text':'password' " placeholder="Enter your password">
-                                    <i v-if="!show" @click="showPassword" class="ri-eye-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
-                                    <i v-if="show" @click="showPassword" class="ri-eye-off-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
-                                </div>
-                                <n-link to="" class="text-blue-1">Forgot password?</n-link>
-                            </div>
-                            <button class="focus:outline-none border border-gray-4 bg-gray-3 text-gray-2 rounded text-center font-bold w-full mb-6 py-1">Login your swades account</button>
+                            <n-link to="" class="text-blue-1">Forgot password?</n-link>
+                        </div>
+                        <button class="focus:outline-none border border-gray-4 bg-gray-3 text-gray-2 rounded text-center font-bold w-full mb-6 py-1">Login your swades account</button>
 
-                            <div class="border-t text-gray-3 mb-3"></div>
+                        <div class="border-t text-gray-3 mb-3"></div>
 
-                            <div class="flex items-center mb-3">
-                                <p>Quick access with</p>
-                                <n-link to="">
-                                    <i class="ri-facebook-circle-fill text-2xl ml-4"></i>
-                                </n-link>
-                                <n-link to="">
-                                    <i class="ri-google-fill text-2xl ml-4"></i>
-                                </n-link>
-                            </div>
+                        <div class="flex items-center mb-3">
+                            <p>Quick access with</p>
+                            <n-link to="">
+                                <i class="ri-facebook-circle-fill text-2xl ml-4"></i>
+                            </n-link>
+                            <n-link to="">
+                                <i class="ri-google-fill text-2xl ml-4"></i>
+                            </n-link>
+                        </div>
 
-                            <div class="border-t text-gray-3 mb-6"></div>
-                            
-                            <p>Don't have an account? <button @click="openRegistrationModal" class="focus:outline-none ml-2 text-orange-1 font-bold">Create account</button></p>
-                        </form>
+                        <div class="border-t text-gray-3 mb-6"></div>
+                        
+                        <p>Don't have an account? <button @click="openRegistrationModal" class="focus:outline-none ml-2 text-orange-1 font-bold">Create account</button></p>
                     </div>
                 </div>
             </div>
