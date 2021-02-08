@@ -33,7 +33,7 @@ export default {
 
   axios: {
     // proxy: true
-    baseURL:"https://itchy-dog-11.loca.lt/"
+    baseURL:process.env.BASE_URL
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
