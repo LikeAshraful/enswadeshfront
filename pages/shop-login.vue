@@ -8,20 +8,21 @@
             <p class="py-2 font-bold max-w-sm m-auto">Account Information</p>
         </div>
         <div class="py-6 max-w-sm m-auto">
-            <div class="mb-2">
-                <label class="font-bold" for="name">Mobile phone number</label>
-                <input class="focus:outline-none input-field" id="name" type="text" placeholder="01XXXXXXXXX">
-            </div>
-            <div class="mb-3">
-                <label class="font-bold" for="name">Password</label>
-                <div class="relative mb-1">
-                    <input class="focus:outline-none input-field pr-6" id="name" :type="show ? 'text':'password' " placeholder="Enter your password">
-                    <i v-if="!show" @click="showPassword" class="ri-eye-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
-                    <i v-if="show" @click="showPassword" class="ri-eye-off-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
+            <form>
+                <div class="mb-2">
+                    Call input field
                 </div>
-                <n-link to="" class="text-blue-1">Forgot password?</n-link>
-            </div>
-            <button class="focus:outline-none btn-full">Login your swades account</button>
+                <div class="mb-3">
+                    <label class="font-bold" for="name">Password</label>
+                    <div class="relative mb-1">
+                        <input class="focus:outline-none input-field pr-6" id="name" :type="show ? 'text':'password' " placeholder="Enter your password">
+                        <i v-if="!show" @click="showPassword" class="ri-eye-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
+                        <i v-if="show" @click="showPassword" class="ri-eye-off-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
+                    </div>
+                    <n-link to="" class="text-blue-1">Forgot password?</n-link>
+                </div>
+                <button class="focus:outline-none btn-full">Login your swades account</button>
+            </form>
             
             <div class="border-t text-gray-3 mb-6"></div>
             
@@ -31,18 +32,28 @@
 </template>
 <script>
 import Breadcrumb from '~/components/common/Breadcrumb.vue';
+import { required } from 'vuelidate/lib/validators';
+
 export default {
-    data:() => ({
-        show: false,
-        breadCrumbs: [
-            {title: 'Home', url: '/'},
-            {title: 'Go To Market', url: '/cities'},
-            {title: 'Dhaka', url: '/markets'},
-            {title: 'Eastern Plaza Shopping Complex', url: '/market'},
-            {title: 'Grand Floor', url: '/market'},
-            {title: 'Shop name goes to here', url: ''},
-        ],
-    }),
+    data() {
+        return {
+            name: '',
+            show: false,
+            breadCrumbs: [
+                {title: 'Home', url: '/'},
+                {title: 'Go To Market', url: '/cities'},
+                {title: 'Dhaka', url: '/markets'},
+                {title: 'Eastern Plaza Shopping Complex', url: '/market'},
+                {title: 'Grand Floor', url: '/market'},
+                {title: 'Shop name goes to here', url: ''},
+            ],
+        }
+    },
+    validations: {
+        name:{
+            required,
+        }
+    },
     components:{
         Breadcrumb,
     },
