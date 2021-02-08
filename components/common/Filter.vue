@@ -11,7 +11,7 @@
           <div :v-if="filtersArea" v-for="(filter, i) in filtersArea" :key="i">
             <NuxtLink to="#" class="flex items-center p-2 hover:bg-green-1 duration-300">
                 <i class="ri-arrow-right-s-fill"></i>
-                <p class="font-bold">{{ filter.area_name }}</p>
+                <p class="font-bold">{{ filter.name }}</p>
             </NuxtLink>
           </div>
         </div>

@@ -10,13 +10,13 @@
                 <loader v-if="isLoading"></loader>
                 <template v-else>
                 <div v-for="(city, i) in cities" :key="i">
-                    <NuxtLink :to="{name:'markets-city-id', params:{city: city.city_slug, id: city.id }}">
+                    <NuxtLink :to="{name:'markets-city-id', params:{city: city.slug, id: city.id }}">
                         <div class="border-2 border-r-4 border-b-4 border-green-4 rounded-xl">
                             <div class="px-2 pt-2 bg-pink-1 rounded-t-xl">
                                 <img class="h-24 m-auto" src="~/assets/img/building.png" alt="Image">
                             </div>
                             <div class="flex flex-wrap items-center justify-center">
-                                <p class="font-bold py-3 text-xl">{{ city.city_name }}</p>
+                                <p class="font-bold py-3 text-xl">{{ city.name }}</p>
                             </div>
                         </div>
                     </NuxtLink>
