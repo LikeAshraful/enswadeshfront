@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="fixed inset-0 z-50 flex flex-col  justify-center items-center">
+        <div class="fixed inset-0 z-50 flex flex-col justify-center items-center">
             <div class="w-full max-w-screen-sm text-right">
                 <button @click="closeRegistrationModal" class="text-gray-1 text-2xl focus:outline-none"><i class="ri-close-line"></i></button>
             </div>

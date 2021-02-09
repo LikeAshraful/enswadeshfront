@@ -50,8 +50,8 @@
           </div>
         </div>
         <div class="text-right lg:col-span-1 md:col-span-5 col-span-3">
-          <button v-tooltip="'Profile'" @click="showLoginModal" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button>
-          <button v-tooltip="'Card'" @click="showCardModal" :class="card || currentRouteName == 'card' || currentRouteName == 'checkout' ? 'text-orange-1':''" class="focus:outline-none text-xl ml-2"><i class="ri-shopping-bag-2-fill"></i></button>
+          <button v-tooltip="'Account'" @click="showLoginModal" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button>
+          <button v-tooltip="'Cart'" @click="showCartModal" :class="cart || currentRouteName == 'cart' || currentRouteName == 'checkout' ? 'text-orange-1':''" class="focus:outline-none text-xl ml-2"><i class="ri-shopping-bag-2-fill"></i></button>
         </div>
       </div>
     </div>
@@ -73,8 +73,8 @@
       </div>
     </div>
 
-    <!-- Card Modal -->
-    <card v-if="card" v-on:closeCard="closeCardModal()"></card>
+    <!-- Cart Modal -->
+    <cart v-if="cart" v-on:closeCart="closeCartModal()"></cart>
 
     <!-- Login Modal -->
     <login v-if="loginModal" v-on:closeLoginModal="closeLoginModal()" v-on:openRegistrationModal="openRegistrationModal()"></login>
@@ -87,20 +87,20 @@
 
 <script>
 import Login from '../auth/Login.vue';
-import Card from '../card/Short.vue';
+import Cart from '../cart/Short.vue';
 import Registration from '../auth/Registration.vue';
 
 export default {
   data() {
     return {
-      card: false,
+      cart: false,
       loginModal: false,
       registrationModal: false,
     }
   },
 
   components: {
-    Card,
+    Cart,
     Login,
     Registration,
   },
@@ -112,11 +112,11 @@ export default {
   },
 
   methods: {
-    showCardModal(){
-      this.card = !this.card;
+    showCartModal(){
+      this.cart = !this.cart;
     },
-    closeCardModal(){
-      this.card = false;
+    closeCartModal(){
+      this.cart = false;
     },
     showLoginModal(){
       this.loginModal = true;

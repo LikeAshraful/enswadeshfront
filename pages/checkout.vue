@@ -53,8 +53,8 @@
 import Breadcrumb from '~/components/common/Breadcrumb.vue';
 import Login from '~/components/auth/Login.vue';
 import Registration from '~/components/auth/Registration.vue';
-import OrderSummary from '../components/card/Order-summary.vue';
-import ShippingBillingAddressInput from '../components/card/Shipping-billing-address-input.vue';
+import OrderSummary from '../components/cart/Order-summary.vue';
+import ShippingBillingAddressInput from '../components/cart/Shipping-billing-address-input.vue';
 export default {
     data() {
         return {
@@ -62,7 +62,7 @@ export default {
             registrationModal: false,
 
             breadCrumbs: [
-                {title: 'Shopping bag', url: '/card'},
+                {title: 'Shopping bag', url: '/cart'},
                 {title: 'Checkout', url: ''},
             ],
             products: [

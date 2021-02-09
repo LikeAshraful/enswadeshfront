@@ -59,9 +59,9 @@
                     <tr class="border-t border-gray-3">
                         <td colspan="4">
                             <div class="mt-4">
-                                <n-link to="/card"><button @click="closeCard" class="btn border-green-3 focus:outline-none">View cart</button></n-link>
+                                <n-link to="/cart"><button @click="closeCart" class="btn border-green-3 focus:outline-none">View cart</button></n-link>
 
-                                <n-link to="/checkout"><button @click="closeCard" class="btn bg-green-3 ml-4 focus:outline-none">Checkout</button></n-link>
+                                <n-link to="/checkout"><button @click="closeCart" class="btn bg-green-3 ml-4 focus:outline-none">Checkout</button></n-link>
                             </div>
                         </td>
                     </tr>
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-        <div @click="closeCard" class="fixed inset-0"></div>
+        <div @click="closeCart" class="fixed inset-0"></div>
     </div>
 </template>
 <script>
@@ -81,8 +81,8 @@ export default {
         emplty: false,
     }),
     methods: {
-        closeCard(){
-            this.$emit('closeCard');
+        closeCart(){
+            this.$emit('closeCart');
         }
     },
 }
