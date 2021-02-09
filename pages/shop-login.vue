@@ -12,7 +12,7 @@
                 <div class="mb-2">
                     <label class="font-bold" for="phone" :class="!$v.phone.$error ? '':'error'">Mobile phone number</label>
                     <input type="text" class="focus:outline-none input-field" id="phone" placeholder="01XXXXXXXXX" v-model.trim="$v.phone.$model" :class="{'is-invalid':$v.phone.$error}">
-                    <div class="text-orange-1 font-medium">
+                    <div class="error-message">
                         <small v-if="!$v.phone.required" :class="!$v.phone.$error ? 'hidden':''">Field is required.</small>
                         <small v-if="!$v.phone.minLength">Phone must have at least {{ $v.phone.$params.minLength.min }} digit.</small>
                     </div>
@@ -24,7 +24,7 @@
                         <i v-if="!show" @click="showPassword" class="ri-eye-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
                         <i v-if="show" @click="showPassword" class="ri-eye-off-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
                     </div>
-                    <div class="text-orange-1 font-medium">
+                    <div class="error-message">
                         <small v-if="!$v.password.required" :class="!$v.password.$error ? 'hidden':''">Password is required.</small>
                         <small v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} letters.</small>
                     </div>
@@ -66,7 +66,7 @@ export default {
         },
         password:{
             required,
-            minLength: minLength(8),
+            minLength: minLength(6),
         }
     },
     components:{
