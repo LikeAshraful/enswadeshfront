@@ -46,13 +46,13 @@
 </template>
 <script>
 import Breadcrumb from '~/components/common/Breadcrumb.vue';
-import OrderSummary from '../components/card/Order-summary.vue';
-import ShippingBilling from '../components/card/Shipping-billing.vue';
+import OrderSummary from '../components/cart/Order-summary.vue';
+import ShippingBilling from '../components/cart/Shipping-billing.vue';
 export default {
     data() {
         return {
             breadCrumbs: [
-                {title: 'Shopping bag', url: '/card'},
+                {title: 'Shopping bag', url: '/cart'},
                 {title: 'Checkout', url: '/checkout'},
                 {title: 'Order complete', url: ''},
             ],

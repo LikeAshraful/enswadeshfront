@@ -1,0 +1,37 @@
+/* npm run build-css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.title {
+    @apply p-2 bg-green-1 font-bold
+}
+.btn-full {
+    @apply border border-gray-4 bg-gray-3 text-gray-2 rounded text-center font-bold w-full py-1
+}
+.btn {
+    @apply border rounded text-center font-bold px-4 py-1
+}
+.input-label {
+    @apply font-bold
+}
+.input-field {
+    @apply w-full border rounded border-gray-3 px-2 py-1
+}
+.divider {
+    @apply border-t text-gray-3
+}
+
+.is-invalid {
+    @apply border border-red-500
+}
+.error {
+    @apply text-orange-1
+}
+.error-message {
+    @apply text-orange-1 font-medium
+}
+.require {
+    @apply text-orange-1
+}
