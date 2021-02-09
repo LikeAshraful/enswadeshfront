@@ -50,8 +50,8 @@
           </div>
         </div>
         <div class="text-right lg:col-span-1 md:col-span-5 col-span-3">
-          <button @click="showLoginModal" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button>
-          <button @click="showCardModal" :class="card || currentRouteName == 'card' || currentRouteName == 'checkout' ? 'text-orange-1':''" class="focus:outline-none text-xl ml-2"><i class="ri-shopping-bag-2-fill"></i></button>
+          <button v-tooltip="'Profile'" @click="showLoginModal" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button>
+          <button v-tooltip="'Card'" @click="showCardModal" :class="card || currentRouteName == 'card' || currentRouteName == 'checkout' ? 'text-orange-1':''" class="focus:outline-none text-xl ml-2"><i class="ri-shopping-bag-2-fill"></i></button>
         </div>
       </div>
     </div>
