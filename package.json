@@ -17,6 +17,7 @@
     "core-js": "^3.6.5",
     "lodash": "^4.17.20",
     "nuxt": "^2.14.12",
+    "v-tooltip": "^2.1.2",
     "vuelidate": "^0.7.6"
   },
   "devDependencies": {
