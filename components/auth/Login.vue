@@ -19,17 +19,16 @@
                     <div class="sm:col-span-4 p-8">
                         <form @submit.prevent="submitForm">
                             <div class="mb-2">
-                                <label class="font-bold" for="phone" :class="!$v.phone.$error ? '':'error'">Email or mobile phone number</label>
+                                <label class="font-bold" for="phone">Email or Mobile phone number</label>
                                 <input class="focus:outline-none input-field" id="phone" type="text" placeholder="hello@example.com"  v-model.trim="$v.phone.$model" :class="{'is-invalid':$v.phone.$error}">
                                 <div class="error-message">
                                     <small v-if="!$v.phone.required" :class="!$v.phone.$error ? 'hidden':''">Field is required.</small>
-                                    <small v-if="!$v.phone.minLength">Phone must have at least {{ $v.phone.$params.minLength.min }} digit.</small>
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="font-bold" for="name" :class="!$v.password.$error ? '':'error'">Password</label>
+                                <label class="font-bold" for="name">Password</label>
                                 <div class="relative">
-                                    <input class="focus:outline-none input-field pr-6" id="name" :type="show ? 'text':'password' " placeholder="At least 6 characters" v-model.trim="$v.password.$model" :class="{'is-invalid':$v.password.$error}">
+                                    <input class="focus:outline-none input-field pr-6" id="name" :type="show ? 'text':'password' " placeholder="At least 8 characters" v-model.trim="$v.password.$model" :class="{'is-invalid':$v.password.$error}">
                                     <i v-if="!show" @click="showPassword" class="ri-eye-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
                                     <i v-if="show" @click="showPassword" class="ri-eye-off-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
                                 </div>
@@ -38,7 +37,8 @@
                                     <small v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} letters.</small>
                                 </div>
                             </div>
-                            <button class="focus:outline-none border border-gray-4 bg-gray-3 text-gray-2 rounded text-center font-bold w-full mb-6 py-1">Login your swades account</button>
+                            <button type="submit" v-if="!btnAction" class="focus:outline-none w-full mb-6" :class="this.$v.$invalid ? 'btn-disabled':'btn-active'">Login your swades account</button>
+                            <p v-if="btnAction" class="focus:outline-none w-full mb-2 btn-disabled cursor-wait">Please wait...</p>
                         </form>
                         <div class="border-t text-gray-3 mb-3"></div>
 
@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="border-t text-gray-3 mb-6"></div>
-                        
+
                         <p>Don't have an account? <button @click="openRegistrationModal" class="focus:outline-none ml-2 text-orange-1 font-bold">Create account</button></p>
                     </div>
                 </div>
@@ -69,17 +69,17 @@ export default {
         return {
             phone: '',
             password: '',
+            btnAction: false,
             show: false,
         }
     },
     validations: {
         phone:{
             required,
-            minLength: minLength(11),
         },
         password:{
             required,
-            minLength: minLength(6),
+            minLength: minLength(8),
         },
     },
     methods: {
@@ -95,9 +95,22 @@ export default {
         submitForm(){
             this.$v.$touch();
             if(!this.$v.$invalid){
-                console.log("success"); 
-            }else{  
-                console.log("error");
+                let email = this.phone;
+                let password = this.password;
+                let self = this;
+                this.$axios.post("api/login", { email, password })
+                .then(response => {
+                    this.$toast.success('Success !');
+                    this.closeLoginModal();
+                })
+                .catch(error => {
+                    this.btnAction = false;
+                    this.$toast.error('Something wrong..!');
+                });
+                this.btnAction = true;
+                this.$toast.info('Thanks for your submission!');
+            }else{
+                this.$toast.error('Please fill the form correctly!')
             }
         },
     },

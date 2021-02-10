@@ -31,7 +31,8 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
+    '@nuxtjs/toast'
   ],
 
   auth: {
@@ -58,6 +59,14 @@ export default {
   axios: {
     // proxy: true
     baseURL:process.env.BASE_URL
+  },
+
+  // Register custom toasts
+  toast: {
+    position: 'top-center',
+    theme: "toasted-primary",
+    position: "top-right",
+    duration : 3000
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
