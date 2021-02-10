@@ -33,7 +33,8 @@ export default {
 
   axios: {
     // proxy: true
-    baseURL:process.env.BASE_URL
+    baseURL:process.env.BASE_URL,
+    imageURL:process.env.BASE_URL + '/storage/',
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)

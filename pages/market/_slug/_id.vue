@@ -54,7 +54,6 @@ export default {
     mounted() {
       this.loadData();
     },
-
     methods: {
         async loadData () {
           await this.$axios.get(
