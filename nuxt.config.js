@@ -20,6 +20,8 @@ export default {
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
 
+  loading: '~/components/LoadingBar.vue',
+
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
@@ -29,7 +31,29 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
+
+  auth: {
+  strategies: {
+    local: {
+      token: {
+        property: 'token',
+        // required: true,
+        // type: 'Bearer'
+      },
+      user: {
+        property: 'user',
+        // autoFetch: true
+      },
+      endpoints: {
+        login: { url: '/api/login', method: 'post' },
+        logout: { url: '/api/logout', method: 'post' },
+        user: { url: '/api/user', method: 'get' }
+      }
+    }
+  }
+},
 
   axios: {
     // proxy: true
