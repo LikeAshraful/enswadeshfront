@@ -1,6 +1,6 @@
 <template>
     <div>
-        This is Short Card
+        This is Images Component
     </div>
 </template>
 <script>

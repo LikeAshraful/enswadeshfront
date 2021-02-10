@@ -1,10 +1,10 @@
 <template>
     <div>
-        <p>rrrrrrrrrrrrrrrrrrrrrrrr</p>
+        This is Features Component
     </div>
 </template>
 <script>
 export default {
-    name: "Information"
+    
 }
 </script>

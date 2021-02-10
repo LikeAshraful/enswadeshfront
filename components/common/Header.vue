@@ -6,18 +6,35 @@
       </div>
       <div class="max-w-screen-xl xl:px-10 px-2 m-auto grid grid-cols-12 gap-2">
         <div class="lg:col-span-5 col-span-12 lg:text-left text-center font-bold">
-          <n-link to="" class="">
-            <img class="inline h-5 mr-1" src="~/assets/icons/wallet.png" alt="Icon">S-Wallet
-          </n-link>
-          <n-link to="" class="pl-3">
-            <img class="inline h-5 mr-1" src="~/assets/icons/earn.png" alt="Icon">Earn
-          </n-link>
-          <n-link to="/my-shop" class="pl-3">
-            <img class="inline h-5 mr-1" src="~/assets/icons/shop.png" alt="Icon">My Shop
-          </n-link>
+          <div class="flex items-center">
+
+            <n-link to="">
+              <div class="flex items-center">
+                <i class="ri-wallet-3-fill text-lg mr-1"></i> 
+                <span>S-Wallet</span>
+              </div>
+            </n-link>
+            <n-link to="" class="pl-4">
+              <div class="flex items-center">
+                <i class="ri-hand-coin-line text-lg mr-1"></i> 
+                <span>Earn</span>
+              </div>
+            </n-link>
+            <n-link to="/my-shop" class="pl-4">
+              <div class="flex items-center" :class="currentRouteName == 'my-shop' ? 'text-orange-1':''">
+                <i class="ri-store-fill text-lg mr-1"></i> 
+                <span>My Shop</span>
+              </div>
+            </n-link>
+
+          </div>
         </div>
         <div class="col-span-2 lg:contents hidden text-center">
-          <n-link to="/" class="font-serif text-4xl">Swadesh</n-link>
+          <n-link to="/" class="font-serif text-4xl">
+            <div :class="currentRouteName == 'index' ? 'text-orange-1':''">
+              Swadesh
+            </div>
+          </n-link>
         </div>
         
         <div class="lg:col-span-4 lg:col-start-8 md:col-span-5 md:col-start-2 col-span-9">
@@ -33,22 +50,19 @@
           </div>
         </div>
         <div class="text-right lg:col-span-1 md:col-span-5 col-span-3">
-          <button @click="showLoginModal" class="focus:outline-none">
-            <img class="inline h-5 mr-2" src="~/assets/icons/user.png" alt="Icon">
-          </button>
-          <n-link to="">
-            <img class="inline h-5" src="~/assets/icons/shopping.png" alt="Icon">
-          </n-link>
+          <button v-tooltip="'Account'" @click="showLoginModal" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button>
+          <button v-tooltip="'Cart'" @click="showCartModal" :class="cart || currentRouteName == 'cart' || currentRouteName == 'checkout' ? 'text-orange-1':''" class="focus:outline-none text-xl ml-2"><i class="ri-shopping-bag-2-fill"></i></button>
         </div>
       </div>
     </div>
     <div class="max-w-screen-xl xl:px-10 px-2 m-auto sm:font-bold">
       <div class="m-auto text-center">
-        <n-link to="/cities">
-          <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/market.png" alt="Icon"> Market
+        <n-link to="/cities" :class="currentRouteName == 'cities' ? 'text-orange-1':''">
+          <i class="ri-building-4-fill"></i>
+          <span>Market</span>
         </n-link>
         <n-link to="" class="sm:pl-6 pl-2">
-          <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/flash_sales.png" alt="Icon"> Flash Sales
+          <i class="ri-flashlight-fill"></i> Flash Sales
         </n-link>
         <n-link to="" class="sm:pl-6 pl-2">
           <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/festivals.png" alt="Icon"> Festivals
@@ -58,6 +72,9 @@
         </n-link>
       </div>
     </div>
+
+    <!-- Cart Modal -->
+    <cart v-if="cart" v-on:closeCart="closeCartModal()"></cart>
 
     <!-- Login Modal -->
     <login v-if="loginModal" v-on:closeLoginModal="closeLoginModal()" v-on:openRegistrationModal="openRegistrationModal()"></login>
@@ -70,18 +87,37 @@
 
 <script>
 import Login from '../auth/Login.vue';
+import Cart from '../cart/Short.vue';
 import Registration from '../auth/Registration.vue';
 
 export default {
+  data() {
+    return {
+      cart: false,
+      loginModal: false,
+      registrationModal: false,
+    }
+  },
+
   components: {
+    Cart,
     Login,
     Registration,
   },
-  data:() => ({
-    loginModal: false,
-    registrationModal: false,
-  }),
+
+  computed: {
+    currentRouteName() {
+      return this.$route.name;
+    }
+  },
+
   methods: {
+    showCartModal(){
+      this.cart = !this.cart;
+    },
+    closeCartModal(){
+      this.cart = false;
+    },
     showLoginModal(){
       this.loginModal = true;
     },

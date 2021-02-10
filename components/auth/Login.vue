@@ -17,38 +17,44 @@
                         </div>
                     </div>
                     <div class="sm:col-span-4 p-8">
-                        <form method="post">
+                        <form @submit.prevent="submitForm">
                             <div class="mb-2">
-                                <label class="font-bold" for="name">Email or mobile phone number</label>
-                                <input class="focus:outline-none w-full border rounded border-gray-3 px-2 py-1" id="name" type="text" placeholder="hello@example.com">
+                                <label class="font-bold" for="phone" :class="!$v.phone.$error ? '':'error'">Email or mobile phone number</label>
+                                <input class="focus:outline-none input-field" id="phone" type="text" placeholder="hello@example.com"  v-model.trim="$v.phone.$model" :class="{'is-invalid':$v.phone.$error}">
+                                <div class="error-message">
+                                    <small v-if="!$v.phone.required" :class="!$v.phone.$error ? 'hidden':''">Field is required.</small>
+                                    <small v-if="!$v.phone.minLength">Phone must have at least {{ $v.phone.$params.minLength.min }} digit.</small>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <label class="font-bold" for="name">Password</label>
-                                <div class="relative mb-1">
-                                    <input class="focus:outline-none w-full border rounded border-gray-3 px-2 py-1 pr-6" id="name" :type="password ? 'text':'password' " placeholder="Enter your password">
-                                    <i v-if="showEye" @click="show" class="ri-eye-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
-                                    <i v-if="hideEye" @click="hide" class="ri-eye-off-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
+                                <label class="font-bold" for="name" :class="!$v.password.$error ? '':'error'">Password</label>
+                                <div class="relative">
+                                    <input class="focus:outline-none input-field pr-6" id="name" :type="show ? 'text':'password' " placeholder="At least 6 characters" v-model.trim="$v.password.$model" :class="{'is-invalid':$v.password.$error}">
+                                    <i v-if="!show" @click="showPassword" class="ri-eye-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
+                                    <i v-if="show" @click="showPassword" class="ri-eye-off-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
                                 </div>
-                                <n-link to="" class="text-blue-1">Forgot password?</n-link>
+                                <div class="error-message">
+                                    <small v-if="!$v.password.required" :class="!$v.password.$error ? 'hidden':''">Password is required.</small>
+                                    <small v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} letters.</small>
+                                </div>
                             </div>
                             <button class="focus:outline-none border border-gray-4 bg-gray-3 text-gray-2 rounded text-center font-bold w-full mb-6 py-1">Login your swades account</button>
-
-                            <div class="border-t text-gray-3 mb-3"></div>
-
-                            <div class="flex items-center mb-3">
-                                <p>Quick access with</p>
-                                <n-link to="">
-                                    <i class="ri-facebook-circle-fill text-2xl ml-4"></i>
-                                </n-link>
-                                <n-link to="">
-                                    <i class="ri-google-fill text-2xl ml-4"></i>
-                                </n-link>
-                            </div>
-
-                            <div class="border-t text-gray-3 mb-6"></div>
-                            
-                            <p>Don't have an account? <button @click="openRegistrationModal" class="focus:outline-none ml-2 text-orange-1 font-bold">Create account</button></p>
                         </form>
+                        <div class="border-t text-gray-3 mb-3"></div>
+
+                        <div class="flex items-center mb-3">
+                            <p>Quick access with</p>
+                            <n-link to="">
+                                <i class="ri-facebook-circle-fill text-2xl ml-4"></i>
+                            </n-link>
+                            <n-link to="">
+                                <i class="ri-google-fill text-2xl ml-4"></i>
+                            </n-link>
+                        </div>
+
+                        <div class="border-t text-gray-3 mb-6"></div>
+                        
+                        <p>Don't have an account? <button @click="openRegistrationModal" class="focus:outline-none ml-2 text-orange-1 font-bold">Create account</button></p>
                     </div>
                 </div>
             </div>
@@ -57,12 +63,25 @@
     </div>
 </template>
 <script>
+import { required, minLength  } from 'vuelidate/lib/validators';
 export default {
-    data:() => ({
-        password: false,
-        showEye: true,
-        hideEye: false,
-    }),
+    data() {
+        return {
+            phone: '',
+            password: '',
+            show: false,
+        }
+    },
+    validations: {
+        phone:{
+            required,
+            minLength: minLength(11),
+        },
+        password:{
+            required,
+            minLength: minLength(6),
+        },
+    },
     methods: {
         closeLoginModal(){
             this.$emit('closeLoginModal');
@@ -70,15 +89,16 @@ export default {
         openRegistrationModal(){
             this.$emit('openRegistrationModal');
         },
-        show(){
-            this.password = true,
-            this.showEye = false;
-            this.hideEye = true;
+        showPassword(){
+            this.show = !this.show;
         },
-        hide(){
-            this.password = false,
-            this.showEye = true;
-            this.hideEye = false;
+        submitForm(){
+            this.$v.$touch();
+            if(!this.$v.$invalid){
+                console.log("success"); 
+            }else{  
+                console.log("error");
+            }
         },
     },
 }

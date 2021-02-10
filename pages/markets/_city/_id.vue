@@ -7,7 +7,7 @@
             <div class="grid lg:grid-cols-4 sm:grid-cols-3 gap-4 my-5">
                 <!-- Filter -->
                 <div>
-                    <data-filter :filtersData="filtersData" :filterTitle="filterTitle"></data-filter>
+                    <data-filter :filtersArea="filtersData.data" :filterTitle="filterTitle"></data-filter>
                 </div>
 
                 <div class="lg:col-span-3 sm:col-span-2">
@@ -38,23 +38,18 @@ export default {
             breadCrumbs: [
                 {title: 'Home', url: '/'},
                 {title: 'Go To Market', url: '/cities'},
-                {title: 'Dhaka', url: ''},
+                {title: this.$route.params.city.toUpperCase(), url: ''},
             ],
 
             filterTitle: 'Filter by Location',
-            filtersData: [
-                {url: '', name: 'Badda'},
-                {url: '', name: 'Bashundhara'},
-                {url: '', name: 'Adabor'},
-                {url: '', name: 'Uttara'},
-                {url: '', name: 'Dhanmondi'},
-                {url: '', name: 'Mohammadpur'},
-                {url: '', name: 'Malibag'},
-                {url: '', name: 'Gulistan'},
-                {url: '', name: 'Banani'},
-                {url: '', name: 'Demra'},
-            ],
+            filtersData: [],
         }
     },
+
+    async fetch() {
+      this.filtersData = await fetch(
+        'http://localhost:8000/api/areas'
+        ).then(res => res.json())
+    }
 }
 </script>
