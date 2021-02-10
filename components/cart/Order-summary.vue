@@ -15,7 +15,17 @@
                             <p><span class="font-semibold">{{ product.name }}</span></p>
                         </div>
                     </td>
-                    <td class="text-center">{{ product.quan }}</td>
+                    <td>
+                        <div class="flex justify-between w-20 rounded border border-gray-3 mr-2 my-1">
+                            <button class="focus:outline-none bg-gray-3 rounded-t flex items-center justify-center px-1">
+                                <i class="ri-subtract-line"></i>
+                            </button>
+                            <p>{{ product.quan }}</p>
+                            <button class="focus:outline-none bg-gray-3 rounded-b flex items-center justify-center px-1">
+                                <i class="ri-add-fill"></i>
+                            </button>
+                        </div>
+                    </td>
                     <td>{{ product.price }}</td>
                 </tr>
                 <tr class="border-t border-gray-3">
@@ -39,6 +49,3 @@ export default {
     props: ['products'],
 }
 </script>
-<style lang="">
-    
-</style>

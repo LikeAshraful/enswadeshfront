@@ -13,6 +13,13 @@
 .btn {
     @apply border rounded text-center font-bold px-4 py-1
 }
+.btn-active {
+    @apply border bg-green-3 rounded text-center font-bold px-4 py-1
+}
+.btn-disabled {
+    @apply border bg-gray-3 rounded text-center font-bold px-4 py-1 text-gray-2
+}
+
 .input-label {
     @apply font-bold
 }
@@ -29,6 +36,16 @@
 .error {
     @apply text-orange-1
 }
+.success {
+    @apply text-green-6
+}
+.warning {
+    @apply text-yellow-2
+}
+.pending {
+    @apply text-blue-1
+}
+
 .error-message {
     @apply text-orange-1 font-medium
 }

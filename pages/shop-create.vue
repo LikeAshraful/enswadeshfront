@@ -10,7 +10,7 @@
         <div class="py-6 max-w-sm m-auto">
             <form @submit.prevent="submitForm">
                 <div class="mb-2">
-                    <label class="input-label" for="market-name" :class="!$v.marketName.$error ? '':'error'">Market Name <span class="require">*</span></label>
+                    <label class="input-label" for="market-name">Market Name <span class="require">*</span></label>
                     <select class="input-field focus:outline-none" id="market-name" v-model.trim="$v.marketName.$model" :class="{'is-invalid':$v.marketName.$error}">
                         <option value="" disabled selected>Select Market</option>
                         <option value="...">...</option>
@@ -22,26 +22,23 @@
                     </div>
                 </div>
                 <div class="mb-2">
-                    <label class="input-label" for="floor" :class="!$v.floor.$error ? '':'error'">Floor <span class="require">*</span></label>
-                    <select class="input-field focus:outline-none" id="floor" v-model.trim="$v.floor.$model" :class="{'is-invalid':$v.floor.$error}">
+                    <label class="input-label" for="floor">Floor</label>
+                    <select class="input-field focus:outline-none" id="floor" v-model="floor">
                         <option value="" disabled selected>Select Floor</option>
                         <option value="...">...</option>
                         <option value="...">...</option>
                         <option value="...">...</option>
                     </select>
-                    <div class="error-message">
-                        <small v-if="!$v.floor.required" :class="!$v.floor.$error ? 'hidden':''">Field is required.</small>
-                    </div>
                 </div>
                 <div class="mb-2">
-                    <label class="input-label" for="shop-name" :class="!$v.shopName.$error ? '':'error'">Shop Name <span class="require">*</span></label>
+                    <label class="input-label" for="shop-name">Shop Name <span class="require">*</span></label>
                     <input class="input-field focus:outline-none" id="shop-name" type="text" placeholder="XYZ varieties store" v-model.trim="$v.shopName.$model" :class="{'is-invalid':$v.shopName.$error}">
                     <div class="error-message">
                         <small v-if="!$v.shopName.required" :class="!$v.shopName.$error ? 'hidden':''">Field is required.</small>
                     </div>
                 </div>
                 <div class="mb-2">
-                    <label class="input-label" for="shop-number" :class="!$v.shopNo.$error ? '':'error'">Shop Number <span class="require">*</span></label>
+                    <label class="input-label" for="shop-number">Shop Number <span class="require">*</span></label>
                     <input class="input-field focus:outline-none" id="shop-number" type="text" placeholder="123" v-model.trim="$v.shopNo.$model" :class="{'is-invalid':$v.shopNo.$error}">
                     <div class="error-message">
                         <small v-if="!$v.shopNo.required" :class="!$v.shopNo.$error ? 'hidden':''">Field is required.</small>
@@ -91,9 +88,6 @@ export default {
     },
     validations: {
         marketName:{
-            required,
-        },
-        floor:{
             required,
         },
         shopName:{

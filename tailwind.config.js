@@ -20,6 +20,7 @@ module.exports = {
           3: '#BAFFD8',
           4: '#163A24',
           5: '#0D2316',
+          6: '#0F9D58',
         },
         gray: {
           1: '#DFFCFF',

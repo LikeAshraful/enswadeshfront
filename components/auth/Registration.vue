@@ -19,24 +19,32 @@
                     <div class="sm:col-span-4 p-8">
                         <form @submit.prevent="submitForm">
                             <div class="mb-2">
-                                <label class="font-bold" for="name" :class="!$v.name.$error ? '':'error'">Name</label>
+                                <label class="font-bold" for="name">Name</label>
                                 <input class="focus:outline-none input-field" id="name" type="text" placeholder="Adam" v-model.trim="$v.name.$model" :class="{'is-invalid':$v.name.$error}">
                                 <div class="error-message">
                                     <small v-if="!$v.name.required" :class="!$v.name.$error ? 'hidden':''">Field is required.</small>
                                 </div>
                             </div>
                             <div class="mb-2">
-                                <label class="font-bold" for="phone" :class="!$v.phone.$error ? '':'error'">Email or mobile phone number</label>
-                                <input class="focus:outline-none input-field" id="phone" type="text" placeholder="hello@example.com"  v-model.trim="$v.phone.$model" :class="{'is-invalid':$v.phone.$error}">
+                                <label class="font-bold" for="email">Email</label>
+                                <input class="focus:outline-none input-field" id="email" type="email" placeholder="hello@example.com"  v-model.trim="$v.email.$model" :class="{'is-invalid':$v.email.$error}">
+                                <div class="error-message">
+                                    <small v-if="!$v.email.required" :class="!$v.email.$error ? 'hidden':''">Field is required.</small>
+                                    <small v-if="!$v.email.email">Email must be valid.</small>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="font-bold" for="phone">Phone</label>
+                                <input class="focus:outline-none input-field" id="phone" type="number" placeholder="hello@example.com"  v-model.trim="$v.phone.$model" :class="{'is-invalid':$v.phone.$error}">
                                 <div class="error-message">
                                     <small v-if="!$v.phone.required" :class="!$v.phone.$error ? 'hidden':''">Field is required.</small>
                                     <small v-if="!$v.phone.minLength">Phone must have at least {{ $v.phone.$params.minLength.min }} digit.</small>
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="font-bold" for="name" :class="!$v.password.$error ? '':'error'">Password</label>
+                                <label class="font-bold" for="name">Password</label>
                                 <div class="relative">
-                                    <input class="focus:outline-none input-field pr-6" id="name" :type="show ? 'text':'password' " placeholder="At least 6 characters" v-model.trim="$v.password.$model" :class="{'is-invalid':$v.password.$error}">
+                                    <input class="focus:outline-none input-field pr-6" id="name" :type="show ? 'text':'password' " placeholder="At least 8 characters" v-model.trim="$v.password.$model" :class="{'is-invalid':$v.password.$error}">
                                     <i v-if="!show" @click="showPassword" class="ri-eye-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
                                     <i v-if="show" @click="showPassword" class="ri-eye-off-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
                                 </div>
@@ -46,16 +54,17 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="font-bold" for="name" :class="!$v.confirmPassword.$error ? '':'error'">Confirm Password</label>
+                                <label class="font-bold" for="name">Confirm Password</label>
                                 <div class="relative">
-                                    <input @keyup="checkPassword" class="focus:outline-none input-field" id="name" type="password" placeholder="Enter your password" v-model.trim="$v.confirmPassword.$model" :class="{'is-invalid':$v.confirmPassword.$error}">
+                                    <input class="focus:outline-none input-field" id="name" type="password" placeholder="Enter your password" v-model.trim="$v.confirmPassword.$model" :class="{'is-invalid':$v.confirmPassword.$error}">
                                 </div>
                                 <div class="error-message">
                                     <small v-if="!$v.confirmPassword.required" :class="!$v.confirmPassword.$error ? 'hidden':''">Confirm Password is required.</small>
-                                    <small v-if="confirmMessage != null && !$v.confirmPassword.$error">{{ confirmMessage }}</small>
+                                    <small v-if="!$v.confirmPassword.sameAsPassword && $v.confirmPassword.required">Passwords must be identical.</small>
                                 </div>
                             </div>
-                            <button class="focus:outline-none border border-gray-4 bg-gray-3 text-gray-2 rounded text-center font-bold w-full mb-2 py-1">Create your swades account</button>
+                            <button v-if="!btnAction" type="submit" class="focus:outline-none w-full mb-2" :class="this.$v.$invalid ? 'btn-disabled':'btn-active'">Create your swades account</button>
+                            <p v-if="btnAction" class="focus:outline-none w-full mb-2 btn-disabled cursor-wait">Please wait...</p>
                         </form>
                         
                         <p class="leading-tight mb-3">By creating an account, you agree to Swades's <n-link to="" class="font-semibold text-blue-1">Conditions of Use</n-link> and <n-link class="font-semibold text-blue-1" to="">Privacy Notice</n-link>.</p>
@@ -83,15 +92,16 @@
     </div>
 </template>
 <script>
-import { required, minLength  } from 'vuelidate/lib/validators';
+import { required, minLength, sameAs, email  } from 'vuelidate/lib/validators';
 export default {
     data() {
         return {
             name: '',
             phone: '',
+            email: '',
             password: '',
             confirmPassword: '',
-            confirmMessage: null,
+            btnAction: false,
             show: false,
         }
     },
@@ -103,12 +113,17 @@ export default {
             required,
             minLength: minLength(11),
         },
+        email:{
+            required,
+            email,
+        },
         password:{
             required,
-            minLength: minLength(6),
+            minLength: minLength(8),
         },
         confirmPassword:{
             required,
+            sameAsPassword: sameAs('password')
         },
     },
     methods: {
@@ -123,19 +138,22 @@ export default {
         },
         submitForm(){
             this.$v.$touch();
-            if(!this.$v.$invalid && this.password == this.confirmPassword){
-                console.log("success"); 
+            if(!this.$v.$invalid){
+                this.$axios.get("api/registration")
+                .then(response => {
+                    this.$toast.success('Success !');
+                    this.closeRegistrationModal();
+                })
+                .catch(error => {
+                    this.btnAction = false;
+                    this.$toast.error('Something wrong..!');
+                });
+                this.btnAction = true;
+                this.$toast.info('Thanks for your submission!');
             }else{  
-                console.log("error");
+                this.$toast.error('Please fill the form correctly!')
             }
         },
-        checkPassword(){
-            if(this.password == this.confirmPassword){
-                this.confirmMessage = null;
-            }else{
-                this.confirmMessage = 'Password not match';
-            }
-        }
     },
 }
 </script>
