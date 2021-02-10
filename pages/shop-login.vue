@@ -10,15 +10,15 @@
         <div class="py-6 max-w-sm m-auto">
             <form @submit.prevent="submitForm">
                 <div class="mb-2">
-                    <label class="font-bold" for="phone" :class="!$v.phone.$error ? '':'error'">Mobile phone number</label>
-                    <input type="text" class="focus:outline-none input-field" id="phone" placeholder="01XXXXXXXXX" v-model.trim="$v.phone.$model" :class="{'is-invalid':$v.phone.$error}">
+                    <label class="font-bold" for="phone">Email or Mobile phone number</label>
+                    <input type="text" class="focus:outline-none input-field" id="phone" placeholder="hello@example.com" v-model.trim="$v.phone.$model" :class="{'is-invalid':$v.phone.$error}">
                     <div class="error-message">
                         <small v-if="!$v.phone.required" :class="!$v.phone.$error ? 'hidden':''">Field is required.</small>
                         <small v-if="!$v.phone.minLength">Phone must have at least {{ $v.phone.$params.minLength.min }} digit.</small>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label class="font-bold" for="password" :class="!$v.password.$error ? '':'error'">Password</label>
+                    <label class="font-bold" for="password">Password</label>
                     <div class="relative mb-1">
                         <input class="focus:outline-none input-field pr-6" id="password" :type="show ? 'text':'password' " placeholder="Enter your password" v-model.trim="$v.password.$model" :class="{'is-invalid':$v.password.$error}">
                         <i v-if="!show" @click="showPassword" class="ri-eye-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
@@ -66,7 +66,7 @@ export default {
         },
         password:{
             required,
-            minLength: minLength(6),
+            minLength: minLength(8),
         }
     },
     components:{
