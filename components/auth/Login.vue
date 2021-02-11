@@ -95,17 +95,26 @@ export default {
         submitForm(){
             this.$v.$touch();
             if(!this.$v.$invalid){
-                let email = this.phone;
-                let password = this.password;
                 let self = this;
-                this.$axios.post("api/login", { email, password })
+                var formData = new FormData();
+                formData.append("email", this.phone);
+                formData.append("password", this.password);
+                //this.$axios.post("api/login", { email, password })
+                this.$auth.loginWith('local', {
+                  data: formData
+                })
                 .then(response => {
-                    this.$toast.success('Success !');
+                  console.log(response.data.data.user);
+                  self.$store.dispatch('snackbar/setSnackbar', response.data.data.user);
+                  //this.$router.push('/');
+                    // self.$store.dispatch("authcheck/setUser", response.data.user);
+                    // self.$store.dispatch("authcheck/setToken", response.data.token);
+                    this.$toast.success('Successfully login !');
                     this.closeLoginModal();
                 })
                 .catch(error => {
                     this.btnAction = false;
-                    this.$toast.error('Something wrong..!');
+                    this.$toast.error(error.data);
                 });
                 this.btnAction = true;
                 this.$toast.info('Thanks for your submission!');
