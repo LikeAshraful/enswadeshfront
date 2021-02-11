@@ -14,7 +14,6 @@
                     <input type="text" class="focus:outline-none input-field" id="phone" placeholder="hello@example.com" v-model.trim="$v.phone.$model" :class="{'is-invalid':$v.phone.$error}">
                     <div class="error-message">
                         <small v-if="!$v.phone.required" :class="!$v.phone.$error ? 'hidden':''">Field is required.</small>
-                        <small v-if="!$v.phone.minLength">Phone must have at least {{ $v.phone.$params.minLength.min }} digit.</small>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -30,7 +29,8 @@
                     </div>
                     <n-link to="" class="text-blue-1">Forgot password?</n-link>
                 </div>
-                <button class="focus:outline-none btn-full">Login your swades account</button>
+                <button type="submit" v-if="!btnAction" class="focus:outline-none w-full" :class="this.$v.$invalid ? 'btn-disabled':'btn-active'">Login your swades account</button>
+                <p v-if="btnAction" class="focus:outline-none w-full mb-2 btn-disabled cursor-wait">Please wait...</p>
             </form>
             
             <div class="border-t text-gray-3 mb-6"></div>
@@ -48,6 +48,7 @@ export default {
         return {
             phone: '',
             password: '',
+            btnAction: false,
             show: false,
             breadCrumbs: [
                 {title: 'Home', url: '/'},
@@ -62,7 +63,6 @@ export default {
     validations: {
         phone:{
             required,
-            minLength: minLength(11),
         },
         password:{
             required,
@@ -79,9 +79,18 @@ export default {
         submitForm(){
             this.$v.$touch();
             if(!this.$v.$invalid){
-                console.log("success"); 
+                this.$axios.get("api/login")
+                .then(response => {
+                    this.$toast.success('Success !');
+                })
+                .catch(error => {
+                    this.btnAction = false;
+                    this.$toast.error('Oops..! Something wrong...!');
+                });
+                this.btnAction = true;
+                this.$toast.info('Thanks for your submission!');
             }else{  
-                console.log("error");
+                this.$toast.error('Please fill the form correctly!')
             }
         }
     },
