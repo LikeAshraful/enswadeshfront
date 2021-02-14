@@ -13,11 +13,11 @@
         </div>
 
         <!-- Shops -->
-        <shops :shops="shops.data" :basePath="basePath"></shops>
+        <shops :shops="shops.data" :basePath="basePath" v-on:pagechanged="testMethod"></shops>
 
         <!-- Paginate -->
         <div class="pb-8">
-            <paginate></paginate>
+            <paginate :totalPages="totalPages" :total="total" :currentPage="currentPage" ></paginate>
         </div>
     </div>
 </template>
@@ -41,6 +41,9 @@ export default {
           basePath: this.$axios.defaults.baseURL,
           floors: [],
           shops: [],
+          totalPages:0,
+          total:0,
+          currentPage:0,
 
           breadCrumbs: [
               {title: 'Home', url: '/'},
@@ -52,23 +55,31 @@ export default {
        }
     },
     mounted() {
-      this.loadData();
+      this.loadFloors();
+      this.loadShops();
+      this.testMethod();
     },
-
     methods: {
-        async loadData () {
-          await this.$axios.get(
-            '/api/shops/shops-by-market-by-floor/' + this.$route.params.id
-          ).then((res) => {
-              this.floors = res.data;
-          }),
-
-          await this.$axios.get(
-            '/api/shops/all-shops-by-market/' + this.$route.params.id
-          ).then((res) => {
-            this.shops = res.data;
-          })
-        }
+      async loadFloors() {
+        await this.$axios.get(
+          '/api/shops/shops-by-market-by-floor/' + this.$route.params.id
+        ).then((res) => {
+            this.floors = res.data;
+        })
+      },
+      async loadShops() {
+        await this.$axios.get(
+          '/api/shops/all-shops-by-market/' + this.$route.params.id
+        ).then((res) => {
+          this.shops = res.data.data;
+          this.total = this.shops.total;
+          this.totalPages = this.shops.last_page;
+          this.currentPage = this.shops.current_page;
+        })
+      },
+      testMethod (value) {
+        console.log('page number is ' + value);
+      }
     }
 }
 </script>
