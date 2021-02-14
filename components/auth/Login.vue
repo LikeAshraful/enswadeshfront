@@ -95,7 +95,13 @@ export default {
         submitForm(){
             this.$v.$touch();
             if(!this.$v.$invalid){
-                this.$axios.get("api/login")
+                //this.$axios.get("api/login")
+                var formData = new FormData();
+                formData.append("email", this.phone);
+                formData.append("password", this.password)
+                this.$auth.login({
+                      data: formData
+                })
                 .then(response => {
                     this.$toast.success('Success !');
                     this.closeLoginModal();

@@ -39,13 +39,10 @@ export default {
   strategies: {
     local: {
       token: {
-        property: 'token',
-        // required: true,
-        // type: 'Bearer'
+        property: 'data.access_token',
       },
       user: {
-        property: 'user',
-        // autoFetch: true
+        property: 'data',
       },
       endpoints: {
         login: { url: '/api/login', method: 'post' },
