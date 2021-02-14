@@ -50,17 +50,28 @@
                 </div>
                 <div class="mb-2">
                     <label class="input-label">Trade License / Verification Document <span class="require">*</span></label>
-                    <div class="border border-dashed border-gray-3 rounded text-center py-3">
-                        <i class="ri-upload-cloud-line text-blue-1 font-bold text-4xl"></i><br>
-                        <p class="inline">Drag & Drop to upload here, or</p> <label for="files" class="text-blue-1 ml-2 inline cursor-pointer">browse</label>
-                        <p class="text-gray-4">Supports: JPG, JPEG, PNG</p>
-                        <input class="hidden" type="file" id="files">
+                    <div class="border border-dashed border-gray-3 rounded text-center">
+                        <div class="py-3" v-if="avatar == null">
+                            <i class="ri-upload-cloud-line text-blue-1 font-bold text-4xl"></i><br>
+                            <p class="inline">Drag & Drop to upload here, or</p> <label for="files" class="text-blue-1 ml-2 inline cursor-pointer">browse</label>
+                            <p class="text-gray-4">Supports: JPG, JPEG, PNG</p>
+                        </div>
+                        <label for="files" class="cursor-pointer">
+                            <div v-if="avatar != null" class="relative pb-1/2">
+                                <img class="absolute h-full w-full p-2" :src="avatar" alt="Image">
+                            </div>
+                        </label>
+
+                        <input class="hidden" type="file" id="files" @change="filesUpload">
                     </div>
                     <n-link to="" class="text-blue-1">Why need Trade License & How to use?</n-link>
                 </div>
-                
+
                 <div class="divider my-6"></div>
-                <button class="focus:outline-none btn-full mb-6">Submit</button>
+
+                <button type="submit" v-if="!btnAction" class="focus:outline-none w-full mb-4" :class="this.$v.$invalid || avatar == null ? 'btn-disabled':'btn-active'">Submit</button>
+                <p v-if="btnAction" class="focus:outline-none w-full mb-4 btn-disabled cursor-wait">Please wait...</p>
+
             </form>
             <p class="text-center">I don't want to Add Shop now. <n-link to="/shop-login" class="ml-2 text-orange-1 font-bold">Go back</n-link></p>
         </div>
@@ -76,6 +87,9 @@ export default {
             floor: '',
             shopName: '',
             shopNo: '',
+            file: '',
+            avatar: null,
+            btnAction: false,
             breadCrumbs: [
                 {title: 'Home', url: '/'},
                 {title: 'Go To Market', url: '/cities'},
@@ -103,10 +117,27 @@ export default {
     methods: {
         submitForm(){
             this.$v.$touch();
-            if(!this.$v.$invalid){
-                console.log("success"); 
+            if(!this.$v.$invalid && this.avatar != null){
+                this.$axios.get("api/login")
+                .then(response => {
+                    this.$toast.success('Success !');
+                })
+                .catch(error => {
+                    this.btnAction = false;
+                    this.$toast.error('Oops..! Something wrong...!');
+                });
+                this.btnAction = true;
+                this.$toast.info('Thanks for your submission!');
             }else{  
-                console.log("error");
+                this.$toast.error('Please fill the form correctly!')
+            }
+        },
+        filesUpload(e){
+            let image = e.target.files[0];
+            let reader = new FileReader();
+            reader.readAsDataURL(image);
+            reader.onload = e => {
+                this.avatar = e.target.result;
             }
         }
     },

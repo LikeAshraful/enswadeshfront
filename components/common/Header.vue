@@ -10,19 +10,19 @@
 
             <n-link to="">
               <div class="flex items-center">
-                <i class="ri-wallet-3-fill text-lg mr-1"></i> 
+                <i class="ri-wallet-3-fill text-lg mr-1"></i>
                 <span>S-Wallet</span>
               </div>
             </n-link>
             <n-link to="" class="pl-4">
               <div class="flex items-center">
-                <i class="ri-hand-coin-line text-lg mr-1"></i> 
+                <i class="ri-hand-coin-line text-lg mr-1"></i>
                 <span>Earn</span>
               </div>
             </n-link>
             <n-link to="/my-shop" class="pl-4">
               <div class="flex items-center" :class="currentRouteName == 'my-shop' ? 'text-orange-1':''">
-                <i class="ri-store-fill text-lg mr-1"></i> 
+                <i class="ri-store-fill text-lg mr-1"></i>
                 <span>My Shop</span>
               </div>
             </n-link>
@@ -36,7 +36,7 @@
             </div>
           </n-link>
         </div>
-        
+
         <div class="lg:col-span-4 lg:col-start-8 md:col-span-5 md:col-start-2 col-span-9">
           <div class="flex lg:justify-end">
             <div class="border border-gray-2 px-2 py-1 rounded-l-full">
@@ -50,7 +50,13 @@
           </div>
         </div>
         <div class="text-right lg:col-span-1 md:col-span-5 col-span-3">
-          <button v-tooltip="'Account'" @click="showLoginModal" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button>
+          <div v-if="$auth.loggedIn">
+            {{$auth.data.user.name}}
+            <button @click="$auth.logout()">Logout</button>
+          </div>
+          <div v-else>
+            <button v-tooltip="'Account'" @click="showLoginModal" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button>
+          </div>
           <button v-tooltip="'Cart'" @click="showCartModal" :class="cart || currentRouteName == 'cart' || currentRouteName == 'checkout' ? 'text-orange-1':''" class="focus:outline-none text-xl ml-2"><i class="ri-shopping-bag-2-fill"></i></button>
         </div>
       </div>
@@ -78,7 +84,7 @@
 
     <!-- Login Modal -->
     <login v-if="loginModal" v-on:closeLoginModal="closeLoginModal()" v-on:openRegistrationModal="openRegistrationModal()"></login>
-    
+
     <!-- Registration Modal -->
     <registration v-if="registrationModal" v-on:closeRegistrationModal="closeRegistrationModal()" v-on:openLoginModal="openLoginModal()"></registration>
 
