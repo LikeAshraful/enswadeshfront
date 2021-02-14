@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="border-t text-gray-3 mb-6"></div>
-                        
+
                         <p>Don't have an account? <button @click="openRegistrationModal" class="focus:outline-none ml-2 text-orange-1 font-bold">Create account</button></p>
                     </div>
                 </div>
@@ -106,7 +106,7 @@ export default {
                 });
                 this.btnAction = true;
                 this.$toast.info('Thanks for your submission!');
-            }else{  
+            }else{
                 this.$toast.error('Please fill the form correctly!')
             }
         },

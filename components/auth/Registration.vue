@@ -66,7 +66,7 @@
                             <button v-if="!btnAction" type="submit" class="focus:outline-none w-full mb-2" :class="this.$v.$invalid ? 'btn-disabled':'btn-active'">Create your swades account</button>
                             <p v-if="btnAction" class="focus:outline-none w-full mb-2 btn-disabled cursor-wait">Please wait...</p>
                         </form>
-                        
+
                         <p class="leading-tight mb-3">By creating an account, you agree to Swades's <n-link to="" class="font-semibold text-blue-1">Conditions of Use</n-link> and <n-link class="font-semibold text-blue-1" to="">Privacy Notice</n-link>.</p>
 
                         <div class="border-t text-gray-3 mb-3"></div>
@@ -82,7 +82,7 @@
                         </div>
 
                         <div class="border-t text-gray-3 mb-6"></div>
-                        
+
                         <p>I have already an account. <button @click="openLoginModal" class="focus:outline-none ml-4 text-orange-1 font-bold">Login</button></p>
                     </div>
                 </div>
@@ -150,7 +150,7 @@ export default {
                 });
                 this.btnAction = true;
                 this.$toast.info('Thanks for your submission!');
-            }else{  
+            }else{
                 this.$toast.error('Please fill the form correctly!')
             }
         },
