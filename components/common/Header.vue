@@ -51,7 +51,7 @@
         </div>
         <div class="text-right lg:col-span-1 md:col-span-5 col-span-3">
           <div v-if="$auth.loggedIn">
-            {{$auth.data.user.name}}
+            {{$auth.user.name}}
             <button @click="$auth.logout()">Logout</button>
           </div>
           <div v-else>
