@@ -95,9 +95,15 @@ export default {
         submitForm(){
             this.$v.$touch();
             if(!this.$v.$invalid){
-                this.$axios.get("api/login")
+                //this.$axios.get("api/login")
+                var formData = new FormData();
+                formData.append("email", this.phone);
+                formData.append("password", this.password)
+                this.$auth.login({
+                      data: formData
+                })
                 .then(response => {
-                    this.$toast.success('Success !');
+                    this.$toast.success('Successfully login your account!');
                     this.closeLoginModal();
                 })
                 .catch(error => {
@@ -105,7 +111,7 @@ export default {
                     this.$toast.error('Oops..! Something wrong...!');
                 });
                 this.btnAction = true;
-                this.$toast.info('Thanks for your submission!');
+                //this.$toast.info('Thanks for your submission!');
             }else{
                 this.$toast.error('Please fill the form correctly!')
             }
