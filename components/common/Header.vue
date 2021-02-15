@@ -51,13 +51,13 @@
         </div>
         <div class="text-right lg:col-span-1 md:col-span-5 col-span-3">
           <div v-if="$auth.loggedIn">
-            {{$auth.data.user.name}}
+            {{$auth.user.name}}
             <button @click="$auth.logout()">Logout</button>
           </div>
           <div v-else>
             <button v-tooltip="'Account'" @click="showLoginModal" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button>
+            <button v-tooltip="'Cart'" @click="showCartModal" :class="cart || currentRouteName == 'cart' || currentRouteName == 'checkout' ? 'text-orange-1':''" class="focus:outline-none text-xl ml-2"><i class="ri-shopping-bag-2-fill"></i></button>
           </div>
-          <button v-tooltip="'Cart'" @click="showCartModal" :class="cart || currentRouteName == 'cart' || currentRouteName == 'checkout' ? 'text-orange-1':''" class="focus:outline-none text-xl ml-2"><i class="ri-shopping-bag-2-fill"></i></button>
         </div>
       </div>
     </div>

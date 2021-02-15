@@ -20,8 +20,6 @@ export default {
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
 
-  loading: '~/components/LoadingBar.vue',
-
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
@@ -39,17 +37,14 @@ export default {
   strategies: {
     local: {
       token: {
-        property: 'token',
-        // required: true,
-        // type: 'Bearer'
+        property: 'data.access_token',
       },
       user: {
-        property: 'user',
-        // autoFetch: true
+        property: 'data',
       },
       endpoints: {
         login: { url: '/api/login', method: 'post' },
-        logout: { url: '/api/logout', method: 'delete' },
+        logout: { url: '/api/logout', method: 'post' },
         user: { url: '/api/user', method: 'get' }
       }
     }
@@ -60,14 +55,6 @@ export default {
     // proxy: true
     baseURL:process.env.BASE_URL,
     imageURL:process.env.BASE_URL + '/storage/',
-  },
-
-  // Register custom toasts
-  toast: {
-    position: 'top-center',
-    theme: "toasted-primary",
-    position: "top-right",
-    duration : 3000
   },
 
   // Register custom toasts
