@@ -15,7 +15,7 @@
                 <dataFilter :filtersData="filtersData" :filterTitle="filterTitle"/>
                 <div class="lg:col-span-3 sm:col-span-2">
                     <!-- All Products -->
-                    <products :products="products" :basePath="basePath"></products>
+                    <products :basePath="basePath"></products>
                 </div>
             </div>
         </div>
@@ -53,7 +53,6 @@ export default {
           filterTitle: 'Categories',
           filtersData: [],
           shop: {},
-          products: []
         }
     },
     mounted() {
@@ -67,11 +66,6 @@ export default {
           this.filtersData = res.data;
         }),
         await this.$axios.get(
-          '/api/products-by-shop/' + this.$route.params.id
-        ).then((res) => {
-          this.products = res.data;
-        }),
-         await this.$axios.get(
           '/api/shops/' + this.$route.params.id
         ).then((res) => {
           this.shop = res.data.data;
