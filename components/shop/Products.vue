@@ -8,7 +8,7 @@
               <NuxtLink to="/">
                 <div @click="showModal" class="">
                     <div class="">
-                        <img class="h-52 w-full" :src="product.image ? basePath + '/storage/' + product.image.src : require(`~/assets/img/products/default.png`)" alt="Image">
+                        <img class="h-52 w-full" :src="product.image ? basePath + 'storage/' + product.image.src : require(`~/assets/img/products/default.png`)" alt="Image">
                     </div>
                     <p class="font-bold pt-2">{{ product.name }}</p>
                     <p class="">{{ product.color }}</p>
@@ -19,7 +19,7 @@
         </div>
         <!-- Paginate -->
         <div class="px-3 pb-8">
-            <Paginate/>
+            <Paginate :totalPages="totalPages" :total="total" :currentPage="currentPage" :perPage="perPage" v-on:pagechanged="loadProducts" />
         </div>
 
         <!-- Product Details -->
@@ -32,36 +32,44 @@ import Paginate from '~/components/common/Paginate.vue';
 import ProductDetails from '~/components/product-details/Product-details.vue';
 
 export default {
-    props:['products', 'basePath'],
+    props:['basePath'],
 
-    data:() => ({
-        modal: false,
-
-        // products: [
-        //     {url: '', photo: 'img-1', color: 'Black & White', price:'1195 BDT', name: 'Bedside white stand electric  deem lamp'},
-        //     {url: '', photo: 'img-2', color: 'Black & White', price:'1195 BDT', name: 'Ceiling pendanent red light'},
-        //     {url: '', photo: 'img-3', color: 'Black & White', price:'1195 BDT', name: 'Ceiling circle black electric  deem lamp'},
-        //     {url: '', photo: 'img-4', color: 'Black & White', price:'1195 BDT', name: 'Bedside white stand electric  deem lamp'},
-        //     {url: '', photo: 'img-5', color: 'Black & White', price:'1195 BDT', name: 'Ceiling pendanent red light'},
-        //     {url: '', photo: 'img-1', color: 'Black & White', price:'1195 BDT', name: 'Table lamp'},
-        //     {url: '', photo: 'img-1', color: 'Black & White', price:'1195 BDT', name: 'Bedside white stand electric  deem lamp'},
-        //     {url: '', photo: 'img-2', color: 'Black & White', price:'1195 BDT', name: 'Ceiling pendanent red light'},
-        //     {url: '', photo: 'img-3', color: 'Black & White', price:'1195 BDT', name: 'Ceiling circle black electric  deem lamp'},
-        //     {url: '', photo: 'img-4', color: 'Black & White', price:'1195 BDT', name: 'Bedside white stand electric  deem lamp'},
-        //     {url: '', photo: 'img-5', color: 'Black & White', price:'1195 BDT', name: 'Ceiling pendanent red light'},
-        //     {url: '', photo: 'img-1', color: 'Black & White', price:'1195 BDT', name: 'Table lamp'},
-        // ],
-    }),
+    data(){
+        return {
+            modal: false,
+            totalPages:0,
+            total:0,
+            currentPage:0,
+            perPage:0,
+            products:[],
+        }
+    },
     components: {
         Paginate,
         ProductDetails,
     },
+
+    mounted() {
+        this.loadProducts();
+    },
+
     methods: {
         showModal(){
             this.modal = true;
         },
         closeModal(e){
             this.modal = e;
+        },
+        async loadProducts(value) {
+            await this.$axios.get(
+                '/api/products-by-shop/' + this.$route.params.id + '?page=' + value
+                ).then((res) => {
+                this.products = res.data.data;
+                this.total = this.products.meta.total;
+                this.totalPages = this.products.meta.last_page;
+                this.currentPage = this.products.meta.current_page;
+                this.perPage = this.products.meta.per_page;                
+            })
         }
     },
 }
