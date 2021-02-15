@@ -13,11 +13,12 @@
         </div>
 
         <!-- Shops -->
-        <shops :shops="shops.data" :basePath="basePath" v-on:pagechanged="testMethod"></shops>
+        <loader v-if="isLoading"></loader>                
+        <shops v-else :shops="shops.data" :basePath="basePath"></shops>
 
         <!-- Paginate -->
         <div class="pb-8">
-            <paginate :totalPages="totalPages" :total="total" :currentPage="currentPage" ></paginate>
+            <paginate :totalPages="totalPages" :total="total" :currentPage="currentPage" :perPage="perPage" v-on:pagechanged="loadShops" ></paginate>
         </div>
     </div>
 </template>
@@ -27,9 +28,11 @@ import Paginate from '~/components/common/Paginate.vue';
 import Floors from '~/components/market/Floors.vue';
 import MarketDetails from '~/components/market/Details.vue';
 import Shops from '~/components/market/Shops.vue';
+import Loader from '~/components/lib/Loader.vue';
 
 export default {
     components: {
+        Loader,
         Breadcrumb,
         Paginate,
         Floors,
@@ -37,13 +40,15 @@ export default {
         Shops,
     },
     data() {
-       return {
+       return {         
+          isLoading: true,
           basePath: this.$axios.defaults.baseURL,
           floors: [],
           shops: [],
           totalPages:0,
           total:0,
           currentPage:0,
+          perPage:0,
 
           breadCrumbs: [
               {title: 'Home', url: '/'},
@@ -57,7 +62,6 @@ export default {
     mounted() {
       this.loadFloors();
       this.loadShops();
-      this.testMethod();
     },
     methods: {
       async loadFloors() {
@@ -67,18 +71,17 @@ export default {
             this.floors = res.data;
         })
       },
-      async loadShops() {
+      async loadShops(value) {
         await this.$axios.get(
-          '/api/shops/all-shops-by-market/' + this.$route.params.id
+          '/api/shops/all-shops-by-market/' + this.$route.params.id + '?page=' + value
         ).then((res) => {
           this.shops = res.data.data;
-          this.total = this.shops.total;
-          this.totalPages = this.shops.last_page;
-          this.currentPage = this.shops.current_page;
+          this.total = this.shops.meta.total;
+          this.totalPages = this.shops.meta.last_page;
+          this.currentPage = this.shops.meta.current_page;
+          this.perPage = this.shops.meta.per_page;
+          this.isLoading = false;
         })
-      },
-      testMethod (value) {
-        console.log('page number is ' + value);
       }
     }
 }
