@@ -56,11 +56,11 @@
                             <div class="mb-3">
                                 <label class="font-bold" for="name">Confirm Password</label>
                                 <div class="relative">
-                                    <input class="focus:outline-none input-field" id="name" type="password" placeholder="Enter your password" v-model.trim="$v.confirmPassword.$model" :class="{'is-invalid':$v.confirmPassword.$error}">
+                                    <input class="focus:outline-none input-field" id="name" type="password" placeholder="Enter your password" v-model.trim="$v.password_confirmation.$model" :class="{'is-invalid':$v.password_confirmation.$error}">
                                 </div>
                                 <div class="error-message">
-                                    <small v-if="!$v.confirmPassword.required" :class="!$v.confirmPassword.$error ? 'hidden':''">Confirm Password is required.</small>
-                                    <small v-if="!$v.confirmPassword.sameAsPassword && $v.confirmPassword.required">Passwords must be identical.</small>
+                                    <small v-if="!$v.password_confirmation.required" :class="!$v.password_confirmation.$error ? 'hidden':''">Confirm Password is required.</small>
+                                    <small v-if="!$v.password_confirmation.sameAsPassword && $v.password_confirmation.required">Passwords must be identical.</small>
                                 </div>
                             </div>
                             <button v-if="!btnAction" type="submit" class="focus:outline-none w-full mb-2" :class="this.$v.$invalid ? 'btn-disabled':'btn-active'">Create your swades account</button>
@@ -100,7 +100,7 @@ export default {
             phone: '',
             email: '',
             password: '',
-            confirmPassword: '',
+            password_confirmation: '',
             btnAction: false,
             show: false,
         }
@@ -121,7 +121,7 @@ export default {
             required,
             minLength: minLength(8),
         },
-        confirmPassword:{
+        password_confirmation:{
             required,
             sameAsPassword: sameAs('password')
         },
@@ -139,7 +139,15 @@ export default {
         submitForm(){
             this.$v.$touch();
             if(!this.$v.$invalid){
-                this.$axios.get("api/registration")
+                var formData = new FormData();
+                formData.append("role_id", 5);
+                formData.append("name", this.name);
+                formData.append("email", this.email);
+                formData.append("phone_number", this.phone);
+                formData.append("password", this.password);
+                formData.append("password_confirmation", this.password_confirmation);
+
+                this.$axios.post("api/register", formData)
                 .then(response => {
                     this.$toast.success('Success !');
                     this.closeRegistrationModal();

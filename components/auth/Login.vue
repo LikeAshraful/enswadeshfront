@@ -95,7 +95,6 @@ export default {
         submitForm(){
             this.$v.$touch();
             if(!this.$v.$invalid){
-                //this.$axios.get("api/login")
                 var formData = new FormData();
                 formData.append("email", this.phone);
                 formData.append("password", this.password)
@@ -103,6 +102,8 @@ export default {
                       data: formData
                 })
                 .then(response => {
+                    this.$store.dispatch("authcheck/setUser", this.$auth.user);
+                    this.$store.dispatch("authcheck/setToken", this.$auth.token);
                     this.$toast.success('Successfully login your account!');
                     this.closeLoginModal();
                 })
