@@ -82,6 +82,9 @@ export default {
             minLength: minLength(8),
         },
     },
+
+    mounted() {
+    },
     methods: {
         closeLoginModal(){
             this.$emit('closeLoginModal');
@@ -102,6 +105,9 @@ export default {
                       data: formData
                 })
                 .then(response => {
+                    console.log(response.data.data.access_token);
+                    this.$auth.$storage.setLocalStorage("user", this.$auth.user);
+                    this.$auth.$storage.setLocalStorage("token", response.data.data.access_token);
                     this.$store.dispatch("authcheck/setUser", this.$auth.user);
                     this.$store.dispatch("authcheck/setToken", this.$auth.token);
                     this.$toast.success('Successfully login your account!');

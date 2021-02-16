@@ -59,6 +59,7 @@
               </div>
               <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                 <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">{{$auth.user.name}}</a>
                   <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Account settings</a>
                   <button button v-tooltip="'Account'" @click.prevent="logout" :class="loginModal || registrationModal ? 'text-orange-1':''" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Sign out</button>
                 </div>
@@ -121,7 +122,9 @@ export default {
       registrationModal: false,
     }
   },
-
+  mounted() {
+    console.log(this.$auth.user);
+  },
   methods: {
     showCartModal(){
       this.cart = !this.cart;
@@ -147,13 +150,20 @@ export default {
       this.registrationModal = false;
     },
 
-    logout() {
-        this.$auth.logout()
-        .then(response => {
-          this.$toast.success('Successfully logout from your account!');
-          location.reload();
-        });
+    async logout() {
+      await this.$auth.logout();
+      this.$toast.success('Successfully logout from your account!');
+      this.$router.push('/')
     }
+
+    // logout() {
+    //     this.$auth.logout()
+    //     .then(response => {
+    //       this.$toast.success('Successfully logout from your account!');
+    //       this.$router.push('/')
+    //       //location.reload();
+    //     });
+    // }
   },
 
   computed: {

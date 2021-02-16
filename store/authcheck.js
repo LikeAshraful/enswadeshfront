@@ -1,6 +1,6 @@
 // export const state = {
-//   token: context.$auth.$storage.getLocalStorage($auth.token),
-//   user: JSON.parse(context.$auth.$storage.getLocalStorage($auth.user)),
+//   token: $auth.token,
+//   user: $auth.user,
 // };
 
 // export const getters = {
@@ -22,16 +22,16 @@
 
 // export const actions = {
 //   setToken({ commit }, token) {
-//     context.$auth.$storage.setLocalStorage("en.token", token);
+//     this.$auth.$storage.setLocalStorage("en.token", token);
 //     commit("SET_TOKEN", token);
 //   },
 //   removeToken({ commit }) {
-//     context.$auth.$storage.removeLocalStorage("en.user");
-//     context.$auth.$storage.removeLocalStorage("en.token");
+//     this.$auth.$storage.removeLocalStorage("en.user");
+//     this.$auth.$storage.removeLocalStorage("en.token");
 //     commit("REMOVE_TOKEN");
 //   },
 //   setUser({ commit }, user) {
-//     context.$auth.$storage.setLocalStorage("en.user", JSON.stringify(user));
+//     this.$auth.$storage.setLocalStorage("en.user", JSON.stringify(user));
 //     commit("SET_USER", user);
 //   },
 // };
