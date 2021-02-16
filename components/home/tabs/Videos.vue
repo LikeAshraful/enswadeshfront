@@ -14,16 +14,16 @@
         </div>
         <!-- Paginate -->
         <div class="">
-            <Paginate />
+            <!-- <Paginate /> -->
         </div>
     </div>
 </template>
 <script>
-import Paginate from '~/components/common/Paginate.vue';
+// import Paginate from '~/components/common/Paginate.vue';
 
 export default {
     components: {
-        Paginate,
+        // Paginate,
     },
     data: () => ({
         videos: [
