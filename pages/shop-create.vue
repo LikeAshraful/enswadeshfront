@@ -89,6 +89,8 @@
 import Breadcrumb from '~/components/common/Breadcrumb.vue';
 import { required, minLength  } from 'vuelidate/lib/validators';
 export default {
+  middleware: 'auth',
+
     data() {
         return {
             city: 0,
