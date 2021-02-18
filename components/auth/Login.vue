@@ -96,7 +96,7 @@ export default {
             this.$v.$touch();
             if(!this.$v.$invalid){
                 var formData = new FormData();
-                formData.append("email", this.phone);
+                formData.append("phone_number", this.phone);
                 formData.append("password", this.password)
                 this.$auth.login({
                       data: formData
