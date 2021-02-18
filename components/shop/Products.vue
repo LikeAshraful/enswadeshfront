@@ -5,7 +5,7 @@
         <div class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
           {{imageUrl}}
             <div v-for="(product, i) in products.data" :key="i" >
-              <NuxtLink to="/">
+              <!-- <NuxtLink to="/"> -->
                 <div @click="showModal" class="">
                     <div class="">
                         <img class="h-52 w-full" :src="product.image.src ? basePath + 'storage/' + product.image.src : require(`~/assets/img/products/default.png`)" alt="Image">
@@ -14,7 +14,7 @@
                     <p class="">{{ product.color }}</p>
                     <p class="font-bold">{{ product.price }} BDT</p>
                 </div>
-              </NuxtLink>
+              <!-- </NuxtLink> -->
             </div>
         </div>
         <!-- Paginate -->
@@ -52,7 +52,7 @@ export default {
 
     mounted() {
         this.loadProducts();
-        console.log(this.imageUrl);
+        this.showModal();
     },
 
     methods: {

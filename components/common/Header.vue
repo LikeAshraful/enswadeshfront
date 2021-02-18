@@ -20,7 +20,8 @@
                 <span>Earn</span>
               </div>
             </n-link>
-            <n-link to="/my-shop" class="pl-4">
+
+            <n-link v-if="$auth.loggedIn" to="/my-shop" class="pl-4">
               <div class="flex items-center" :class="currentRouteName == 'my-shop' ? 'text-orange-1':''">
                 <i class="ri-store-fill text-lg mr-1"></i>
                 <span>My Shop</span>
@@ -50,14 +51,19 @@
           </div>
         </div>
         <div class="text-right lg:col-span-1 md:col-span-5 col-span-3">
-          <div v-if="$auth.loggedIn">
+          <div>
             <!-- <button v-tooltip="'Account'" @click.prevent="logout" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button> -->
             <div class="relative inline-block text-left">
               <div>
-                <button class="focus:outline-none text-xl" id="options-menu" aria-haspopup="true" aria-expanded="true"><i class="ri-user-fill"></i>
+                <button v-if="$auth.loggedIn" class="focus:outline-none text-xl" id="options-menu" aria-haspopup="true" aria-expanded="true"><i class="ri-user-fill"></i>
                 </button>
+
+                <button v-if="!$auth.loggedIn" v-tooltip="'Account'" @click="showLoginModal" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button>
+
+                <button v-tooltip="'Cart'" @click="showCartModal" :class="cart || currentRouteName == 'cart' || currentRouteName == 'checkout' ? 'text-orange-1':''" class="focus:outline-none text-xl ml-2"><i class="ri-shopping-bag-2-fill"></i></button>
+
               </div>
-              <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+              <div v-if="$auth.loggedIn" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                 <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                   <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">{{$auth.user.name}}</a>
                   <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Account settings</a>
@@ -65,10 +71,6 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div v-else>
-            <button v-tooltip="'Account'" @click="showLoginModal" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button>
-            <button v-tooltip="'Cart'" @click="showCartModal" :class="cart || currentRouteName == 'cart' || currentRouteName == 'checkout' ? 'text-orange-1':''" class="focus:outline-none text-xl ml-2"><i class="ri-shopping-bag-2-fill"></i></button>
           </div>
         </div>
       </div>
