@@ -12,8 +12,8 @@
                 <div class="mb-2">
                     <label class="input-label" for="city-name">City <span class="require">*</span></label>
                     <select @change="loadArea()" class="input-field focus:outline-none" id="city-name" v-model.trim="$v.city.$model" :class="{'is-invalid':$v.city.$error}">
-                        <option value="" disabled selected>Select City</option>
-                        <option  v-for="(city, i) in cities" :key="i" :value="city.id">{{city.name}}</option>                        
+                        <option value="0" disabled selected>Select City</option>
+                        <option  v-for="(city, i) in cities" :key="i" :value="city.id">{{city.name}}</option>
                     </select>
                     <div class="error-message">
                         <small v-if="!$v.city.required" :class="!$v.city.$error ? 'hidden':''">Field is required.</small>
@@ -22,8 +22,8 @@
                 <div class="mb-2">
                     <label class="input-label" for="area-name">Area <span class="require">*</span></label>
                     <select @change="loadMarket()" class="input-field focus:outline-none" id="city-name" v-model.trim="$v.area.$model" :class="{'is-invalid':$v.area.$error}">
-                        <option value="" disabled selected>Select Area</option>
-                        <option v-for="(area, i) in areas" :key="i" :value="area.id">{{area.name}}</option>                        
+                        <option value="0" disabled selected>Select Area</option>
+                        <option v-for="(area, i) in areas" :key="i" :value="area.id">{{area.name}}</option>
                     </select>
                     <div class="error-message">
                         <small v-if="!$v.area.required" :class="!$v.area.$error ? 'hidden':''">Field is required.</small>
@@ -33,7 +33,7 @@
                     <label class="input-label" for="market-name">Market Name <span class="require">*</span></label>
                     <select class="input-field focus:outline-none" id="market-name" v-model.trim="$v.market.$model" :class="{'is-invalid':$v.market.$error}">
                         <option value="" disabled selected>Select Market</option>
-                        <option v-for="(market, i) in markets" :key="i" :value="market.id">{{market.name}}</option>                        
+                        <option v-for="(market, i) in markets" :key="i" :value="market.id">{{market.name}}</option>
                     </select>
                     <div class="error-message">
                         <small v-if="!$v.market.required" :class="!$v.market.$error ? 'hidden':''">Field is required.</small>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="mb-2">
                     <label class="input-label" for="floor">Floor</label>
-                    <select class="input-field focus:outline-none" id="floor" v-model="floor">
+                    <select class="input-field focus:outline-none" id="floor" v-model="floor_no">
                         <option value="" disabled selected>Select Floor</option>
                         <option value="Ground Floor">Ground Floor</option>
                         <option value="1st Floor">1st Floor</option>
@@ -53,7 +53,7 @@
                         <option value="7th Floor">7th Floor</option>
                         <option value="8th Floor">8th Floor</option>
                         <option value="9th Floor">9th Floor</option>
-                        <option value="10th Floor">10th Floor</option>                      
+                        <option value="10th Floor">10th Floor</option>
                     </select>
                 </div>
                 <div class="mb-2">
@@ -74,28 +74,10 @@
                     <label class="input-label" for="block">Block Number (If any)</label>
                     <input class="input-field focus:outline-none" id="block" type="text" placeholder="A">
                 </div>
-                <div class="mb-2">
-                    <label class="input-label">Trade License / Verification Document <span class="require">*</span></label>
-                    <div class="border border-dashed border-gray-3 rounded text-center">
-                        <div class="py-3" v-if="licence_file == null">
-                            <i class="ri-upload-cloud-line text-blue-1 font-bold text-4xl"></i><br>
-                            <p class="inline">Drag & Drop to upload here, or</p> <label for="files" class="text-blue-1 ml-2 inline cursor-pointer">browse</label>
-                            <p class="text-gray-4">Supports: JPG, JPEG, PNG</p>
-                        </div>
-                        <label for="files" class="cursor-pointer">
-                            <div v-if="licence_file != null" class="relative pb-1/2">
-                                <img class="absolute h-full w-full p-2" :src="licence_file" alt="Image">
-                            </div>
-                        </label>
-
-                        <input class="hidden" type="file" id="files" @change="filesUpload">
-                    </div>
-                    <n-link to="" class="text-blue-1">Why need Trade License & How to use?</n-link>
-                </div>
 
                 <div class="divider my-6"></div>
 
-                <button type="submit" v-if="!btnAction" class="focus:outline-none w-full mb-4" :class="this.$v.$invalid || licence_file == null ? 'btn-disabled':'btn-active'">Submit</button>
+                <button type="submit" v-if="!btnAction" class="focus:outline-none w-full mb-4" :class="this.$v.$invalid ? 'btn-disabled':'btn-active'">Submit</button>
                 <p v-if="btnAction" class="focus:outline-none w-full mb-4 btn-disabled cursor-wait">Please wait...</p>
 
             </form>
@@ -109,14 +91,12 @@ import { required, minLength  } from 'vuelidate/lib/validators';
 export default {
     data() {
         return {
-            city: '',
+            city: 0,
+            area: 0,
             market: '',
-            area:'',
-            floor: '',
+            floor_no: '',
             name: '',
             shopNo: '',
-            file: '',
-            licence_file: null,
             btnAction: false,
             breadCrumbs: [
                 {title: 'Home', url: '/'},
@@ -159,27 +139,27 @@ export default {
     methods: {
         submitForm(){
             this.$v.$touch();
-            if(!this.$v.$invalid && this.licence_file != null){
+            if(!this.$v.$invalid != null){
                 var formData = new FormData();
                 formData.append("id", 5);
                 formData.append("city_id", this.city);
                 formData.append("area_id", this.area);
                 formData.append("market_id", this.market);
+                formData.append('floor_no', this.floor_no);
                 formData.append("name", this.name);
                 formData.append("shop_no", this.shopNo);
 
                 this.$axios.post("/api/my-shops", formData)
                 .then(response => {
-                    this.$toast.success('Success !');
-                    this.closeRegistrationModal();
+                    this.$toast.success('Your shop is created successfully !');
+                    this.$router.push('/my-shop');
                 })
                 .catch(error => {
                     this.btnAction = false;
                     this.$toast.error('Oops..! Something wrong...!');
                 });
                 this.btnAction = true;
-                this.$toast.info('Thanks for your submission!');
-            }else{  
+            }else{
                 this.$toast.error('Please fill the form correctly!')
             }
         },
@@ -189,10 +169,10 @@ export default {
                 '/api/cities'
             ).then((res) => {
                 this.cities = res.data;
-            })            
+            })
         },
         async loadArea() {
-            await this.$axios.$get('/api/areas-by-city/' + this.city )
+            await this.$axios.$get('/api/areas-by-city/' + this.city  )
             .then(function( response ){
                 this.areas = response.data;
             }.bind(this));
@@ -203,15 +183,6 @@ export default {
             .then(function( response ){
                 this.markets = response.data;
             }.bind(this));
-        },
-
-        filesUpload(e){
-            let image = e.target.files[0];
-            let reader = new FileReader();
-            reader.readAsDataURL(image);
-            reader.onload = e => {
-                this.licence_file = e.target.result;
-            }
         }
     }
 }
