@@ -140,7 +140,6 @@ export default {
             this.$v.$touch();
             if(!this.$v.$invalid){
                 var formData = new FormData();
-                formData.append("role_id", 5);
                 formData.append("name", this.name);
                 formData.append("email", this.email);
                 formData.append("phone_number", this.phone);
