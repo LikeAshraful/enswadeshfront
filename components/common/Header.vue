@@ -51,8 +51,19 @@
         </div>
         <div class="text-right lg:col-span-1 md:col-span-5 col-span-3">
           <div v-if="$auth.loggedIn">
-            {{$auth.user.name}}
-            <button @click="$auth.logout()">Logout</button>
+            <!-- <button v-tooltip="'Account'" @click.prevent="logout" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button> -->
+            <div class="relative inline-block text-left">
+              <div>
+                <button class="focus:outline-none text-xl" id="options-menu" aria-haspopup="true" aria-expanded="true"><i class="ri-user-fill"></i>
+                </button>
+              </div>
+              <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Account settings</a>
+                  <button button v-tooltip="'Account'" @click.prevent="logout" :class="loginModal || registrationModal ? 'text-orange-1':''" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900">Sign out</button>
+                </div>
+              </div>
+            </div>
           </div>
           <div v-else>
             <button v-tooltip="'Account'" @click="showLoginModal" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button>
@@ -97,23 +108,17 @@ import Cart from '../cart/Short.vue';
 import Registration from '../auth/Registration.vue';
 
 export default {
-  data() {
-    return {
-      cart: false,
-      loginModal: false,
-      registrationModal: false,
-    }
-  },
-
   components: {
     Cart,
     Login,
     Registration,
   },
 
-  computed: {
-    currentRouteName() {
-      return this.$route.name;
+  data() {
+    return {
+      cart: false,
+      loginModal: false,
+      registrationModal: false,
     }
   },
 
@@ -141,6 +146,20 @@ export default {
       this.loginModal = true;
       this.registrationModal = false;
     },
+
+    logout() {
+        this.$auth.logout()
+        .then(response => {
+          this.$toast.success('Successfully logout from your account!');
+          location.reload();
+        });
+    }
+  },
+
+  computed: {
+    currentRouteName() {
+      return this.$route.name;
+    }
   },
 }
 </script>
