@@ -2,7 +2,7 @@
     <div>
         <!-- Breadcrumbs -->
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
-        
+
         <div class="shop market grid grid-cols-2 gap-3">
             <!-- Add photo -->
             <add-photo></add-photo>
@@ -10,13 +10,13 @@
             <!-- Shop details -->
             <my-shop-details></my-shop-details>
         </div>
-        
+
         <!-- Photos -->
         <image-slider></image-slider>
 
         <!-- Tabs -->
         <tab :showTab="showTab" :tabs="tabs"></tab>
-        
+
     </div>
 </template>
 
@@ -28,6 +28,7 @@ import MyShopDetails from '~/components/my-shop/MyShopDetails.vue';
 import Tab from '~/components/common/Tab.vue';
 
 export default {
+    middleware: 'auth',
     components: {
         Breadcrumb,
         ImageSlider,
@@ -35,7 +36,7 @@ export default {
         MyShopDetails,
         Tab,
     },
-    
+
     data: () => ({
         breadCrumbs: [
             {title: 'Home', url: '/'},

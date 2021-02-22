@@ -1,9 +1,9 @@
 <template>
     <div>
         <!-- Breadcrumbs -->
-        <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
-
-        <p class="font-bold text-3xl mb-4">Login your swades account to add your shop</p>
+        <div class="mb-10 mt-10 text-center">
+          <p class="font-bold text-3xl mb-4">Login your swades account!</p>
+        </div>
         <div class="bg-green-1">
             <p class="py-2 font-bold max-w-sm m-auto">Account Information</p>
         </div>
@@ -32,32 +32,24 @@
                 <button type="submit" v-if="!btnAction" class="focus:outline-none w-full" :class="this.$v.$invalid ? 'btn-disabled':'btn-active'">Login your swades account</button>
                 <p v-if="btnAction" class="focus:outline-none w-full mb-2 btn-disabled cursor-wait">Please wait...</p>
             </form>
-            
+
             <div class="border-t text-gray-3 mb-6"></div>
-            
+
             <p class="text-center">Don't have an account? <n-link to="/shop-create" class="ml-2 text-orange-1 font-bold">Create account</n-link></p>
         </div>
     </div>
 </template>
 <script>
-import Breadcrumb from '~/components/common/Breadcrumb.vue';
 import { required, minLength  } from 'vuelidate/lib/validators';
 
 export default {
+    middleware: 'auth',
     data() {
         return {
             phone: '',
             password: '',
             btnAction: false,
-            show: false,
-            breadCrumbs: [
-                {title: 'Home', url: '/'},
-                {title: 'Go To Market', url: '/cities'},
-                {title: 'Dhaka', url: '/markets'},
-                {title: 'Eastern Plaza Shopping Complex', url: '/market'},
-                {title: 'Grand Floor', url: '/market'},
-                {title: 'Shop name goes to here', url: ''},
-            ],
+            show: false
         }
     },
     validations: {
@@ -69,9 +61,6 @@ export default {
             minLength: minLength(8),
         }
     },
-    components:{
-        Breadcrumb,
-    },
     methods: {
         showPassword(){
             this.show = !this.show;
@@ -79,20 +68,32 @@ export default {
         submitForm(){
             this.$v.$touch();
             if(!this.$v.$invalid){
-                this.$axios.get("api/login")
+                var formData = new FormData();
+                formData.append("phone_number", this.phone);
+                formData.append("password", this.password)
+                this.$auth.login({
+                      data: formData
+                })
                 .then(response => {
-                    this.$toast.success('Success !');
+                    console.log(response.data.data.access_token);
+                    this.$auth.$storage.setLocalStorage("user", this.$auth.user);
+                    this.$auth.$storage.setLocalStorage("token", response.data.data.access_token);
+                    this.$store.dispatch("authcheck/setUser", this.$auth.user);
+                    this.$store.dispatch("authcheck/setToken", this.$auth.token);
+                    this.$toast.success('Successfully login your account!');
+                    this.closeLoginModal();
                 })
                 .catch(error => {
                     this.btnAction = false;
-                    this.$toast.error('Oops..! Something wrong...!');
+                    this.$toast.error(error.data);
+                    // this.$toast.error('Oops..! Something wrong...!');
                 });
                 this.btnAction = true;
-                this.$toast.info('Thanks for your submission!');
-            }else{  
+                //this.$toast.info('Thanks for your submission!');
+            }else{
                 this.$toast.error('Please fill the form correctly!')
             }
-        }
+        },
     },
 }
 </script>
