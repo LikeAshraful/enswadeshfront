@@ -8,15 +8,15 @@
                     <input class="mr-2 w-4 h-4" type="radio" name="option" id="" checked>
                     <label for="">Color</label>
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center mr-8">
                     <input class="mr-2 w-4 h-4" type="radio" name="option" id="">
                     <label for="">Size</label>
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center mr-8">
                     <input class="mr-2 w-4 h-4" type="radio" name="option" id="">
                     <label for="">Weight</label>
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center mr-8">
                     <input class="mr-2 w-4 h-4" type="radio" name="option" id="">
                     <label for="">None</label>
                 </div>
