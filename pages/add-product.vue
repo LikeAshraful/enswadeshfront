@@ -137,11 +137,11 @@
                     <div class="flex flex-row">
                         <div class="flex items-center mr-8">
                             <input class="mr-2 w-4 h-4" type="radio" name="payment" id="" checked>
-                            <label for="cash">No</label>
+                            <label for="">No</label>
                         </div>
                         <div class="flex items-center">
                             <input class="mr-2 w-4 h-4" type="radio" name="payment" id="">
-                            <label for="bkash">Yes</label>
+                            <label for="">Yes</label>
                         </div>
                     </div>
                 </div>
@@ -150,15 +150,15 @@
                     <div class="flex flex-row">
                         <div class="flex items-center mr-8">
                             <input class="mr-2 w-4 h-4" type="checkbox" name="publish" id="">
-                            <label for="cash">Festival</label>
+                            <label for="">Festival</label>
                         </div>
                         <div class="flex items-center mr-8">
                             <input class="mr-2 w-4 h-4" type="checkbox" name="publish" id="">
-                            <label for="bkash">Flash Sale</label>
+                            <label for="">Flash Sale</label>
                         </div>
                         <div class="flex items-center">
                             <input class="mr-2 w-4 h-4" type="checkbox" name="publish" id="">
-                            <label for="bkash">Discount</label>
+                            <label for="">Discount</label>
                         </div>
                     </div>
                 </div>
