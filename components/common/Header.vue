@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="col-span-2 lg:contents hidden text-center">
-          <n-link to="/" class="font-serif text-4xl">
+          <n-link to="/" class="font-serif text-4xl lg:pl-8">
             <div :class="currentRouteName == 'index' ? 'text-orange-1':''">
               Swadesh
             </div>
@@ -77,10 +77,10 @@
     </div>
     <div class="max-w-screen-xl xl:px-10 px-2 m-auto sm:font-bold">
       <div class="m-auto text-center">
-        <n-link to="/cities" :class="currentRouteName == 'cities' ? 'text-orange-1':''">
+        <!-- <n-link to="/cities" :class="currentRouteName == 'cities' ? 'text-orange-1':''">
           <i class="ri-building-4-fill"></i>
           <span>Market</span>
-        </n-link>
+        </n-link> -->
         <n-link to="" class="sm:pl-6 pl-2">
           <i class="ri-flashlight-fill"></i> Flash Sales
         </n-link>

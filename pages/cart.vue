@@ -29,7 +29,17 @@
                                     </div>
                                 </td>
                                 <td class="font-semibold text-orange-1">৳ {{ product.price }}</td>
-                                <td><p class="border border-gray-3 rounded inline px-2 py-1">{{ product.qun }}</p></td>
+                                <td>
+                                    <div class="flex justify-between w-20 rounded border border-gray-3 mr-2 my-1">
+                                        <button class="focus:outline-none bg-gray-3 rounded-l flex items-center justify-center px-1">
+                                            <i class="ri-subtract-line"></i>
+                                        </button>
+                                        <p>{{ product.qun }}</p>
+                                        <button class="focus:outline-none bg-gray-3 rounded-r flex items-center justify-center px-1">
+                                            <i class="ri-add-fill"></i>
+                                        </button>
+                                    </div>
+                                </td>
                                 <td class="font-semibold text-orange-1">৳ {{ product.price * product.qun }}</td>
                             </tr>
                         </table>

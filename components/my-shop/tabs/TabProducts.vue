@@ -12,7 +12,7 @@
                         <i class="ri-search-line mr-2"></i>
                         <input class="focus:outline-none" type="text" placeholder="Search products">
                     </div>
-                    <n-link to="" class="bg-orange-1 text-white rounded-lg py-2 px-4">Add Product</n-link>
+                    <n-link to="/add-product" class="bg-orange-1 text-white rounded-lg py-2 px-4">Add Product</n-link>
                 </div>
                 <table class="w-full text-left mb-6">
                     <thead>
