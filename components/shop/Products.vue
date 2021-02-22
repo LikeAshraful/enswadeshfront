@@ -52,7 +52,7 @@ export default {
 
     mounted() {
         this.loadProducts();
-        this.showModal();
+        // this.showModal();
     },
 
     methods: {
