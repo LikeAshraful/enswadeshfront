@@ -21,7 +21,7 @@
               </div>
             </n-link>
 
-            <n-link v-if="$auth.loggedIn" to="/my-shop" class="pl-4">
+            <n-link to="/my-shop" class="pl-4">
               <div class="flex items-center" :class="currentRouteName == 'my-shop' ? 'text-orange-1':''">
                 <i class="ri-store-fill text-lg mr-1"></i>
                 <span>My Shop</span>
@@ -90,9 +90,9 @@
         <n-link to="" class="sm:pl-6 pl-2">
           <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/festivals.png" alt="Icon"> Festivals
         </n-link>
-        <n-link to="" class="sm:pl-6 pl-2">
+        <!-- <n-link to="" class="sm:pl-6 pl-2">
           <img class="inline sm:h-5 h-4 my-1" src="~/assets/icons/discount.png" alt="Icon"> Discount
-        </n-link>
+        </n-link> -->
       </div>
     </div>
 

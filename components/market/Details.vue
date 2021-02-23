@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flex">
-            <img class="h-40 w-2/5 rounded-l-lg" :src="imagepath + '/' + market.icon" alt="Image">
+            <img class="h-40 w-2/5 rounded-l-lg" :src="market.icon ? imagepath + '/' + market.icon : require(`~/assets/img/default_market@2x.png`)" alt="Image">
             <div class="pl-3 w-full">
                 <p class="font-bold lg:text-2xl">{{market.name}}</p>
                 <div class="flex justify-around text-center font-bold mt-4">
