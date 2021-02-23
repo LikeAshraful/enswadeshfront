@@ -1,7 +1,14 @@
 <template>
     <div>
         <!-- All Products -->
-        <p class="text-2xl font-black">All Products</p>
+        <div class="flex justify-between">
+            <p class="text-2xl font-black">All Products</p>
+            <div style="margin-left: -1px;" class="flex items-center border border-gray-2 px-3 py-1 rounded-full overflow-hidden">
+                <img class="h-4 mr-1" src="~/assets/icons/search.png" alt="Icon">
+                <input class="focus:outline-none w-full font-bold" type="text" placeholder="Search anything">
+            </div>
+        </div>
+
         <div class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
           {{imageUrl}}
             <div v-for="(product, i) in products.data" :key="i" >

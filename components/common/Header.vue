@@ -38,7 +38,7 @@
           </n-link>
         </div>
 
-        <div class="lg:col-span-4 lg:col-start-8 md:col-span-5 md:col-start-2 col-span-9">
+        <div class="lg:col-span-3 lg:col-start-8 md:col-span-5 md:col-start-2 col-span-9">
           <div class="flex lg:justify-end">
             <div class="border border-gray-2 px-2 py-1 rounded-l-full">
               <button class="flex items-center focus:outline-none font-bold">All<img class="h-5" src="~/assets/icons/drop_down.png" alt="Icon">
@@ -50,19 +50,22 @@
             </div>
           </div>
         </div>
-        <div class="text-right lg:col-span-1 md:col-span-5 col-span-3">
+        <div class="text-right lg:col-span-2 md:col-span-5 col-span-3">
           <div>
             <!-- <button v-tooltip="'Account'" @click.prevent="logout" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button> -->
             <div class="relative inline-block text-left">
               <div>
+                <button class="focus:outline-none text-xl mr-2"><i class="ri-chat-4-fill"></i></button>
+                <button class="focus:outline-none text-xl mr-2"><i class="ri-notification-2-fill"></i></button>
+
                 <button v-if="$auth.loggedIn" class="focus:outline-none text-xl" id="options-menu" aria-haspopup="true" aria-expanded="true"><i class="ri-user-fill"></i>
                 </button>
 
                 <button v-if="!$auth.loggedIn" v-tooltip="'Account'" @click="showLoginModal" :class="loginModal || registrationModal ? 'text-orange-1':''" class="focus:outline-none text-xl"><i class="ri-user-fill"></i></button>
 
                 <button v-tooltip="'Cart'" @click="showCartModal" :class="cart || currentRouteName == 'cart' || currentRouteName == 'checkout' ? 'text-orange-1':''" class="focus:outline-none text-xl ml-2"><i class="ri-shopping-bag-2-fill"></i></button>
-
               </div>
+
               <div v-if="$auth.loggedIn" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                 <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                   <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">{{$auth.user.name}}</a>
