@@ -85,12 +85,12 @@ export default {
                 })
                 .catch((error) => {
                     this.btnAction = false;
-                    this.$toast.warning("Oops..!-" + error.response.data.message);
+                    this.$toast.error("Oops..!-" + error.response.data.message);
                 });
                 this.btnAction = true;
                 //this.$toast.info('Thanks for your submission!');
             }else{
-                this.$toast.warning('Please fill the form correctly!')
+                this.$toast.error('Please fill the form correctly!')
             }
         },
     },
