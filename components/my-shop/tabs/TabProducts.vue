@@ -28,12 +28,12 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item, i) in products.data" :key="i">
-                            <td>{{ i + 1 }}</td>
+                            <td>{{ (currentPage*4) - 4 + i + 1 }}</td>
                             <td>
                                 <img class="w-12 h-12" :src="require(`~/assets/img/products/default.png`)" alt="Image">
                             </td>
                             <td>{{ item.name }}</td>
-                            <td>{{ item.category }}</td>
+                            <td>{{ item.category.name }}</td>
                             <td>{{ item.price }}</td>
                             <td>{{ item.total_stocks }}</td>
                             <td>
@@ -65,23 +65,17 @@ export default {
     },
     data: () => ({
         filterTitle: 'Categories',
-        filtersData: [
-            {url: '', name: 'Food'},
-            {url: '', name: 'Groceries'},
-            {url: '', name: 'Furniture'},
-            {url: '', name: 'Toys'},
-            {url: '', name: 'Electronics'},
-            {url: '', name: 'Fashion'},
-        ],
+        filtersData: [],
         totalPages:0,
         total:0,
         currentPage:0,
         perPage:0,
-        products: []
+        products: [],
     }),
 
     mounted(){
       this.loadProducts();
+      this.loadCategories();
     },
 
     methods: {
@@ -94,12 +88,19 @@ export default {
           this.totalPages = this.products.meta.last_page;
           this.currentPage = this.products.meta.current_page;
           this.perPage = this.products.meta.per_page;
-        }).catch(
-          error => {
-            console.log(error)
-          }
-        )
+        }).catch(error => {
+          console.log(error)
+        })
+      },
+      async loadCategories() {
+        await this.$axios.get('/api/categories/base')
+        .then((res) => {
+          this.filtersData = res.data
+        }).catch(error => {
+          console.log(error)
+        })
       }
-    }
+    },
+
 }
 </script>
