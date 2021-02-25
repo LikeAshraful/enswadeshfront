@@ -61,7 +61,7 @@ export default {
     methods: {
       async loadData () {
         await this.$axios.get(
-          '/api/categories'
+          '/api/categories/base'
         ).then((res) => {
           this.filtersData = res.data;
         }),
