@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <p class="font-bold text-xl">Shop name goes to here</p>
+            <p class="font-bold text-xl">{{shop.name}}</p>
             <p class="text-gray-2">111 Subscribers</p>
             <p class="text-gray-2">55 Active Customers</p>
             <div class="flex text-yellow-2">
@@ -36,6 +36,6 @@
 </template>
 <script>
 export default {
-    
+  props : ['shop']
 }
 </script>

@@ -5,10 +5,10 @@
 
         <div class="shop market grid grid-cols-2 gap-3">
             <!-- Add photo -->
-            <add-photo></add-photo>
+            <add-photo :cover_image="cover_image"></add-photo>
 
             <!-- Shop details -->
-            <my-shop-details></my-shop-details>
+            <my-shop-details :shop="shop"></my-shop-details>
         </div>
 
         <!-- Photos -->
@@ -50,6 +50,31 @@ export default {
             {name: 'Tutorials',view: 'Tutorials'},
             {name: 'Calculator',view: 'Calculator'},
         ],
+        shop:[],
+        cover_image:'',
+        products:[],
+
     }),
+
+    mounted() {
+      this.loadShop();
+    },
+
+    methods: {
+      async loadShop() {
+        await this.$axios.get(
+          '/api/my-shops/' + this.$route.params.id
+        ).then((res) => {
+          this.shop = res.data.data;
+          this.cover_image = this.shop.cover_image;
+        })
+        .catch((error) => {
+          if(error.response.status == 404){
+            this.$nuxt.error({ statusCode: 404, message: 'err message' })
+          }
+        })
+      }
+
+    }
 }
 </script>

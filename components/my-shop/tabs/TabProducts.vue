@@ -27,15 +27,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, i) in items" :key="i">
-                            <td>{{ item.id }}</td>
+                        <tr v-for="(item, i) in products.data" :key="i">
+                            <td>{{ (currentPage*4) - 4 + i + 1 }}</td>
                             <td>
-                                <img class="w-12 h-12" :src="require(`~/assets/img/products/${item.photo}.png`)" alt="Image">
+                                <img class="w-12 h-12" :src="require(`~/assets/img/products/default.png`)" alt="Image">
                             </td>
-                            <td>{{ item.title }}</td>
-                            <td>{{ item.categori }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.category.name }}</td>
                             <td>{{ item.price }}</td>
-                            <td>{{ item.avl }}</td>
+                            <td>{{ item.total_stocks }}</td>
                             <td>
                                 <n-link to=""><i class="ri-edit-2-fill mr-5"></i></n-link>
                                 <n-link to=""><i class="ri-delete-bin-2-fill"></i></n-link>
@@ -46,7 +46,7 @@
                 <!-- End Product tables -->
                 <!-- Paginate -->
                 <div class="px-3 pb-8">
-                    <Paginate/>
+                    <Paginate :totalPages="totalPages" :total="total" :currentPage="currentPage" :perPage="perPage" v-on:pagechanged="loadProducts" />
                 </div>
                 <!-- End Paginate -->
             </div>
@@ -65,26 +65,42 @@ export default {
     },
     data: () => ({
         filterTitle: 'Categories',
-        filtersData: [
-            {url: '', name: 'Food'},
-            {url: '', name: 'Groceries'},
-            {url: '', name: 'Furniture'},
-            {url: '', name: 'Toys'},
-            {url: '', name: 'Electronics'},
-            {url: '', name: 'Fashion'},
-        ],
+        filtersData: [],
+        totalPages:0,
+        total:0,
+        currentPage:0,
+        perPage:0,
+        products: [],
+    }),
 
-        items: [
-            {id: '1', photo: 'img-1', title: 'Ceiling circle black electric deem lamp', categori: 'Home Decor', price: '1195', avl: '25'}, 
-            {id: '2', photo: 'img-2', title: 'Ceiling circle black electric deem lamp', categori: 'Home Decor', price: '1195', avl: '25'}, 
-            {id: '3', photo: 'img-3', title: 'Ceiling circle black electric deem lamp', categori: 'Home Decor', price: '1195', avl: '25'}, 
-            {id: '4', photo: 'img-4', title: 'Ceiling circle black electric deem lamp', categori: 'Home Decor', price: '1195', avl: '25'}, 
-            {id: '5', photo: 'img-5', title: 'Ceiling circle black electric deem lamp', categori: 'Home Decor', price: '1195', avl: '25'}, 
-            {id: '6', photo: 'img-1', title: 'Ceiling circle black electric deem lamp', categori: 'Home Decor', price: '1195', avl: '25'}, 
-            {id: '7', photo: 'img-2', title: 'Ceiling circle black electric deem lamp', categori: 'Home Decor', price: '1195', avl: '25'}, 
-            {id: '8', photo: 'img-3', title: 'Ceiling circle black electric deem lamp', categori: 'Home Decor', price: '1195', avl: '25'}, 
-            {id: '9', photo: 'img-4', title: 'Ceiling circle black electric deem lamp', categori: 'Home Decor', price: '1195', avl: '25'}, 
-        ]
-    })
+    mounted(){
+      this.loadProducts();
+      this.loadCategories();
+    },
+
+    methods: {
+      async loadProducts(value) {
+        await this.$axios.get(
+          '/api/products-by-shop/' + this.$route.params.id + '?page=' + value
+        ).then((res) => {
+          this.products = res.data.data;
+          this.total = this.products.meta.total;
+          this.totalPages = this.products.meta.last_page;
+          this.currentPage = this.products.meta.current_page;
+          this.perPage = this.products.meta.per_page;
+        }).catch(error => {
+          console.log(error)
+        })
+      },
+      async loadCategories() {
+        await this.$axios.get('/api/categories/base')
+        .then((res) => {
+          this.filtersData = res.data
+        }).catch(error => {
+          console.log(error)
+        })
+      }
+    },
+
 }
 </script>
