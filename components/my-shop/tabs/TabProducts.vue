@@ -12,7 +12,7 @@
                         <i class="ri-search-line mr-2"></i>
                         <input class="focus:outline-none" type="text" placeholder="Search products">
                     </div>
-                    <n-link to="/add-product" class="bg-orange-1 text-white rounded-lg py-2 px-4">Add Product</n-link>
+                    <n-link to="/add-product" class="bg-orange-1 text-white rounded-lg py-2 px-4 focus:outline-none">Add Product</n-link>
                 </div>
                 <table class="w-full text-left mb-6">
                     <thead>
@@ -52,6 +52,8 @@
             </div>
         </div>
         <!-- End Products Section -->
+
+        
     </div>
 </template>
 <script>
@@ -63,7 +65,8 @@ export default {
         Paginate,
         DataFilter,
     },
-    data: () => ({
+    data () {
+      return {
         filterTitle: 'Categories',
         filtersData: [],
         totalPages:0,
@@ -71,11 +74,12 @@ export default {
         currentPage:0,
         perPage:0,
         products: [],
-    }),
+      }
+    },
 
     mounted(){
-      this.loadProducts();
-      this.loadCategories();
+      // this.loadProducts();
+      // this.loadCategories();
     },
 
     methods: {
