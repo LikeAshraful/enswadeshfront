@@ -87,6 +87,30 @@
                         </div>
                     </div>
                 </div>
+                <div v-if="make_a_list" class="bg-white rounded-lg mb-6">
+                    <p class="title">Make a list</p>
+                    <div class="p-2">
+                        <table class="w-full">
+                            <tr class="font-bold">
+                                <td>Product name</td>
+                                <td>Rate</td>
+                                <td>Per Unit</td>
+                                <td>Discount</td>
+                                <td>Offer</td>
+                                <td></td>
+                            </tr>
+                            <tr v-for="(list, i) in lists" :key="i">
+                                <td><input type="text" class="input-field focus:outline-none my-1" placeholder="Name"></td>
+                                <td><input type="text" class="input-field focus:outline-none my-1" placeholder="0"></td>
+                                <td><input type="text" class="input-field focus:outline-none my-1" placeholder="0"></td>
+                                <td><input type="text" class="input-field focus:outline-none my-1" placeholder="0"></td>
+                                <td><input type="text" class="input-field focus:outline-none my-1" placeholder="0"></td>
+                                <td><button class="focus:outline-none text-orange-1" v-if="i == lists-1 && i != 0" @click="removeList"><i class="ri-close-circle-fill"></i></button></td>
+                            </tr>
+                        </table>
+                        <button @click="addList" class="font-bold text-orange-1 focus:outline-none">Add another</button>
+                    </div>
+                </div>
                 <div v-if="weight_wise" class="bg-white rounded-lg mb-6">
                     <p class="title">Weight Wise Price Information</p>
                     <div class="p-2">
@@ -325,6 +349,7 @@ export default {
             featurs: 1,
             sizes: 1,
             weights: 1,
+            lists: 1,
             breadCrumbs: [
                 {title: 'Home', url: '/'},
                 {title: 'My Shop', url: '/my-shop'},
@@ -376,6 +401,18 @@ export default {
             if(this.weights > 1)
             {
                 this.weights -= 1;
+            }
+        },
+
+        addList()
+        {
+            this.lists += 1;
+        },
+        removeList()
+        {
+            if(this.lists > 1)
+            {
+                this.lists -= 1;
             }
         },
 
