@@ -163,7 +163,7 @@ export default {
 
                 this.$axios.post("/api/my-shops", formData)
                 .then(response => {
-                    // console.log(response.data);
+                    console.log(response.data.data.id);
                     this.$router.push('/shop/under-verification/' + response.data.data.id);
                     this.$toast.success('Your shop is created successfully !');
                 })

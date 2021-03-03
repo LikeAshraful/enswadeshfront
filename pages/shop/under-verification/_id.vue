@@ -43,7 +43,10 @@ import Breadcrumb from '~/components/common/Breadcrumb.vue';
 import { mapMutations } from 'vuex'
 
 export default {
-    middleware: ['auth','shop-verification'],
+    middleware: [
+      'auth',
+      'shop-verification'
+    ],
 
   components: {
       Breadcrumb,
@@ -57,22 +60,21 @@ export default {
           shop:'',
       };
   },
-  mounted(){
-    this.loadShop();
-  },
   computed: {
     set() {
-      this.$store.commit('shopstatus/add', this.shop.status)
-      this.$store.commit('shopstatus/setID', this.$route.params.id)
+      this.$store.commit('shopstatus/setShop', this.shop)
     }
+  },
+  mounted(){
+    this.loadShop();
   },
   methods: {
     async loadShop() {
       await this.$axios.get(
-        '/api/my-shops/' + this.$route.params.id
+        '/api/my-shops/pending/' + this.$route.params.id
       ).then((res) => {
         this.shop = res.data.data;
-        console.log('status = ' + this.shop.status);
+        console.log(res.data);
       })
       .catch((error) => {
         if(error.response.status == 404){
