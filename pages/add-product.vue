@@ -7,31 +7,15 @@
             <n-link to="#" class="text-blue-1 font-bold">Need help?</n-link>
         </div>
         <p class="title">Choose an appropriate format</p>
-        <div class="flex my-4">
-            <button @click="simpleFormat" :class="simple_format ? 'bg-green-3':'bg-white'" class="font-bold border border-gray-3 hover:bg-green-3 py-1 px-4 focus:outline-none">Simple format</button>
-            <button @click="sizeWise" :class="size_wise ? 'bg-green-3':'bg-white'" class="font-bold border border-gray-3 hover:bg-green-3 py-1 px-4 focus:outline-none">Size wise</button>
-            <button @click="weightWise" :class="weight_wise ? 'bg-green-3':'bg-white'" class="font-bold border border-gray-3 hover:bg-green-3 py-1 px-4 focus:outline-none">Weight wise</button>
-            <button @click="makeAList" :class="make_a_list ? 'bg-green-3':'bg-white'" class="font-bold border border-gray-3 hover:bg-green-3 py-1 px-4 focus:outline-none">Make a list</button>
+        <div class="p-2">
+            <div class="flex my-4">
+                <button @click="simpleFormat" :class="simple_format ? 'bg-green-3':'bg-white'" class="font-bold border border-gray-3 hover:bg-green-3 py-1 px-4 focus:outline-none">Simple format</button>
+                <button @click="sizeWise" :class="size_wise ? 'bg-green-3':'bg-white'" class="font-bold border border-gray-3 hover:bg-green-3 py-1 px-4 focus:outline-none">Size wise</button>
+                <button @click="weightWise" :class="weight_wise ? 'bg-green-3':'bg-white'" class="font-bold border border-gray-3 hover:bg-green-3 py-1 px-4 focus:outline-none">Weight wise</button>
+                <button @click="makeAList" :class="make_a_list ? 'bg-green-3':'bg-white'" class="font-bold border border-gray-3 hover:bg-green-3 py-1 px-4 focus:outline-none">Make a list</button>
+            </div>
+            <p class="mb-4">Write here why use this format as a helper text</p>
         </div>
-        <!-- <div class="flex flex-row my-4 font-bold">
-            <div class="flex items-center mr-6">
-                <input class="mr-2 w-4 h-4" type="radio" name="form-type" id="" checked>
-                <label for="">Simple format</label>
-            </div>
-            <div class="flex items-center mr-6">
-                <input class="mr-2 w-4 h-4" type="radio" name="form-type" id="">
-                <label for="">Size wise</label>
-            </div>
-            <div class="flex items-center mr-6">
-                <input class="mr-2 w-4 h-4" type="radio" name="form-type" id="">
-                <label for="">Weight wise</label>
-            </div>
-            <div class="flex items-center">
-                <input class="mr-2 w-4 h-4" type="radio" name="form-type" id="">
-                <label for="">Make a list</label>
-            </div>
-        </div> -->
-        <p class="mb-4">Write here why use this format as a helper text</p>
         <div class="bg-white rounded-lg mb-6">
             <p class="title">Similarity</p>
             <div class="p-2">
@@ -84,6 +68,56 @@
                         <div v-if="simple_format" class="mb-2">
                             <label class="input-label" for="quantity">Quantity</label>
                             <input class="input-field focus:outline-none" id="quantity" type="text" placeholder="Quantity">
+                        </div>
+                    </div>
+                </div>
+                <div v-if="simple_format" class="bg-white rounded-lg mb-6">
+                    <p class="title">Price</p>
+                    <div class="p-2">
+                        <div class="mb-2">
+                            <label class="input-label" for="price">Price</label>
+                            <div class="grid grid-cols-5 gap-8">
+                                <div class="col-span-4">
+                                    <input class="input-field focus:outline-none" id="price" type="text" placeholder="What is the price for product">
+                                </div>
+                                <div>
+                                    <select class="input-field focus:outline-none bg-gray-1" name="" id="">
+                                        <option value="">BDT</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="input-label" for="unit">Price Per Unit</label>
+                            <div class="grid grid-cols-5 gap-4">
+                                <div class="col-span-3">
+                                    <select class="input-field focus:outline-none" name="" id="category">
+                                        <option value="" selected disabled>Select</option>
+                                        <option value="">01</option>
+                                        <option value="">02</option>
+                                        <option value="">03</option>
+                                    </select>
+                                </div>
+                                <div class="col-span-2">
+                                    <input type="text" class="input-field focus:outline-none" placeholder="Create new">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="input-label" for="discount">Discount</label>
+                            <select class="input-field focus:outline-none" name="" id="discount">
+                                <option value="" selected disabled>Select</option>
+                                <option value="">...</option>
+                                <option value="">...</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="input-label" for="discount-price">Discount Price</label>
+                            <input class="input-field focus:outline-none" id="discount-price" type="text" placeholder="0">
+                        </div>
+                        <div class="mb-2">
+                            <label class="input-label" for="offer">Offer</label>
+                            <input class="input-field focus:outline-none" id="offer" type="text" placeholder="Type here">
                         </div>
                     </div>
                 </div>
@@ -151,70 +185,20 @@
                         <button @click="addSize" class="font-bold text-orange-1 focus:outline-none">Add another</button>
                     </div>
                 </div>
-                <div v-if="simple_format" class="bg-white rounded-lg mb-6">
-                    <p class="title">Price</p>
-                    <div class="p-2">
-                        <div class="mb-2">
-                            <label class="input-label" for="price">Price</label>
-                            <div class="grid grid-cols-5 gap-8">
-                                <div class="col-span-4">
-                                    <input class="input-field focus:outline-none" id="price" type="text" placeholder="Write here">
-                                </div>
-                                <div>
-                                    <select class="input-field focus:outline-none bg-gray-1" name="" id="">
-                                        <option value="">BDT</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2">
-                            <label class="input-label" for="unit">Price Per Unit</label>
-                            <select class="input-field focus:outline-none" name="" id="unit">
-                                <option value="" disabled selected>Select category</option>
-                                <option value="">...</option>
-                                <option value="">...</option>
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <label class="input-label" for="discount">Discount</label>
-                            <select class="input-field focus:outline-none" name="" id="discount">
-                                <option value="" selected disabled>Select category</option>
-                                <option value="">...</option>
-                                <option value="">...</option>
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <label class="input-label" for="discount-price">Discount Price</label>
-                            <input class="input-field focus:outline-none" id="discount-price" type="text" placeholder="Type code here">
-                        </div>
-                        <div class="mb-2">
-                            <label class="input-label" for="offer">Offer</label>
-                            <input class="input-field focus:outline-none" id="offer" type="text" placeholder="Type product brand name">
-                        </div>
-                    </div>
-                </div>
                 <div class="bg-white rounded-lg mb-6">
                     <p class="title">Services</p>
                     <div class="p-2">
                         <div class="mb-2">
-                            <div class="flex flex-row">
-                                <div class="flex items-center mr-8">
-                                    <input class="mr-2 w-4 h-4" type="radio" name="service" id="">
-                                    <label for="">Warranty</label>
-                                </div>
-                                <div class="flex items-center mr-8">
-                                    <input class="mr-2 w-4 h-4" type="radio" name="service" id="">
-                                    <label for="">Guarantee</label>
-                                </div>
-                                <div class="flex items-center">
-                                    <input class="mr-2 w-4 h-4" type="radio" name="service" id="" checked>
-                                    <label for="">None</label>
-                                </div>
-                            </div>
+                            <label class="input-label" for="warranty">Warranty</label>
+                            <textarea class="input-field focus:outline-none" name="" id="warranty" rows="3" placeholder="Write details here about warranty"></textarea>
                         </div>
                         <div class="mb-2">
-                            <label class="input-label">Details</label>
-                            <textarea class="input-field" name="" id="" rows="4" placeholder="Write details here about warranty or guarantee "></textarea>
+                            <label class="input-label" for="guarantee">Guarantee</label>
+                            <textarea class="input-field focus:outline-none" name="" id="guarantee" rows="3" placeholder="Write details here about guarantee"></textarea>
+                        </div>
+                        <div class="mb-2">
+                            <label class="input-label" for="discount-price">Return option</label>
+                            <textarea class="input-field focus:outline-none" name="" id="discount-price" rows="3" placeholder="Write details here about return policy"></textarea>
                         </div>
                     </div>
                 </div>
@@ -232,8 +216,8 @@
                                     <p class="inline">or drop images here</p> 
                                 </div>
                                 <label for="thumbnail" class="cursor-pointer">
-                                    <div v-if="url" class="relative pb-2/5 p-2 flex flex-row justify-center">
-                                        <img class="absolute h-full rounded-xl m-auto" :src="url" />
+                                    <div v-if="url" style="padding-bottom: 40%;" class="relative flex flex-row justify-center">
+                                        <img class="absolute p-2 h-full m-auto" :src="url" />
                                     </div>
                                 </label>
                                 <input class="hidden" type="file" id="thumbnail" @change="onFileChange">
@@ -299,9 +283,8 @@
                         </div>
                         <div class="mb-2">
                             <label class="input-label" for="">Bargain</label> <br>
-
-                            <label @click="bargainToggle" class="input-label cursor-pointer text-3xl" :class="bargain ? 'text-gray-2':'text-blue-1'" for="bargain-opt"><i :class="bargain ? 'ri-toggle-line':'ri-toggle-fill'"></i></label>
-                            <input :model="bar" class="hidden" id="bargain-opt" type="text" value="Yes">
+                            <span @click="bargainToggle" class="input-label cursor-pointer text-3xl" :class="bargain ? 'text-blue-1':'text-gray-2'" for="bargain-opt"><i :class="bargain ? 'ri-toggle-fill':'ri-toggle-line'"></i></span>
+        
                         </div>
                     </div>
                 </div>
