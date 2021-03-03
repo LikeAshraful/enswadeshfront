@@ -5,16 +5,15 @@
 
         <div class="lg:py-6 py-3 grid md:grid-cols-2 gap-3">
             <!-- Market Details -->
-            <market-details></market-details>
+            <market-details :market="market" :basePath="basePath"></market-details>
             <!-- Market Floors -->
             <div>
-                <floors :floors="floors.data"></floors>
+                <floors :total_floors="this.market.total_floor" :floors="floors.data"></floors>
             </div>
         </div>
-
         <!-- Shops -->
-        <loader v-if="isLoading"></loader>                
-        <shops v-else :shops="shops.data" :basePath="basePath"></shops>
+        <loader v-if="isLoading"></loader>
+        <shops v-else :shops="shops.data" :basePath="basePath" :market="market"></shops>
 
         <!-- Paginate -->
         <div class="pb-8">
@@ -40,11 +39,12 @@ export default {
         Shops,
     },
     data() {
-       return {         
+       return {
           isLoading: true,
           basePath: this.$axios.defaults.baseURL,
           floors: [],
           shops: [],
+          market: [],
           totalPages:0,
           total:0,
           currentPage:0,
@@ -62,6 +62,7 @@ export default {
     mounted() {
       this.loadFloors();
       this.loadShops();
+      this.loadMarket();
     },
     methods: {
       async loadFloors() {
@@ -69,6 +70,7 @@ export default {
           '/api/shops/shops-by-market-by-floor/' + this.$route.params.id
         ).then((res) => {
             this.floors = res.data;
+            console.log('total floor' + this.floors.data);
         })
       },
       async loadShops(value) {
@@ -81,6 +83,13 @@ export default {
           this.currentPage = this.shops.meta.current_page;
           this.perPage = this.shops.meta.per_page;
           this.isLoading = false;
+        })
+      },
+      async loadMarket() {
+        await this.$axios.$get(
+          '/api/markets/' + this.$route.params.id
+        ).then((res) => {
+          this.market = res.data;
         })
       }
     }
