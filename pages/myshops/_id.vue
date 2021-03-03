@@ -28,7 +28,11 @@ import MyShopDetails from '~/components/my-shop/MyShopDetails.vue';
 import Tab from '~/components/common/Tab.vue';
 
 export default {
-    middleware: ['auth','shop-verification'],
+    middleware: [
+      'auth',
+      // 'shop-verification'
+      ],
+
     components: {
         Breadcrumb,
         ImageSlider,
