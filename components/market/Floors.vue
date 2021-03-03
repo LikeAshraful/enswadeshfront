@@ -13,6 +13,6 @@
 <script>
 
 export default {
-    props: ['floors']
+    props: ['total_floors','floors']
 }
 </script>

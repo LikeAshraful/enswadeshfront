@@ -21,28 +21,11 @@
 
 <script>
 export default {
+  props: ['market', 'basePath'],
   data() {
     return {
-      market: [],
       imagepath: this.$axios.defaults.baseURL,
     }
   },
-
-  mounted() {
-      this.loadMarket();
-      this.basePath = this.$axios.defaults.baseURL;
-    },
-
-    methods: {
-      async loadMarket() {
-        await this.$axios.$get(
-          '/api/markets/' + this.$route.params.id
-        ).then((res) => {
-          this.market = res.data;
-        })
-      },
-
-
-    }
 }
 </script>
