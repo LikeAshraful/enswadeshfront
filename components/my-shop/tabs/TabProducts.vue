@@ -53,7 +53,7 @@
         </div>
         <!-- End Products Section -->
 
-        
+
     </div>
 </template>
 <script>
@@ -78,8 +78,8 @@ export default {
     },
 
     mounted(){
-      // this.loadProducts();
-      // this.loadCategories();
+      this.loadProducts();
+      this.loadCategories();
     },
 
     methods: {
@@ -100,6 +100,7 @@ export default {
         await this.$axios.get('/api/categories/base')
         .then((res) => {
           this.filtersData = res.data
+          console.log(this.filtersData);
         }).catch(error => {
           console.log(error)
         })
