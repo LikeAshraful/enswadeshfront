@@ -28,7 +28,7 @@ import MyShopDetails from '~/components/my-shop/MyShopDetails.vue';
 import Tab from '~/components/common/Tab.vue';
 
 export default {
-    middleware: 'auth',
+    middleware: ['auth','shop-verification'],
     components: {
         Breadcrumb,
         ImageSlider,
@@ -60,6 +60,12 @@ export default {
       this.loadShop();
     },
 
+    computed: {
+      set() {
+        this.$store.commit('shopstatus/add', this.shop.status)
+        this.$store.commit('shopstatus/setID', this.$route.params.id)
+      }
+    },
     methods: {
       async loadShop() {
         await this.$axios.get(

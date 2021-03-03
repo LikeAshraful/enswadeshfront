@@ -9,9 +9,11 @@
         </div>
         <div class="py-6 max-w-sm m-auto">
             <form @submit.prevent="submitForm">
-                <div class="mb-2">
+
+                <input v-if="this.$route.params.city_id" type="hidden" v-model="$v.city.$model">
+                <div v-else class="mb-2">
                     <label class="input-label" for="city-name">City <span class="require">*</span></label>
-                    <select @change="loadArea()" class="input-field focus:outline-none" id="city-name" v-model.trim="$v.city.$model" :class="{'is-invalid':$v.city.$error}">
+                    <select  @change="loadArea()" class="input-field focus:outline-none" id="city-name" v-model.trim="$v.city.$model" :class="{'is-invalid':$v.city.$error}">
                         <option value="0" disabled selected>Select City</option>
                         <option  v-for="(city, i) in cities" :key="i" :value="city.id">{{city.name}}</option>
                     </select>
@@ -19,7 +21,9 @@
                         <small v-if="!$v.city.required" :class="!$v.city.$error ? 'hidden':''">Field is required.</small>
                     </div>
                 </div>
-                <div class="mb-2">
+
+                <input v-if="this.$route.params.area_id" type="hidden" v-model="$v.area.$model">
+                <div v-else class="mb-2">
                     <label class="input-label" for="area-name">Area <span class="require">*</span></label>
                     <select @change="loadMarket()" class="input-field focus:outline-none" id="city-name" v-model.trim="$v.area.$model" :class="{'is-invalid':$v.area.$error}">
                         <option value="0" disabled selected>Select Area</option>
@@ -29,7 +33,12 @@
                         <small v-if="!$v.area.required" :class="!$v.area.$error ? 'hidden':''">Field is required.</small>
                     </div>
                 </div>
-                <div class="mb-2">
+                <div  v-if="this.$route.params.market_id"  class="mb-2">
+                    <label class="input-label" for="shop-name">Market Name <span class="require">*</span></label>
+                    <input type="hidden" v-model="$v.market.$model">
+                    <input class="input-field focus:outline-none" id="market-name" type="text" :placeholder="this.$route.params.market_name" disabled>
+                </div>
+                <div v-else class="mb-2">
                     <label class="input-label" for="market-name">Market Name <span class="require">*</span></label>
                     <select class="input-field focus:outline-none" id="market-name" v-model.trim="$v.market.$model" :class="{'is-invalid':$v.market.$error}">
                         <option value="" disabled selected>Select Market</option>
@@ -39,6 +48,8 @@
                         <small v-if="!$v.market.required" :class="!$v.market.$error ? 'hidden':''">Field is required.</small>
                     </div>
                 </div>
+
+
                 <div class="mb-2">
                     <label class="input-label" for="floor">Floor</label>
                     <select class="input-field focus:outline-none" id="floor" v-model="floor_no">
@@ -93,9 +104,9 @@ export default {
 
     data() {
         return {
-            city: 0,
-            area: 0,
-            market: '',
+            city: this.$route.params.city_id ? this.$route.params.city_id : 0,
+            area: this.$route.params.area_id ? this.$route.params.area_id : 0,
+            market: this.$route.params.market_id ? this.$route.params.market_id : '',
             floor_no: '',
             name: '',
             shopNo: '',
@@ -104,7 +115,7 @@ export default {
                 {title: 'Home', url: '/'},
                 {title: 'Go To Market', url: '/cities'},
                 {title: 'Dhaka', url: '/markets'},
-                {title: 'Eastern Plaza Shopping Complex', url: '/market'},
+                {title: this.$route.params.market_name, url: '/market'},
                 {title: 'Grand Floor', url: '/market'},
                 {title: 'Shop name goes to here', url: ''},
             ],
@@ -143,7 +154,6 @@ export default {
             this.$v.$touch();
             if(!this.$v.$invalid != null){
                 var formData = new FormData();
-                formData.append("id", 5);
                 formData.append("city_id", this.city);
                 formData.append("area_id", this.area);
                 formData.append("market_id", this.market);
@@ -153,8 +163,9 @@ export default {
 
                 this.$axios.post("/api/my-shops", formData)
                 .then(response => {
+                    // console.log(response.data);
+                    this.$router.push('/shop/under-verification/' + response.data.data.id);
                     this.$toast.success('Your shop is created successfully !');
-                    this.$router.push('/my-shop');
                 })
                 .catch(error => {
                     this.btnAction = false;
@@ -174,7 +185,7 @@ export default {
             })
         },
         async loadArea() {
-            await this.$axios.$get('/api/areas-by-city/' + this.city  )
+            await this.$axios.$get('/api/areas-by-city/' + this.city )
             .then(function( response ){
                 this.areas = response.data;
             }.bind(this));
