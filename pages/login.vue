@@ -35,12 +35,17 @@
 
             <div class="border-t text-gray-3 mb-6"></div>
 
-            <p class="text-center">Don't have an account? <n-link to="/shop-create" class="ml-2 text-orange-1 font-bold">Create account</n-link></p>
+            <p @click="openRegistrationModal" class="text-center">Don't have an account? <n-link to="/shop-create" class="ml-2 text-orange-1 font-bold">Create account</n-link></p>
         </div>
+
+        <!-- Registration Modal -->
+        <registration v-if="registrationModal" v-on:closeRegistrationModal="closeRegistrationModal()" v-on:openLoginModal="openLoginModal()"></registration>
+
     </div>
 </template>
 <script>
 import { required, minLength  } from 'vuelidate/lib/validators';
+import Registration from '~/components/auth/Registration.vue';
 
 export default {
     middleware: 'auth',
@@ -49,7 +54,8 @@ export default {
             phone: '',
             password: '',
             btnAction: false,
-            show: false
+            show: false,
+            registrationModal: false,
         }
     },
     validations: {
@@ -92,6 +98,13 @@ export default {
             }else{
                 this.$toast.warning('Please fill the form correctly!')
             }
+        },
+
+        openRegistrationModal(){
+            this.registrationModal = true;
+        },
+        closeRegistrationModal(){
+            this.registrationModal = false;
         },
     },
 }
