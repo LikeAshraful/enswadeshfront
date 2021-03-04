@@ -12,7 +12,7 @@
         </div>
 
         <!-- Photos -->
-        <image-slider></image-slider>
+        <slider class="mb-8"></slider>
 
         <!-- Tabs -->
         <tab :showTab="showTab" :tabs="tabs"></tab>
@@ -22,7 +22,7 @@
 
 <script>
 import Breadcrumb from '~/components/common/Breadcrumb.vue';
-import ImageSlider from '~/components/my-shop/ImageSlider.vue';
+import Slider from '~/components/shop/Slider.vue';
 import AddPhoto from '~/components/my-shop/AddPhoto.vue';
 import MyShopDetails from '~/components/my-shop/MyShopDetails.vue';
 import Tab from '~/components/common/Tab.vue';
@@ -35,7 +35,7 @@ export default {
 
     components: {
         Breadcrumb,
-        ImageSlider,
+        Slider,
         AddPhoto,
         MyShopDetails,
         Tab,
