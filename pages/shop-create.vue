@@ -81,7 +81,7 @@
                     </div>
                     <div class="mb-2">
                         <label class="input-label" for="block">Block Number (If any)</label>
-                        <input class="input-field focus:outline-none" id="block" type="text" placeholder="A">
+                        <input class="input-field focus:outline-none" id="block" type="text" v-model="block" placeholder="A">
                     </div>
 
                     <div class="divider my-6"></div>
@@ -120,6 +120,7 @@ export default {
             floor_no: '',
             name: '',
             shopNo: '',
+            block:'',
             btnAction: false,
             breadCrumbs: [
                 {title: 'Home', url: '/'},
@@ -170,6 +171,7 @@ export default {
                 formData.append('floor_no', this.floor_no);
                 formData.append("name", this.name);
                 formData.append("shop_no", this.shopNo);
+                formData.append("block", this.block);
 
                 this.$axios.post("/api/my-shops", formData)
                 .then(response => {
@@ -194,6 +196,7 @@ export default {
                 this.cities = res.data;
             })
         },
+
         async loadArea() {
             await this.$axios.$get('/api/areas-by-city/' + this.city )
             .then(function( response ){
