@@ -26,12 +26,12 @@
                     <p>Video call</p>
                 </n-link>
             </div>
-            <div class="md:my-5 pt-2">
-                <n-link to="" class="w-full md:px-6 px-3 md:py-2 py-1 font-bold md:text-xl rounded-lg bg-green-3">Subscribe</n-link>
-                <n-link to="" class="w-full md:px-6 px-3 md:py-2 py-1 font-bold md:text-xl rounded-lg border-2 border-orange-1 md:ml-3 ml-1">Invite Friend</n-link>
+            <div class="md:my-4">
+                <n-link to="" class="w-full md:px-6 px-3 md:py-1 py-1 font-semibold md:text-xl rounded-lg bg-green-3">Subscribe</n-link>
+                <n-link to="" class="w-full md:px-6 px-3 md:py-1 py-1 font-semibold md:text-xl rounded-lg border border-orange-1 md:ml-3 ml-1">Invite Friend</n-link>
             </div>
-            <div class="pt-3">
-                <div class="text-purple-2 border-2 border-purple-2 rounded-lg md:p-2 p-1">
+            <div>
+                <div class="text-purple-2 border border-purple-2 rounded-lg md:p-2 p-1">
                     <p><strong>Note:</strong> Subscribe us & get 5% discount on every product</p>
                 </div>
             </div>
