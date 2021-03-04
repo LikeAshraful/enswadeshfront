@@ -29,12 +29,12 @@
                 </tr>
                 <tr>
                     <td class="font-bold pt-3">Block Number:</td>
-                    <td>B</td>
+                    <td>{{shop.block}}</td>
                 </tr>
             </table>
         </div>
         <div class="flex justify-center mb-6">
-            <button class="font-semibold border border-gray-3 py-1 px-8 focus:outline-none hover:bg-green-3 rounded">Cancel Application</button>
+            <button @click="cancelShopCreate" class="font-semibold border border-gray-3 py-1 px-8 focus:outline-none hover:bg-green-3 rounded">Cancel Application</button>
         </div>
     </div>
 </template>
@@ -81,6 +81,17 @@ export default {
           this.$nuxt.error({ statusCode: 404, message: 'err message' })
         }
       })
+    },
+    async cancelShopCreate() {
+      await this.$axios.$get(
+        '/api/my-shops/delete/' + this.$route.params.id
+      ).then((res) => {
+        this.$router.push('/market/' + this.shop.market.slug + '/' + this.shop.market.id);
+        this.$toast.success('Your shop is Canceled !');
+      })
+      .catch(error => {
+          this.$toast.error('Oops..! Something wrong...!');
+      });
     }
 
     }
