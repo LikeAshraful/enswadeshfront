@@ -4,11 +4,13 @@
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
 
         <div class="lg:py-6 py-3 grid sm:grid-cols-2 gap-3">
-            <!-- Slider -->
-            <slider></slider>
+            <!-- Shop thumbnail -->
+            <shop-thumbnail></shop-thumbnail>
             <!-- Shop Details -->
             <shopDetails :shop="shop"></shopDetails>
         </div>
+        <!-- Slider -->
+        <slider></slider>
         <div class="">
             <div class="grid lg:grid-cols-4 sm:grid-cols-3 gap-4 my-5">
                 <!-- Filter -->
@@ -26,6 +28,7 @@
 import Breadcrumb from '~/components/common/Breadcrumb.vue';
 import Slider from '~/components/shop/Slider.vue';
 import ShopDetails from '~/components/shop/ShopDetails.vue';
+import ShopThumbnail from '~/components/shop/ShopThumbnail.vue';
 import DataFilter from '~/components/common/Filter.vue';
 import Products from '~/components/shop/Products.vue';
 
@@ -34,8 +37,9 @@ export default {
         Breadcrumb,
         Slider,
         ShopDetails,
+        ShopThumbnail,
         DataFilter,
-        Products,
+        Products
     },
     data() {
         return {
