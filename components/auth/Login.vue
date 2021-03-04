@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="fixed inset-0 z-50 flex flex-col  justify-center items-center">
+        <div class="fixed inset-0 z-50 flex flex-col  justify-center items-center my-12">
             <div class="w-full max-w-screen-sm text-right">
                 <button @click="closeLoginModal" class="text-gray-1 text-2xl focus:outline-none"><i class="ri-close-line"></i></button>
             </div>
-            <div class="max-w-screen-sm shadow-lg bg-white">
+            <div class="max-w-screen-sm shadow-lg bg-white overflow-auto">
                 <div class="grid sm:grid-cols-7">
                     <div class="sm:col-span-3 bg-green-4 text-white p-6 flex flex-col justify-between">
                         <div>
