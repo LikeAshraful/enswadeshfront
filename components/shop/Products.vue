@@ -5,7 +5,7 @@
             <p class="text-2xl font-black">All Products</p>
             <div style="margin-left: -1px;" class="flex items-center border border-gray-2 px-3 py-1 rounded-full overflow-hidden">
                 <img class="h-4 mr-1" src="~/assets/icons/search.png" alt="Icon">
-                <input class="focus:outline-none w-full font-bold" type="text" placeholder="Search anything">
+                <input class="focus:outline-none w-full font-bold" type="text" @keyup="getProductsSearchResults"  v-model="keyword" placeholder="Search Products">
             </div>
         </div>
 
@@ -39,6 +39,7 @@
     </div>
 </template>
 <script>
+import _ from "lodash"
 import Paginate from '~/components/common/Paginate.vue';
 import ProductDetails from '~/components/product-details/Product-details.vue';
 
@@ -46,15 +47,17 @@ export default {
     props:['basePath'],
 
     data(){
-        return {
-            modal: false,
-            totalPages:0,
-            total:0,
-            currentPage:0,
-            perPage:0,
-            products:[],
-            imageUrl: this.$axios.imageURL,
-        }
+      return {
+        modal: false,
+        totalPages:0,
+        total:0,
+        currentPage:0,
+        perPage:0,
+        products:[],
+        //sproducts:[],
+        imageUrl: this.$axios.imageURL,
+        keyword: null,
+      }
     },
     components: {
         Paginate,
@@ -82,10 +85,28 @@ export default {
                 this.totalPages = this.products.meta.last_page;
                 this.currentPage = this.products.meta.current_page;
                 this.perPage = this.products.meta.per_page;
-                
+
                 console.log(this.products);
             })
-        }
+        },
+
+      //  async getProductsSearchResults() {
+      //     await this.$axios.post('/api/search/products', { params: { keyword: this.keyword, id: this.$route.params.id } })
+      //           .then(res => this.products = res.data)
+      //           // .catch(error => {});
+      //   },
+
+        getProductsSearchResults: _.debounce(function (e) {
+          console.log(this.keyword);
+            this.$axios.post('/api/search/products/', { params: { keyword: this.keyword, id: this.$route.params.id } })
+                .then(res => {
+                    this.products = res.data.data;
+                    this.total = this.products.meta.total;
+                    this.totalPages = this.products.meta.last_page;
+                    this.currentPage = this.products.meta.current_page;
+                    this.perPage = this.products.meta.per_page;
+                })
+        }, 500),
     },
 }
 </script>
