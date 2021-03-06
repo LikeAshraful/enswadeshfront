@@ -36,27 +36,14 @@ export default {
   name: "Top",
     data (){
       return {
-        topMarkets: [],
-        basePath: this.$axios.defaults.baseURL,
-        isLoading: true,
+        basePath: null,
       }
     },
+
+    props : ['topMarkets', 'isLoading'],
 
     mounted() {
-      this.loadMarket();
       this.basePath = this.$axios.defaults.baseURL;
-    },
-
-
-    methods: {
-      async loadMarket() {
-        await this.$axios.$get(
-          '/api/markets/top-market-by-city/' + this.$route.params.id
-        ).then((res) => {
-          this.topMarkets = res.data;
-          this.isLoading = false;
-        })
-      }
     }
 }
 </script>

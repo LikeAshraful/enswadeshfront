@@ -5,7 +5,7 @@
         <div class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 sm:gap-3 gap-2 pt-6 pb-12">
           <loader v-if="isLoading"></loader>
           <template v-else>
-            <div v-for="(market, i) of markets" :key="i">
+            <div v-for="(market, i) of allMarkets" :key="i">
                 <NuxtLink :to="{name:'market-slug-id', params:{slug: market.slug, id: market.id }}">
                 <div class="border-2 md:border-r-8 border-r-4 md:border-b-8 border-b-4 border-green-4 rounded-xl">
                   <div class="rounded-t-xl relative">
@@ -25,31 +25,18 @@
 </template>
 <script>
 export default {
+
     data (){
       return {
-        markets: [],
         basePath: null,
-        isLoading:true,
       }
     },
+
+    props : ['allMarkets', 'isLoading'],
 
     mounted() {
-      this.loadMarket();
       this.basePath = this.$axios.defaults.baseURL;
     },
-
-
-    methods: {
-      async loadMarket() {
-        await this.$axios.$get(
-          '/api/markets/all-market-by-city/' + this.$route.params.id
-        ).then((res) => {
-          this.markets = res.data;
-          console.log(res.data)
-          this.isLoading = false;
-        })
-      }
-    }
 
 }
 </script>
