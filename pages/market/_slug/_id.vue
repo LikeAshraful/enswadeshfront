@@ -43,6 +43,7 @@ export default {
           isLoading: true,
           basePath: this.$axios.defaults.baseURL,
           floors: [],
+          shopCountByFloor: [],
           shops: [],
           market: [],
           totalPages:0,
@@ -62,6 +63,7 @@ export default {
     mounted() {
       this.loadFloors();
       this.loadShops();
+      //this.loadFloorsByShop();
       this.loadMarket();
     },
     methods: {
@@ -70,7 +72,14 @@ export default {
           '/api/shops/shops-by-market-by-floor/' + this.$route.params.id
         ).then((res) => {
             this.floors = res.data;
-            console.log('total floor' + this.floors.data);
+            console.log(this.floors);
+        })
+      },
+      async loadFloorsByShop() {
+        await this.$axios.get(
+          '/api/shops/shops-by-market-by-floors/' + this.$route.params.id
+        ).then((res) => {
+            this.shopCountByFloor = res.data;
         })
       },
       async loadShops(value) {

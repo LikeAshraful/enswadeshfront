@@ -125,9 +125,9 @@ export default {
                     this.$toast.success('Successfully login your account!');
                     this.closeLoginModal();
                 })
-                .catch(error => {
+                .catch((error) => {
                     this.btnAction = false;
-                    this.$toast.error('Oops..! Something wrong...!');
+                    this.$toast.error("Oops..!-" + error.response.data.message);
                 });
                 this.btnAction = true;
                 //this.$toast.info('Thanks for your submission!');

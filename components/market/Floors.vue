@@ -4,7 +4,7 @@
             <div v-for="(floor, i) in floors" :key="i">
                 <div :class="floor.active" class="border border-gray-4 hover:bg-green-3 rounded-lg text-center p-2">
                     <p>{{ floor.shop_count }} Shops</p>
-                    <p class="font-bold">{{ floor.floor_no }}</p>
+                    <p class="font-bold">{{ floor.floor }}</p>
                 </div>
             </div>
         </div>

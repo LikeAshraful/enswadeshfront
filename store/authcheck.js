@@ -1,6 +1,6 @@
 // export const state = {
-//   token: $auth.token,
-//   user: $auth.user,
+//   token: this.state.token,
+//   user: this.state.user,
 // };
 
 // export const getters = {

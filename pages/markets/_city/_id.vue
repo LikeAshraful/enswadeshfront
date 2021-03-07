@@ -7,7 +7,7 @@
             <div class="grid lg:grid-cols-4 sm:grid-cols-3 gap-4 my-5">
                 <!-- Filter -->
                 <div>
-                    <data-filter :filtersData="filtersData" :filterTitle="filterTitle" v-on:filterByArea="loadMarket"></data-filter>
+                    <data-filter :filtersData="filtersData" :filterTitle="filterTitle" v-on:filterByData="loadMarket"></data-filter>
                 </div>
 
                 <div class="lg:col-span-3 sm:col-span-2">

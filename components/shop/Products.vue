@@ -8,10 +8,9 @@
                 <input class="focus:outline-none w-full font-bold" type="text" @keyup="getProductsSearchResults"  v-model="keyword" placeholder="Search Products">
             </div>
         </div>
-
-        <div class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
-            {{imageUrl}}
-            <div class="mb-8" v-for="(product, i) in products.data" :key="i" >
+        <loader v-if="isLoading"></loader>
+        <div v-else class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
+            <div v-for="(product, i) in products.data" :key="i" >
               <!-- <NuxtLink to="/"> -->
                 <div @click="showModal" class="h-full">
                     <div class="">
@@ -28,11 +27,6 @@
               <!-- </NuxtLink> -->
             </div>
         </div>
-        <!-- Paginate -->
-        <div class="px-3 pb-8">
-            <Paginate :totalPages="totalPages" :total="total" :currentPage="currentPage" :perPage="perPage" v-on:pagechanged="loadProducts" />
-        </div>
-
         <!-- Product Details -->
         <product-details v-if="modal" v-on:product-modal="closeModal($event)"></product-details>
 
@@ -40,32 +34,23 @@
 </template>
 <script>
 import _ from "lodash"
-import Paginate from '~/components/common/Paginate.vue';
 import ProductDetails from '~/components/product-details/Product-details.vue';
 
 export default {
-    props:['basePath'],
+    props:['basePath', 'products', 'isLoading'],
 
     data(){
       return {
         modal: false,
-        totalPages:0,
-        total:0,
-        currentPage:0,
-        perPage:0,
-        products:[],
-        //sproducts:[],
         imageUrl: this.$axios.imageURL,
         keyword: null,
       }
     },
     components: {
-        Paginate,
         ProductDetails,
     },
 
     mounted() {
-        this.loadProducts();
         // this.showModal();
     },
 
@@ -76,26 +61,6 @@ export default {
         closeModal(e){
             this.modal = e;
         },
-        async loadProducts(value) {
-            await this.$axios.get(
-                '/api/products-by-shop/' + this.$route.params.id + '?page=' + value
-                ).then((res) => {
-                this.products = res.data.data;
-                this.total = this.products.meta.total;
-                this.totalPages = this.products.meta.last_page;
-                this.currentPage = this.products.meta.current_page;
-                this.perPage = this.products.meta.per_page;
-
-                console.log(this.products);
-            })
-        },
-
-      //  async getProductsSearchResults() {
-      //     await this.$axios.post('/api/search/products', { params: { keyword: this.keyword, id: this.$route.params.id } })
-      //           .then(res => this.products = res.data)
-      //           // .catch(error => {});
-      //   },
-
         getProductsSearchResults: _.debounce(function (e) {
           console.log(this.keyword);
             this.$axios.post('/api/search/products/', { params: { keyword: this.keyword, id: this.$route.params.id } })
