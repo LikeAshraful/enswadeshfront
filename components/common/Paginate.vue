@@ -1,5 +1,5 @@
 <template>
-    <div>           
+    <div>
         <ul v-if="totalPages > 1" class="md:my-6 my-3 sm:h-10 h-8 flex flex-wrap justify-center">
             <li>
                 <button type="button"  @click="onClickPreviousPage" :disabled="isInFirstPage" class="border border-gray-1 h-full sm:w-10 w-8 sm:mx-2 mx-1 rounded">
@@ -18,7 +18,7 @@
             </li>
         </ul>
         <ul v-else></ul>
-        
+
     </div>
 </template>
 <script>
@@ -52,14 +52,17 @@ export default {
         return 1;
       }
 
-      if (this.currentPage === this.totalPages) { 
+      if (this.currentPage === this.totalPages) {
         return this.totalPages - this.maxVisibleButtons + 1;
+      }
+      if(this.currentPage === 1){
+        return this.currentPage - 0;
       }
 
       return this.currentPage - 1;
     },
-    endPage() {      
-      return Math.min(this.startPage + this.maxVisibleButtons - 1, this.totalPages);      
+    endPage() {
+      return Math.min(this.startPage + this.maxVisibleButtons - 1, this.totalPages);
     },
     pages() {
       const range = [];
@@ -67,7 +70,7 @@ export default {
       for (let i = this.startPage; i <= this.endPage; i+= 1 ) {
         range.push({
           name: i,
-          isDisabled: i === this.currentPage 
+          isDisabled: i === this.currentPage
         });
       }
       return range;
@@ -93,7 +96,7 @@ export default {
       this.$emit('pagechanged', this.currentPage + 1);
     },
     onClickLastPage() {
-      this.$emit('pagechanged', this.totalPages);    
+      this.$emit('pagechanged', this.totalPages);
     },
     isPageActive(page) {
       return this.currentPage === page;

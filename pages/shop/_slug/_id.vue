@@ -14,10 +14,14 @@
         <div class="">
             <div class="grid lg:grid-cols-4 sm:grid-cols-3 gap-4 my-5">
                 <!-- Filter -->
-                <dataFilter :filtersData="filtersData" :filterTitle="filterTitle"/>
+                <dataFilter :filtersData="filtersData" :filterTitle="filterTitle" v-on:filterByData="loadProducts"/>
                 <div class="lg:col-span-3 sm:col-span-2">
                     <!-- All Products -->
-                    <products :basePath="basePath"></products>
+                    <products :basePath="basePath" :products="products" :isLoading="isLoading"></products>
+                    <!-- Paginate -->
+                    <div class="px-3 pb-8">
+                        <Paginate :totalPages="totalPages" :total="total" :currentPage="currentPage" :perPage="perPage" v-on:pagechanged="loadProductsPaginate" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -31,6 +35,7 @@ import ShopDetails from '~/components/shop/ShopDetails.vue';
 import ShopThumbnail from '~/components/shop/ShopThumbnail.vue';
 import DataFilter from '~/components/common/Filter.vue';
 import Products from '~/components/shop/Products.vue';
+import Paginate from '~/components/common/Paginate.vue';
 
 export default {
     components: {
@@ -39,7 +44,8 @@ export default {
         ShopDetails,
         ShopThumbnail,
         DataFilter,
-        Products
+        Products,
+        Paginate,
     },
     data() {
         return {
@@ -57,10 +63,18 @@ export default {
           filterTitle: 'Categories',
           filtersData: [],
           shop: {},
+          products: [],
+          totalPages:0,
+          total:0,
+          currentPage:0,
+          perPage:0,
+          isLoading: true
         }
     },
     mounted() {
       this.loadData();
+      this.loadProducts();
+      this.loadProductsPaginate();
     },
     methods: {
       async loadData () {
@@ -74,7 +88,29 @@ export default {
         ).then((res) => {
           this.shop = res.data.data;
         })
-      }
+      },
+
+      async loadProducts(id, isLoading) {
+          this.isLoading = isLoading;
+          await this.$axios.get(
+            id ? '/api/products-by-shop/category/' + this.$route.params.id + '/' + id : '/api/products-by-shop/' + this.$route.params.id
+              ).then((res) => {
+              this.products = res.data.data;
+              this.isLoading = false;
+          })
+      },
+      async loadProductsPaginate(value) {
+          await this.$axios.get(
+            '/api/products-by-shop/' + this.$route.params.id + '?page=' + value
+              ).then((res) => {
+              this.products = res.data.data;
+              this.total = this.products.meta.total;
+              this.totalPages = this.products.meta.last_page;
+              this.currentPage = this.products.meta.current_page;
+              this.perPage = this.products.meta.per_page;
+              this.isLoading = false;
+          })
+      },
     }
 }
 </script>
