@@ -1,10 +1,7 @@
 <template>
     <div>
-        <div class="fixed inset-0 z-50 flex flex-col  justify-center items-center">
-            <div class="w-full max-w-screen-sm text-right">
-                <button @click="closeModal" class="text-gray-1 text-2xl focus:outline-none"><i class="ri-close-line"></i></button>
-            </div>
-            <div class="max-w-screen-sm shadow-lg bg-white">
+        <div @click="closeModal" class="fixed inset-0 z-50 flex flex-col justify-center items-center py-12">
+            <div @click="wait" class="max-w-screen-sm shadow-lg bg-white overflow-auto">
                 <div class="grid sm:grid-cols-2 gap-6 p-6">
                     <div class="">
                         <div class="relative pb-full">
@@ -18,6 +15,9 @@
                         </div>
                     </div>
                     <div class="">
+                        <div class="w-full text-right">
+                            <button @click="closeModal" class="text-2xl focus:outline-none"><i class="ri-close-line"></i></button>
+                        </div>
                         <p class="font-bold text-2xl mb-2">Ceiling circle black electric deem lamp</p>
                         <p class="bg-green-4 px-2 py-1 text-white inline">
                             4.5<i class="ri-star-fill ml-2 text-yellow-2"></i>
@@ -80,23 +80,35 @@
                 </div>
             </div>
         </div>
-        <div class="opacity-50 fixed inset-0 z-40 bg-green-4"></div>
+        <div @click="closeModal" class="opacity-50 fixed inset-0 z-40 bg-green-4"></div>
     </div>
 </template>
 <script>
 export default {
-    data:() => ({
-        photos:[
-            'img-6',
-            'img-1',
-            'img-2',
-            'img-3',
-        ]
-    }),
-    methods: {
-        closeModal(){
-            this.$emit('product-modal',false);
+    data(){
+        return {
+            photos:[
+                'img-6',
+                'img-1',
+                'img-2',
+                'img-3',
+            ],
+            close_modal: 'closeModal',
         }
+    },
+    methods: {
+        closeModal()
+        {
+            if(this.close_modal == 'closeModal')
+            {
+                this.$emit('product-modal',false);
+            }
+        },
+        wait()
+        {
+            this.close_modal = 'wait';
+            setTimeout(() => this.close_modal = 'closeModal', 500);
+        },
     },
 }
 </script>

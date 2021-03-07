@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="fixed inset-0 z-50 flex flex-col items-end max-w-screen-xl xl:px-10 px-2 m-auto mt-24">
-            <div class="max-w-sm shadow-lg p-4 border border-gray-3 bg-white">
+        <div @click="closeCart" class="fixed inset-0 z-50 flex flex-col items-end max-w-screen-xl xl:px-10 px-2 m-auto mt-24">
+            <div @click="wait" class="max-w-sm shadow-lg p-4 border border-gray-3 bg-white">
                 <p class="font-bold text-xl mb-6 text-center">Here's what's in your bag.</p>
                 <table v-if="!emplty">
                     <tr class="font-semibold">
@@ -77,13 +77,25 @@
 </template>
 <script>
 export default {
-    data:() => ({
-        emplty: false,
-    }),
-    methods: {
-        closeCart(){
-            this.$emit('closeCart');
+    data() {
+        return {
+            emplty: false,
+            close_modal: 'closeModal',
         }
+    },
+    methods: {
+        closeCart()
+        {
+            if(this.close_modal == 'closeModal')
+            {
+                this.$emit('closeCart');
+            }
+        },
+        wait()
+        {
+            this.close_modal = 'wait';
+            setTimeout(() => this.close_modal = 'closeModal', 500);
+        },
     },
 }
 </script>

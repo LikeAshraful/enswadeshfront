@@ -32,14 +32,15 @@
             <button v-tooltip="'Cart'" @click="showCartModal" :class="cart || currentRouteName == 'cart' || currentRouteName == 'checkout' ? 'text-orange-1':''" class="focus:outline-none text-xl ml-2"><i class="ri-shopping-bag-2-fill"></i></button>
           </div>
 
-          <div v-if="$auth.loggedIn && accountOptions" class="lg:mr-20 absolute right-0 mt-10 w-56 rounded-md shadow-lg bg-white border border-gray-4 font-semibold">
+          <account v-if="accountOptions"  v-on:showAccountOptions="showAccountOptions()"></account>
+          <!-- <div v-if="$auth.loggedIn && accountOptions" class="lg:mr-20 absolute right-0 mt-10 w-56 rounded-md shadow-lg bg-white border border-gray-4 font-semibold">
             <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
               <p @click="showAccountOptions" class="text-right font-semibold cursor-pointer text-red-500 mr-2"><i class="ri-close-line"></i></p>
               <a href="#" class="block px-4 py-1 text-gray-700 hover:bg-gray-100" role="menuitem">{{$auth.user.name}}</a>
               <a href="#" class="block px-4 py-1 text-gray-700 hover:bg-gray-100" role="menuitem">Account settings</a>
               <button @click.prevent="logout" :class="loginModal || registrationModal ? 'text-orange-1':''" class="block px-4 py-1 font-semibold text-gray-700 hover:bg-gray-100 focus:outline-none">Sign out</button>
             </div>
-          </div>
+          </div> -->
         </div>
         <!-- <div class="flex flex-row justify-end">
           <div class="flex flex-row mr-4">
@@ -127,12 +128,14 @@
 import Login from '../auth/Login.vue';
 import Cart from '../cart/Short.vue';
 import Registration from '../auth/Registration.vue';
+import Account from './Account.vue';
 
 export default {
   components: {
     Cart,
     Login,
     Registration,
+    Account,
   },
 
   data() {
@@ -175,12 +178,12 @@ export default {
       this.registrationModal = false;
     },
 
-    async logout() {
-      await this.$auth.logout();
-      this.$toast.success('Successfully logout from your account!');
-      this.$router.push('/');
-      this.accountOptions = false;
-    }
+    // async logout() {
+    //   await this.$auth.logout();
+    //   this.$toast.success('Successfully logout from your account!');
+    //   this.$router.push('/');
+    //   this.accountOptions = false;
+    // }
 
     // logout() {
     //     this.$auth.logout()
