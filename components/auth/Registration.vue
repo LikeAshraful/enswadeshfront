@@ -1,10 +1,7 @@
 <template>
     <div>
-        <div class="fixed inset-0 z-50 flex flex-col justify-center items-center my-12">
-            <div class="w-full max-w-screen-sm text-right">
-                <button @click="closeRegistrationModal" class="text-gray-1 text-2xl focus:outline-none"><i class="ri-close-line"></i></button>
-            </div>
-            <div class="max-w-screen-sm shadow-lg bg-white overflow-auto">
+        <div @click="closeModal" class="fixed inset-0 z-50 flex flex-col justify-center items-center my-12">
+            <div @click="wait" class="max-w-screen-sm shadow-lg bg-white overflow-auto">
                 <div class="grid sm:grid-cols-7">
                     <div class="sm:col-span-3 bg-green-4 text-white p-6 flex flex-col justify-between">
                         <div>
@@ -16,79 +13,84 @@
                             <img class="absolute bottom-0 object-cover" src="~/assets/img/auth.png" alt="">
                         </div>
                     </div>
-                    <div class="sm:col-span-4 p-8">
-                        <form @submit.prevent="submitForm">
-                            <div class="mb-2">
-                                <label class="font-bold" for="name">Name</label>
-                                <input class="focus:outline-none input-field" id="name" type="text" placeholder="Adam" v-model.trim="$v.name.$model" :class="{'is-invalid':$v.name.$error}">
-                                <div class="error-message">
-                                    <small v-if="!$v.name.required" :class="!$v.name.$error ? 'hidden':''">Field is required.</small>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <label class="font-bold" for="email">Email</label>
-                                <input class="focus:outline-none input-field" id="email" type="email" placeholder="hello@example.com"  v-model.trim="$v.email.$model" :class="{'is-invalid':$v.email.$error}">
-                                <div class="error-message">
-                                    <small v-if="!$v.email.required" :class="!$v.email.$error ? 'hidden':''">Field is required.</small>
-                                    <small v-if="!$v.email.email">Email must be valid.</small>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <label class="font-bold" for="phone">Phone</label>
-                                <input class="focus:outline-none input-field" id="phone" type="number" placeholder="hello@example.com"  v-model.trim="$v.phone.$model" :class="{'is-invalid':$v.phone.$error}">
-                                <div class="error-message">
-                                    <small v-if="!$v.phone.required" :class="!$v.phone.$error ? 'hidden':''">Field is required.</small>
-                                    <small v-if="!$v.phone.minLength">Phone must have at least {{ $v.phone.$params.minLength.min }} digit.</small>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="font-bold" for="name">Password</label>
-                                <div class="relative">
-                                    <input class="focus:outline-none input-field pr-6" id="name" :type="show ? 'text':'password' " placeholder="At least 8 characters" v-model.trim="$v.password.$model" :class="{'is-invalid':$v.password.$error}">
-                                    <i v-if="!show" @click="showPassword" class="ri-eye-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
-                                    <i v-if="show" @click="showPassword" class="ri-eye-off-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
-                                </div>
-                                <div class="error-message">
-                                    <small v-if="!$v.password.required" :class="!$v.password.$error ? 'hidden':''">Password is required.</small>
-                                    <small v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} letters.</small>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="font-bold" for="name">Confirm Password</label>
-                                <div class="relative">
-                                    <input class="focus:outline-none input-field" id="name" type="password" placeholder="Enter your password" v-model.trim="$v.password_confirmation.$model" :class="{'is-invalid':$v.password_confirmation.$error}">
-                                </div>
-                                <div class="error-message">
-                                    <small v-if="!$v.password_confirmation.required" :class="!$v.password_confirmation.$error ? 'hidden':''">Confirm Password is required.</small>
-                                    <small v-if="!$v.password_confirmation.sameAsPassword && $v.password_confirmation.required">Passwords must be identical.</small>
-                                </div>
-                            </div>
-                            <button v-if="!btnAction" type="submit" class="focus:outline-none w-full mb-2" :class="this.$v.$invalid ? 'btn-disabled':'btn-active'">Create your swades account</button>
-                            <p v-if="btnAction" class="focus:outline-none w-full mb-2 btn-disabled cursor-wait">Please wait...</p>
-                        </form>
-
-                        <p class="leading-tight mb-3">By creating an account, you agree to Swades's <n-link to="" class="font-semibold text-blue-1">Conditions of Use</n-link> and <n-link class="font-semibold text-blue-1" to="">Privacy Notice</n-link>.</p>
-
-                        <div class="border-t text-gray-3 mb-3"></div>
-
-                        <div class="flex items-center mb-3">
-                            <p>Quick access with</p>
-                            <n-link to="">
-                                <i class="ri-facebook-circle-fill text-2xl ml-4"></i>
-                            </n-link>
-                            <n-link to="">
-                                <i class="ri-google-fill text-2xl ml-4"></i>
-                            </n-link>
+                    <div class="sm:col-span-4">
+                        <div class="w-full text-right pr-1">
+                            <button @click="closeRegistrationModal" class="text-2xl focus:outline-none"><i class="ri-close-line"></i></button>
                         </div>
+                        <div class="px-6">
+                            <form @submit.prevent="submitForm">
+                                <div class="mb-2">
+                                    <label class="font-bold" for="name">Name</label>
+                                    <input class="focus:outline-none input-field" id="name" type="text" placeholder="Adam" v-model.trim="$v.name.$model" :class="{'is-invalid':$v.name.$error}">
+                                    <div class="error-message">
+                                        <small v-if="!$v.name.required" :class="!$v.name.$error ? 'hidden':''">Field is required.</small>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="font-bold" for="email">Email</label>
+                                    <input class="focus:outline-none input-field" id="email" type="email" placeholder="hello@example.com"  v-model.trim="$v.email.$model" :class="{'is-invalid':$v.email.$error}">
+                                    <div class="error-message">
+                                        <small v-if="!$v.email.required" :class="!$v.email.$error ? 'hidden':''">Field is required.</small>
+                                        <small v-if="!$v.email.email">Email must be valid.</small>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="font-bold" for="phone">Phone</label>
+                                    <input class="focus:outline-none input-field" id="phone" type="number" placeholder="hello@example.com"  v-model.trim="$v.phone.$model" :class="{'is-invalid':$v.phone.$error}">
+                                    <div class="error-message">
+                                        <small v-if="!$v.phone.required" :class="!$v.phone.$error ? 'hidden':''">Field is required.</small>
+                                        <small v-if="!$v.phone.minLength">Phone must have at least {{ $v.phone.$params.minLength.min }} digit.</small>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="font-bold" for="name">Password</label>
+                                    <div class="relative">
+                                        <input class="focus:outline-none input-field pr-6" id="name" :type="show ? 'text':'password' " placeholder="At least 8 characters" v-model.trim="$v.password.$model" :class="{'is-invalid':$v.password.$error}">
+                                        <i v-if="!show" @click="showPassword" class="ri-eye-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
+                                        <i v-if="show" @click="showPassword" class="ri-eye-off-fill absolute top-0 right-0 cursor-pointer pr-2 pt-1 text-xl"></i>
+                                    </div>
+                                    <div class="error-message">
+                                        <small v-if="!$v.password.required" :class="!$v.password.$error ? 'hidden':''">Password is required.</small>
+                                        <small v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} letters.</small>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="font-bold" for="name">Confirm Password</label>
+                                    <div class="relative">
+                                        <input class="focus:outline-none input-field" id="name" type="password" placeholder="Enter your password" v-model.trim="$v.password_confirmation.$model" :class="{'is-invalid':$v.password_confirmation.$error}">
+                                    </div>
+                                    <div class="error-message">
+                                        <small v-if="!$v.password_confirmation.required" :class="!$v.password_confirmation.$error ? 'hidden':''">Confirm Password is required.</small>
+                                        <small v-if="!$v.password_confirmation.sameAsPassword && $v.password_confirmation.required">Passwords must be identical.</small>
+                                    </div>
+                                </div>
+                                <button v-if="!btnAction" type="submit" class="focus:outline-none w-full mb-2" :class="this.$v.$invalid ? 'btn-disabled':'btn-active'">Create your swades account</button>
+                                <p v-if="btnAction" class="focus:outline-none w-full mb-2 btn-disabled cursor-wait">Please wait...</p>
+                            </form>
 
-                        <div class="border-t text-gray-3 mb-6"></div>
+                            <p class="leading-tight mb-3">By creating an account, you agree to Swades's <n-link to="" class="font-semibold text-blue-1">Conditions of Use</n-link> and <n-link class="font-semibold text-blue-1" to="">Privacy Notice</n-link>.</p>
 
-                        <p v-if="currentRouteName != 'login'">I have already an account. <button @click="openLoginModal" class="focus:outline-none ml-4 text-orange-1 font-bold">Login</button></p>
+                            <div class="border-t text-gray-3 mb-3"></div>
+
+                            <div class="flex items-center mb-3">
+                                <p>Quick access with</p>
+                                <n-link to="">
+                                    <i class="ri-facebook-circle-fill text-2xl ml-4"></i>
+                                </n-link>
+                                <n-link to="">
+                                    <i class="ri-google-fill text-2xl ml-4"></i>
+                                </n-link>
+                            </div>
+
+                            <div class="border-t text-gray-3 mb-6"></div>
+
+                            <p class="mb-6" v-if="currentRouteName != 'login'">I have already an account. <button @click="openLoginModal" class="focus:outline-none ml-4 text-orange-1 font-bold">Login</button></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="opacity-50 fixed inset-0 z-40 bg-green-4"></div>
+        <div @click="closeModal" class="opacity-50 fixed inset-0 z-40 bg-green-4"></div>
     </div>
 </template>
 <script>
@@ -103,6 +105,7 @@ export default {
             password_confirmation: '',
             btnAction: false,
             show: false,
+            close_modal: 'closeModal',
         }
     },
     validations: {
@@ -132,6 +135,19 @@ export default {
         }
     },
     methods: {
+        closeModal()
+        {
+            if(this.close_modal == 'closeModal')
+            {
+                this.closeRegistrationModal();
+            }
+        },
+        wait()
+        {
+            this.close_modal = 'wait';
+            setTimeout(() => this.close_modal = 'closeModal', 500);
+        },
+
         closeRegistrationModal(){
             this.$emit('closeRegistrationModal');
         },
