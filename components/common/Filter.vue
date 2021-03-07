@@ -26,7 +26,7 @@ export default {
 
   methods: {
     filterSearch(id)  {
-      this.$emit('filterByArea', id, this.isLoading);
+      this.$emit('filterByData', id, this.isLoading);
     }
   }
 }

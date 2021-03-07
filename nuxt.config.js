@@ -34,22 +34,22 @@ export default {
   ],
 
   auth: {
-  strategies: {
-    local: {
-      token: {
-        property: 'data.access_token',
-      },
-      user: {
-        property: 'data',
-      },
-      endpoints: {
-        login: { url: '/api/login', method: 'post' },
-        logout: { url: '/api/logout', method: 'post' },
-        user: { url: '/api/user', method: 'get' }
+    strategies: {
+      local: {
+        token: {
+          property: 'data.access_token',
+        },
+        user: {
+          property: 'data',
+        },
+        endpoints: {
+          login: { url: '/api/login', method: 'post' },
+          logout: { url: '/api/logout', method: 'post' },
+          user: { url: '/api/user', method: 'get' }
+        }
       }
     }
-  }
-},
+  },
 
   axios: {
     // proxy: true

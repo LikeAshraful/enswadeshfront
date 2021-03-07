@@ -158,7 +158,8 @@ export default {
                 })
                 .catch(error => {
                     this.btnAction = false;
-                    this.$toast.error('Oops..! Something wrong...!');
+                    this.$toast.error("Oops..!-" + error.response.data.message);
+                    // this.$toast.error('Oops..! Something wrong...!');
                 });
                 this.btnAction = true;
                 this.$toast.info('Thanks for your submission!');
