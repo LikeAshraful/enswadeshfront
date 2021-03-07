@@ -1,15 +1,19 @@
 <template>
     <div>
         <div class="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 xl:gap-8 lg:gap-4 gap-2">
-            <div v-for="(video, i) in videos" :key="i" class="border-2 border-green-4"> 
-                <div class="relative pb-2/3">
-                    <img class="absolute h-full w-full object-cover" :src="require(`~/assets/videos/${video.url}`)" alt="Image">
-                    <p class="absolute bottom-0 mb-2 ml-2 text-white bg-green-5 px-3 py-1 inline">{{ video.duration }}</p>
-                </div>
-                <div class="p-2">
-                    <p class="font-bold lg:text-lg">{{ video.title }}</p>
-                    <p class="text-gray-2">{{ video.view }} views  •  {{ video.time }} min ago</p>
-                </div>
+            <div v-for="(video, i) in videos" :key="i" class="border-2 border-green-4">
+              <NuxtLink to="/">
+                  <div class="relative pb-2/3">
+                    <img class="absolute h-full w-full object-cover" :src="video.thumbnail ? basePath + '/storage/' + video.thumbnail : require(`~/assets/img/products/default.png`)" alt="Image">
+                      <!-- <p class="absolute bottom-0 mb-2 ml-2 text-white bg-green-5 px-3 py-1 inline">{{ video.duration }}</p> -->
+                  </div>
+                  <div class="p-2">
+                      <p class="font-bold lg:text-lg">{{ video.title }}</p>
+                      <p class="text-gray-2">
+                        <!-- {{ video.view }} views -->
+                        •  {{ video.created_at }}</p>
+                  </div>
+              </NuxtLink>
             </div>
         </div>
         <!-- Paginate -->
@@ -25,17 +29,28 @@ export default {
     components: {
         // Paginate,
     },
-    data: () => ({
-        videos: [
-            {url: 'img-one.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-            {url: 'img-two.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-            {url: 'img-three.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-            {url: 'img-four.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-            {url: 'img-five.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-            {url: 'img-six.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-            {url: 'img-seven.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-            {url: 'img-eight.png', duration: '10:00', title: 'Video name goes here', view: '512', time: '7'},
-        ]
-    })
+    data (){
+        return {
+          videos : [],
+          basePath: this.$axios.defaults.baseURL,
+        }
+    },
+
+    mounted() {
+      this.loadVideos();
+    },
+
+    methods: {
+      async loadVideos() {
+        await this.$axios.$get(
+          '/api/videos'
+        ).then((res) => {
+          this.videos = res.data;
+          console.log(this.videos);
+        })
+      }
+    }
+
+
 }
 </script>
