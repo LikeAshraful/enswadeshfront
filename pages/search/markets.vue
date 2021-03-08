@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-import Markets from '~/components/markets/Markets.vue';
+import Markets from '~/components/markets/Market.vue';
 export default {
     data(){
         return {
