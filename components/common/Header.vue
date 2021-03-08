@@ -20,10 +20,14 @@
               name=""
               id=""
             >
-              <option value="0" selected>All</option>
-              <option value="1">Market</option>
-              <option value="2">Shop</option>
-              <option value="3">Product</option>
+              <option
+                v-for="(searchdata, keysearchdata) in searchdatas"
+                :key="keysearchdata"
+                :value="searchdata.value"
+                selected
+              >
+                {{ searchdata.title }}
+              </option>
             </select>
           </div>
           <div
@@ -222,7 +226,16 @@ export default {
 
   data() {
     return {
+      alls: [],
+      markets: [],
       shops: [],
+      products: [],
+      searchdatas: [
+        { value: 0, title: 'All' },
+        { value: 1, title: 'Market' },
+        { value: 2, title: 'Shop' },
+        { value: 3, title: 'Product' },
+      ],
       cart: false,
       loginModal: false,
       registrationModal: false,
@@ -261,16 +274,12 @@ export default {
       this.loginModal = true
       this.registrationModal = false
     },
-
     mainSearchInHearder: _.debounce(function (e) {
-      this.$axios
-        .post('/api/search-all-header/', {
-          params: { keyword: e.target.value, selectType: this.selectType },
-        })
-        .then((res) => {
-          this.shops = res.data.data
-          console.log(res.data)
-        })
+      let data = {
+        keyword: e.target.value,
+        selectType: this.selectType,
+      }
+      this.$store.dispatch('search/loadSearch', data)
     }, 500),
   },
 
