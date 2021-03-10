@@ -8,12 +8,6 @@ export const getters = {
   isLoading: (state) => state.isLoading,
 }
 
-export const mutations = {
-  SEARCH_DATA(state, data) {
-    state.data = data
-    state.isLoading = false
-  },
-}
 export const actions = {
   async loadSearch({ commit }, data) {
     if (data) {
@@ -30,9 +24,16 @@ export const actions = {
 
         this.$router.push({ path: '/search/products' })
       } else {
-        this.$router.push({ path: '/' })
+        this.$router.push({ path: '/search/all' })
       }
-      commit('SEARCH_DATA', datares.data.data,)
+      commit('SET_SEARCH_DATA', datares.data.data)
     }
   }
+}
+
+export const mutations = {
+  SET_SEARCH_DATA(state, data) {
+    state.data = data
+    state.isLoading = false
+  },
 }
