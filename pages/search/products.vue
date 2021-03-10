@@ -1,7 +1,10 @@
 <template>
   <div>
     <p class="text-2xl font-bold">Products search result</p>
-    <div class="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
+    <div
+      v-if="products.data.length > 0"
+      class="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12"
+    >
       <div class="mb-8" v-for="(product, i) in products.data" :key="i">
         <div @click="showModal" class="h-full">
           <div class="">
@@ -26,6 +29,11 @@
           </button>
         </div>
       </div>
+    </div>
+    <div v-else>
+      <h1 class="text-3xl font-bold text-center text-red-400">
+        No result found!
+      </h1>
     </div>
     <!-- Product Details -->
     <product-details

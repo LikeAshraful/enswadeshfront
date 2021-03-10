@@ -116,6 +116,7 @@
 </template>
 <script>
 import _ from 'lodash'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -123,18 +124,38 @@ export default {
       shopss: [],
     }
   },
-  props: ['shops', 'basePath', 'market', 'floor'],
+  props: ['shops', 'basePath', 'market', 'floor', 'floorId'],
   methods: {
     searchShopByMarket: _.debounce(function (e) {
-      this.$axios
-        .post('/api/shops/search/shops-by-market/', {
-          params: { keyword: this.keyword, id: this.market.id },
-        })
-        .then((res) => {
-          this.shopss = res.data.data
-          console.log(this.shopss)
-        })
+      this.fId == 0
+        ? this.$axios.post('/api/shops/search/shops-by-market/', {
+            params: {
+              keyword: this.keyword,
+              id: this.market.id,
+              floorId: this.floorId,
+            },
+          })
+        : this.$axios
+            .post('/api/shops/search/shops-by-market/', {
+              params: {
+                keyword: this.keyword,
+                id: this.market.id,
+                floorId: this.fId,
+              },
+            })
+            .then((res) => {
+              this.shopss = res.data.data
+            })
     }, 500),
+  },
+
+  computed: {
+    ...mapGetters({
+      floorIds: 'floorserchid/floorIds',
+    }),
+    fId() {
+      return this.floorIds
+    },
   },
 }
 </script>

@@ -29,6 +29,7 @@ export default {
   methods: {
     floorId(id, floor, i) {
       this.$emit('floorId', id, floor)
+      this.$store.dispatch('floorserchid/getFloorId', id)
       this.floorAcitve = i
     },
   },
