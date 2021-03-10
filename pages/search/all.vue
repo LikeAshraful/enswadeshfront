@@ -65,10 +65,6 @@ export default {
     }
   },
 
-  components: {
-    Markets,
-  },
-
   created() {
     this.loadSearch()
   },

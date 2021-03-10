@@ -2,6 +2,7 @@
   <div>
     <p class="text-2xl font-bold">Shops search result</p>
     <div
+      v-if="shops.data.length > 0"
       class="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-3 py-8"
     >
       <div v-for="(shop, i) in shops.data" :key="i" class="">
@@ -34,6 +35,11 @@
           <p class="w-full text-center font-bold">{{ shop.name }}</p>
         </NuxtLink>
       </div>
+    </div>
+    <div v-else>
+      <h1 class="text-3xl font-bold text-center text-red-400">
+        No result found!
+      </h1>
     </div>
   </div>
 </template>
