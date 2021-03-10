@@ -1,21 +1,38 @@
 <template>
   <div>
-    <p class="text-2xl font-bold">Shops search result</p>
+    <p class="text-2xl font-bold">All search result</p>
     <div
-      class="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-3 py-8"
+      grid
+      lg:grid-cols-4
+      md:grid-cols-3
+      grid-cols-2
+      lg:gap-6
+      md:gap-4
+      gap-3
+      py-8
+      h-24
+      pb-10
     >
-      <div v-for="(shop, i) in shops.data" :key="i" class="">
+      <h1 class="text-3xl font-bold text-center text-red-400">
+        Comming soon..........!!!!!!!!!!!!!!!!!!!
+      </h1>
+    </div>
+
+    <!-- <div
+      class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-3 py-8"
+    >
+      <div v-for="(all, i) in alls.data" :key="i" class="">
         <NuxtLink
           :to="{
-            name: 'shop-slug-id',
-            params: { slug: shop.slug, id: shop.id },
+            path: 'search/all',
+            params: { slug: all.title },
           }"
         >
           <img
             class="h-16 w-full"
             :src="
-              shop.logo
-                ? basePath + 'storage/' + shop.logo
+              all.title
+                ? basePath + 'storage/' + all.logo
                 : require(`~/assets/img/banner_green.png`)
             "
             alt="Image"
@@ -24,19 +41,20 @@
             style="margin-top: -48px"
             class="w-full text-center font-bold text-white text-xl mb-5"
           >
-            {{ shop.shop_no }}
+            {{ all.title }}
           </p>
           <img
             class="sm:h-40 h-32 w-full"
             src="~/assets/img/shutter.png"
             alt="Image"
           />
-          <p class="w-full text-center font-bold">{{ shop.name }}</p>
+          <p class="w-full text-center font-bold">{{ all.title }}</p>
         </NuxtLink>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
+
 <script>
 import { mapActions, mapGetters } from 'vuex'
 export default {
@@ -45,6 +63,10 @@ export default {
       cols: 'lg:grid-cols-4',
       imageUrl: this.$axios.imageURL,
     }
+  },
+
+  components: {
+    Markets,
   },
 
   created() {
@@ -56,16 +78,16 @@ export default {
   },
 
   methods: {
-    ...mapActions({
-      loadSearch: 'search/loadSearch',
-    }),
+    ...mapActions('search', ['loadSearch']),
   },
 
   computed: {
     ...mapGetters({
-      shops: 'search/result',
+      alls: 'search/result',
       isLoading: 'search/isLoading',
     }),
   },
 }
 </script>
+
+<style></style>
