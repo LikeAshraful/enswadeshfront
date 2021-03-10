@@ -21,7 +21,7 @@
 }
 
 .input-label {
-    @apply font-bold
+    @apply font-semibold
 }
 .input-field {
     @apply w-full border rounded border-gray-3 px-2 py-1
