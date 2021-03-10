@@ -168,7 +168,7 @@
         <n-link to="" class="sm:pl-6 pl-2">
           <div
             class="flex items-center"
-            :class="currentRouteName == 'my-shop' ? 'text-orange-1' : ''"
+            :class="currentRouteName == 'flash-sales' ? 'text-orange-1' : ''"
           >
             <i class="ri-flashlight-fill"></i>
             <span>Flash Sales</span>
@@ -177,7 +177,7 @@
         <n-link to="" class="sm:pl-6 pl-2">
           <div
             class="flex items-center"
-            :class="currentRouteName == 'my-shop' ? 'text-orange-1' : ''"
+            :class="currentRouteName == 'festivals' ? 'text-orange-1' : ''"
           >
             <img
               class="inline sm:h-5 h-4 my-1"
