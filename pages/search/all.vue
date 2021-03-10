@@ -56,7 +56,6 @@
 </template>
 
 <script>
-import Markets from '~/components/markets/Markets.vue'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
