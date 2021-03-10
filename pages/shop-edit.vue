@@ -57,12 +57,17 @@
                     <div class="mb-2">
                         <label class="input-label">Shop name banner</label>
                         <div class="border border-dashed border-gray-3 rounded text-center">
-                            <div class="py-3">
-                                <i class="ri-upload-cloud-line text-blue-1 font-bold text-4xl"></i><br>
-                                <p class="inline">Drag & Drop to upload here, or</p> <label for="audio" class="text-blue-1 ml-2 inline cursor-pointer">browse</label>
-                                <p class="text-gray-4">Supports: JPG, JPEG, PNG</p>
+                            <div v-if="!url" class="py-10 flex items-center justify-center">
+                                <i class="ri-attachment-line"></i>
+                                <label for="thumbnail" class="font-bold text-blue-1 ml-2 inline cursor-pointer mr-2">Add file</label>
+                                <p class="inline">or drop images here</p> 
                             </div>
-                            <input class="hidden" type="file" id="audio">
+                            <label for="thumbnail" class="cursor-pointer">
+                                <div v-if="url" style="padding-bottom: 40%;" class="relative flex flex-row justify-center">
+                                    <img class="absolute p-2 h-full m-auto" :src="url" />
+                                </div>
+                            </label>
+                            <input class="hidden" type="file" id="thumbnail" @change="onFileChange">
                         </div>
                     </div>
                     <div class="mb-2">
@@ -102,7 +107,14 @@ export default {
                 {title: 'Own Shop', url: '/my-shop'},
                 {title: 'Shop name gose here', url: ''},
             ],
+            url: null,
         };
     },
+    methods: {
+        onFileChange(e) {
+            const file = e.target.files[0];
+            this.url = URL.createObjectURL(file);
+        },
+    }
 }
 </script>
