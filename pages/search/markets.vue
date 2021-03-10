@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import Markets from '~/components/markets/Markets.vue'
+import Markets from '~/components/markets/Market.vue'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
