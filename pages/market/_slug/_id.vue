@@ -22,6 +22,7 @@
       :basePath="basePath"
       :market="market"
       :floor="floor"
+      :floorId="floorId"
     ></shops>
 
     <!-- Paginate -->
@@ -67,11 +68,12 @@ export default {
       ],
     }
   },
-  beforeCreate() {},
+
   mounted() {
     this.loadFloors()
     this.loadMarket()
   },
+
   methods: {
     async loadFloors() {
       await this.$axios

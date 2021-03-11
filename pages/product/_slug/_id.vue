@@ -70,7 +70,7 @@
                 </div>
                 <div class="flex gap-3 justify-between">
                     <button class="focus:outline-none border rounded border-gray-3 py-1 font-bold w-full">Add to bag</button>
-                    <button class="focus:outline-none border rounded border-gray-3 py-1 font-bold w-full">Bargain</button>
+                    <button @click="bargainModal" class="focus:outline-none border rounded border-gray-3 py-1 font-bold w-full">Bargain</button>
                     <button class="focus:outline-none border rounded border-gray-3 py-1 font-bold px-2"><i class="ri-heart-line"></i></button>
                 </div>
             </div>
@@ -104,11 +104,15 @@
         <!-- Tabs -->
         <tab :showTab="showTab" :tabs="tabs"></tab>
 
+        <!-- Bargain modal -->
+        <bargain v-if="bargain" v-on:bargainModal="bargainModal"></bargain>
+
     </div>
 </template>
 <script>
 import Breadcrumb from '~/components/common/Breadcrumb.vue';
 import Tab from '~/components/common/Tab.vue';
+import Bargain from '~/components/product-details/Bargain.vue';
 import { mapGetters } from 'vuex'
 
 export default {
@@ -116,8 +120,10 @@ export default {
     components: {
         Breadcrumb,
         Tab,
+        Bargain,
     },
     data:() => ({
+      bargain: false,
         photos:[
             'img-6',
             'img-1',
@@ -144,6 +150,10 @@ export default {
     this.getSingleProduct();
   },
   methods: {
+    bargainModal()
+    {
+      this.bargain = !this.bargain;
+    },
     // ...mapActions(
     //   'products', ['getSingleProduct']
     // )
