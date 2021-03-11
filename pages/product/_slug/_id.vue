@@ -52,27 +52,32 @@
                         <td>XS</td>
                     </tr>
                 </table>
-                <div class="border-t text-gray-3 my-2"></div>
-                <p class="font-semibold mb-2">Quantity</p>
+                <p class="font-semibold mt-4">Available Offers</p>
+                <ul>
+                    <li>Offers will be appear here.</li>
+                    <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr</li>
+                </ul>
+                <p class="font-semibold mt-4 mb-2">Quantity</p>
                 <div class="grid grid-cols-2 gap-3 mb-3">
-                    <div class="grid grid-cols-4 rounded border border-gray-3 font-bold">
-                        <button class="focus:outline-none bg-gray-3 rounded-l text-xl flex items-center justify-center">
+                    <div class="grid grid-cols-4 rounded border border-gray-3 font-semibold">
+                        <button @click="minus" class="focus:outline-none bg-gray-3 rounded-l text-xl flex items-center justify-center">
                             <i class="ri-subtract-line"></i>
                         </button>
                         <div class="col-span-2 text-center py-1">
-                            0
+                            {{ quantity }}
                         </div>
-                        <button class="focus:outline-none bg-gray-3 rounded-r text-xl flex items-center justify-center">
+                        <button @click="plus" class="focus:outline-none bg-gray-3 rounded-r text-xl flex items-center justify-center">
                             <i class="ri-add-fill"></i>
                         </button>
                     </div>
-                    <n-link to="" class="border bg-green-3 border-gray-2 rounded py-1 w-full font-bold text-center">Buy now</n-link>
+                    <n-link to="" class="border bg-green-3 border-gray-2 rounded py-1 w-full font-semibold text-center">Buy now</n-link>
                 </div>
                 <div class="flex gap-3 justify-between">
-                    <button class="focus:outline-none border rounded border-gray-3 py-1 font-bold w-full">Add to bag</button>
-                    <button @click="bargainModal" class="focus:outline-none border rounded border-gray-3 py-1 font-bold w-full">Bargain</button>
-                    <button class="focus:outline-none border rounded border-gray-3 py-1 font-bold px-2"><i class="ri-heart-line"></i></button>
+                    <button class="focus:outline-none border rounded border-gray-3 py-1 font-semibold w-full">Add to bag</button>
+                    <button @click="bargainModal" class="focus:outline-none border rounded border-gray-3 py-1 font-semibold w-full">Bargain</button>
+                    <button class="focus:outline-none border rounded border-gray-3 py-1 font-semibold px-2"><i class="ri-heart-line"></i></button>
                 </div>
+                <p class="font-semibold text-purple-2 mt-4">Delivery offer shows here</p>
             </div>
             <div class="sm:col-span-2 sm:mt-0 mt-4">
                 <p class="font-bold">Audio Description</p>
@@ -104,6 +109,9 @@
         <!-- Tabs -->
         <tab :showTab="showTab" :tabs="tabs"></tab>
 
+        <!-- Similar Product -->
+        <similar-product></similar-product>
+
         <!-- Bargain modal -->
         <bargain v-if="bargain" v-on:bargainModal="bargainModal"></bargain>
 
@@ -121,6 +129,7 @@ export default {
         Breadcrumb,
         Tab,
         Bargain,
+        SimilarProduct,
     },
     data:() => ({
       bargain: false,
