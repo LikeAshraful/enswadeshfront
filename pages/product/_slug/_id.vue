@@ -17,20 +17,21 @@
                 </div>
             </div>
             <div class="sm:col-span-3 sm:mt-0 mt-4">
-                <p class="font-bold text-2xl mb-2">Ceiling circle black electric deem lamp</p>
+                <p class="font-bold text-2xl mb-2">{{getProduct.name}}</p>
                 <p class="bg-green-4 px-2 py-1 text-white inline">
                     4.5<i class="ri-star-fill ml-2 text-yellow-2"></i>
                 </p>
-                <p class="font-bold mt-3">1195 BDT</p>
+                <p class="font-bold mt-3">{{getProduct.price}} BDT</p>
                 <div class="border-t text-gray-3 my-2"></div>
                 <table class="w-full">
                     <tr>
                         <td class="font-semibold">Availability</td>
-                        <td>In stock</td>
+                        <td v-if="getProduct.total_stocks >= 1"><strong> In Stock</strong></td>
+                        <td v-else class="text-red-500" ><strong> Out Of Stock</strong></td>
                     </tr>
                     <tr>
                         <td class="font-semibold">Brand</td>
-                        <td>zxy</td>
+                        <td>{{getProduct.brand ? getProduct.brand.name : ''}}</td>
                     </tr>
                     <tr>
                         <td><div class="border-t text-gray-3 my-2"></div></td>
@@ -80,7 +81,7 @@
                     <p>Audio file name goes to here</p>
                 </div>
                 <p class="font-bold mt-4">Video Description</p>
-                <div class="border-2 border-green-4"> 
+                <div class="border-2 border-green-4">
                     <div class="relative pb-3/5">
                         <img class="absolute h-full w-full object-cover" src="~/assets/videos/img-two.png" alt="Image">
                         <p class="absolute bottom-0 mb-2 ml-2 text-white bg-green-5 px-3 py-1 inline">10:00</p>
@@ -111,43 +112,59 @@
 <script>
 import Breadcrumb from '~/components/common/Breadcrumb.vue';
 import Tab from '~/components/common/Tab.vue';
-import Bargain from '../components/product-details/Bargain.vue';
+import Bargain from '~/components/product-details/Bargain.vue';
+import { mapGetters } from 'vuex'
 
 export default {
+
     components: {
         Breadcrumb,
         Tab,
         Bargain,
     },
-    data() {
-        return {
-            bargain: false,
-            photos:[
-                'img-6',
-                'img-1',
-                'img-2',
-                'img-3',
-            ],
-            breadCrumbs: [
-                {title: 'Home', url: '/'},
-                {title: '...', url: '/'},
-                {title: 'Shop name goes to here', url: '/shop'},
-                {title: 'Product name goes to here', url: ''},
-            ],
-            showTab: 'Information',
-            tabs:[
-                {name: 'Information',view: 'Information'},
-                {name: 'Features',view: 'Features'},
-                {name: 'Images',view: 'Images'},
-                {name: 'Reviews',view: 'Reviews'},
-            ],
-        }
+    data:() => ({
+      bargain: false,
+        photos:[
+            'img-6',
+            'img-1',
+            'img-2',
+            'img-3',
+        ],
+        breadCrumbs: [
+            {title: 'Home', url: '/'},
+            {title: '...', url: '/'},
+            {title: 'Shop name goes to here', url: '/shop'},
+            {title: 'Product name goes to here', url: ''},
+        ],
+
+        showTab: 'Information',
+        tabs:[
+            {name: 'Information',view: 'Information'},
+            {name: 'Features',view: 'Features'},
+            {name: 'Images',view: 'Images'},
+            {name: 'Reviews',view: 'Reviews'},
+        ],
+    }),
+
+  created(){
+    this.getSingleProduct();
+  },
+  methods: {
+    bargainModal()
+    {
+      this.bargain = !this.bargain;
     },
-    methods: {
-        bargainModal() 
-        {
-            this.bargain = !this.bargain;
-        }
-    },
+    // ...mapActions(
+    //   'products', ['getSingleProduct']
+    // )
+    getSingleProduct(){
+      this.$store.dispatch('products/getSingleProduct', this.$route.params.id)
+    }
+  },
+  computed: {
+    ...mapGetters(
+      'products', ['getProduct']
+    )
+  }
 }
 </script>
