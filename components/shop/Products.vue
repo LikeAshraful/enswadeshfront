@@ -25,9 +25,9 @@
                 <div class="">
                     <img class="h-52 w-full" :src="product.image.src ? basePath + 'storage/' + product.image.src : require(`~/assets/img/products/default.png`)" alt="Image">
                 </div>
-                <p class="font-bold pt-2">{{ product.name }}</p>
+                <p class="font-semibold pt-2">{{ product.name }}</p>
                 <p class="">{{ product.color }}</p>
-                <p class="font-bold">{{ product.price }} BDT</p>
+                <p class="font-semibold">{{ product.price }} BDT</p>
             </div>
             <div class="flex justify-between">
                 <button class="btn bg-green-3 focus:outline-none">Buy Now</button>
