@@ -46,7 +46,6 @@ export default {
           '/api/videos'
         ).then((res) => {
           this.videos = res.data;
-          console.log(this.videos);
         })
       }
     }
