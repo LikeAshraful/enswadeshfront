@@ -18,29 +18,6 @@
       </div>
     </div>
     <loader v-if="isLoading"></loader>
-<<<<<<< HEAD
-    <div
-      v-else
-      class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12"
-    >
-      <div class="mb-8" v-for="(product, i) in products.data" :key="i">
-        <!-- <NuxtLink to="/"> -->
-        <div @click="showModal" class="h-full">
-          <div class="">
-            <img
-              class="h-52 w-full"
-              :src="
-                product.image.src
-                  ? basePath + 'storage/' + product.image.src
-                  : require(`~/assets/img/products/default.png`)
-              "
-              alt="Image"
-            />
-          </div>
-          <p class="font-semibold pt-2">{{ product.name }}</p>
-          <p class="">{{ product.color }}</p>
-          <p class="font-semibold">{{ product.price }} BDT</p>
-=======
     <div v-else class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
         <div class="mb-8" v-for="(product, i) in products.data" :key="i" >
           <!-- <NuxtLink to="/"> -->
@@ -57,7 +34,6 @@
                 <button class="btn border-orange-1 focus:outline-none">Add to bag</button>
             </div>
           <!-- </NuxtLink> -->
->>>>>>> 3452f694dc006d9f9bd33e7ffff2cdbc3737a63d
         </div>
     </div>
     <!-- Product Details -->

@@ -17,34 +17,6 @@
                 </div>
             </div>
             <div class="sm:col-span-3 sm:mt-0 mt-4">
-<<<<<<< HEAD:pages/product-details-full.vue
-                <p class="font-bold text-2xl mb-2">Ceiling circle black electric deem lamp</p>
-                <div class="flex items-center gap-8">
-                    <p class="bg-green-4 px-2 py-1 text-white inline">
-                        4.5<i class="ri-star-fill ml-2 text-yellow-2"></i>
-                    </p>
-                    <p class="font-semibold text-blue-1">Rate this product</p>
-                </div>
-                <table class="w-full mt-4">
-                    <tbody>
-                        <tr>
-                            <td>Price:</td>
-                            <td class="font-semibold"><span>1000 BDT</span> <span class="text-gray-4 ml-4 line-through">1195 BDT</span></td>
-                        </tr>
-                        <tr>
-                            <td>Stock:</td>
-                            <td class="font-semibold">Available</td>
-                        </tr>
-                        <tr>
-                            <td>Brand:</td>
-                            <td class="font-semibold">zxy</td>
-                        </tr>
-                        <tr>
-                            <td>SKU:</td>
-                            <td class="font-semibold">VEM00905</td>
-                        </tr>
-                    </tbody>
-=======
                 <p class="font-bold text-2xl mb-2">{{getProduct.name}}</p>
                 <p class="bg-green-4 px-2 py-1 text-white inline">
                     4.5<i class="ri-star-fill ml-2 text-yellow-2"></i>
@@ -79,7 +51,6 @@
                         <td class="font-semibold">Size</td>
                         <td>XS</td>
                     </tr>
->>>>>>> 3452f694dc006d9f9bd33e7ffff2cdbc3737a63d:pages/product/_slug/_id.vue
                 </table>
                 <p class="font-semibold mt-4">Available Offers</p>
                 <ul>
@@ -149,13 +120,8 @@
 <script>
 import Breadcrumb from '~/components/common/Breadcrumb.vue';
 import Tab from '~/components/common/Tab.vue';
-<<<<<<< HEAD:pages/product-details-full.vue
-import Bargain from '../components/product-details/Bargain.vue';
-import SimilarProduct from '../components/product-details/Similar-product.vue';
-=======
 import Bargain from '~/components/product-details/Bargain.vue';
 import { mapGetters } from 'vuex'
->>>>>>> 3452f694dc006d9f9bd33e7ffff2cdbc3737a63d:pages/product/_slug/_id.vue
 
 export default {
 
@@ -165,52 +131,6 @@ export default {
         Bargain,
         SimilarProduct,
     },
-<<<<<<< HEAD:pages/product-details-full.vue
-    data() {
-        return {
-            quantity: 0,
-            bargain: false,
-            photos:[
-                'img-6',
-                'img-1',
-                'img-2',
-                'img-3',
-            ],
-            breadCrumbs: [
-                {title: 'Home', url: '/'},
-                {title: '...', url: '/'},
-                {title: 'Shop name goes to here', url: '/shop'},
-                {title: 'Product name goes to here', url: ''},
-            ],
-            showTab: 'Information',
-            tabs:[
-                {name: 'Information',view: 'Information'},
-                {name: 'Features',view: 'Features'},
-                {name: 'Reviews',view: 'Reviews'},
-            ],
-            products: [
-                {name: 'Product name gose here', color: 'Red', price: '1200'},
-                {name: 'Product name gose here', color: 'Red', price: '1200'},
-                {name: 'Product name gose here', color: 'Red', price: '1200'},
-                {name: 'Product name gose here', color: 'Red', price: '1200'},
-            ]
-        }
-    },
-    methods: {
-        bargainModal() 
-        {
-            this.bargain = !this.bargain;
-        },
-        plus()
-        {
-            this.quantity += 1;
-        },
-        minus()
-        {
-            if(this.quantity > 0)
-            this.quantity -= 1;
-        }
-=======
     data:() => ({
       bargain: false,
         photos:[
@@ -242,7 +162,6 @@ export default {
     bargainModal()
     {
       this.bargain = !this.bargain;
->>>>>>> 3452f694dc006d9f9bd33e7ffff2cdbc3737a63d:pages/product/_slug/_id.vue
     },
     // ...mapActions(
     //   'products', ['getSingleProduct']
