@@ -3,14 +3,14 @@
         <!-- Top Markets -->
         <div class="flex justify-between">
             <p class="text-2xl font-bold capitalize">Top Markets in {{ this.$route.params.city }}</p>
-            <!-- <div class="flex">
+            <div class="flex">
                 <n-link to="">
                     <img class="border-2 rounded-full p-3 mr-3" src="~/assets/icons/left.png" alt="Icon">
                 </n-link>
                 <n-link to="">
                     <img class="border-2 rounded-full p-3" src="~/assets/icons/right.png" alt="Icon">
                 </n-link>
-            </div> -->
+            </div>
         </div>
         <div class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
           <loader v-if="isLoading"></loader>

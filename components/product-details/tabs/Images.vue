@@ -1,6 +1,6 @@
 <template>
     <div>
-        This is Features Component
+        This is Images Component
     </div>
 </template>
 <script>
