@@ -18,60 +18,58 @@
             </div>
             <div class="sm:col-span-3 sm:mt-0 mt-4">
                 <p class="font-bold text-2xl mb-2">Ceiling circle black electric deem lamp</p>
-                <p class="bg-green-4 px-2 py-1 text-white inline">
-                    4.5<i class="ri-star-fill ml-2 text-yellow-2"></i>
-                </p>
-                <p class="font-bold mt-3">1195 BDT</p>
-                <div class="border-t text-gray-3 my-2"></div>
-                <table class="w-full">
-                    <tr>
-                        <td class="font-semibold">Availability</td>
-                        <td>In stock</td>
-                    </tr>
-                    <tr>
-                        <td class="font-semibold">Brand</td>
-                        <td>zxy</td>
-                    </tr>
-                    <tr>
-                        <td><div class="border-t text-gray-3 my-2"></div></td>
-                        <td><div class="border-t text-gray-3 my-2"></div></td>
-                    </tr>
-                    <tr>
-                        <td class="font-semibold">Select color</td>
-                        <td>
-                            <i class="ri-checkbox-blank-circle-fill text-yellow-2"></i>
-                            <i class="ri-checkbox-blank-circle-fill text-green-4"></i>
-                            <i class="ri-checkbox-blank-circle-fill text-red-500"></i>
-                            <i class="ri-checkbox-blank-circle-fill text-blue-1"></i>
-                            <i class="ri-checkbox-blank-circle-fill text-purple-2"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="font-semibold">Size</td>
-                        <td>XS</td>
-                    </tr>
+                <div class="flex items-center gap-8">
+                    <p class="bg-green-4 px-2 py-1 text-white inline">
+                        4.5<i class="ri-star-fill ml-2 text-yellow-2"></i>
+                    </p>
+                    <p class="font-semibold text-blue-1">Rate this product</p>
+                </div>
+                <table class="w-full mt-4">
+                    <tbody>
+                        <tr>
+                            <td>Price:</td>
+                            <td class="font-semibold"><span>1000 BDT</span> <span class="text-gray-4 ml-4 line-through">1195 BDT</span></td>
+                        </tr>
+                        <tr>
+                            <td>Stock:</td>
+                            <td class="font-semibold">Available</td>
+                        </tr>
+                        <tr>
+                            <td>Brand:</td>
+                            <td class="font-semibold">zxy</td>
+                        </tr>
+                        <tr>
+                            <td>SKU:</td>
+                            <td class="font-semibold">VEM00905</td>
+                        </tr>
+                    </tbody>
                 </table>
-                <div class="border-t text-gray-3 my-2"></div>
-                <p class="font-semibold mb-2">Quantity</p>
+                <p class="font-semibold mt-4">Available Offers</p>
+                <ul>
+                    <li>Offers will be appear here.</li>
+                    <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr</li>
+                </ul>
+                <p class="font-semibold mt-4 mb-2">Quantity</p>
                 <div class="grid grid-cols-2 gap-3 mb-3">
-                    <div class="grid grid-cols-4 rounded border border-gray-3 font-bold">
-                        <button class="focus:outline-none bg-gray-3 rounded-l text-xl flex items-center justify-center">
+                    <div class="grid grid-cols-4 rounded border border-gray-3 font-semibold">
+                        <button @click="minus" class="focus:outline-none bg-gray-3 rounded-l text-xl flex items-center justify-center">
                             <i class="ri-subtract-line"></i>
                         </button>
                         <div class="col-span-2 text-center py-1">
-                            0
+                            {{ quantity }}
                         </div>
-                        <button class="focus:outline-none bg-gray-3 rounded-r text-xl flex items-center justify-center">
+                        <button @click="plus" class="focus:outline-none bg-gray-3 rounded-r text-xl flex items-center justify-center">
                             <i class="ri-add-fill"></i>
                         </button>
                     </div>
-                    <n-link to="" class="border bg-green-3 border-gray-2 rounded py-1 w-full font-bold text-center">Buy now</n-link>
+                    <n-link to="" class="border bg-green-3 border-gray-2 rounded py-1 w-full font-semibold text-center">Buy now</n-link>
                 </div>
                 <div class="flex gap-3 justify-between">
-                    <button class="focus:outline-none border rounded border-gray-3 py-1 font-bold w-full">Add to bag</button>
-                    <button @click="bargainModal" class="focus:outline-none border rounded border-gray-3 py-1 font-bold w-full">Bargain</button>
-                    <button class="focus:outline-none border rounded border-gray-3 py-1 font-bold px-2"><i class="ri-heart-line"></i></button>
+                    <button class="focus:outline-none border rounded border-gray-3 py-1 font-semibold w-full">Add to bag</button>
+                    <button @click="bargainModal" class="focus:outline-none border rounded border-gray-3 py-1 font-semibold w-full">Bargain</button>
+                    <button class="focus:outline-none border rounded border-gray-3 py-1 font-semibold px-2"><i class="ri-heart-line"></i></button>
                 </div>
+                <p class="font-semibold text-purple-2 mt-4">Delivery offer shows here</p>
             </div>
             <div class="sm:col-span-2 sm:mt-0 mt-4">
                 <p class="font-bold">Audio Description</p>
@@ -103,6 +101,9 @@
         <!-- Tabs -->
         <tab :showTab="showTab" :tabs="tabs"></tab>
 
+        <!-- Similar Product -->
+        <similar-product></similar-product>
+
         <!-- Bargain modal -->
         <bargain v-if="bargain" v-on:bargainModal="bargainModal"></bargain>
 
@@ -112,15 +113,18 @@
 import Breadcrumb from '~/components/common/Breadcrumb.vue';
 import Tab from '~/components/common/Tab.vue';
 import Bargain from '../components/product-details/Bargain.vue';
+import SimilarProduct from '../components/product-details/Similar-product.vue';
 
 export default {
     components: {
         Breadcrumb,
         Tab,
         Bargain,
+        SimilarProduct,
     },
     data() {
         return {
+            quantity: 0,
             bargain: false,
             photos:[
                 'img-6',
@@ -138,15 +142,29 @@ export default {
             tabs:[
                 {name: 'Information',view: 'Information'},
                 {name: 'Features',view: 'Features'},
-                {name: 'Images',view: 'Images'},
                 {name: 'Reviews',view: 'Reviews'},
             ],
+            products: [
+                {name: 'Product name gose here', color: 'Red', price: '1200'},
+                {name: 'Product name gose here', color: 'Red', price: '1200'},
+                {name: 'Product name gose here', color: 'Red', price: '1200'},
+                {name: 'Product name gose here', color: 'Red', price: '1200'},
+            ]
         }
     },
     methods: {
         bargainModal() 
         {
             this.bargain = !this.bargain;
+        },
+        plus()
+        {
+            this.quantity += 1;
+        },
+        minus()
+        {
+            if(this.quantity > 0)
+            this.quantity -= 1;
         }
     },
 }

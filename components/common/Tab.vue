@@ -47,9 +47,6 @@
                     <div v-if="tab.view == 'Features'">
                         <features></features>
                     </div>
-                    <div v-if="tab.view == 'Images'">
-                        <images></images>
-                    </div>
                     <div v-if="tab.view == 'Reviews'">
                         <reviews></reviews>
                     </div>
@@ -76,7 +73,6 @@ import Tutorials from '~/components/my-shop/tabs/Tutorials.vue';
 // Product Details tabs component
 import Information from '../product-details/tabs/Information.vue';
 import Features from '../product-details/tabs/Features.vue';
-import Images from '../product-details/tabs/Images.vue';
 import Reviews from '../product-details/tabs/Reviews.vue';
 
 export default {
@@ -100,7 +96,6 @@ export default {
         // Product Details
         Information,
         Features,
-        Images,
         Reviews,
     },
     props: ['showTab','tabs'],

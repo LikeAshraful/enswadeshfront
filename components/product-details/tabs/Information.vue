@@ -1,12 +1,20 @@
 <template>
     <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate dolorem eius ratione earum libero! Asperiores explicabo sunt illum veniam, doloremque quasi obcaecati aspernatur voluptatum quibusdam? Temporibus placeat facere fuga sit. 
-        <br>
-        <br>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, dolore. Consequatur placeat doloribus, cupiditate officiis minima impedit molestiae numquam ipsum tempore ratione suscipit, voluptatum inventore veritatis ullam assumenda perspiciatis fugiat.
-        <br>
-        <br>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere obcaecati omnis neque vitae quisquam cupiditate? Ipsam omnis, quidem optio totam, sed hic laborum doloremque commodi vitae blanditiis reiciendis nam ducimus....
+        <p>Brand: zxy</p>
+        <p>Item Code: 873220</p>
+        <p>Model: VIS-EK-011</p>
+        <p>Capacity: 2.3L</p>
+        <p>Power: 1500W, 220V, 50Hz</p>
+        <p>Fully Heat resistant, Cool touch two-layer body</p>
+        <p>Inner side 201SS & Outer side Plastic heatproof Body</p>
+        <p>Auto turn Off when 100°C water boils</p>
+        <p>Boil-dry and overheat protection</p>
+        <p>Triple Safety Protection</p>
+        <p>Fast water boils within 3-4 minutes</p>
+        <p>Color: Mixed (As given picture).</p>
+        <p>Warranty: 1-year warranty</p>
+        <p>Note: Product delivery duration may vary due to product availability in stock.</p>
+        <p>Disclaimer: The actual color of the physical product may slightly vary due to the deviation of lighting sources, photography or your device display settings.</p>
     </div>
 </template>
 <script>
