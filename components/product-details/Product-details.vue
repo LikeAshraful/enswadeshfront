@@ -18,20 +18,21 @@
                         <div class="w-full text-right">
                             <button @click="closeModal" class="text-2xl focus:outline-none"><i class="ri-close-line"></i></button>
                         </div>
-                        <p class="font-bold text-2xl mb-2">Ceiling circle black electric deem lamp</p>
+                        <p class="font-bold text-2xl mb-2">{{product.name}}</p>
                         <p class="bg-green-4 px-2 py-1 text-white inline">
                             4.5<i class="ri-star-fill ml-2 text-yellow-2"></i>
                         </p>
-                        <p class="font-bold mt-3">1195 BDT</p>
+                        <p class="font-bold mt-3">{{product.price}} BDT</p>
                         <div class="border-t text-gray-3 my-2"></div>
                         <table class="w-full">
                             <tr>
                                 <td class="font-semibold">Availability</td>
-                                <td>In stock</td>
+                                <td v-if="product.total_stocks >= 1"><strong> In Stock</strong></td>
+                                <td v-else class="text-red-500" ><strong> Out Of Stock</strong></td>
                             </tr>
                             <tr>
                                 <td class="font-semibold">Brand</td>
-                                <td>zxy</td>
+                                <td class="">{{product.brand.name}}</td>
                             </tr>
                             <tr>
                                 <td><div class="border-t text-gray-3 my-2"></div></td>
@@ -76,7 +77,7 @@
                     </div>
                 </div>
                 <div class="border-t text-gray-3 mx-6 py-6 text-center">
-                    <n-link to="/product-details-full" class="border rounded border-gray-3 py-1 font-bold text-green-4 p-8">Show more details</n-link>
+                    <n-link :to="{name:'product-slug-id', params:{slug: product.slug, id: product.id }}" class="border rounded border-gray-3 py-1 font-bold text-green-4 p-8">Show More Details</n-link>
                 </div>
             </div>
         </div>
@@ -96,6 +97,8 @@ export default {
             close_modal: 'closeModal',
         }
     },
+    props:['basePath', 'product'],
+
     methods: {
         closeModal()
         {
