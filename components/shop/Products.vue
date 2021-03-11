@@ -12,7 +12,7 @@
         <div v-else class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
             <div class="mb-8" v-for="(product, i) in products.data" :key="i" >
               <!-- <NuxtLink to="/"> -->
-                <div @click="showModal" class="h-full">
+                <div @click="showModal(product)" class="h-full">
                     <div class="">
                         <img class="h-52 w-full" :src="product.image.src ? basePath + 'storage/' + product.image.src : require(`~/assets/img/products/default.png`)" alt="Image">
                     </div>
@@ -28,7 +28,7 @@
             </div>
         </div>
         <!-- Product Details -->
-        <product-details v-if="modal" v-on:product-modal="closeModal($event)"></product-details>
+        <product-details v-if="modal" :product="product" :basePath="basePath" v-on:product-modal="closeModal($event)"></product-details>
 
     </div>
 </template>
@@ -44,6 +44,7 @@ export default {
         modal: false,
         imageUrl: this.$axios.imageURL,
         keyword: null,
+        product:{}
       }
     },
     components: {
@@ -55,7 +56,8 @@ export default {
     },
 
     methods: {
-        showModal(){
+        showModal(product){
+            this.product = Object.assign({}, product)
             this.modal = true;
         },
         closeModal(e){
