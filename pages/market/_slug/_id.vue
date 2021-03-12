@@ -62,16 +62,17 @@ export default {
       breadCrumbs: [
         { title: 'Home', url: '/' },
         { title: 'Go To Market', url: '/cities' },
-        { title: 'Dhaka', url: '/markets' },
-        { title: this.$route.params.slug, url: this.$route.path },
-        { title: 'Grand Floor', url: '' },
+        { title: '', url: '' },
+        { title: '', url: '' },
+        { title: '', url: '' },
       ],
     }
   },
 
   mounted() {
-    this.loadFloors()
-    this.loadMarket()
+    this.loadFloors();
+    this.loadMarket();
+    this.getBreadCrumbItems();
   },
 
   methods: {
@@ -82,6 +83,13 @@ export default {
           this.floors = res.data
           this.floorId = this.floors.data[0].id
           this.floorName = this.floors.data[0].floor
+          const floor = this.floors.data[0].floor
+          const id = this.floors.data[0].id
+          setTimeout(function () { 
+            // console.log(floor, id)
+            localStorage.setItem('floor', floor);
+            localStorage.setItem('floor-url', '/shops/shops-by-market-by-floors/'+id);
+          }.bind(this), 1000);
           this.loadShops()
         })
     },
@@ -93,6 +101,7 @@ export default {
         })
     },
     async loadShops(value, floor) {
+      localStorage.setItem('floor', floor);
       await this.$axios
         .get(
           value
@@ -118,6 +127,13 @@ export default {
           this.market = res.data
         })
     },
+    getBreadCrumbItems()
+    {
+      this.breadCrumbs[2].title = localStorage.getItem('city');
+      this.breadCrumbs[2].url = localStorage.getItem('city-url');
+      this.breadCrumbs[3].title = localStorage.getItem('market');
+      // this.breadCrumbs[3].url = localStorage.getItem('market-url');
+    }
   },
 }
 </script>

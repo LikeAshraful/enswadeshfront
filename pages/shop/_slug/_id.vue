@@ -54,10 +54,10 @@ export default {
           breadCrumbs: [
             {title: 'Home', url: '/'},
             {title: 'Go To Market', url: '/cities'},
-            {title: 'Dhaka', url: '/markets'},
-            {title: 'Eastern Plaza Shopping Complex', url: '/market'},
-            {title: 'Grand Floor', url: '/market'},
-            {title: 'Shop name goes to here', url: ''},
+            {title: '', url: ''},
+            {title: '', url: ''},
+            {title: '', url: ''},
+            {title: '', url: ''},
           ],
 
           filterTitle: 'Categories',
@@ -75,6 +75,7 @@ export default {
       this.loadData();
       this.loadProducts();
       this.loadProductsPaginate();
+      this.getBreadCrumbItems();
     },
     methods: {
       async loadData () {
@@ -111,6 +112,17 @@ export default {
               this.isLoading = false;
           })
       },
+      getBreadCrumbItems()
+      {
+        this.breadCrumbs[2].title = localStorage.getItem('city');
+        this.breadCrumbs[2].url = localStorage.getItem('city-url');
+        this.breadCrumbs[3].title = localStorage.getItem('market');
+        this.breadCrumbs[3].url = localStorage.getItem('market-url');
+        this.breadCrumbs[4].title = localStorage.getItem('floor');
+        this.breadCrumbs[4].url = localStorage.getItem('market-url');
+        this.breadCrumbs[5].title = localStorage.getItem('shop');
+        // this.breadCrumbs[5].url = localStorage.getItem('shop-url');
+      }
     }
 }
 </script>

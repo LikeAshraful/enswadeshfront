@@ -21,7 +21,7 @@
     <div v-else class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
         <div class="mb-8" v-for="(product, i) in products.data" :key="i" >
           <!-- <NuxtLink to="/"> -->
-            <div @click="showModal(product)" class="h-full">
+            <div @click="showModal(product, product.name, product.slug, product.id)" class="h-full">
                 <div class="">
                     <img class="h-52 w-full" :src="product.image.src ? basePath + 'storage/' + product.image.src : require(`~/assets/img/products/default.png`)" alt="Image">
                 </div>
@@ -65,9 +65,13 @@ export default {
   },
 
   methods: {
-      showModal(product){
+      showModal(product, name, slug, id){
           this.product = Object.assign({}, product)
           this.modal = true;
+          
+          // console.log(name, slug, id);
+          localStorage.setItem('product', name);
+          localStorage.setItem('product-url', '/product/'+slug+'/'+id);
       },
       closeModal(e){
           this.modal = e;

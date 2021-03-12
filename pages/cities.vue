@@ -11,7 +11,7 @@
                 <template v-else>
                 <div v-for="(city, i) in cities" :key="i">
                     <NuxtLink :to="{name:'markets-city-id', params:{city: city.slug, id: city.id }}">
-                        <div class="border-2 border-r-4 border-b-4 border-green-4 rounded-xl">
+                        <div @click="setCityName(city.name, city.slug, city.id)" class="border-2 border-r-4 border-b-4 border-green-4 rounded-xl">
                             <div class="px-2 pt-2 bg-pink-1 rounded-t-xl">
                                 <img class="h-24 m-auto" src="~/assets/img/building.png" alt="Image">
                             </div>
@@ -62,6 +62,11 @@ export default {
           console.log(this.cities);
           this.isLoading = false;
         })
+      },
+      setCityName(name, slug, id)
+      {
+        localStorage.setItem('city', name);
+        localStorage.setItem('city-url', '/markets/'+slug+"/"+id);
       }
     }
 }
