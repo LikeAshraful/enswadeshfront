@@ -106,7 +106,11 @@ export default {
     },
     async checkSubscribe() {
       await this.$axios
-        .$get('/api/subscribe-check-by-shop-customer/' + this.$route.params.id)
+        .$get(
+          this.$auth.loggedIn
+            ? '/api/subscribe-check-by-shop-customer/' + this.$route.params.id
+            : '/api/shops/' + this.$route.params.id
+        )
         .then((res) => {
           this.subscribeCheck = res.data
           if (this.subscribeCheck != null) {
