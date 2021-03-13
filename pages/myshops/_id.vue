@@ -75,7 +75,6 @@ export default {
         .then((res) => {
           this.shop = res.data.data
           this.cover_image = this.shop.cover_image
-          console.log(this.shop)
         })
         .catch((error) => {
           if (error.response.status == 404) {
