@@ -41,11 +41,11 @@ export default {
           allMarkets: [],
           isLoading:true,
 
-            breadCrumbs: [
-                {title: 'Home', url: '/'},
-                {title: 'Go To Market', url: '/cities'},
-                {title: '', url: ''},
-            ],
+          breadCrumbs: [
+              {title: 'Home', url: '/'},
+              {title: 'Go To Market', url: '/cities'},
+              {title: '', url: ''},
+          ],
 
         }
     },
@@ -53,6 +53,7 @@ export default {
     mounted() {
       this.loadAreas();
       this.loadMarket();
+      this.getCityName();
     },
 
     methods: {
@@ -61,7 +62,7 @@ export default {
           '/api/areas-by-city/' + this.$route.params.id
         ).then((res) => {
           this.filtersData = res.data;
-          this.breadCrumbs[2].title = this.filtersData.data[0].city.name;
+          // this.breadCrumbs[2].title = this.filtersData.data[0].city.name;
         })
         .catch((error) => {
           if(error.response.status == 404){
@@ -83,7 +84,13 @@ export default {
           this.allMarkets = res.data;
           this.isLoading = false;
         })
+      },
+
+      getCityName()
+      {
+        this.breadCrumbs[2].title = localStorage.getItem('city');
       }
+
     }
 }
 </script>

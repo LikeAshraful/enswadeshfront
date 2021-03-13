@@ -31,6 +31,7 @@ export default {
       this.$emit('floorId', id, floor)
       this.$store.dispatch('floorserchid/getFloorId', id)
       this.floorAcitve = i
+      localStorage.setItem('floor-url', '/shops/shops-by-market-by-floors/'+id);
     },
   },
 }
