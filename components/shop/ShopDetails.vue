@@ -38,7 +38,7 @@
           @click="subscribeShop(shop.id)"
           v-if="$auth.loggedIn"
           :disabled="disable"
-          :class="count == 0 ? ' bg-green-3' : ' bg-green-1'"
+          :class="subscribeCheck == null ? ' bg-green-3' : ' bg-green-1'"
           class="md:px-6 px-3 md:py-1 py-1 font-semibold md:text-xl rounded-lg"
         >
           {{ subscribeCheck ? 'Subscribed' : 'Subscribe' }}
@@ -85,7 +85,8 @@ export default {
       await this.$axios
         .post('api/subscribe-request', formData)
         .then((response) => {
-          console.log(response.data)
+          this.getSubscribeCount()
+          this.checkSubscribe()
           this.$toast.success('Success Subscribe!')
         })
         .catch((error) => {
