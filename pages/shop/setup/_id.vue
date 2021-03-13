@@ -214,6 +214,7 @@ export default {
       formData.append("phone", this.phone);
       formData.append("email", this.email);
       formData.append("shop_type_id", this.shop_type);
+      formData.append("subscription_note", this.subscription_note);
       formData.append('meta_title', this.meta_title);
       formData.append("meta_keywords", this.meta_keywords);
       formData.append("meta_description", this.meta_description);
