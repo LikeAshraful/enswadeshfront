@@ -50,19 +50,17 @@
 
                     <div class="mb-2">
                         <label class="input-label" for="floor">Floor</label>
-                        <select class="input-field focus:outline-none" id="floor" v-model="floor_no">
+                        <select class="input-field focus:outline-none" id="floor" v-model="floor_id">
+
                             <option value="" disabled selected>Select Floor</option>
-                            <option value="Ground Floor">Ground Floor</option>
-                            <option value="1st Floor">1st Floor</option>
-                            <option value="2nd Floor">2nd Floor</option>
-                            <option value="3rd Floor">3rd Floor</option>
-                            <option value="4th Floor">4th Floor</option>
-                            <option value="5th Floor">5th Floor</option>
-                            <option value="6th Floor">6th Floor</option>
-                            <option value="7th Floor">7th Floor</option>
-                            <option value="8th Floor">8th Floor</option>
-                            <option value="9th Floor">9th Floor</option>
-                            <option value="10th Floor">10th Floor</option>
+                            <option
+                              v-for="(floor, k) in floors"
+                              :key="k"
+                              :value="floor.id"
+                              selected
+                            >
+                              {{ floor.floor }}
+                            </option>
                         </select>
                     </div>
                     <div class="mb-2">
@@ -117,7 +115,8 @@ export default {
             city: this.$route.params.city_id ? this.$route.params.city_id : 0,
             area: this.$route.params.area_id ? this.$route.params.area_id : 0,
             market: this.$route.params.market_id ? this.$route.params.market_id : '',
-            floor_no: '',
+            floor_id: '',
+            floors:[],
             name: '',
             shopNo: '',
             block:'',
@@ -132,7 +131,7 @@ export default {
             ],
             cities:[],
             areas:[],
-            markets:[],
+            markets:[]
         }
     },
     validations: {
@@ -159,6 +158,7 @@ export default {
         this.loadData();
         this.loadArea();
         this.loadMarket();
+        this.loadFloors();
     },
     methods: {
         submitForm(){
@@ -168,7 +168,7 @@ export default {
                 formData.append("city_id", this.city);
                 formData.append("area_id", this.area);
                 formData.append("market_id", this.market);
-                formData.append('floor_no', this.floor_no);
+                formData.append('floor_id', this.floor_id);
                 formData.append("name", this.name);
                 formData.append("shop_no", this.shopNo);
                 formData.append("block", this.block);
@@ -189,27 +189,31 @@ export default {
             }
         },
 
-        async loadData() {
-            await this.$axios.$get(
-                '/api/cities'
-            ).then((res) => {
-                this.cities = res.data;
-            })
-        },
-
-        async loadArea() {
-            await this.$axios.$get('/api/areas-by-city/' + this.city )
-            .then(function( response ){
-                this.areas = response.data;
-            }.bind(this));
-        },
-
-        async loadMarket() {
-            await this.$axios.$get('/api/markets/all-market-by-area/' + this.area )
-            .then(function( response ){
-                this.markets = response.data;
-            }.bind(this));
-        }
+      async loadData() {
+          await this.$axios.$get(
+              '/api/cities'
+          ).then((res) => {
+              this.cities = res.data;
+          })
+      },
+      async loadArea() {
+          await this.$axios.$get('/api/areas-by-city/' + this.city )
+          .then(function( response ){
+              this.areas = response.data;
+          }.bind(this));
+      },
+      async loadMarket() {
+          await this.$axios.$get('/api/markets/all-market-by-area/' + this.area )
+          .then(function( response ){
+              this.markets = response.data;
+          }.bind(this));
+      },
+      async loadFloors() {
+        await this.$axios.$get('/api/floors')
+        .then(function(res) {
+          this.floors = res.data;
+        }.bind(this));
+      }
     }
 }
 </script>

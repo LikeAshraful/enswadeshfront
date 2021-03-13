@@ -5,7 +5,7 @@
 
     <div class="shop market grid grid-cols-2 gap-3">
       <!-- Add photo -->
-      <add-photo :cover_image="cover_image"></add-photo>
+      <add-photo :cover_image="cover_image" :basePath="basePath"></add-photo>
 
       <!-- Shop details -->
       <my-shop-details :shop="shop"></my-shop-details>
@@ -40,23 +40,26 @@ export default {
     Tab,
   },
 
-  data: () => ({
-    breadCrumbs: [
-      { title: 'Home', url: '/' },
-      { title: 'My Shop', url: '/my-shop' },
-      { title: 'Shop name goes to here', url: '' },
-    ],
-    showTab: 'Products',
-    tabs: [
-      { name: 'Products', view: 'Products' },
-      { name: 'Orders', view: 'Orders' },
-      { name: 'Tutorials', view: 'Tutorials' },
-      { name: 'Calculator', view: 'Calculator' },
-    ],
-    shop: '',
-    cover_image: '',
-    products: [],
-  }),
+  data() {
+    return {
+      basePath: this.$axios.defaults.baseURL,
+      breadCrumbs: [
+        { title: 'Home', url: '/' },
+        { title: 'My Shop', url: '/my-shop' },
+        { title: 'Shop name goes to here', url: '' },
+      ],
+      showTab: 'Products',
+      tabs: [
+        { name: 'Products', view: 'Products' },
+        { name: 'Orders', view: 'Orders' },
+        { name: 'Tutorials', view: 'Tutorials' },
+        { name: 'Calculator', view: 'Calculator' },
+      ],
+      shop: '',
+      cover_image: '',
+      products: [],
+    }
+  },
 
   mounted() {
     this.loadShop()
@@ -75,7 +78,6 @@ export default {
         .then((res) => {
           this.shop = res.data.data
           this.cover_image = this.shop.cover_image
-          console.log(this.shop)
         })
         .catch((error) => {
           if (error.response.status == 404) {
