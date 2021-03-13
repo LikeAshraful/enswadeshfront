@@ -137,9 +137,9 @@ export default {
             ],
             breadCrumbs: [
                 {title: 'Home', url: '/'},
-                {title: '...', url: '/'},
-                {title: 'Shop name goes to here', url: '/shop'},
-                {title: 'Product name goes to here', url: ''},
+                {title: '...', url: ''},
+                {title: '', url: ''},
+                {title: '', url: ''},
             ],
 
             showTab: 'Information',
@@ -158,35 +158,46 @@ export default {
         }
     },
 
-  created(){
-    this.getSingleProduct();
-  },
-  methods: {
-    bargainModal()
-    {
-      this.bargain = !this.bargain;
+    created(){
+        this.getSingleProduct();
     },
-    plus()
-    {
-        this.quantity += 1;
+    mounted() {
+      this.getBreadCrumbItems();
     },
-    minus()
-    {
-        if(this.quantity > 0)
-            this.quantity -= 1;
-    },
+    methods: {
+        bargainModal()
+        {
+        this.bargain = !this.bargain;
+        },
+        plus()
+        {
+            this.quantity += 1;
+        },
+        minus()
+        {
+            if(this.quantity > 0)
+                this.quantity -= 1;
+        },
 
-    // ...mapActions(
-    //   'products', ['getSingleProduct']
-    // )
-    getSingleProduct(){
-      this.$store.dispatch('products/getSingleProduct', this.$route.params.id)
-    }
-  },
-  computed: {
-    ...mapGetters(
-      'products', ['getProduct']
-    )
-  }
+        // ...mapActions(
+        //   'products', ['getSingleProduct']
+        // )
+        getSingleProduct(){
+            this.$store.dispatch('products/getSingleProduct', this.$route.params.id)
+        },
+        getBreadCrumbItems()
+        {
+            this.breadCrumbs[1].url = localStorage.getItem('market-url');
+            this.breadCrumbs[2].title = localStorage.getItem('shop');
+            this.breadCrumbs[2].url = localStorage.getItem('shop-url');
+            this.breadCrumbs[3].title = localStorage.getItem('product');
+            // this.breadCrumbs[3].url = localStorage.getItem('product-url');
+        }
+    },
+    computed: {
+        ...mapGetters(
+        'products', ['getProduct']
+        )
+    },
 }
 </script>

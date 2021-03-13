@@ -19,42 +19,40 @@
                             <button @click="closeModal" class="text-2xl focus:outline-none"><i class="ri-close-line"></i></button>
                         </div>
                         <p class="font-bold text-2xl mb-2">{{product.name}}</p>
-                        <p class="bg-green-4 px-2 py-1 text-white inline">
-                            4.5<i class="ri-star-fill ml-2 text-yellow-2"></i>
-                        </p>
-                        <p class="font-bold mt-3">{{product.price}} BDT</p>
-                        <div class="border-t text-gray-3 my-2"></div>
-                        <table class="w-full">
-                            <tr>
-                                <td class="font-semibold">Availability</td>
-                                <td v-if="product.total_stocks >= 1"><strong> In Stock</strong></td>
-                                <td v-else class="text-red-500" ><strong> Out Of Stock</strong></td>
-                            </tr>
-                            <tr>
-                                <td class="font-semibold">Brand</td>
-                                <td class="">{{product.brand.name}}</td>
-                            </tr>
-                            <tr>
-                                <td><div class="border-t text-gray-3 my-2"></div></td>
-                                <td><div class="border-t text-gray-3 my-2"></div></td>
-                            </tr>
-                            <tr>
-                                <td class="font-semibold">Select color</td>
-                                <td>
-                                    <i class="ri-checkbox-blank-circle-fill text-yellow-2"></i>
-                                    <i class="ri-checkbox-blank-circle-fill text-green-4"></i>
-                                    <i class="ri-checkbox-blank-circle-fill text-red-500"></i>
-                                    <i class="ri-checkbox-blank-circle-fill text-blue-1"></i>
-                                    <i class="ri-checkbox-blank-circle-fill text-purple-2"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="font-semibold">Size</td>
-                                <td>XS</td>
-                            </tr>
+
+
+                        <div class="flex items-center gap-8">
+                            <p class="bg-green-4 px-2 py-1 text-white inline">
+                                4.5<i class="ri-star-fill ml-2 text-yellow-2"></i>
+                            </p>
+                            <p class="font-semibold text-blue-1">Rate this product</p>
+                        </div>
+                        <table class="w-full mt-4">
+                            <tbody>
+                                <tr>
+                                    <td>Price:</td>
+                                    <td class="font-semibold"><span>1000 BDT</span> <span class="text-gray-4 ml-4 line-through">1195 BDT</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Stock:</td>
+                                    <td class="font-semibold">Available</td>
+                                </tr>
+                                <tr>
+                                    <td>Brand:</td>
+                                    <td class="font-semibold">zxy</td>
+                                </tr>
+                                <tr>
+                                    <td>SKU:</td>
+                                    <td class="font-semibold">VEM00905</td>
+                                </tr>
+                            </tbody>
                         </table>
-                        <div class="border-t text-gray-3 my-2"></div>
-                        <p class="font-semibold mb-2">Quantity</p>
+                        <p class="font-semibold mt-4">Available Offers</p>
+                        <ul>
+                            <li>Offers will be appear here.</li>
+                            <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr</li>
+                        </ul>
+                        <p class="font-semibold mt-4 mb-2">Quantity</p>
                         <div class="grid grid-cols-2 gap-2 mb-2">
                             <div class="grid grid-cols-4 rounded border border-gray-3 font-bold">
                                 <button class="focus:outline-none bg-gray-3 rounded-l text-xl flex items-center justify-center">
