@@ -35,7 +35,9 @@
           >Subscribe</a
         >
         <button
-          @click="subscribeShop(shop.id)"
+          id="show-modal"
+          @click="showModal = true"
+          v-tooltip="'Subscribe'"
           v-if="$auth.loggedIn"
           :disabled="disable"
           :class="subscribeCheck == null ? ' bg-green-3' : ' bg-green-1'"
@@ -58,6 +60,45 @@
         </div>
       </div>
     </div>
+    <!-- use the modal component, pass in the prop -->
+    <div v-if="showModal" @close="showModal = false">
+      <transition name="modal">
+        <div class="modal-mask">
+          <div class="modal-wrapper">
+            <div class="modal-container">
+              <div class="modal-body">
+                <form @submit.prevent="subscribeShop(shop.id)">
+                  <input
+                    type="text"
+                    class="focus:outline-none input-field pr-6"
+                    placeholder="Enter nickname"
+                    v-model="nickname"
+                  />
+                  <button
+                    type="submit"
+                    :disabled="disable"
+                    :class="
+                      subscribeCheck == null ? ' bg-green-3' : ' bg-green-1'
+                    "
+                    class="md:px-6 px-3 md:py-1 py-1 font-semibold md:text-xl rounded-lg"
+                  >
+                    Submit
+                  </button>
+                </form>
+              </div>
+
+              <div class="modal-footer">
+                <slot name="footer">
+                  <button class="modal-default-button" @click="$emit('close')">
+                    OK
+                  </button>
+                </slot>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
   </div>
 </template>
 <script>
@@ -66,10 +107,11 @@ export default {
 
   data() {
     return {
+      showModal: false,
       disable: false,
       subscribeCheck: null,
       count: 0,
-      nickname: 'Sanwarul',
+      nickname: '',
     }
   },
 
@@ -121,3 +163,59 @@ export default {
   },
 }
 </script>
+<style>
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 300px;
+  margin: 0px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+  margin-top: 0;
+  color: #42b983;
+}
+
+.modal-body {
+  margin: 20px 0;
+}
+
+.modal-default-button {
+  float: right;
+}
+
+.modal-enter {
+  opacity: 0;
+}
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+</style>
