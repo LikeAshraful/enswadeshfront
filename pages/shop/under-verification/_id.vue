@@ -17,7 +17,7 @@
                 </tr>
                 <tr>
                     <td class="font-bold pt-3">Floor:</td>
-                    <td>{{shop.floor ? shop.floor : '' }}</td>
+                    <td>{{shop.floor ? shop.floor.floor : '' }}</td>
                 </tr>
                 <tr>
                     <td class="font-bold pt-3">Shop Name:</td>
