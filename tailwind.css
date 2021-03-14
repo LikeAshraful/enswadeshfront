@@ -52,3 +52,30 @@
 .require {
     @apply text-orange-1
 }
+
+
+
+.avatar {
+    @apply w-20 h-20 rounded-full bg-purple-1
+}
+.btn-group {
+    @apply border border-gray-3 px-2 py-1 font-semibold
+}
+.divider {
+    @apply border border-gray-3
+}
+.head-line {
+    @apply font-bold text-3xl
+}
+.list {
+    @apply bg-white p-4
+}
+.list-items {
+    @apply py-1 font-semibold cursor-pointer px-2 delay-100
+}
+.list-items-center {
+    @apply bg-white flex flex-col items-center p-4
+}
+.search {
+    @apply border border-gray-3 py-1 pr-2 pl-6 rounded-full
+}
