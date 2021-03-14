@@ -2,7 +2,7 @@
     <div>
         <div>
             <p class="font-bold text-xl">{{shop.name}}</p>
-            <p class="text-gray-2">111 Subscribers</p>
+            <p class="text-gray-2">{{shop.total_subscriber}} Subscribers</p>
             <p class="text-gray-2">55 Active Customers</p>
             <div class="flex text-yellow-2">
                 <i class="ri-star-fill"></i>

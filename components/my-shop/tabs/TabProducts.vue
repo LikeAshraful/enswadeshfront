@@ -93,6 +93,7 @@ export default {
       currentPage: 0,
       perPage: 0,
       products: [],
+      keyword:''
     }
   },
 

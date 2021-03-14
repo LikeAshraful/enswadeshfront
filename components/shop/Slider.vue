@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div v-if="slider_images != ''">
         <VueSlickCarousel  v-bind="settings">
-            <div class="px-1" v-for="(slider, i) in sliders" :key="i">
-                <img class="rounded-lg h-40" :src="require(`~/assets/img/shops/${slider}`)" alt="Image">
+            <div class="px-1" v-for="(slider, i) in slider_images" :key="i">
+                <img class="rounded-lg h-40" :src="basePath + '/storage/' + slider.image" alt="Image">
             </div>
         </VueSlickCarousel>
     </div>
@@ -12,7 +12,7 @@
   import 'vue-slick-carousel/dist/vue-slick-carousel.css'
   // optional style for arrows & dots
   import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
- 
+
   export default {
     name: 'MyComponent',
     data() {
@@ -29,22 +29,14 @@
                 "pauseOnHover": true
             },
             sliders: [
-                'img-1.png',
-                'img-2.png',
-                'img-3.png',
-                'img-4.png',
-                'img-2.png',
-                'img-3.png',
-                'img-1.png',
-                'img-4.png',
-                'img-2.png',
-                'img-3.png',
+              '', '', '', ''
             ]
         }
     },
-    components: 
-    { 
+    props: ['slider_images', 'basePath'],
+    components:
+    {
         VueSlickCarousel
     },
   }
-</script> 
+</script>
