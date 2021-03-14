@@ -164,7 +164,7 @@ export default {
       this.registrationModal = false
     },
     async loadShippingUser() {
-      await this.$axios.$get('/api/shipping-address').then((res) => {
+      await this.$axios.$get('/api/orders/shipping-address').then((res) => {
         this.customer = res.data
         console.log(this.customer)
       })

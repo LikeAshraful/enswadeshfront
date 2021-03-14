@@ -87,6 +87,7 @@ export default {
   data() {
     return {
       filterTitle: 'Categories',
+      keyword: '',
       filtersData: [],
       totalPages: 0,
       total: 0,
@@ -123,7 +124,6 @@ export default {
         .get('/api/categories/base')
         .then((res) => {
           this.filtersData = res.data
-          console.log(this.filtersData)
         })
         .catch((error) => {
           console.log(error)
@@ -131,7 +131,6 @@ export default {
     },
 
     getProductsSearchResults: _.debounce(function (e) {
-      console.log(this.keyword)
       this.$axios
         .post('/api/search/products/', {
           params: { keyword: this.keyword, id: this.$route.params.id },
