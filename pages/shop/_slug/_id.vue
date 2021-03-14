@@ -104,7 +104,6 @@ export default {
     },
 
     async loadProducts(id, isLoading) {
-      console.log(id)
       this.isLoading = isLoading
       await this.$axios
         .get(
