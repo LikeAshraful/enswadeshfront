@@ -1,4 +1,5 @@
 <template>
+  <div>
     <div>
         <div>
             <p class="font-bold text-xl">{{shop.name}}</p>
@@ -32,10 +33,18 @@
                 </div>
             </div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 <script>
 export default {
-  props : ['shop']
+  props: ['shop'],
+
+  methods: {
+    editShop(id) {
+      this.$router.push({ path: '/shop/edit/' + id })
+    },
+  },
 }
 </script>
