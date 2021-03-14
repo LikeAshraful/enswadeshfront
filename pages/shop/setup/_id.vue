@@ -2,19 +2,21 @@
     <div>
         <!-- Breadcrumbs -->
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
+
         <p class="text-3xl font-bold mb-4">Shop setup</p>
         <p class="title">Shop Information</p>
+
         <form @submit.prevent="submitForm">
           <div class="p-2 mb-6">
               <div class="grid grid-cols-2 gap-8">
                   <div>
                       <div class="mb-2">
                           <label class="input-label" for="phone">Shop Phone Number <span class="text-orange-1">*</span></label>
-                          <input class="input-field focus:outline-none" id="phone" type="text" v-model="getMyShop.phone" placeholder="01XXXXXXXXX">
+                          <input class="input-field focus:outline-none" id="phone" type="text" v-model="shop.phone" placeholder="01XXXXXXXXX">
                       </div>
                       <div class="mb-2">
                           <label class="input-label" for="email">Shop Email <span class="text-orange-1">*</span></label>
-                          <input class="input-field focus:outline-none" id="email" type="text" v-model="getMyShop.email" placeholder="shop@email.com">
+                          <input class="input-field focus:outline-none" id="email" type="text" v-model="shop.email" placeholder="shop@email.com">
                       </div>
                       <div class="mb-2">
                           <label class="input-label" for="shop-type">Shop Type <span class="text-orange-1">*</span></label>
@@ -24,32 +26,32 @@
                           </select>
                       </div>
                       <div class="mb-2">
-                          <label class="input-label" for="email">Subscription note</label>
-                          <input class="input-field focus:outline-none" id="email" type="text" v-model="getMyShop.subscription_note" placeholder="What you do offer for subscribed customer?">
+                          <label class="input-label" for="subs_note">Subscription note</label>
+                          <input class="input-field focus:outline-none" id="subs_note" type="text" v-model="shop.subscription_note" placeholder="What you do offer for subscribed customer?">
                       </div>
                   </div>
                   <div>
                       <table class="w-full">
-                        <!-- {{getMyShop}} -->
+                        <!-- {{} -->
                           <tr>
                               <td class="font-bold pt-3">Market Name:</td>
-                              <td>{{ getMyShop.market ? getMyShop.market.name : ''}}</td>
+                              <td class="pt-3">{{ shop.market ? shop.market.name : ''}}</td>
                           </tr>
                           <tr>
                               <td class="font-bold pt-3">Floor:</td>
-                              <td>{{getMyShop.floor ? getMyShop.floor.floor : ''}}</td>
+                              <td class="pt-3">{{shop.floor ? shop.floor.floor : ''}}</td>
                           </tr>
                           <tr>
                               <td class="font-bold pt-3">Shop Name:</td>
-                              <td>{{getMyShop.name}}</td>
+                              <td class="pt-3">{{shop.name}}</td>
                           </tr>
                           <tr>
                               <td class="font-bold pt-3">Shop Number:</td>
-                              <td>{{getMyShop.shop_no}}</td>
+                              <td class="pt-3">{{shop.shop_no}}</td>
                           </tr>
                           <tr>
                               <td class="font-bold pt-3">Block Number:</td>
-                              <td>{{getMyShop.block}}</td>
+                              <td class="pt-3">{{shop.block}}</td>
                           </tr>
                       </table>
                   </div>
@@ -61,25 +63,25 @@
                   <div class="p-2">
                       <div class="mb-2">
                           <label class="input-label" for="meta_title">Meta Title</label>
-                          <input class="input-field focus:outline-none" id="meta_title" type="text" v-model="getMyShop.meta_title" placeholder="@Rana Bhai, write here how to use meta title.">
+                          <input class="input-field focus:outline-none" id="meta_title" type="text" v-model="shop.meta_title" placeholder="@Rana Bhai, write here how to use meta title.">
                           <small class="font-semibold">If need any help text, write here.</small>
                       </div>
                       <div class="mb-2">
                           <label class="input-label" for="meta_keywords">Meta Keyword</label>
-                          <input class="input-field focus:outline-none" id="meta_keywords" type="text"  v-model="getMyShop.meta_keywords"  placeholder="Type and hit enter to add a tag">
+                          <input class="input-field focus:outline-none" id="meta_keywords" type="text"  v-model="shop.meta_keywords"  placeholder="Type and hit enter to add a tag">
                           <small class="font-semibold">If need any help text, write here.</small>
                       </div>
                       <div class="mb-2">
                           <label class="input-label" for="meta_description">Meta Description</label>
-                          <input class="input-field focus:outline-none" id="meta_description" type="text"  v-model="getMyShop.meta_description" placeholder="Write here">
+                          <input class="input-field focus:outline-none" id="meta_description" type="text"  v-model="shop.meta_description" placeholder="Write here">
                       </div>
                       <div class="mb-2">
                           <label class="input-label" for="meta_url">Meta OG URL</label>
-                          <input class="input-field focus:outline-none" id="meta_url" type="text" v-model="getMyShop.meta_og_url" placeholder="Write here">
+                          <input class="input-field focus:outline-none" id="meta_url" type="text" v-model="shop.meta_og_url" placeholder="Write here">
                       </div>
                   </div>
               </div>
-              <div>{{selectedShopType}}
+              <div>
                   <p class="title">Shop Images</p>
                   <div class="p-2">
                       <div class="mb-2">
@@ -140,10 +142,12 @@
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
 import Breadcrumb from '~/components/common/Breadcrumb.vue';
 
 export default {
+  middleware: [
+    'auth'
+  ],
   components: {
       Breadcrumb,
   },
@@ -152,7 +156,7 @@ export default {
         breadCrumbs: [
             {title: 'My Shop', url: '/my-shop'},
             {title: 'Own Shop', url: '/my-shop'},
-            {title: 'Shop Setup', url: ''},
+            {title: 'Shop Setup', url: '#'},
         ],
         phone: '',
         email:'',
@@ -169,12 +173,14 @@ export default {
         thumbnailUrl:null,
         gallery_images_url: [],
         shop_types:[],
+        shop:[],
     };
   },
   created() {
     this.loadShopTypes();
-    this.setMySingleShop();
+    this.getSingleShop();
   },
+
   methods: {
     bannerFile(event) {
       console.log(event.target.files[0]);
@@ -206,19 +212,28 @@ export default {
         }
       })
     },
-    setMySingleShop() {
-        this.$store.dispatch('shops/setMyShop', this.$route.params.id)
+    async getSingleShop() {
+      await this.$axios.get(`/api/my-shops/${this.$route.params.id}`)
+      .then((res) => {
+        this.shop = res.data.data
+
+      })
+      .catch((error) => {
+        if (error.response.status == 404) {
+          this.$nuxt.error({ statusCode: 404, message: 'err message' })
+        }
+      })
     },
     submitForm(){
       var formData = new FormData();
-      formData.append("phone", this.phone);
-      formData.append("email", this.email);
+      formData.append("phone", this.shop.phone);
+      formData.append("email", this.shop.email);
       formData.append("shop_type_id", this.shop_type);
-      formData.append("subscription_note", this.subscription_note);
-      formData.append('meta_title', this.meta_title);
-      formData.append("meta_keywords", this.meta_keywords);
-      formData.append("meta_description", this.meta_description);
-      formData.append("meta_og_url", this.meta_og_url);
+      formData.append("subscription_note", this.shop.subscription_note);
+      formData.append('meta_title', this.shop.meta_title);
+      formData.append("meta_keywords", this.shop.meta_keywords);
+      formData.append("meta_description", this.shop.meta_description);
+      formData.append("meta_og_url", this.shop.meta_og_url);
       formData.append("logo", this.shop_banner);
       formData.append("cover_image", this.thumbnail);
 
@@ -239,11 +254,7 @@ export default {
       });
       // this.btnAction = true;
     },
+
   },
-  computed: {
-    ...mapGetters(
-      'shops', ['getMyShop']
-    )
-  }
 }
 </script>

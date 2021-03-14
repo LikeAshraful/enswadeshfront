@@ -2,7 +2,7 @@
   <div>
     <div>
       <p class="font-bold text-xl">{{ shop.name }}</p>
-      <p class="text-gray-2">{{ count }} Subscribers</p>
+      <p class="text-gray-2">{{ shop.total_subscriber }} Subscribers</p>
       <p class="text-gray-2">55 Active Customers</p>
       <div class="flex text-yellow-2">
         <i class="ri-star-fill"></i>
@@ -54,8 +54,7 @@
       <div>
         <div class="text-purple-2 border border-purple-2 rounded-lg md:p-2 p-1">
           <p>
-            <strong>Note:</strong> Subscribe us & get 5% discount on every
-            product
+            <strong>Note:</strong> {{shop.subscription_note}}
           </p>
         </div>
       </div>
