@@ -10,7 +10,8 @@
       <shopDetails :shop="shop"></shopDetails>
     </div>
     <!-- Slider -->
-    <slider></slider>
+    <slider :slider_images="slider_images" :basePath="basePath" class="mb-8 mt-8"></slider>
+
     <div class="">
       <div class="grid lg:grid-cols-4 sm:grid-cols-3 gap-4 my-5">
         <!-- Filter -->
@@ -64,7 +65,6 @@ export default {
   data() {
     return {
       basePath: this.$axios.defaults.baseURL,
-
       breadCrumbs: [
         { title: 'Home', url: '/' },
         { title: 'Go To Market', url: '/cities' },
@@ -73,7 +73,6 @@ export default {
         { title: '', url: '' },
         { title: '', url: '' },
       ],
-
       filterTitle: 'Categories',
       filtersCategory: [],
       shop: {},
@@ -83,12 +82,15 @@ export default {
       currentPage: 0,
       perPage: 0,
       isLoading: true,
+      slider_images: [],
     }
   },
-  mounted() {
-    this.loadCategory()
+  created() {
+    this.loadData()
     this.loadProducts()
     this.loadProductsPaginate()
+  },
+  mounted() {
     this.getBreadCrumbItems()
   },
   methods: {
@@ -100,6 +102,7 @@ export default {
           .get('/api/shops/' + this.$route.params.id)
           .then((res) => {
             this.shop = res.data.data
+            this.slider_images = this.shop.shop_gallery
           })
     },
 

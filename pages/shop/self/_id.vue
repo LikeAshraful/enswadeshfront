@@ -12,7 +12,7 @@
     </div>
 
     <!-- Photos -->
-    <slider class="mb-8"></slider>
+    <slider :slider_images="slider_images" :basePath="basePath" class="mb-8 mt-8"></slider>
 
     <!-- Tabs -->
     <tab :showTab="showTab" :tabs="tabs"></tab>
@@ -58,10 +58,11 @@ export default {
       shop: '',
       cover_image: '',
       products: [],
+      slider_images: [],
     }
   },
 
-  mounted() {
+  created() {
     this.loadShop()
   },
 
@@ -78,6 +79,7 @@ export default {
         .then((res) => {
           this.shop = res.data.data
           this.cover_image = this.shop.cover_image
+          this.slider_images = this.shop.shop_gallery
         })
         .catch((error) => {
           if (error.response.status == 404) {
