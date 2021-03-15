@@ -6,7 +6,7 @@
           <div class="bg-gray-1 pt-12 rounded-t-xl">
             <img class="lg:h-56 md:h-40 h-24 m-auto" src="~/assets/img/market.png" alt="Image">
           </div>
-          <div class="flex flex-wrap items-center justify-center">
+          <div class="flex flex-wrap items-center justify-center bg-white">
             <n-link to="/cities" class="bg-green-3 border-2 border-green-4 rounded-xl font-bold lg:my-10 md:my-6 sm:my-4 my-3 lg:px-8 px-4 lg:py-2 py-1">Go To Market</n-link>
           </div>
         </div>
@@ -14,7 +14,7 @@
           <div class="bg-pink-1 pt-12 rounded-t-xl">
             <img class="lg:h-56 md:h-40 h-24 m-auto" src="~/assets/img/full-building.png" alt="Image">
           </div>
-          <div class="flex flex-wrap items-center justify-center">
+          <div class="flex flex-wrap items-center justify-center bg-white">
             <n-link to="" class="bg-green-3 border-2 border-green-4 rounded-xl font-bold lg:my-10 md:my-6 sm:my-4 my-3 lg:px-8 px-4 lg:py-2 py-1">Coming Soon</n-link>
           </div>
         </div>
@@ -22,7 +22,7 @@
           <div class="bg-purple-1 pt-12 rounded-t-xl">
             <img class="lg:h-56 md:h-40 h-24 m-auto" src="~/assets/img/full-building.png" alt="Image">
           </div>
-          <div class="flex flex-wrap items-center justify-center">
+          <div class="flex flex-wrap items-center justify-center bg-white">
             <n-link to="" class="bg-green-3 border-2 border-green-4 rounded-xl font-bold lg:my-10 md:my-6 sm:my-4 my-3 lg:px-8 px-4 lg:py-2 py-1">Coming Soon</n-link>
           </div>
         </div>

@@ -3,7 +3,7 @@
         <!-- Tabs -->
         <div class="">
             <span v-for="(tab, i) in tabs" :key="i">
-                <button @click="changeTab(tab.name)" :class="active == tab.name ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-white':''" class="focus:outline-none sm:font-bold lg:px-6 md:px-4 sm:px-2 px-1 md:py-2 py-1">{{ tab.name }}</button>
+                <button @click="changeTab(tab.name)" :class="active == tab.name ? 'border-l-2 border-t-2 border-r-2 rounded-t-lg border-green-4 bg-gray-5':''" class="focus:outline-none sm:font-bold lg:px-6 md:px-4 sm:px-2 px-1 md:py-2 py-1">{{ tab.name }}</button>
             </span>
 
             <div style="margin-top: -2px;" class="border-t-2 border-green-4 xl:py-8 lg:pt-4 md:pt-2 pt-1">

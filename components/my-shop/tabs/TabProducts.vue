@@ -3,7 +3,11 @@
     <!-- Products Section -->
     <div class="grid lg:grid-cols-4 md:grid-cols-3 gap-4 my-5">
       <!-- Filter -->
-      <dataFilter :filtersData="filtersData" :filterTitle="filterTitle" />
+      <dataFilter
+        :filtersData="filtersData"
+        :filterTitle="filterTitle"
+        v-on:filterByData="loadProducts"
+      />
 
       <div class="lg:col-span-3 md:col-span-2">
         <!-- Product tables -->
@@ -24,7 +28,8 @@
             >Add Product</n-link
           >
         </div>
-        <table class="w-full text-left mb-6">
+        <loader v-if="isLoading"></loader>
+        <table v-else class="w-full text-left mb-6">
           <thead>
             <tr class="bg-green-1 h-10">
               <th>#</th>
@@ -65,7 +70,7 @@
             :total="total"
             :currentPage="currentPage"
             :perPage="perPage"
-            v-on:pagechanged="loadProducts"
+            v-on:pagechanged="loadProductsPaginate"
           />
         </div>
         <!-- End Paginate -->
@@ -94,32 +99,18 @@ export default {
       currentPage: 0,
       perPage: 0,
       products: [],
-      keyword:''
+      keyword: '',
+      isLoading: true,
     }
   },
 
   mounted() {
-    this.loadProducts()
     this.loadCategories()
+    this.loadProducts()
+    this.loadProductsPaginate()
   },
 
   methods: {
-    async loadProducts(value) {
-      await this.$axios
-        .get(
-          '/api/products-by-shop/' + this.$route.params.id + '?page=' + value
-        )
-        .then((res) => {
-          this.products = res.data.data
-          this.total = this.products.meta.total
-          this.totalPages = this.products.meta.last_page
-          this.currentPage = this.products.meta.current_page
-          this.perPage = this.products.meta.per_page
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    },
     async loadCategories() {
       await this.$axios
         .get('/api/categories/base')
@@ -131,7 +122,40 @@ export default {
         })
     },
 
+    async loadProducts(id, isLoading) {
+      this.isLoading = isLoading
+      await this.$axios
+        .get(
+          id
+            ? '/api/products-by-shop/category/' +
+                this.$route.params.id +
+                '/' +
+                id
+            : '/api/products-by-shop/' + this.$route.params.id
+        )
+        .then((res) => {
+          this.products = res.data.data
+          this.isLoading = false
+        })
+    },
+
+    async loadProductsPaginate(value) {
+      await this.$axios
+        .get(
+          '/api/products-by-shop/' + this.$route.params.id + '?page=' + value
+        )
+        .then((res) => {
+          this.products = res.data.data
+          this.total = this.products.meta.total
+          this.totalPages = this.products.meta.last_page
+          this.currentPage = this.products.meta.current_page
+          this.perPage = this.products.meta.per_page
+          this.isLoading = false
+        })
+    },
+
     getProductsSearchResults: _.debounce(function (e) {
+      this.isLoading = true
       this.$axios
         .post('/api/search/products/', {
           params: { keyword: this.keyword, id: this.$route.params.id },
@@ -142,6 +166,7 @@ export default {
           this.totalPages = this.products.meta.last_page
           this.currentPage = this.products.meta.current_page
           this.perPage = this.products.meta.per_page
+          this.isLoading = false
         })
     }, 500),
   },

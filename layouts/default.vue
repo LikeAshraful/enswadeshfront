@@ -1,8 +1,10 @@
 <template>
   <div>
     <Header />
-    <div class="max-w-screen-xl xl:px-10 px-2 m-auto">
-      <Nuxt />
+    <div class="bg-gray-5">
+      <div class="max-w-screen-xl xl:px-10 px-2 m-auto">
+        <Nuxt />
+      </div>
     </div>
     <Footer />
   </div>

@@ -1,7 +1,8 @@
+
+/* Page transiction */
 .focus-in {
     animation: transitionIn 0.75s;
 }
-
 @keyframes transitionIn {
     from {
         opacity: 0;
@@ -12,4 +13,50 @@
         opacity: 1;
         /* transform: rotateX(0); */
     }
+}
+
+
+/* DropDown */
+.dropbtn {}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #fff;
+    width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropdown-content p {
+    color: black;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+.dropdown-content p:hover {background-color: #F5FAF8;}
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {}
+
+
+/* Hover effect */
+.target-area {
+    position: relative;
+}
+.hover-area {
+    height: 0px;
+	padding-top: 0px;
+    overflow:hidden;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+	position:absolute;
+}
+.target-area:hover .hover-area {
+    margin-top: 0px;
+    height: 100%;
+	padding-top: 0px;
 }
