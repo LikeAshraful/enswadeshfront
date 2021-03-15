@@ -66,6 +66,17 @@
                 placeholder="What you do offer for subscribed customer?"
               />
             </div>
+            <div class="mb-2">
+              <label class="input-label" for="description">Description</label>
+              <textarea
+                id="description"
+                rows="4"
+                v-model="shop.description"
+                class="input-field focus:outline-none"
+                placeholder="What you do offer for subscribed customer?"
+              >
+              </textarea>
+            </div>
           </div>
           <div>
             <table class="w-full">
@@ -189,6 +200,11 @@
                   id="shop_banner"
                 />
               </div>
+              <img
+                class="h-40"
+                :src="basePath + '/storage/' + shop.logo"
+                alt="Image"
+              />
             </div>
             <div class="mb-2">
               <label class="input-label">Thumbnail</label>
@@ -226,6 +242,11 @@
                   id="thumbnail"
                 />
               </div>
+              <img
+                class="h-40"
+                :src="basePath + '/storage/' + shop.cover_image"
+                alt="Image"
+              />
             </div>
             <div class="mb-2">
               <label class="input-label">Slider Image</label>
@@ -262,6 +283,18 @@
                   id="gallery"
                 />
               </div>
+              <div class="grid grid-cols-4 gap-2 justify-center">
+                <div
+                  v-for="(gallery, i) in shop_gallery"
+                  :key="i"
+                  class="relative"
+                >
+                  <img
+                    :src="basePath + '/storage/' + gallery.image"
+                    alt="Image"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -286,6 +319,7 @@ export default {
   },
   data() {
     return {
+      basePath: this.$axios.defaults.baseURL,
       breadCrumbs: [
         { title: 'My Shop', url: '/my-shop' },
         { title: 'Own Shop', url: '/my-shop' },
@@ -298,6 +332,7 @@ export default {
       thumbnailUrl: null,
       gallery_images_url: [],
       shop_types: [],
+      shop_gallery: '',
       shop: {
         name: '',
         phone: '',
@@ -305,7 +340,10 @@ export default {
         shop_type_id: '',
         shop_no: '',
         block: '',
+        logo: '',
+        cover_image: '',
         subscription_note: '',
+        description: '',
         meta_title: '',
         meta_keywords: '',
         meta_description: '',
@@ -356,6 +394,8 @@ export default {
         .get(`/api/my-shops/${this.$route.params.id}`)
         .then((res) => {
           this.shop = res.data.data
+          let shop_gallery = res.data.data.shop_gallery
+          this.shop_gallery = shop_gallery.length > 0 ? shop_gallery : ''
         })
         .catch((error) => {
           if (error.response.status == 404) {
@@ -370,6 +410,8 @@ export default {
       formData.append('email', this.shop.email)
       formData.append('shop_type_id', this.shop.shop_type_id)
       formData.append('block', this.shop.block)
+      formData.append('subscription_note', this.shop.subscription_note)
+      formData.append('description', this.shop.description)
       formData.append('subscription_note', this.shop.subscription_note)
       formData.append('meta_title', this.shop.meta_title)
       formData.append('meta_keywords', this.shop.meta_keywords)
@@ -386,7 +428,6 @@ export default {
       this.$axios
         .post(`/api/my-shops/update/${this.$route.params.id}`, formData)
         .then((response) => {
-          console.log(response.data.data.id)
           this.$router.push(`/shop/self/${this.$route.params.id}`)
           this.$toast.success('Your shop is Setup successfully !')
         })
