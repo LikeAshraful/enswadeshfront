@@ -16,7 +16,7 @@
             class="h-16 w-full"
             :src="
               shop.logo
-                ? basePath + 'storage/' + shop.logo
+                ? basePath + '/storage/' + shop.logo
                 : require(`~/assets/img/banner_green.png`)
             "
             alt="Image"
@@ -49,6 +49,7 @@ export default {
   data() {
     return {
       cols: 'lg:grid-cols-4',
+      basePath: '',
       imageUrl: this.$axios.imageURL,
     }
   },
