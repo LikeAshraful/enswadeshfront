@@ -104,14 +104,79 @@
             </div>
             <div class="mb-2">
               <label class="input-label" for="note">Subscription note</label>
-              <textarea
+              <input
+                class="input-field focus:outline-none"
                 id="note"
-                rows="4"
+                type="text"
                 v-model="shop.subscription_note"
+                placeholder="What you do offer for subscribed customer?"
+              />
+            </div>
+            <div class="mb-2">
+              <label class="input-label" for="description">Description</label>
+              <textarea
+                id="description"
+                rows="4"
+                v-model="shop.description"
                 class="input-field focus:outline-none"
                 placeholder="What you do offer for subscribed customer?"
               >
               </textarea>
+            </div>
+          </div>
+          <div>
+            <p class="title">Shop SEO Information</p>
+            <div class="p-2">
+              <div class="mb-2">
+                <label class="input-label" for="meta_title">Meta Title</label>
+                <input
+                  class="input-field focus:outline-none"
+                  id="meta_title"
+                  type="text"
+                  v-model="shop.meta_title"
+                  placeholder="@Rana Bhai, write here how to use meta title."
+                />
+                <small class="font-semibold"
+                  >If need any help text, write here.</small
+                >
+              </div>
+              <div class="mb-2">
+                <label class="input-label" for="meta_keywords"
+                  >Meta Keyword</label
+                >
+                <input
+                  class="input-field focus:outline-none"
+                  id="meta_keywords"
+                  type="text"
+                  v-model="shop.meta_keywords"
+                  placeholder="Type and hit enter to add a tag"
+                />
+                <small class="font-semibold"
+                  >If need any help text, write here.</small
+                >
+              </div>
+              <div class="mb-2">
+                <label class="input-label" for="meta_description"
+                  >Meta Description</label
+                >
+                <input
+                  class="input-field focus:outline-none"
+                  id="meta_description"
+                  type="text"
+                  v-model="shop.meta_description"
+                  placeholder="Write here"
+                />
+              </div>
+              <div class="mb-2">
+                <label class="input-label" for="meta_url">Meta OG URL</label>
+                <input
+                  class="input-field focus:outline-none"
+                  id="meta_url"
+                  type="text"
+                  v-model="shop.meta_og_url"
+                  placeholder="Write here"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -152,6 +217,11 @@
                   id="shop_banner"
                 />
               </div>
+              <img
+                class="h-40"
+                :src="basePath + '/storage/' + shop.logo"
+                alt="Image"
+              />
             </div>
             <div class="mb-2">
               <label class="input-label">Thumbnail</label>
@@ -189,6 +259,11 @@
                   id="thumbnail"
                 />
               </div>
+              <img
+                class="h-40"
+                :src="basePath + '/storage/' + shop.cover_image"
+                alt="Image"
+              />
             </div>
             <div class="mb-2">
               <label class="input-label">Slider Image</label>
@@ -225,6 +300,18 @@
                   id="gallery"
                 />
               </div>
+              <div class="grid grid-cols-4 gap-2 justify-center">
+                <div
+                  v-for="(gallery, i) in shop_gallery"
+                  :key="i"
+                  class="relative"
+                >
+                  <img
+                    :src="basePath + '/storage/' + gallery.image"
+                    alt="Image"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -247,6 +334,7 @@ export default {
   },
   data() {
     return {
+      basePath: this.$axios.defaults.baseURL,
       breadCrumbs: [
         { title: 'My Shop', url: '/my-shop' },
         { title: 'Own Shop', url: '/my-shop' },
@@ -259,7 +347,10 @@ export default {
         shop_type_id: '',
         shop_no: '',
         block: '',
+        logo: '',
+        cover_image: '',
         subscription_note: '',
+        description: '',
         meta_title: '',
         meta_keywords: '',
         meta_description: '',
@@ -275,6 +366,7 @@ export default {
       thumbnailUrl: null,
       gallery_images_url: [],
       shop_types: [],
+      shop_gallery: '',
     }
   },
   mounted() {
@@ -321,6 +413,8 @@ export default {
           this.shop = res.data.data
           this.floor = res.data.data.floor.floor
           this.market = res.data.data.market.name
+          let shop_gallery = res.data.data.shop_gallery
+          this.shop_gallery = shop_gallery.length > 0 ? shop_gallery : ''
           console.log(this.shop)
         })
         .catch((error) => {
@@ -339,6 +433,7 @@ export default {
       formData.append('shop_no', this.shop.shop_no)
       formData.append('block', this.shop.block)
       formData.append('subscription_note', this.shop.subscription_note)
+      formData.append('description', this.shop.description)
       formData.append('meta_title', this.shop.meta_title)
       formData.append('meta_keywords', this.shop.meta_keywords)
       formData.append('meta_description', this.shop.meta_description)
