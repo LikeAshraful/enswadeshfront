@@ -10,7 +10,11 @@
       <shopDetails :shop="shop"></shopDetails>
     </div>
     <!-- Slider -->
-    <slider :slider_images="slider_images" :basePath="basePath" class="mb-8 mt-8"></slider>
+    <slider
+      :slider_images="slider_images"
+      :basePath="basePath"
+      class="mb-8 mt-8"
+    ></slider>
 
     <div class="">
       <div class="grid lg:grid-cols-4 sm:grid-cols-3 gap-4 my-5">
@@ -86,7 +90,7 @@ export default {
     }
   },
   created() {
-    this.loadData()
+    this.loadCategory()
     this.loadProducts()
     this.loadProductsPaginate()
   },
