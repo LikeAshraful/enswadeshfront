@@ -11,7 +11,7 @@
                         <li @click="shopMenu" :class="shop ? 'bg-green-3':''" class="list-items hover:bg-green-3">Shops</li>
                         <li @click="myShops" :class="myShop ? 'bg-green-3':''" class="list-items hover:bg-green-3">My shops</li>
                         <li @click="myOrders" :class="my_orders ? 'bg-green-3':''" class="list-items hover:bg-green-3">My orders</li>
-                        <li class="list-items hover:bg-green-3">My wishlist</li>
+                        <li @click="myWishlist" :class="wishlist ? 'bg-green-3':''" class="list-items hover:bg-green-3">My wishlist</li>
                     </ul>
                 </div>
             </div>
@@ -20,6 +20,7 @@
                 <my-shops v-if="myShop"></my-shops>
                 <shopping-friend v-if="friend"></shopping-friend>
                 <my-orders v-if="my_orders"></my-orders>
+                <my-wishlist v-if="wishlist"></my-wishlist>
             </div>
         </div>
     </div>
@@ -30,6 +31,7 @@ import ShoppingFriend from '~/components/my-account/menus/shopping-friend-items/
 import Shops from '~/components/my-account/menus/shops-items/ShopHome.vue';
 import MyShops from '~/components/my-account/menus/my-shops/MyShops.vue';
 import MyOrders from '~/components/my-account/menus/my-orders/MyOrders.vue';
+import MyWishlist from '~/components/my-account/menus/my-wishlist/MyWishlist.vue';
 export default {
     data() {
         return {
@@ -37,6 +39,7 @@ export default {
             shop: false,
             myShop: false,
             my_orders: false,
+            wishlist: false,
         }
     },
     components: {
@@ -45,6 +48,7 @@ export default {
         Shops,
         MyShops,
         MyOrders,
+        MyWishlist
     },
     methods: {
         shopMenu() {
@@ -52,24 +56,35 @@ export default {
             this.myShop = false;
             this.friend = false;
             this.my_orders = false;
+            this.wishlist = false;
         },
         myShops() {
             this.shop = false;
             this.myShop = true;
             this.friend = false;
             this.my_orders = false;
+            this.wishlist = false;
         },
         shoppingFriend() {
             this.shop = false;
             this.myShop = false;
             this.friend = true;
             this.my_orders = false;
+            this.wishlist = false;
         },
         myOrders() {
             this.shop = false;
             this.myShop = false;
             this.friend = false;
             this.my_orders = true;
+            this.wishlist = false;
+        },
+        myWishlist() {
+            this.shop = false;
+            this.myShop = false;
+            this.friend = false;
+            this.my_orders = false;
+            this.wishlist = true;
         },
     }
 }
