@@ -1,8 +1,9 @@
 <template>
+  <div>
     <div>
         <div>
             <p class="font-bold text-xl">{{shop.name}}</p>
-            <p class="text-gray-2">111 Subscribers</p>
+            <p class="text-gray-2">{{shop.total_subscriber}} Subscribers</p>
             <p class="text-gray-2">55 Active Customers</p>
             <div class="flex text-yellow-2">
                 <i class="ri-star-fill"></i>
@@ -28,14 +29,22 @@
             </div>
             <div class="">
                 <div class="mt-3">
-                    <p class="font-bold text-purple-2 border-2 border-purple-2 rounded-lg p-2 inline px-4"><i class="ri-edit-2-fill pr-3"></i>Edit</p>
+                    <button @click="editShop(shop.id)" class="font-bold text-purple-2 border-2 border-purple-2 rounded-lg p-2 inline px-4"><i class="ri-edit-2-fill pr-3"></i>Edit</button>
                 </div>
             </div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 <script>
 export default {
-  props : ['shop']
+  props: ['shop'],
+
+  methods: {
+    editShop(id) {
+      this.$router.push({ path: '/shop/edit/' + id })
+    },
+  },
 }
 </script>

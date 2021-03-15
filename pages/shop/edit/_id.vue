@@ -2,18 +2,68 @@
   <div>
     <!-- Breadcrumbs -->
     <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
-
-    <p class="text-3xl font-bold mb-4">Shop setup</p>
-    <p class="title">Shop Information</p>
-
+    <p class="text-3xl font-bold mb-4">Shop Edit</p>
     <form @submit.prevent="submitForm">
-      <div class="p-2 mb-6">
-        <div class="grid grid-cols-2 gap-8">
-          <div>
+      <div class="grid grid-cols-2 gap-8">
+        <div>
+          <p class="title">Shop Information</p>
+          <div class="p-2">
             <div class="mb-2">
-              <label class="input-label" for="phone"
-                >Shop Phone Number <span class="text-orange-1">*</span></label
+              <label class="input-label" for="market">Market Name</label>
+              <input
+                class="input-field focus:outline-none"
+                id="market"
+                type="text"
+                v-model="market"
+                readonly
+                placeholder="Eastern Plaza Shopping Complex"
+              />
+            </div>
+            <div class="mb-2">
+              <label class="input-label" for="floor">Floor</label>
+              <input
+                class="input-field focus:outline-none"
+                id="floor"
+                type="text"
+                v-model="floor"
+                readonly
+                placeholder="Sanwarul Store"
+              />
+            </div>
+            <div class="mb-2">
+              <label class="input-label" for="name">Shop Name</label>
+              <input
+                class="input-field focus:outline-none"
+                id="name"
+                type="text"
+                v-model="shop.name"
+                placeholder="Sanwarul Store"
+              />
+            </div>
+            <div class="mb-2">
+              <label class="input-label" for="shop_no">Shop Number</label>
+              <input
+                class="input-field focus:outline-none"
+                id="shop_no"
+                type="text"
+                v-model="shop.shop_no"
+                placeholder="123"
+              />
+            </div>
+            <div class="mb-2">
+              <label class="input-label" for="block_no"
+                >Block Number (If any)</label
               >
+              <input
+                class="input-field focus:outline-none"
+                id="block_no"
+                type="text"
+                v-model="shop.block"
+                placeholder="A"
+              />
+            </div>
+            <div class="mb-2">
+              <label class="input-label" for="phone">Shop Phone Number</label>
               <input
                 class="input-field focus:outline-none"
                 id="phone"
@@ -23,13 +73,11 @@
               />
             </div>
             <div class="mb-2">
-              <label class="input-label" for="email"
-                >Shop Email <span class="text-orange-1">*</span></label
-              >
+              <label class="input-label" for="email">Shop Email</label>
               <input
                 class="input-field focus:outline-none"
                 id="email"
-                type="text"
+                type="email"
                 v-model="shop.email"
                 placeholder="shop@email.com"
               />
@@ -55,104 +103,19 @@
               </select>
             </div>
             <div class="mb-2">
-              <label class="input-label" for="subs_note"
-                >Subscription note</label
-              >
-              <input
-                class="input-field focus:outline-none"
-                id="subs_note"
-                type="text"
+              <label class="input-label" for="note">Subscription note</label>
+              <textarea
+                id="note"
+                rows="4"
                 v-model="shop.subscription_note"
+                class="input-field focus:outline-none"
                 placeholder="What you do offer for subscribed customer?"
-              />
-            </div>
-          </div>
-          <div>
-            <table class="w-full">
-              <tbody>
-                <tr>
-                  <td class="font-bold pt-3">Market Name:</td>
-                  <td class="pt-3">
-                    {{ shop.market ? shop.market.name : '' }}
-                  </td>
-                </tr>
-                <tr>
-                  <td class="font-bold pt-3">Floor:</td>
-                  <td class="pt-3">{{ shop.floor ? shop.floor.floor : '' }}</td>
-                </tr>
-                <tr>
-                  <td class="font-bold pt-3">Shop Name:</td>
-                  <td class="pt-3">{{ shop.name }}</td>
-                </tr>
-                <tr>
-                  <td class="font-bold pt-3">Shop Number:</td>
-                  <td class="pt-3">{{ shop.shop_no }}</td>
-                </tr>
-                <tr>
-                  <td class="font-bold pt-3">Block Number:</td>
-                  <td class="pt-3">{{ shop.block }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="grid grid-cols-2 gap-8">
-        <div>
-          <p class="title">Shop SEO Information</p>
-          <div class="p-2">
-            <div class="mb-2">
-              <label class="input-label" for="meta_title">Meta Title</label>
-              <input
-                class="input-field focus:outline-none"
-                id="meta_title"
-                type="text"
-                v-model="shop.meta_title"
-                placeholder="@Rana Bhai, write here how to use meta title."
-              />
-              <small class="font-semibold"
-                >If need any help text, write here.</small
               >
-            </div>
-            <div class="mb-2">
-              <label class="input-label" for="meta_keywords"
-                >Meta Keyword</label
-              >
-              <input
-                class="input-field focus:outline-none"
-                id="meta_keywords"
-                type="text"
-                v-model="shop.meta_keywords"
-                placeholder="Type and hit enter to add a tag"
-              />
-              <small class="font-semibold"
-                >If need any help text, write here.</small
-              >
-            </div>
-            <div class="mb-2">
-              <label class="input-label" for="meta_description"
-                >Meta Description</label
-              >
-              <input
-                class="input-field focus:outline-none"
-                id="meta_description"
-                type="text"
-                v-model="shop.meta_description"
-                placeholder="Write here"
-              />
-            </div>
-            <div class="mb-2">
-              <label class="input-label" for="meta_url">Meta OG URL</label>
-              <input
-                class="input-field focus:outline-none"
-                id="meta_url"
-                type="text"
-                v-model="shop.meta_og_url"
-                placeholder="Write here"
-              />
+              </textarea>
             </div>
           </div>
         </div>
+
         <div>
           <p class="title">Shop Images</p>
           <div class="p-2">
@@ -270,7 +233,7 @@
         <button
           class="font-semibold border border-gray-3 py-1 px-16 focus:outline-none bg-gray-3 hover:bg-green-3 rounded"
         >
-          Submit
+          Save Changes
         </button>
       </div>
     </form>
@@ -278,9 +241,7 @@
 </template>
 <script>
 import Breadcrumb from '~/components/common/Breadcrumb.vue'
-
 export default {
-  middleware: ['auth'],
   components: {
     Breadcrumb,
   },
@@ -289,15 +250,8 @@ export default {
       breadCrumbs: [
         { title: 'My Shop', url: '/my-shop' },
         { title: 'Own Shop', url: '/my-shop' },
-        { title: 'Shop Setup', url: '#' },
+        { title: 'Shop name gose here', url: '' },
       ],
-      shop_banner: '',
-      thumbnail: '',
-      gallery_images: [],
-      bannerUrl: null,
-      thumbnailUrl: null,
-      gallery_images_url: [],
-      shop_types: [],
       shop: {
         name: '',
         phone: '',
@@ -311,34 +265,23 @@ export default {
         meta_description: '',
         meta_og_url: '',
       },
+      shop_banner: '',
+      thumbnail: '',
+      gallery_images: [],
+      floor: '',
+      market: '',
+      url: null,
+      bannerUrl: null,
+      thumbnailUrl: null,
+      gallery_images_url: [],
+      shop_types: [],
     }
   },
-  created() {
+  mounted() {
     this.loadShopTypes()
-    this.getSingleShop()
+    this.loadShop()
   },
-
   methods: {
-    bannerFile(event) {
-      console.log(event.target.files[0])
-      this.shop_banner = event.target.files[0]
-      const file = event.target.files[0]
-      this.bannerUrl = URL.createObjectURL(file)
-    },
-    thumbnailFile(event) {
-      console.log(event.target.files[0])
-      this.thumbnail = event.target.files[0]
-      this.thumbnailUrl = URL.createObjectURL(this.thumbnail)
-    },
-    galleryFiles(e) {
-      console.log(e.target.files)
-      this.gallery_images = e.target.files
-      for (var i = 0; i < this.gallery_images.length; i++) {
-        this.gallery_images_url.push(
-          URL.createObjectURL(this.gallery_images[i])
-        )
-      }
-    },
     async loadShopTypes() {
       await this.$axios
         .get('/api/shops/shop-types')
@@ -351,11 +294,34 @@ export default {
           }
         })
     },
-    async getSingleShop() {
+
+    bannerFile(event) {
+      console.log(event.target.files[0])
+      this.shop_banner = event.target.files[0]
+      const file = event.target.files[0]
+      this.bannerUrl = URL.createObjectURL(file)
+    },
+    thumbnailFile(event) {
+      console.log(event.target.files[0])
+      this.thumbnail = event.target.files[0]
+      this.thumbnailUrl = URL.createObjectURL(this.thumbnail)
+    },
+    galleryFiles(e) {
+      this.gallery_images = e.target.files
+      for (var i = 0; i < this.gallery_images.length; i++) {
+        this.gallery_images_url.push(
+          URL.createObjectURL(this.gallery_images[i])
+        )
+      }
+    },
+    async loadShop() {
       await this.$axios
-        .get(`/api/my-shops/${this.$route.params.id}`)
+        .get('/api/my-shops/' + this.$route.params.id)
         .then((res) => {
           this.shop = res.data.data
+          this.floor = res.data.data.floor.floor
+          this.market = res.data.data.market.name
+          console.log(this.shop)
         })
         .catch((error) => {
           if (error.response.status == 404) {
@@ -363,12 +329,14 @@ export default {
           }
         })
     },
+
     submitForm() {
       var formData = new FormData()
       formData.append('name', this.shop.name)
       formData.append('phone', this.shop.phone)
       formData.append('email', this.shop.email)
       formData.append('shop_type_id', this.shop.shop_type_id)
+      formData.append('shop_no', this.shop.shop_no)
       formData.append('block', this.shop.block)
       formData.append('subscription_note', this.shop.subscription_note)
       formData.append('meta_title', this.shop.meta_title)
@@ -386,9 +354,9 @@ export default {
       this.$axios
         .post(`/api/my-shops/update/${this.$route.params.id}`, formData)
         .then((response) => {
-          console.log(response.data.data.id)
-          this.$router.push(`/shop/self/${this.$route.params.id}`)
-          this.$toast.success('Your shop is Setup successfully !')
+          this.loadShop()
+          this.$router.push(`/shop/edit/${this.$route.params.id}`)
+          this.$toast.success('Your shop is update successfully !')
         })
         .catch((error) => {
           this.btnAction = false

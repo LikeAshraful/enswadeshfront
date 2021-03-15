@@ -10,12 +10,17 @@
       <shopDetails :shop="shop"></shopDetails>
     </div>
     <!-- Slider -->
-    <slider></slider>
+    <slider
+      :slider_images="slider_images"
+      :basePath="basePath"
+      class="mb-8 mt-8"
+    ></slider>
+
     <div class="">
       <div class="grid lg:grid-cols-4 sm:grid-cols-3 gap-4 my-5">
         <!-- Filter -->
         <dataFilter
-          :filtersData="filtersData"
+          :filtersData="filtersCategory"
           :filterTitle="filterTitle"
           v-on:filterByData="loadProducts"
         />
@@ -64,18 +69,16 @@ export default {
   data() {
     return {
       basePath: this.$axios.defaults.baseURL,
-
       breadCrumbs: [
-        {title: 'Home', url: '/'},
-        {title: 'Go To Market', url: '/cities'},
-        {title: '', url: ''},
-        {title: '', url: ''},
-        {title: '', url: ''},
-        {title: '', url: ''},
+        { title: 'Home', url: '/' },
+        { title: 'Go To Market', url: '/cities' },
+        { title: '', url: '' },
+        { title: '', url: '' },
+        { title: '', url: '' },
+        { title: '', url: '' },
       ],
-
       filterTitle: 'Categories',
-      filtersData: [],
+      filtersCategory: [],
       shop: {},
       products: [],
       totalPages: 0,
@@ -83,23 +86,27 @@ export default {
       currentPage: 0,
       perPage: 0,
       isLoading: true,
+      slider_images: [],
     }
   },
-  mounted() {
-    this.loadData()
+  created() {
+    this.loadCategory()
     this.loadProducts()
     this.loadProductsPaginate()
-    this.getBreadCrumbItems();
+  },
+  mounted() {
+    this.getBreadCrumbItems()
   },
   methods: {
-    async loadData() {
+    async loadCategory() {
       await this.$axios.get('/api/categories/base').then((res) => {
-        this.filtersData = res.data
+        this.filtersCategory = res.data
       }),
         await this.$axios
           .get('/api/shops/' + this.$route.params.id)
           .then((res) => {
             this.shop = res.data.data
+            this.slider_images = this.shop.shop_gallery
           })
     },
 
@@ -133,17 +140,15 @@ export default {
           this.isLoading = false
         })
     },
-    getBreadCrumbItems()
-    {
-      this.breadCrumbs[2].title = localStorage.getItem('city');
-      this.breadCrumbs[2].url = localStorage.getItem('city-url');
-      this.breadCrumbs[3].title = localStorage.getItem('market');
-      this.breadCrumbs[3].url = localStorage.getItem('market-url');
-      this.breadCrumbs[4].title = localStorage.getItem('floor');
-      this.breadCrumbs[4].url = localStorage.getItem('market-url');
-      this.breadCrumbs[5].title = localStorage.getItem('shop');
-      // this.breadCrumbs[5].url = localStorage.getItem('shop-url');
-    }
+    getBreadCrumbItems() {
+      this.breadCrumbs[2].title = localStorage.getItem('city')
+      this.breadCrumbs[2].url = localStorage.getItem('city-url')
+      this.breadCrumbs[3].title = localStorage.getItem('market')
+      this.breadCrumbs[3].url = localStorage.getItem('market-url')
+      this.breadCrumbs[4].title = localStorage.getItem('floor')
+      this.breadCrumbs[4].url = localStorage.getItem('market-url')
+      this.breadCrumbs[5].title = localStorage.getItem('shop')
+    },
   },
 }
 </script>
