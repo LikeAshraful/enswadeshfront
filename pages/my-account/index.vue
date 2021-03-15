@@ -1,56 +1,76 @@
 <template lang="">
     <div>
+        <p class="h1">My Account</p>
         <div class="min-h-screen grid grid-cols-4 gap-4 py-4">
             <div>
-                <div class="relative list-items-center">
-                    <div class="absolute top-0 right-0 mt-2 mr-4">
-                        <button class="focus:outline-none"><i class="ri-edit-box-line font-bold text-xl text-blue-1"></i></button>
-                    </div>
-                    <img class="avatar" src="~/assets/img/default_market.png" alt="Image">
-                    <p class="text-2xl font-bold mt-2">Adam</p>
-                    <p>DOB (dd/mm/yyyy)</p>
-                    <p>Blood Group (AB+)</p>
-                    <p>example@mail.com</p>
-                    <p>Address line show here</p>
-                </div>
+                <!-- User details -->
+                <user-details></user-details>
                 <div class="list mt-4">
                     <ul>
-                        <li class="list-items hover:bg-green-3">My Shopping Friends</li>
-                        <li class="list-items hover:bg-green-3">Shops</li>
-                        <li class="list-items hover:bg-green-3">My shops</li>
-                        <li class="list-items hover:bg-green-3">My orders</li>
+                        <li @click="shoppingFriend" :class="friend ? 'bg-green-3':''" class="list-items hover:bg-green-3">My Shopping Friends</li>
+                        <li @click="shopMenu" :class="shop ? 'bg-green-3':''" class="list-items hover:bg-green-3">Shops</li>
+                        <li @click="myShops" :class="myShop ? 'bg-green-3':''" class="list-items hover:bg-green-3">My shops</li>
+                        <li @click="myOrders" :class="my_orders ? 'bg-green-3':''" class="list-items hover:bg-green-3">My orders</li>
                         <li class="list-items hover:bg-green-3">My wishlist</li>
                     </ul>
                 </div>
             </div>
             <div class="col-span-3">
-                <p class="head-line">Shops</p>
-                <div class="mt-4 bg-white">
-                    <div class="p-4 flex">
-                        <div class="btn-group border rounded-l">
-                            Subscribed shops
-                        </div>
-                        <div class="btn-group border">
-                            Frequently visited
-                        </div>
-                        <div class="btn-group border rounded-r">
-                            Recently visited
-                        </div>
-                    </div>
-                    <div class="divider"></div>
-                    <div class="p-4 flex">
-                        <input type="text" class="search" placeholder="Search">
-                    </div>
-                </div>
+                <shops v-if="shop"></shops>
+                <my-shops v-if="myShop"></my-shops>
+                <shopping-friend v-if="friend"></shopping-friend>
+                <my-orders v-if="my_orders"></my-orders>
             </div>
         </div>
     </div>
 </template>
 <script>
+import UserDetails from '~/components/my-account/UserDetails.vue';
+import ShoppingFriend from '~/components/my-account/menus/shopping-friend-items/ShoppingHome.vue';
+import Shops from '~/components/my-account/menus/shops-items/ShopHome.vue';
+import MyShops from '~/components/my-account/menus/my-shops/MyShops.vue';
+import MyOrders from '~/components/my-account/menus/my-orders/MyOrders.vue';
 export default {
-    
+    data() {
+        return {
+            friend: true,
+            shop: false,
+            myShop: false,
+            my_orders: false,
+        }
+    },
+    components: {
+        UserDetails,
+        ShoppingFriend,
+        Shops,
+        MyShops,
+        MyOrders,
+    },
+    methods: {
+        shopMenu() {
+            this.shop = true;
+            this.myShop = false;
+            this.friend = false;
+            this.my_orders = false;
+        },
+        myShops() {
+            this.shop = false;
+            this.myShop = true;
+            this.friend = false;
+            this.my_orders = false;
+        },
+        shoppingFriend() {
+            this.shop = false;
+            this.myShop = false;
+            this.friend = true;
+            this.my_orders = false;
+        },
+        myOrders() {
+            this.shop = false;
+            this.myShop = false;
+            this.friend = false;
+            this.my_orders = true;
+        },
+    }
 }
 </script>
-<style lang="">
-    
-</style>

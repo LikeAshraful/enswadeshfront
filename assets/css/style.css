@@ -18252,6 +18252,23 @@ video {
   color: rgba(255, 81, 0, var(--text-opacity))
 }
 
+.btn-add {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  --bg-opacity: 1;
+  background-color: #FF5100;
+  background-color: rgba(255, 81, 0, var(--bg-opacity));
+  border-radius: 9999px;
+  font-weight: 600;
+  --text-opacity: 1;
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
+  display: flex;
+  align-items: center
+}
+
 .avatar {
   width: 5rem;
   height: 5rem;
@@ -18270,19 +18287,44 @@ video {
   padding-right: 0.5rem;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition-delay: 100ms
+}
+
+.btn-border {
+  border-width: 1px;
+  --border-opacity: 1;
+  border-color: #DCE2DE;
+  border-color: rgba(220, 226, 222, var(--border-opacity));
+  border-radius: 0.25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
   font-weight: 600
 }
 
 .divider {
-  border-width: 1px;
+  border-top-width: 1px;
   --border-opacity: 1;
   border-color: #DCE2DE;
   border-color: rgba(220, 226, 222, var(--border-opacity))
 }
 
-.head-line {
+.h1 {
   font-weight: 700;
   font-size: 1.875rem
+}
+
+.h2 {
+  font-weight: 600;
+  font-size: 1.5rem
+}
+
+.h3 {
+  font-weight: 600;
+  font-size: 1.25rem
 }
 
 .list {
@@ -18313,15 +18355,59 @@ video {
 }
 
 .search {
+  display: flex;
+  align-items: center;
+  position: relative
+}
+
+.search-icon {
+  position: absolute;
+  left: 0;
+  margin-left: 0.75rem
+}
+
+.search-input {
   border-width: 1px;
   --border-opacity: 1;
   border-color: #DCE2DE;
   border-color: rgba(220, 226, 222, var(--border-opacity));
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  padding-left: 0.5rem;
+  padding-left: 2rem;
   padding-right: 0.5rem;
   border-radius: 9999px
+}
+
+.success-alart {
+  border-width: 2px;
+  --border-opacity: 1;
+  border-color: #0F9D58;
+  border-color: rgba(15, 157, 88, var(--border-opacity));
+  border-radius: 0.375rem;
+  font-weight: 600;
+  --text-opacity: 1;
+  color: #0F9D58;
+  color: rgba(15, 157, 88, var(--text-opacity));
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem
+}
+
+.warning-alart {
+  border-width: 2px;
+  --border-opacity: 1;
+  border-color: #FF9900;
+  border-color: rgba(255, 153, 0, var(--border-opacity));
+  border-radius: 0.375rem;
+  font-weight: 600;
+  --text-opacity: 1;
+  color: #FF9900;
+  color: rgba(255, 153, 0, var(--text-opacity));
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem
 }
 
 @media (min-width: 640px) {
