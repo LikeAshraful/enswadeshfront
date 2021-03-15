@@ -18,6 +18,7 @@
             <friend-list v-if="shopping_friend"></friend-list>
             <find-friend v-if="shopping_find"></find-friend>
             <friend-request v-if="shopping_request"></friend-request>
+
         </div>
     </div>
 </template>
@@ -38,7 +39,9 @@ export default {
         FindFriend,
         FriendRequest,
     },
+  
     methods: {
+
         shoppingFriend(){
             this.shopping_friend = true;
             this.shopping_find = false;
