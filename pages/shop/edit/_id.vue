@@ -336,6 +336,7 @@ export default {
       formData.append('phone', this.shop.phone)
       formData.append('email', this.shop.email)
       formData.append('shop_type_id', this.shop.shop_type_id)
+      formData.append('shop_no', this.shop.shop_no)
       formData.append('block', this.shop.block)
       formData.append('subscription_note', this.shop.subscription_note)
       formData.append('meta_title', this.shop.meta_title)

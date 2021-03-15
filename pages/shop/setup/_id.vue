@@ -69,26 +69,30 @@
           </div>
           <div>
             <table class="w-full">
-              <tr>
-                <td class="font-bold pt-3">Market Name:</td>
-                <td class="pt-3">{{ shop.market ? shop.market.name : '' }}</td>
-              </tr>
-              <tr>
-                <td class="font-bold pt-3">Floor:</td>
-                <td class="pt-3">{{ shop.floor ? shop.floor.floor : '' }}</td>
-              </tr>
-              <tr>
-                <td class="font-bold pt-3">Shop Name:</td>
-                <td class="pt-3">{{ shop.name }}</td>
-              </tr>
-              <tr>
-                <td class="font-bold pt-3">Shop Number:</td>
-                <td class="pt-3">{{ shop.shop_no }}</td>
-              </tr>
-              <tr>
-                <td class="font-bold pt-3">Block Number:</td>
-                <td class="pt-3">{{ shop.block }}</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td class="font-bold pt-3">Market Name:</td>
+                  <td class="pt-3">
+                    {{ shop.market ? shop.market.name : '' }}
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-bold pt-3">Floor:</td>
+                  <td class="pt-3">{{ shop.floor ? shop.floor.floor : '' }}</td>
+                </tr>
+                <tr>
+                  <td class="font-bold pt-3">Shop Name:</td>
+                  <td class="pt-3">{{ shop.name }}</td>
+                </tr>
+                <tr>
+                  <td class="font-bold pt-3">Shop Number:</td>
+                  <td class="pt-3">{{ shop.shop_no }}</td>
+                </tr>
+                <tr>
+                  <td class="font-bold pt-3">Block Number:</td>
+                  <td class="pt-3">{{ shop.block }}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>

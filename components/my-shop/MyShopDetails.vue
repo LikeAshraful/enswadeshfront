@@ -29,7 +29,7 @@
             </div>
             <div class="">
                 <div class="mt-3">
-                    <p class="font-bold text-purple-2 border-2 border-purple-2 rounded-lg p-2 inline px-4"><i class="ri-edit-2-fill pr-3"></i>Edit</p>
+                    <button @click="editShop(shop.id)" class="font-bold text-purple-2 border-2 border-purple-2 rounded-lg p-2 inline px-4"><i class="ri-edit-2-fill pr-3"></i>Edit</button>
                 </div>
             </div>
         </div>
