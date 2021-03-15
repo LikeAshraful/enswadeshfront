@@ -53,45 +53,41 @@
       </div>
       <div>
         <div class="text-purple-2 border border-purple-2 rounded-lg md:p-2 p-1">
-          <p>
-            <strong>Note:</strong> {{shop.subscription_note}}
-          </p>
+          <p><strong>Note:</strong> {{ shop.subscription_note }}</p>
         </div>
       </div>
     </div>
     <!-- use the modal component, pass in the prop -->
-    <div v-if="showModal" @close="showModal = false">
+    <div v-if="showModal" @click="$emit('close')">
       <transition name="modal">
         <div class="modal-mask">
           <div class="modal-wrapper">
             <div class="modal-container">
+              <div class="model-header">
+                <button class="close-btn" @click="close">
+                  <i class="ri-close-line"></i>
+                </button>
+              </div>
               <div class="modal-body">
                 <form @submit.prevent="subscribeShop(shop.id)">
-                  <input
-                    type="text"
-                    class="focus:outline-none input-field pr-6"
-                    placeholder="Enter nickname"
-                    v-model="nickname"
-                  />
-                  <button
-                    type="submit"
-                    :disabled="disable"
-                    :class="
-                      subscribeCheck == null ? ' bg-green-3' : ' bg-green-1'
-                    "
-                    class="md:px-6 px-3 md:py-1 py-1 font-semibold md:text-xl rounded-lg"
-                  >
-                    Submit
-                  </button>
-                </form>
-              </div>
+                  <div class="flex">
+                    <input
+                      type="text"
+                      class="focus:outline-none input-field pr-6"
+                      placeholder="Enter nickname"
+                      v-model="nickname"
+                    />
 
-              <div class="modal-footer">
-                <slot name="footer">
-                  <button class="modal-default-button" @click="$emit('close')">
-                    OK
-                  </button>
-                </slot>
+                    <button
+                      type="submit"
+                      :disabled="!Submit"
+                      :class="!Submit ? ' bg-green-1' : ' bg-green-3'"
+                      class="md:px-6 px-3 ml-3 md:py-1 py-1 font-semibold md:text-xl rounded-lg"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -118,8 +114,21 @@ export default {
     this.getSubscribeCount()
     this.checkSubscribe()
   },
+  computed: {
+    Submit() {
+      return this.nickname
+    },
+  },
   methods: {
     async subscribeShop(id) {
+      let loader = this.$loading.show({
+        // Optional parameters
+        container: this.fullPage ? null : this.$refs.formContainer,
+        canCancel: true,
+        onCancel: this.onCancel,
+        zIndex: 2000,
+        opacity: 0.5,
+      })
       var formData = new FormData()
       formData.append('nickname', this.nickname)
       formData.append('shop_id', id)
@@ -128,7 +137,10 @@ export default {
         .then((response) => {
           this.getSubscribeCount()
           this.checkSubscribe()
+          loader.hide()
           this.$toast.success('Success Subscribe!')
+
+          this.showModal = false
         })
         .catch((error) => {
           this.$toast.error('Oops..!-' + error.response.data.message)
@@ -146,6 +158,16 @@ export default {
         })
     },
     async checkSubscribe() {
+      let loader = this.$loading.show({
+        // Optional parameters
+        container: this.fullPage ? null : this.$refs.formContainer,
+        canCancel: true,
+        onCancel: this.onCancel,
+        zIndex: 2000,
+        opacity: 2,
+      })
+      // simulate AJAX
+
       await this.$axios
         .$get(
           this.$auth.loggedIn
@@ -154,18 +176,25 @@ export default {
         )
         .then((res) => {
           this.subscribeCheck = res.data
+          console.log(res, this.$auth.loggedIn)
+
+          loader.hide()
           if (this.subscribeCheck != null) {
             this.disable = true
           }
         })
     },
+    async close() {
+      this.$emit('close')
+      this.showModal = false
+    },
   },
 }
 </script>
-<style>
+<style scoped>
 .modal-mask {
   position: fixed;
-  z-index: 9998;
+  z-index: 200;
   top: 0;
   left: 0;
   width: 100%;
@@ -181,7 +210,7 @@ export default {
 }
 
 .modal-container {
-  width: 300px;
+  width: 500px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -216,5 +245,15 @@ export default {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
+}
+.model-header {
+  position: relative;
+}
+.close-btn {
+  display: block;
+  padding: 5px;
+  position: absolute;
+  top: -20px;
+  right: -22px;
 }
 </style>

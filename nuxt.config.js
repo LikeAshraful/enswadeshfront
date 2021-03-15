@@ -8,14 +8,28 @@ export default {
       { hid: 'description', name: 'description', content: '' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    link: [{ rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css' }],
+    link: [
+      {
+        rel: 'stylesheet',
+        href:
+          'https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css',
+      },
+    ],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ['~/assets/css/style.css','~/assets/css/v-tooltip.css','~/assets/css/coustom.css'],
+  css: [
+    '~/assets/css/style.css',
+    '~/assets/css/v-tooltip.css',
+    '~/assets/css/coustom.css',
+  ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~/plugins/vuelidate.js', '~/plugins/v-tooltip.js'],
+  plugins: [
+    '~/plugins/vuelidate.js',
+    '~/plugins/v-tooltip.js',
+    '~/plugins/loading_overly.js',
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -27,11 +41,7 @@ export default {
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/auth-next',
-    '@nuxtjs/toast'
-  ],
+  modules: ['@nuxtjs/axios', '@nuxtjs/auth-next', '@nuxtjs/toast'],
 
   auth: {
     strategies: {
@@ -45,24 +55,24 @@ export default {
         endpoints: {
           login: { url: '/api/login', method: 'post' },
           logout: { url: '/api/logout', method: 'post' },
-          user: { url: '/api/user', method: 'get' }
-        }
-      }
-    }
+          user: { url: '/api/user', method: 'get' },
+        },
+      },
+    },
   },
 
   axios: {
     // proxy: true
-    baseURL:process.env.BASE_URL,
+    baseURL: process.env.BASE_URL,
     imageURL: '/storage/',
   },
 
   // Register custom toasts
   toast: {
     position: 'top-center',
-    theme: "toasted-primary",
-    position: "top-right",
-    duration : 3000
+    theme: 'toasted-primary',
+    position: 'top-right',
+    duration: 3000,
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
