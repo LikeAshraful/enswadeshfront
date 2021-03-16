@@ -2,6 +2,15 @@
     animation: transitionIn 0.75s;
 }
 
+.notify-tooltip {
+    left: 8px;
+    top: -15px;
+    width: 20px;
+    height: 20px;
+    font-size: 13px;
+    text-align: center;
+}
+
 @keyframes transitionIn {
     from {
         opacity: 0;
