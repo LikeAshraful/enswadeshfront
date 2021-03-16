@@ -135,9 +135,9 @@ export default {
       await this.$axios
         .post('api/subscribe-request', formData)
         .then((response) => {
+          loader.hide()
           this.getSubscribeCount()
           this.checkSubscribe()
-          loader.hide()
           this.$toast.success('Success Subscribe!')
 
           this.showModal = false
@@ -157,6 +157,7 @@ export default {
         .then((res) => {
           this.count = res.data
         })
+        .catch((err) => loader.hide())
     },
     async checkSubscribe() {
       let loader = this.$loading.show({
@@ -177,14 +178,13 @@ export default {
         )
         .then((res) => {
           this.subscribeCheck = res.data
+          console.log(res, this.$auth.loggedIn)
           loader.hide()
           if (this.subscribeCheck != null) {
             this.disable = true
           }
         })
-        .catch((error) => {
-          loader.hide()
-        })
+        .catch((err) => loader.hide())
     },
     async close() {
       this.$emit('close')
