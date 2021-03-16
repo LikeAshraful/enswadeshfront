@@ -106,3 +106,6 @@
 .danger-alart {
     @apply border-2 border-red-500 rounded-md font-semibold text-red-500 py-1 px-6
 }
+.note {
+    @apply bg-purple-1 text-purple-2 py-1 px-4 rounded-md font-semibold
+}
