@@ -7,10 +7,10 @@
                         <button @click="closeLoginModal" class="text-2xl focus:outline-none"><i class="ri-close-line"></i></button>
                     </div> -->
                     <div class="cart-tems-center text-center">
-                        <p class="title">Remove member</p>
+                        <p class="title">Move to trash</p>
                         <div class="p-6">
-                            <p class="mb-6">Do you really want to remove this shop member?</p>
-                            <button class="btn-border bg-green-3 focus:outline-none">Yes, Confirm</button>
+                            <p class="mb-6">Are you sure you want to move this product to trash?</p>
+                            <button class="btn-border bg-green-3 focus:outline-none">Confirm</button>
                         </div>
                     </div>
                 </div>
@@ -23,21 +23,21 @@
 export default {
     data() {
         return {
-            close_modal: 'closeModal',
+            close_modal: 'modal',
         }
     },
     methods: {
         closeModal()
         {
-            if(this.close_modal == 'closeModal')
+            if(this.close_modal == 'modal')
             {
-                this.$emit('closeModal');
+                this.$emit('moveTrash');
             }
         },
         wait()
         {
             this.close_modal = 'wait';
-            setTimeout(() => this.close_modal = 'closeModal', 500);
+            setTimeout(() => this.close_modal = 'modal', 500);
         },
     },
 }
