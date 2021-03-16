@@ -12,10 +12,10 @@
       <div class="lg:col-span-3 md:col-span-2">
         <!-- Product tables -->
         <div class="flex justify-between font-bold mb-4">
-          <div class="flex items-center border border-gray-2 rounded-full px-3">
-            <i class="ri-search-line mr-2"></i>
+          <div class="search">
+            <i class="search-icon ri-search-line mr-2"></i>
             <input
-              class="focus:outline-none"
+              class="search-input bg-gray-5 focus:outline-none"
               type="text"
               @keyup="getProductsSearchResults"
               v-model="keyword"
@@ -24,7 +24,7 @@
           </div>
           <n-link
             to="/add-product"
-            class="bg-orange-1 text-white rounded-lg py-2 px-4 focus:outline-none"
+            class="btn-add focus:outline-none"
             >Add Product</n-link
           >
         </div>
@@ -60,10 +60,10 @@
                   <i class="dropbtn border rounded p-2 ri-arrow-down-s-fill"></i>
                   <div class="dropdown-content font-semibold">
                     <p>Edit</p>
-                    <p>Move to trash</p>
-                    <p>Notify to subscribers</p>
-                    <p>Add to flash sales</p>
-                    <p>Add to festival</p>
+                    <p @click="moveTrash">Move to trash</p>
+                    <p @click="notify">Notify to subscribers</p>
+                    <p @click="flashSale">Add to flash sales</p>
+                    <p @click="addFestival">Add to festival</p>
                   </div>
                 </div>
               </td>
@@ -71,6 +71,14 @@
           </tbody>
         </table>
         <!-- End Product tables -->
+
+
+        <move-trash v-if="move" v-on:moveTrash="moveTrash()"></move-trash>
+        <notify v-if="notification" v-on:notify="notify()"></notify>
+        <flash-sale v-if="flash" v-on:flashSale="flashSale()"></flash-sale>
+        <festival v-if="festival" v-on:addFestival="addFestival()"></festival>
+
+
         <!-- Paginate -->
         <div class="px-3 pb-8">
           <Paginate
@@ -91,11 +99,19 @@
 import _ from 'lodash'
 import DataFilter from '~/components/common/Filter.vue'
 import Paginate from '~/components/common/Paginate.vue'
+import MoveTrash from '~/components/my-shop/options/modals/MoveTrash.vue'
+import Notify from '~/components/my-shop/options/modals/Notify.vue'
+import FlashSale from '~/components/my-shop/options/modals/FlashSale.vue'
+import Festival from '~/components/my-shop/options/modals/Festival.vue'
 
 export default {
   components: {
     Paginate,
     DataFilter,
+    MoveTrash,
+    Notify,
+    FlashSale,
+    Festival
   },
   data() {
     return {
@@ -109,6 +125,10 @@ export default {
       products: [],
       keyword: '',
       isLoading: true,
+      move: false,
+      notification: false,
+      flash: false,
+      festival: false,
     }
   },
 
@@ -119,6 +139,27 @@ export default {
   },
 
   methods: {
+    moveTrash()
+    {
+      this.move = !this.move;
+    },
+    notify()
+    {
+      this.notification = !this.notification;
+    },
+    flashSale()
+    {
+      this.flash = !this.flash;
+    },
+    addFestival()
+    {
+      this.festival = !this.festival;
+    },
+
+
+
+
+
     async loadCategories() {
       await this.$axios
         .get('/api/categories/base')
