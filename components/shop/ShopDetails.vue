@@ -143,6 +143,7 @@ export default {
           this.showModal = false
         })
         .catch((error) => {
+          loader.hide()
           this.$toast.error('Oops..!-' + error.response.data.message)
         })
     },
@@ -176,12 +177,13 @@ export default {
         )
         .then((res) => {
           this.subscribeCheck = res.data
-          console.log(res, this.$auth.loggedIn)
-
           loader.hide()
           if (this.subscribeCheck != null) {
             this.disable = true
           }
+        })
+        .catch((error) => {
+          loader.hide()
         })
     },
     async close() {
