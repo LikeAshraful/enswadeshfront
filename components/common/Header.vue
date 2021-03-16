@@ -47,15 +47,25 @@
           </div>
           <div class="flex flex-row justify-end">
             <div>
-              <button class="focus:outline-none text-xl mr-2" v-tooltip="'Chat'">
+              <button
+                class="focus:outline-none text-xl mr-2"
+                v-tooltip="'Chat'"
+              >
                 <i class="ri-chat-4-fill"></i>
               </button>
               <span class="relative">
                 <button
-                  class="focus:outline-none text-xl mr-2" v-tooltip="'Notification'" @click="showNotifyModal">
+                  class="focus:outline-none text-xl mr-2"
+                  v-tooltip="'Notification'"
+                  @click="showNotifyModal"
+                >
                   <i class="ri-notification-2-fill"></i>
                 </button>
-                <span v-if="notify_count > 0" class="bg-orange-1 text-white absolute notify-tooltip rounded-full">{{notify_count}}</span>
+                <span
+                  v-if="notify_count > 0"
+                  class="bg-orange-1 text-white absolute notify-tooltip rounded-full"
+                  >{{ notify_count }}</span
+                >
               </span>
 
               <button
@@ -151,10 +161,13 @@
         </div>
       </div>
 
-    <!-- Cart Modal -->
-    <cart v-if="cart" v-on:closeCart="closeCartModal()"></cart>
-    <!-- Notification Modal  -->
-    <notification v-if="notify"  v-on:closeNotify="closeNotifyModal()"></notification>
+      <!-- Cart Modal -->
+      <cart v-if="cart" v-on:closeCart="closeCartModal()"></cart>
+      <!-- Notification Modal  -->
+      <notification
+        v-if="notify"
+        v-on:closeNotify="closeNotifyModal()"
+      ></notification>
 
       <!-- Login Modal -->
       <login
@@ -203,18 +216,18 @@ export default {
         { value: 3, title: 'Product' },
       ],
       cart: false,
-      notify:false,
+      notify: false,
       loginModal: false,
       registrationModal: false,
       accountOptions: false,
       selectType: 0,
       keyword: '',
-      notify_count:0,
+      notify_count: 0,
     }
   },
   mounted() {
     //console.log(this.$auth.user);
-    this.loadNotifications();
+    this.loadNotifications()
   },
   methods: {
     showAccountOptions() {
@@ -258,11 +271,12 @@ export default {
     }, 500),
 
     async loadNotifications() {
-      await this.$axios.get('/api/notifications')
-      .then((res) => {
-        this.notify_count = res.data.data.length;
-      })
-    }
+      if (this.$auth.loggedIn) {
+        await this.$axios.get('/api/notifications').then((res) => {
+          this.notify_count = res.data.data.length
+        })
+      }
+    },
   },
 
   computed: {
