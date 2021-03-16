@@ -1,174 +1,175 @@
 <template>
   <div>
-    <div class="w-full lg:py-5">
-      <div
-        class="max-w-screen-xl xl:px-10 px-2 m-auto grid grid-cols-3 items-center justify-center gap-2"
-      >
-        <div>
-          <n-link
-            to="/"
-            class="text-4xl"
-            :class="currentRouteName == 'index' ? 'text-orange-1' : ''"
-            >Swadesh</n-link
-          >
-        </div>
-        <div class="flex flex-row items-center justify-center">
-          <div class="border border-gray-4 px-2 py-1 rounded-l-full">
-            <select
-              class="focus:outline-none font-semibold"
-              v-model="selectType"
-              name=""
-              id=""
-            >
-              <option
-                v-for="(searchdata, keysearchdata) in searchdatas"
-                :key="keysearchdata"
-                :value="searchdata.value"
-                selected
-              >
-                {{ searchdata.title }}
-              </option>
-            </select>
-          </div>
-          <div
-            style="margin-left: -1px"
-            class="flex items-center border border-gray-4 px-2 py-1 rounded-r-full overflow-hidden"
-          >
-            <i class="ri-search-line mr-2"></i>
-            <input
-              @keyup="mainSearchInHearder"
-              v-model="keyword"
-              class="focus:outline-none w-full font-semibold"
-              type="text"
-              placeholder="Search anything"
-            />
-          </div>
-        </div>
-        <div class="flex flex-row justify-end">
+    <div class="bg-yellow-3">
+      <div class="w-full lg:py-5">
+        <div
+          class="max-w-screen-xl xl:px-10 px-2 m-auto grid grid-cols-3 items-center justify-center gap-2"
+        >
           <div>
-            <button class="focus:outline-none text-xl mr-2" v-tooltip="'Chat'">
-              <i class="ri-chat-4-fill"></i>
-            </button>
-
-            <span class="relative">
+            <n-link
+              to="/"
+              class="text-4xl"
+              :class="currentRouteName == 'index' ? 'text-orange-1' : ''"
+              >Swadesh</n-link
+            >
+          </div>
+          <div class="flex flex-row items-center justify-center">
+            <div class="border border-gray-4 px-2 py-1 rounded-l-full bg-white">
+              <select
+                class="focus:outline-none font-semibold"
+                v-model="selectType"
+                name=""
+                id=""
+              >
+                <option
+                  v-for="(searchdata, keysearchdata) in searchdatas"
+                  :key="keysearchdata"
+                  :value="searchdata.value"
+                  selected
+                >
+                  {{ searchdata.title }}
+                </option>
+              </select>
+            </div>
+            <div
+              style="margin-left: -1px"
+              class="flex items-center border border-gray-4 px-2 py-1 rounded-r-full overflow-hidden"
+            >
+              <i class="ri-search-line mr-2"></i>
+              <input
+                @keyup="mainSearchInHearder"
+                v-model="keyword"
+                class="focus:outline-none w-full font-semibold bg-yellow-3"
+                type="text"
+                placeholder="Search anything"
+              />
+            </div>
+          </div>
+          <div class="flex flex-row justify-end">
+            <div>
+              <button class="focus:outline-none text-xl mr-2" v-tooltip="'Chat'">
+                <i class="ri-chat-4-fill"></i>
+              </button>
+              <span class="relative">
                 <button
                   class="focus:outline-none text-xl mr-2" v-tooltip="'Notification'" @click="showNotifyModal">
                   <i class="ri-notification-2-fill"></i>
                 </button>
                 <span v-if="notify_count > 0" class="bg-orange-1 text-white absolute notify-tooltip rounded-full">{{notify_count}}</span>
-            </span>
+              </span>
 
-            <button
-              v-if="$auth.loggedIn"
-              @click="showAccountOptions"
-              v-tooltip="'Account'"
-              class="focus:outline-none text-xl"
-              id="options-menu"
-              aria-haspopup="true"
-              aria-expanded="true"
-            >
-              <i class="ri-user-fill"></i>
-            </button>
+              <button
+                v-if="$auth.loggedIn"
+                @click="showAccountOptions"
+                v-tooltip="'Account'"
+                class="focus:outline-none text-xl"
+                id="options-menu"
+                aria-haspopup="true"
+                aria-expanded="true"
+              >
+                <i class="ri-user-fill"></i>
+              </button>
 
-            <button
-              v-if="!$auth.loggedIn"
-              v-tooltip="'Account'"
-              @click="showLoginModal"
-              :class="loginModal || registrationModal ? 'text-orange-1' : ''"
-              class="focus:outline-none text-xl"
-            >
-              <i class="ri-user-fill"></i>
-            </button>
+              <button
+                v-if="!$auth.loggedIn"
+                v-tooltip="'Account'"
+                @click="showLoginModal"
+                :class="loginModal || registrationModal ? 'text-orange-1' : ''"
+                class="focus:outline-none text-xl"
+              >
+                <i class="ri-user-fill"></i>
+              </button>
 
-            <button
-              v-tooltip="'Cart'"
-              @click="showCartModal"
-              :class="
-                cart ||
-                currentRouteName == 'cart' ||
-                currentRouteName == 'checkout'
-                  ? 'text-orange-1'
-                  : ''
-              "
-              class="focus:outline-none text-xl ml-2"
-            >
-              <i class="ri-shopping-bag-2-fill"></i>
-            </button>
+              <button
+                v-tooltip="'Cart'"
+                @click="showCartModal"
+                :class="
+                  cart ||
+                  currentRouteName == 'cart' ||
+                  currentRouteName == 'checkout'
+                    ? 'text-orange-1'
+                    : ''
+                "
+                class="focus:outline-none text-xl ml-2"
+              >
+                <i class="ri-shopping-bag-2-fill"></i>
+              </button>
+            </div>
+
+            <account
+              v-if="accountOptions"
+              v-on:showAccountOptions="showAccountOptions()"
+            ></account>
           </div>
-
-          <account
-            v-if="accountOptions"
-            v-on:showAccountOptions="showAccountOptions()"
-          ></account>
         </div>
       </div>
-    </div>
-    <div class="max-w-screen-xl xl:px-10 px-2 m-auto sm:font-bold">
-      <div class="flex flex-row items-center justify-center">
-        <n-link to="">
-          <div class="flex items-center">
-            <i class="ri-wallet-3-fill mr-1"></i>
-            <span>S-Wallet</span>
-          </div>
-        </n-link>
-        <n-link to="" class="sm:pl-6 pl-2">
-          <div class="flex items-center">
-            <i class="ri-hand-coin-line mr-1"></i>
-            <span>Earn</span>
-          </div>
-        </n-link>
-        <n-link to="/my-shop" class="sm:pl-6 pl-2">
-          <div
-            class="flex items-center"
-            :class="currentRouteName == 'my-shop' ? 'text-orange-1' : ''"
-          >
-            <i class="ri-store-fill mr-1"></i>
-            <span>My Shop</span>
-          </div>
-        </n-link>
-        <n-link to="" class="sm:pl-6 pl-2">
-          <div
-            class="flex items-center"
-            :class="currentRouteName == 'flash-sales' ? 'text-orange-1' : ''"
-          >
-            <i class="ri-flashlight-fill"></i>
-            <span>Flash Sales</span>
-          </div>
-        </n-link>
-        <n-link to="" class="sm:pl-6 pl-2">
-          <div
-            class="flex items-center"
-            :class="currentRouteName == 'festivals' ? 'text-orange-1' : ''"
-          >
-            <img
-              class="inline sm:h-5 h-4 my-1"
-              src="~/assets/icons/festivals.png"
-              alt="Icon"
-            />
-            <span>Festivals</span>
-          </div>
-        </n-link>
+      <div class="max-w-screen-xl xl:px-10 px-2 pb-2 m-auto sm:font-bold">
+        <div class="flex flex-row items-center justify-center">
+          <n-link to="">
+            <div class="flex items-center">
+              <i class="ri-wallet-3-fill mr-1"></i>
+              <span>S-Wallet</span>
+            </div>
+          </n-link>
+          <n-link to="" class="sm:pl-6 pl-2">
+            <div class="flex items-center">
+              <i class="ri-hand-coin-line mr-1"></i>
+              <span>Earn</span>
+            </div>
+          </n-link>
+          <n-link to="/my-shop" class="sm:pl-6 pl-2">
+            <div
+              class="flex items-center"
+              :class="currentRouteName == 'my-shop' ? 'text-orange-1' : ''"
+            >
+              <i class="ri-store-fill mr-1"></i>
+              <span>My Shop</span>
+            </div>
+          </n-link>
+          <n-link to="" class="sm:pl-6 pl-2">
+            <div
+              class="flex items-center"
+              :class="currentRouteName == 'flash-sales' ? 'text-orange-1' : ''"
+            >
+              <i class="ri-flashlight-fill"></i>
+              <span>Flash Sales</span>
+            </div>
+          </n-link>
+          <n-link to="" class="sm:pl-6 pl-2">
+            <div
+              class="flex items-center"
+              :class="currentRouteName == 'festivals' ? 'text-orange-1' : ''"
+            >
+              <img
+                class="inline sm:h-5 h-4 my-1"
+                src="~/assets/icons/festivals.png"
+                alt="Icon"
+              />
+              <span>Festivals</span>
+            </div>
+          </n-link>
+        </div>
       </div>
-    </div>
 
     <!-- Cart Modal -->
     <cart v-if="cart" v-on:closeCart="closeCartModal()"></cart>
     <!-- Notification Modal  -->
     <notification v-if="notify"  v-on:closeNotify="closeNotifyModal()"></notification>
 
-    <!-- Login Modal -->
-    <login
-      v-if="loginModal"
-      v-on:closeLoginModal="closeLoginModal()"
-      v-on:openRegistrationModal="openRegistrationModal()"
-    ></login>
+      <!-- Login Modal -->
+      <login
+        v-if="loginModal"
+        v-on:closeLoginModal="closeLoginModal()"
+        v-on:openRegistrationModal="openRegistrationModal()"
+      ></login>
 
-    <!-- Registration Modal -->
-    <registration
-      v-if="registrationModal"
-      v-on:closeRegistrationModal="closeRegistrationModal()"
-      v-on:openLoginModal="openLoginModal()"
-    ></registration>
+      <!-- Registration Modal -->
+      <registration
+        v-if="registrationModal"
+        v-on:closeRegistrationModal="closeRegistrationModal()"
+        v-on:openLoginModal="openLoginModal()"
+      ></registration>
+    </div>
   </div>
 </template>
 

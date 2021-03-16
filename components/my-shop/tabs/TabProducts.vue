@@ -56,8 +56,16 @@
               <td>{{ item.price }}</td>
               <td>{{ item.total_stocks }}</td>
               <td>
-                <n-link to=""><i class="ri-edit-2-fill mr-5"></i></n-link>
-                <n-link to=""><i class="ri-delete-bin-2-fill"></i></n-link>
+                <div class="dropdown">
+                  <i class="dropbtn border rounded p-2 ri-arrow-down-s-fill"></i>
+                  <div class="dropdown-content font-semibold">
+                    <p>Edit</p>
+                    <p>Move to trash</p>
+                    <p>Notify to subscribers</p>
+                    <p>Add to flash sales</p>
+                    <p>Add to festival</p>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>
