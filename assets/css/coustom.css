@@ -70,3 +70,9 @@
     height: 100%;
 	padding-top: 0px;
 }
+
+.product-delete {
+    position: absolute;
+    right: -7px;
+    bottom: -12px;
+}
