@@ -143,6 +143,7 @@ export default {
           this.showModal = false
         })
         .catch((error) => {
+          loader.hide()
           this.$toast.error('Oops..!-' + error.response.data.message)
         })
     },
