@@ -39,7 +39,7 @@ export default {
         FindFriend,
         FriendRequest,
     },
-  
+
     methods: {
 
         shoppingFriend(){
