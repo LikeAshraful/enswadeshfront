@@ -23,9 +23,12 @@
             />
           </div>
           <n-link
-            to="/add-product"
+            :to="{
+              name: 'shop-proudct-add-id',
+              params: { id: $route.params.id },
+            }"
             class="bg-orange-1 text-white rounded-lg py-2 px-4 focus:outline-none"
-            >Add Product</n-link
+            >Add Product {{ $router.params }}</n-link
           >
         </div>
         <loader v-if="isLoading"></loader>
@@ -57,7 +60,9 @@
               <td>{{ item.total_stocks }}</td>
               <td>
                 <div class="dropdown">
-                  <i class="dropbtn border rounded p-2 ri-arrow-down-s-fill"></i>
+                  <i
+                    class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
+                  ></i>
                   <div class="dropdown-content font-semibold">
                     <p>Edit</p>
                     <p>Move to trash</p>

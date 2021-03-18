@@ -225,62 +225,62 @@
           <div class="p-2">
             <table class="w-full">
               <thead>
-              <tr class="font-bold">
-                <td>Product name</td>
-                <td>Rate</td>
-                <td>Per Unit</td>
-                <td>Discount</td>
-                <td>Offer</td>
-                <td></td>
-              </tr>
+                <tr class="font-bold">
+                  <td>Product name</td>
+                  <td>Rate</td>
+                  <td>Per Unit</td>
+                  <td>Discount</td>
+                  <td>Offer</td>
+                  <td></td>
+                </tr>
               </thead>
               <tbody>
-              <tr v-for="(list, i) in lists" :key="i">
-                <td>
-                  <input
-                    type="text"
-                    class="input-field focus:outline-none my-1"
-                    placeholder="Name"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="input-field focus:outline-none my-1"
-                    placeholder="0"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="input-field focus:outline-none my-1"
-                    placeholder="0"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="input-field focus:outline-none my-1"
-                    placeholder="0"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="input-field focus:outline-none my-1"
-                    placeholder="0"
-                  />
-                </td>
-                <td>
-                  <button
-                    class="focus:outline-none text-orange-1"
-                    v-if="i == lists - 1 && i != 0"
-                    @click="removeList"
-                  >
-                    <i class="ri-close-circle-fill"></i>
-                  </button>
-                </td>
-              </tr>
+                <tr v-for="(list, i) in lists" :key="i">
+                  <td>
+                    <input
+                      type="text"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="Name"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="0"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="0"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="0"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="0"
+                    />
+                  </td>
+                  <td>
+                    <button
+                      class="focus:outline-none text-orange-1"
+                      v-if="i == lists - 1 && i != 0"
+                      @click="removeList"
+                    >
+                      <i class="ri-close-circle-fill"></i>
+                    </button>
+                  </td>
+                </tr>
               </tbody>
             </table>
             <button
@@ -296,46 +296,46 @@
           <div class="p-2">
             <table class="w-full">
               <thead>
-              <tr class="font-bold">
-                <td>Weight</td>
-                <td>Quantity</td>
-                <td>Price/Unit</td>
-                <td></td>
-              </tr>
+                <tr class="font-bold">
+                  <td>Weight</td>
+                  <td>Quantity</td>
+                  <td>Price/Unit</td>
+                  <td></td>
+                </tr>
               </thead>
               <tbody>
-              <tr v-for="(weight, i) in weights" :key="i">
-                <td>
-                  <input
-                    type="text"
-                    class="input-field focus:outline-none my-1"
-                    placeholder="(kg, litre, cm, mm)"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="input-field focus:outline-none my-1"
-                    placeholder="1"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="input-field focus:outline-none my-1"
-                    placeholder="0"
-                  />
-                </td>
-                <td>
-                  <button
-                    class="focus:outline-none text-orange-1"
-                    v-if="i == weights - 1 && i != 0"
-                    @click="removeWeight"
-                  >
-                    <i class="ri-close-circle-fill"></i>
-                  </button>
-                </td>
-              </tr>
+                <tr v-for="(weight, i) in weights" :key="i">
+                  <td>
+                    <input
+                      type="text"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="(kg, litre, cm, mm)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="1"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="0"
+                    />
+                  </td>
+                  <td>
+                    <button
+                      class="focus:outline-none text-orange-1"
+                      v-if="i == weights - 1 && i != 0"
+                      @click="removeWeight"
+                    >
+                      <i class="ri-close-circle-fill"></i>
+                    </button>
+                  </td>
+                </tr>
               </tbody>
             </table>
             <button
@@ -351,46 +351,46 @@
           <div class="p-2">
             <table class="w-full">
               <thead>
-              <tr class="font-bold">
-                <td>Size</td>
-                <td>Quantity</td>
-                <td>Price/Unit</td>
-                <td></td>
-              </tr>
+                <tr class="font-bold">
+                  <td>Size</td>
+                  <td>Quantity</td>
+                  <td>Price/Unit</td>
+                  <td></td>
+                </tr>
               </thead>
               <tbody>
-              <tr v-for="(size, i) in sizes" :key="i">
-                <td>
-                  <input
-                    type="text"
-                    class="input-field focus:outline-none my-1"
-                    placeholder="(S/M/L/4/5/6)"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="input-field focus:outline-none my-1"
-                    placeholder="1"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    class="input-field focus:outline-none my-1"
-                    placeholder="0"
-                  />
-                </td>
-                <td>
-                  <button
-                    class="focus:outline-none text-orange-1"
-                    v-if="sizes.length - 1 && i != 0"
-                    @click="removeSize"
-                  >
-                    <i class="ri-close-circle-fill"></i>
-                  </button>
-                </td>
-              </tr>
+                <tr v-for="(size, i) in sizes" :key="i">
+                  <td>
+                    <input
+                      type="text"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="(S/M/L/4/5/6)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="1"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="0"
+                    />
+                  </td>
+                  <td>
+                    <button
+                      class="focus:outline-none text-orange-1"
+                      v-if="sizes.length - 1 && i != 0"
+                      @click="removeSize"
+                    >
+                      <i class="ri-close-circle-fill"></i>
+                    </button>
+                  </td>
+                </tr>
               </tbody>
             </table>
             <button
@@ -409,7 +409,7 @@
               <textarea
                 class="input-field focus:outline-none"
                 name=""
-                 v-model="service_policy"
+                v-model="service_policy"
                 id="warranty"
                 rows="3"
                 placeholder="Write details here about warranty"
@@ -451,7 +451,10 @@
               <div
                 class="border border-dashed border-gray-3 rounded text-center"
               >
-                <div v-if="!thumbnail" class="py-10 flex items-center justify-center">
+                <div
+                  v-if="!thumbnail"
+                  class="py-10 flex items-center justify-center"
+                >
                   <i class="ri-attachment-line"></i>
                   <label
                     for="thumbnail"
@@ -466,7 +469,10 @@
                     style="padding-bottom: 40%"
                     class="relative flex flex-row justify-center"
                   >
-                    <img class="absolute p-2 h-full m-auto" :src="thumbnail_images" />
+                    <img
+                      class="absolute p-2 h-full m-auto"
+                      :src="thumbnail_images"
+                    />
                   </div>
                 </label>
                 <input
@@ -530,35 +536,35 @@
               <label class="input-label" for="feature">Features</label>
               <table class="w-full">
                 <tbody>
-                <tr v-for="(feature, i) in features" :key="i">
-                  <td>
-                    <input
-                      class="input-field focus:outline-none my-1"
-                      id="feature"
-                      v-model="feature.title"
-                      type="text"
-                      placeholder="Write feature title"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      class="input-field focus:outline-none my-1"
-                      id="feature"
-                      v-model="feature.feature"
-                      type="text"
-                      placeholder="Write details here"
-                    />
-                  </td>
-                  <td>
-                    <button
-                      class="focus:outline-none text-orange-1"
-                      v-if="i === features.length - 1 && i != 0"
-                      @click="removeFeature(feature)"
-                    >
-                      <i class="ri-close-circle-fill"></i>
-                    </button>
-                  </td>
-                </tr>
+                  <tr v-for="(feature, i) in features" :key="i">
+                    <td>
+                      <input
+                        class="input-field focus:outline-none my-1"
+                        id="feature"
+                        v-model="feature.title"
+                        type="text"
+                        placeholder="Write feature title"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        class="input-field focus:outline-none my-1"
+                        id="feature"
+                        v-model="feature.feature"
+                        type="text"
+                        placeholder="Write details here"
+                      />
+                    </td>
+                    <td>
+                      <button
+                        class="focus:outline-none text-orange-1"
+                        v-if="i === features.length - 1 && i != 0"
+                        @click="removeFeature(feature)"
+                      >
+                        <i class="ri-close-circle-fill"></i>
+                      </button>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
               <button
@@ -695,7 +701,7 @@ export default {
       product_code_sku: '',
       quantity: '',
       alert: '',
-      thumbnail_images:'',
+      thumbnail_images: '',
 
       url: null,
       bar: '',
@@ -721,8 +727,6 @@ export default {
   created() {
     this.CategoriesData()
     this.BrandData()
-    this.setMyShop()
-
   },
   computed: {
     ...mapGetters('category', ['categorys'], 'brand', ['brands']),
@@ -731,7 +735,7 @@ export default {
   methods: {
     ...mapActions('category', ['CategoriesData'], 'brand', ['BrandData']),
     ...mapActions('brand', ['BrandData']),
-    ...mapActions('shops', ['setMyShop']),
+
     bargainToggle() {
       this.can_bargain = !this.can_bargain
     },
@@ -744,10 +748,10 @@ export default {
         )
       }
     },
-   thumbnailFiles(e){
-        this.thumbnail = e.target.files[0]
-        this.thumbnail_images =  URL.createObjectURL(e.target.files[0])
-   },
+    thumbnailFiles(e) {
+      this.thumbnail = e.target.files[0]
+      this.thumbnail_images = URL.createObjectURL(e.target.files[0])
+    },
     addFeature() {
       this.features.push({
         title: '',
@@ -772,10 +776,21 @@ export default {
     addProducts() {
 
       var formData = new FormData()
-      formData.append('name', this.name).
-      formData.append('title', this.title)
+      if(this.size_wise){
+          formData.append('sizes[]', this.sizes)
+      }else if(this.make_a_list){
+          formData.append('make_a_list[]', this.make_a_list)
+
+      }else if(this.weight_wise){
+           formData.append('weight_wise[]', this.weight_wise)
+
+      }else{
+
+      }
+      formData.append('name', this.name)
+      formData.append('product_type', this.title)
       formData.append('slug', this.slug)
-      formData.append('shop_id', this.shop_id)
+      formData.append('shop_id', this.$route.params.id)
       formData.append('user_id', this.$auth.user.id)
       formData.append('brand_id', this.brand_id)
       formData.append('can_bargain', this.can_bargain)
@@ -783,8 +798,10 @@ export default {
       formData.append('stocks', this.stocks)
       formData.append('category_id', this.category_id)
       formData.append('thumbnail', this.thumbnail)
-       for (const i of Object.keys(this.gallery_images)) {
-        formData.append('image[]', this.gallery_images[i])
+      formData.append('feature[]', this.features)
+      for (const i of Object.keys(this.gallery_images)) {
+        formData.append('images[]', this.gallery_images[i])
+        console.log(this.gallery_images[i])
       }
       this.$store.dispatch('products/addProducts', formData)
     },
@@ -808,7 +825,7 @@ export default {
     },
 
     simpleFormat(format) {
-       this.title = format.title;
+      this.title = format.title
       this.formats.forEach((element) => {
         if (format.value === element.value) {
           if (format.value == 'simple_format') {
