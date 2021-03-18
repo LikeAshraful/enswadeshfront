@@ -774,21 +774,17 @@ export default {
     },
 
     addProducts() {
-
       var formData = new FormData()
-      if(this.size_wise){
-          formData.append('sizes[]', this.sizes)
-      }else if(this.make_a_list){
-          formData.append('make_a_list[]', this.make_a_list)
-
-      }else if(this.weight_wise){
-           formData.append('weight_wise[]', this.weight_wise)
-
-      }else{
-
+      if (this.size_wise) {
+        formData.append('sizes[]', this.sizes)
+      } else if (this.make_a_list) {
+        formData.append('make_a_list[]', this.make_a_list)
+      } else if (this.weight_wise) {
+        formData.append('weight_wise[]', this.weight_wise)
+      } else {
       }
-      formData.append('name', this.name)
-      formData.append('product_type', this.title)
+      formData.append('title', this.name)
+      formData.append('name', this.title)
       formData.append('slug', this.slug)
       formData.append('shop_id', this.$route.params.id)
       formData.append('user_id', this.$auth.user.id)

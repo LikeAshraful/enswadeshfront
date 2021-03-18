@@ -284,7 +284,6 @@
                       :key="i"
                       class="relative"
                     >
-                      <!-- {{gallery_images_url}} -->
                       <img
                         class="absolute w-full h-full object-cover"
                         :src="gallery_image_url"
@@ -310,6 +309,12 @@
                     :src="basePath + '/storage/' + gallery.image"
                     alt="Image"
                   />
+                  <span
+                    @click="removeImage(gallery)"
+                    class="product-delete cursor-pointer"
+                  >
+                    <i class="text-red-500 ri-close-circle-line"></i>
+                  </span>
                 </div>
               </div>
             </div>
@@ -457,7 +462,18 @@ export default {
           this.btnAction = false
           this.$toast.error('Oops..! Something wrong...!')
         })
-      // this.btnAction = true;
+    },
+    async removeImage(gallery) {
+      await this.$axios
+        .get('/api/my-shops/media-image/' + gallery.id)
+        .then((res) => {
+          this.loadShop()
+        })
+        .catch((error) => {
+          if (error.response.status == 404) {
+            this.$nuxt.error({ statusCode: 404, message: 'err message' })
+          }
+        })
     },
   },
 }
