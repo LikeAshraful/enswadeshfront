@@ -64,7 +64,7 @@ export default {
   axios: {
     // proxy: true
     baseURL: process.env.BASE_URL,
-    imageURL: '/storage/',
+    imageURL:'/storage/',
   },
 
   // Register custom toasts
