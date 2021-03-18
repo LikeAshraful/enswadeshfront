@@ -349,9 +349,11 @@ export default {
         meta_description: '',
         meta_og_url: '',
       },
+      shop_status:''
     }
   },
   created() {
+    this.checkShopStatus()
     this.loadShopTypes()
     this.getSingleShop()
   },
@@ -389,6 +391,24 @@ export default {
           }
         })
     },
+    async checkShopStatus() {
+      await this.$axios.get(
+        '/api/my-shops/pending/' + this.$route.params.id
+      ).then((res) => {
+        this.shop_status = res.data.data.status;
+        if(this.shop_status == 'Declined') {
+          this.$router.push({ name: 'shop-declined-id', params: { id: this.shop.id } })
+        }
+        if(this.shop_status == 'Pending') {
+          this.$router.push({ name: 'shop-under-verification-id', params: { id: this.shop.id } })
+        }
+      })
+      .catch((error) => {
+        if(error.response.status == 404){
+          this.$nuxt.error({ statusCode: 404, message: 'err message' })
+        }
+      })
+    },
     async getSingleShop() {
       await this.$axios
         .get(`/api/my-shops/${this.$route.params.id}`)
@@ -396,6 +416,7 @@ export default {
           this.shop = res.data.data
           let shop_gallery = res.data.data.shop_gallery
           this.shop_gallery = shop_gallery.length > 0 ? shop_gallery : ''
+
         })
         .catch((error) => {
           if (error.response.status == 404) {

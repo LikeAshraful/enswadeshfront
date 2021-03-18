@@ -12,7 +12,7 @@
                         <h2 class="text-xl font-semibold pb-3">{{notification.data.shop_verify_data.title}}</h2>
                         <!-- <p class="text-sm">{{notification.data.shop_verify_data.body}}</p> -->
                         <div class="flex justify-between">
-                            <NuxtLink class="btn bg-green-3 focus:outline-none" :to="notification.data.shop_verify_data.action_url">{{notification.data.shop_verify_data.action_button}}</NuxtLink>
+                            <NuxtLink @click="closeNotifyBox" class="btn bg-green-3 focus:outline-none" :to="notification.data.shop_verify_data.action_url">{{notification.data.shop_verify_data.action_button}}</NuxtLink>
                             <button @click="readNotification" class="btn bg-red-5 focus:outline-none" :data-id="notification.id">Done</button>
                         </div>
                     </div>
