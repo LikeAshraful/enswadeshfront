@@ -12,7 +12,7 @@
               class="h-52 w-full"
               :src="
                 product.image.src
-                  ? basePath + 'storage/' + product.image.src
+                  ? basePath + '/storage/' + product.image.src
                   : require(`~/assets/img/products/default.png`)
               "
               alt="Image"

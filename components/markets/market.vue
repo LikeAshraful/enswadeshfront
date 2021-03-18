@@ -44,9 +44,7 @@
       </template>
     </div>
     <div v-else>
-      <h1 class="text-3xl font-bold text-center text-red-400">
-        No result found!
-      </h1>
+      <h1 class="font-bold text-center text-red-400">No result found!</h1>
     </div>
     <!-- End All Markets -->
   </div>
