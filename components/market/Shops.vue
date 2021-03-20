@@ -4,19 +4,18 @@
     <div class="">
       <div class="flex justify-between font-bold mb-4">
         <div class="left">
-          <p class="font-bold text-2xl">{{ floor }}</p>
+          <p class="h2">{{ floor }}</p>
         </div>
         <div class="right flex justify-between gap-4">
           <div class="flex flex-row items-center justify-center">
             <div
-              style="margin-left: -1px"
-              class="flex items-center border border-gray-4 px-2 py-1 rounded-l-full rounded-r-full overflow-hidden"
+              class="search"
             >
-              <i class="ri-search-line mr-2"></i>
+              <i class="search-icon ri-search-line mr-2"></i>
               <input
                 @keyup="searchShopByMarket"
                 v-model="keyword"
-                class="focus:outline-none w-full font-semibold"
+                class="search-input focus:outline-none"
                 type="text"
                 placeholder="Search shops"
               />
@@ -35,7 +34,7 @@
                 },
               })
             "
-            class="bg-orange-1 text-white rounded-full focus:outline-none py-1 px-4"
+            class="btn-add focus:outline-none"
           >
             Add Shop
           </button>

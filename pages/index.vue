@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="lg:pt-20 pt-10">
+    <div class="min-h-screen lg:pt-20 pt-10">
       <menus></menus>
       <!-- Tabs -->
       <div class="lg:mt-20 md:mt-10 sm:mt-6 mt-3">

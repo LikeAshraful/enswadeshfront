@@ -74,7 +74,12 @@ export default {
         '/api/my-shops/pending/' + this.$route.params.id
       ).then((res) => {
         this.shop = res.data.data;
-        console.log(res.data);
+        if(this.shop.status == 'Approved') {
+          this.$router.push({ name: 'shop-setup-id', params: { id: this.shop.id } })
+        }
+        if(this.shop.status == 'Declined') {
+          this.$router.push({ name: 'shop-declined-id', params: { id: this.shop.id } })
+        }
       })
       .catch((error) => {
         if(error.response.status == 404){
