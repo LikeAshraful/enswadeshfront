@@ -2,14 +2,13 @@
    <div>
     <!-- All Products -->
     <div class="flex justify-between">
-      <p class="text-2xl font-black">All Products</p>
+      <p class="h2">All Products</p>
       <div
-        style="margin-left: -1px"
-        class="flex items-center border border-gray-2 px-3 py-1 rounded-full overflow-hidden"
+        class="search"
       >
-        <img class="h-4 mr-1" src="~/assets/icons/search.png" alt="Icon" />
+        <i class="search-icon ri-search-line mr-2"></i>
         <input
-          class="focus:outline-none w-full font-bold"
+          class="search-input focus:outline-none"
           type="text"
           @keyup="getProductsSearchResults"
           v-model="keyword"
@@ -19,21 +18,35 @@
     </div>
     <loader v-if="isLoading"></loader>
     <div v-else class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
-        <div class="mb-8" v-for="(product, i) in products.data" :key="i" >
+        <div class="target-area" v-for="(product, i) in products.data" :key="i" >
           <!-- <NuxtLink to="/"> -->
-            <div @click="showModal(product, product.name, product.slug, product.id)" class="h-full">
+            <div @click="showModal(product, product.name, product.slug, product.id)" class="h-full mb-10">
                 <div class="">
                     <img class="h-52 w-full" :src="product.image.src ? basePath + 'storage/' + product.image.src : require(`~/assets/img/products/default.png`)" alt="Image">
                 </div>
                 <p class="font-semibold pt-2">{{ product.name }}</p>
                 <p class="">{{ product.color }}</p>
-                <p class="font-semibold">{{ product.price }} BDT</p>
+                <p class="font-bold">{{ product.price }} BDT</p>
             </div>
-            <div class="flex justify-between">
-                <button class="btn bg-green-3 focus:outline-none">Buy Now</button>
-                <button class="btn border-orange-1 focus:outline-none">Add to bag</button>
+            <div class="hover-area-btns left-0 bottom-0 right-0">
+              <div class="flex justify-between">
+                  <button class="btn bg-green-3 focus:outline-none">Buy Now</button>
+                  <button class="btn border-orange-1 bg-white focus:outline-none">Add to bag</button>
+              </div>
             </div>
           <!-- </NuxtLink> -->
+          <!-- <div class="target-area">
+            <img class="h-16 w-full" src="~/assets/img/banner_green.png" alt="Image"/>
+            <p class="absolute top-0 mt-4 w-full text-center font-bold text-white text-xl mb-5" >101</p>
+            <img class="sm:h-56 h-40 w-full" src="~/assets/img/shutter.png" alt="Image" />
+            <p class="w-full text-center font-bold">Shop name gose hear</p>
+
+            <div class="hover-area top-0 left-0 bottom-0 right-0 bg-gray-2 opacity-50"></div>
+            <div class="hover-area top-0 left-0 bottom-0 right-0 flex flex-col items-center justify-center">
+                <button class="btn-border focus:outline-none bg-green-3 mb-4">Control Room</button>
+                <button class="btn-border focus:outline-none">Visit Shop</button>
+            </div>
+          </div> -->
         </div>
     </div>
     <!-- Product Details -->

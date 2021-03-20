@@ -226,10 +226,10 @@
             <table class="w-full">
               <thead>
               <tr class="font-bold">
-                <td>Product name</td>
-                <td>Rate</td>
-                <td>Per Unit</td>
-                <td>Discount</td>
+                <td>Size/Weight</td>
+                <td><p class="ml-2">Stock</p></td>
+                <td>Price</td>
+                <td>Discount (%)</td>
                 <td>Offer</td>
                 <td></td>
               </tr>
@@ -237,11 +237,21 @@
               <tbody>
               <tr v-for="(list, i) in lists" :key="i">
                 <td>
-                  <input
+                  <select class="input-field focus:outline-none my-1">
+                    <option value="" selected disabled>Select</option>
+                    <option value="">feet</option>
+                    <option value="">gauze</option>
+                    <option value="">m</option>
+                    <option value="">cm</option>
+                    <option value="">mm</option>
+                    <option value="">gram</option>
+                    <option value="">kg</option>
+                  </select>
+                  <!-- <input
                     type="text"
                     class="input-field focus:outline-none my-1"
                     placeholder="Name"
-                  />
+                  /> -->
                 </td>
                 <td>
                   <input
@@ -268,7 +278,7 @@
                   <input
                     type="text"
                     class="input-field focus:outline-none my-1"
-                    placeholder="0"
+                    placeholder="Type hear"
                   />
                 </td>
                 <td>

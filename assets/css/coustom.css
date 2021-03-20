@@ -37,7 +37,6 @@
     position: absolute;
     right: 0;
     background-color: #fff;
-    width: 200px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
@@ -68,6 +67,21 @@
 .target-area:hover .hover-area {
     margin-top: 0px;
     height: 100%;
+	padding-top: 0px;
+}
+.hover-area-btns {
+    height: 0px;
+	padding-top: 0px;
+    overflow:hidden;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+	position:absolute;
+}
+.target-area:hover .hover-area-btns {
+    margin-top: 0px;
+    height: 10%;
 	padding-top: 0px;
 }
 
