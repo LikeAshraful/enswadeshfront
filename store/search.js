@@ -15,18 +15,18 @@ export const actions = {
           params: { keyword: data.keyword, selectType: data.selectType },
         })
       if (data.selectType == 1) {
-
+        commit('SET_SEARCH_DATA', datares.data.data)
         this.$router.push({ path: '/search/markets' })
       } else if (data.selectType == 2) {
-
+        commit('SET_SEARCH_DATA', datares.data.data)
         this.$router.push({ path: '/search/shops' })
       } else if (data.selectType == 3) {
-
+        commit('SET_SEARCH_DATA', datares.data.data)
         this.$router.push({ path: '/search/products' })
       } else {
+        commit('SET_SEARCH_DATA', datares.data)
         this.$router.push({ path: '/search/all' })
       }
-      commit('SET_SEARCH_DATA', datares.data.data)
     }
   }
 }

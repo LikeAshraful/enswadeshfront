@@ -141,6 +141,7 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import { required, minLength } from 'vuelidate/lib/validators'
 export default {
   data() {
@@ -192,8 +193,16 @@ export default {
             data: formData,
           })
           .then((response) => {
-            // this.$store.dispatch("authcheck/setUser", this.$auth.user);
-            // this.$store.dispatch("authcheck/setToken", this.$auth.token);
+            localStorage.setItem('user', this.$auth.user)
+            localStorage.setItem('token', response.data.data.access_token)
+            this.$store.dispatch('authcheck/setUser', this.$auth.user)
+            this.$store.dispatch(
+              'authcheck/setToken',
+              response.data.data.access_token
+            )
+            this.$axios.defaults.headers.common[
+              'Authorization'
+            ] = `Bearer ${this.tokenHeader}`
             this.$toast.success('Successfully login your account!')
             this.closeLoginModal()
           })
@@ -207,6 +216,12 @@ export default {
         this.$toast.error('Please fill the form correctly!')
       }
     },
+  },
+
+  computed: {
+    ...mapGetters({
+      tokenHeader: 'authcheck/token',
+    }),
   },
 }
 </script>

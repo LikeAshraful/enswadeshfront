@@ -37,17 +37,16 @@
         <button
           id="show-modal"
           @click="showModal = true"
-          v-tooltip="'Subscribe'"
           v-if="$auth.loggedIn"
           :disabled="disable"
           :class="subscribeCheck == null ? ' bg-green-3' : ' bg-green-1'"
-          class="md:px-6 px-3 md:py-1 py-1 font-semibold md:text-xl rounded-lg"
+          class="md:px-6 px-3 md:py-1 py-1 font-semibold md:text-xl rounded-lg focus:outline-none"
         >
           {{ subscribeCheck ? 'Subscribed' : 'Subscribe' }}
         </button>
         <n-link
           to=""
-          class="w-full md:px-6 px-3 md:py-1 py-1 font-semibold md:text-xl rounded-lg border border-orange-1 md:ml-3 ml-1"
+          class="md:px-6 px-3 py-1 font-semibold md:text-xl rounded-lg border border-orange-1 bg-white md:ml-3 ml-1"
           >Invite Friend</n-link
         >
       </div>
@@ -135,9 +134,9 @@ export default {
       await this.$axios
         .post('api/subscribe-request', formData)
         .then((response) => {
-          loader.hide()
           this.getSubscribeCount()
           this.checkSubscribe()
+          loader.hide()
           this.$toast.success('Success Subscribe!')
 
           this.showModal = false
@@ -157,7 +156,6 @@ export default {
         .then((res) => {
           this.count = res.data
         })
-        .catch((err) => loader.hide())
     },
     async checkSubscribe() {
       let loader = this.$loading.show({
@@ -178,13 +176,14 @@ export default {
         )
         .then((res) => {
           this.subscribeCheck = res.data
-          console.log(res, this.$auth.loggedIn)
           loader.hide()
           if (this.subscribeCheck != null) {
             this.disable = true
           }
         })
-        .catch((err) => loader.hide())
+        .catch((error) => {
+          loader.hide()
+        })
     },
     async close() {
       this.$emit('close')

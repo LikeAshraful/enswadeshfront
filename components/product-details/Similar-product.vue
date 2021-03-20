@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="flex justify-between">
-            <p class="text-3xl font-bold">Similar Products</p>
+            <p class="h1">Similar Products</p>
             <div class="flex text-xl font-bold">
-                <button class="border-2 rounded-full w-12 h-12 text-xl mr-4 hover:bg-green-3"><i class="ri-arrow-left-line"></i></button>
-                <button class="border-2 rounded-full w-12 h-12 text-xl mr-4 hover:bg-green-3"><i class="ri-arrow-right-line"></i></button>
+                <button class="border-2 rounded-full w-12 h-12 text-xl mr-4 hover:bg-green-3 focus:outline-none"><i class="ri-arrow-left-line"></i></button>
+                <button class="border-2 rounded-full w-12 h-12 text-xl mr-4 hover:bg-green-3 focus:outline-none"><i class="ri-arrow-right-line"></i></button>
             </div>
         </div>
         <div class="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 gap-4 pt-6 pb-6">

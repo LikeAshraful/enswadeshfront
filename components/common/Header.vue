@@ -68,17 +68,58 @@
                 >
               </span>
 
-              <button
-                v-if="$auth.loggedIn"
-                @click="showAccountOptions"
-                v-tooltip="'Account'"
-                class="focus:outline-none text-xl"
-                id="options-menu"
-                aria-haspopup="true"
-                aria-expanded="true"
-              >
-                <i class="ri-user-fill"></i>
-              </button>
+              <div v-if="$auth.loggedIn" class="dropdown">
+                <i class="dropbtn hover:text-orange-1 text-xl ri-user-fill"></i>
+                <div
+                  class="dropdown-content w-64 shadow-lg p-2 border border-gray-3 bg-white"
+                >
+                  <n-link to="/my-account">
+                    <div
+                      class="p-4 flex flex-row items-center justify-center gap-2 hover:bg-purple-1 delay-100"
+                    >
+                      <img
+                        class="avatar"
+                        src="~/assets/img/default_market.png"
+                        alt="Image"
+                      />
+                      <span class="font-bold">{{ $auth.user.name }}</span>
+                    </div>
+                  </n-link>
+                  <div class="divider"></div>
+                  <div class="p-4">
+                    <n-link
+                      to=""
+                      class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                      >My Shopping Friends</n-link
+                    >
+                    <n-link
+                      to=""
+                      class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                      >Shops</n-link
+                    >
+                    <n-link
+                      to=""
+                      class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                      >My shops</n-link
+                    >
+                    <n-link
+                      to=""
+                      class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                      >My orders</n-link
+                    >
+                    <n-link
+                      to=""
+                      class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                      >My wishlist</n-link
+                    >
+                    <span
+                      @click.prevent="logout"
+                      class="font-semibold hover:bg-green-3 block p-1 delay-100 cursor-pointer"
+                      >Sign out</span
+                    >
+                  </div>
+                </div>
+              </div>
 
               <button
                 v-if="!$auth.loggedIn"
@@ -105,11 +146,6 @@
                 <i class="ri-shopping-bag-2-fill"></i>
               </button>
             </div>
-
-            <account
-              v-if="accountOptions"
-              v-on:showAccountOptions="showAccountOptions()"
-            ></account>
           </div>
         </div>
       </div>
@@ -121,19 +157,14 @@
               <span>S-Wallet</span>
             </div>
           </n-link>
-          <n-link to="" class="sm:pl-6 pl-2">
+          <n-link
+            to="/earn"
+            class="sm:pl-6 pl-2"
+            :class="currentRouteName == 'earn' ? 'text-orange-1' : ''"
+          >
             <div class="flex items-center">
               <i class="ri-hand-coin-line mr-1"></i>
               <span>Earn</span>
-            </div>
-          </n-link>
-          <n-link to="/my-shop" class="sm:pl-6 pl-2">
-            <div
-              class="flex items-center"
-              :class="currentRouteName == 'my-shop' ? 'text-orange-1' : ''"
-            >
-              <i class="ri-store-fill mr-1"></i>
-              <span>My Shop</span>
             </div>
           </n-link>
           <n-link to="" class="sm:pl-6 pl-2">
@@ -192,7 +223,6 @@ import Login from '../auth/Login.vue'
 import Cart from '../cart/Short.vue'
 import Notification from '../common/Notification.vue'
 import Registration from '../auth/Registration.vue'
-import Account from './Account.vue'
 
 export default {
   components: {
@@ -200,7 +230,6 @@ export default {
     Notification,
     Login,
     Registration,
-    Account,
   },
 
   data() {
@@ -219,20 +248,16 @@ export default {
       notify: false,
       loginModal: false,
       registrationModal: false,
-      accountOptions: false,
       selectType: 0,
       keyword: '',
       notify_count: 0,
     }
   },
   mounted() {
-    //console.log(this.$auth.user);
+    console.log(this.$auth)
     this.loadNotifications()
   },
   methods: {
-    showAccountOptions() {
-      this.accountOptions = !this.accountOptions
-    },
     showCartModal() {
       this.cart = !this.cart
     },
@@ -276,6 +301,11 @@ export default {
           this.notify_count = res.data.data.length
         })
       }
+    },
+    async logout() {
+      await this.$auth.logout()
+      this.$toast.success('Successfully logout from your account!')
+      this.$router.push('/')
     },
   },
 

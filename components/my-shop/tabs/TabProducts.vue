@@ -23,9 +23,12 @@
             />
           </div>
           <n-link
-            to="/add-product"
-            class="btn-add focus:outline-none"
-            >Add Product</n-link
+            :to="{
+              name: 'shop-proudct-add-id',
+              params: { id: $route.params.id },
+            }"
+            class="bg-orange-1 text-white rounded-lg py-2 px-4 focus:outline-none"
+            >Add Product {{ $router.params }}</n-link
           >
         </div>
         <loader v-if="isLoading"></loader>
@@ -57,7 +60,9 @@
               <td>{{ item.total_stocks }}</td>
               <td>
                 <div class="dropdown">
-                  <i class="dropbtn border rounded p-2 ri-arrow-down-s-fill"></i>
+                  <i
+                    class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
+                  ></i>
                   <div class="dropdown-content font-semibold">
                     <p>Edit</p>
                     <p @click="moveTrash">Move to trash</p>
@@ -72,12 +77,10 @@
         </table>
         <!-- End Product tables -->
 
-
         <move-trash v-if="move" v-on:moveTrash="moveTrash()"></move-trash>
         <notify v-if="notification" v-on:notify="notify()"></notify>
         <flash-sale v-if="flash" v-on:flashSale="flashSale()"></flash-sale>
         <festival v-if="festival" v-on:addFestival="addFestival()"></festival>
-
 
         <!-- Paginate -->
         <div class="px-3 pb-8">
@@ -111,7 +114,7 @@ export default {
     MoveTrash,
     Notify,
     FlashSale,
-    Festival
+    Festival,
   },
   data() {
     return {
@@ -139,26 +142,18 @@ export default {
   },
 
   methods: {
-    moveTrash()
-    {
-      this.move = !this.move;
+    moveTrash() {
+      this.move = !this.move
     },
-    notify()
-    {
-      this.notification = !this.notification;
+    notify() {
+      this.notification = !this.notification
     },
-    flashSale()
-    {
-      this.flash = !this.flash;
+    flashSale() {
+      this.flash = !this.flash
     },
-    addFestival()
-    {
-      this.festival = !this.festival;
+    addFestival() {
+      this.festival = !this.festival
     },
-
-
-
-
 
     async loadCategories() {
       await this.$axios

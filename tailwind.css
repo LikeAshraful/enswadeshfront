@@ -67,6 +67,9 @@
 .btn-border {
     @apply border border-gray-3 rounded px-4 py-1 font-semibold
 }
+.btn-close {
+    @apply w-full text-right text-2xl text-gray-5
+}
 .divider {
     @apply border-t border-gray-3
 }
