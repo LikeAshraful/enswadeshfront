@@ -38,6 +38,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/moment',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -64,7 +65,7 @@ export default {
   axios: {
     // proxy: true
     baseURL: process.env.BASE_URL,
-    imageURL: '/storage/',
+    imageURL:'/storage/',
   },
 
   // Register custom toasts
