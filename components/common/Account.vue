@@ -2,9 +2,19 @@
     <div>
         <div @click="closeModal" class="fixed inset-0 z-50 flex flex-col items-end max-w-screen-xl xl:px-10 px-2 m-auto mt-24">
             <div @click="wait" class="max-w-sm shadow-lg p-2 border border-gray-3 bg-white">
-                <a href="#" class="block px-4 py-1 text-gray-700 hover:bg-gray-100" role="menuitem">{{$auth.user.name}}</a>
-                <a href="#" class="block px-4 py-1 text-gray-700 hover:bg-gray-100" role="menuitem">Account settings</a>
-                <button @click.prevent="logout" class="block px-4 py-1 font-semibold text-gray-700 hover:bg-gray-100 focus:outline-none">Sign out</button>
+                <div class="p-4 flex flex-row items-center justify-center gap-2">
+                    <img class="avatar" src="~/assets/img/default_market.png" alt="Image">
+                    <p class="h3">{{$auth.user.name}}</p>
+                </div>
+                <div class="divider"></div>
+                <div class="p-4">
+                    <n-link to="" class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100">My Shopping Friends</n-link>
+                    <n-link to="" class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100">Shops</n-link>
+                    <n-link to="" class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100">My shops</n-link>
+                    <n-link to="" class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100">My orders</n-link>
+                    <n-link to="" class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100">My wishlist</n-link>
+                    <p @click.prevent="logout" class="font-semibold hover:bg-green-3 w-full p-1 delay-100">Sign out</p>
+                </div>
             </div>
         </div>
         <div @click="closeModal" class="fixed inset-0"></div>

@@ -1,16 +1,16 @@
 <template>
   <div>
     <div
-      class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-4 grid-cols-3 gap-3"
+      class="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-4 grid-cols-3 gap-1"
     >
       <div v-for="(floor, i) in floors" :key="i">
         <div
           @click="floorId(floor.id, floor.floor, i)"
           :class="i == floorAcitve ? 'bg-green-3' : ''"
-          class="border cursor-pointer border-gray-4 hover:bg-green-3 rounded-lg text-center p-2"
+          class="border cursor-pointer border-gray-3 bg-white hover:bg-green-3 rounded-lg text-center p-1 delay-100"
         >
           <p>{{ floor.shop_count }} Shops</p>
-          <p class="font-bold">{{ floor.floor }}</p>
+          <p class="font-semibold">{{ floor.floor }}</p>
         </div>
       </div>
     </div>

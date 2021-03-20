@@ -3,7 +3,7 @@
         <!-- Breadcrumbs -->
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
         <!-- Markets Section -->
-        <div class="">
+        <div class="min-h-screen">
             <div class="grid lg:grid-cols-4 sm:grid-cols-3 gap-4 my-5">
                 <!-- Filter -->
                 <div>

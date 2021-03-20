@@ -2,7 +2,7 @@
     <div>
         <!-- Top Markets -->
         <div class="flex justify-between">
-            <p class="text-2xl font-bold capitalize">Top Markets in {{ this.$route.params.city }}</p>
+            <p class="h2 capitalize">Top Markets in {{ this.$route.params.city }}</p>
             <!-- <div class="flex">
                 <n-link to="">
                     <img class="border-2 rounded-full p-3 mr-3" src="~/assets/icons/left.png" alt="Icon">

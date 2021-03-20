@@ -1,34 +1,36 @@
 <template>
   <div>
-    <!-- Breadcrumbs -->
-    <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
-    <div class="lg:py-6 py-3 grid md:grid-cols-2 gap-3">
-      <!-- Market Details -->
-      <market-details :market="market" :basePath="basePath"></market-details>
-      <!-- Market Floors -->
-      <div>
-        <floors
-          :total_floors="this.market.total_floor"
-          :floors="floors.data"
-          v-on:floorId="loadShops"
-        ></floors>
+    <div class="min-h-screen">
+      <!-- Breadcrumbs -->
+      <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
+      <div class="lg:py-6 py-3 grid md:grid-cols-2 gap-3">
+        <!-- Market Details -->
+        <market-details :market="market" :basePath="basePath"></market-details>
+        <!-- Market Floors -->
+        <div>
+          <floors
+            :total_floors="this.market.total_floor"
+            :floors="floors.data"
+            v-on:floorId="loadShops"
+          ></floors>
+        </div>
       </div>
-    </div>
-    <!-- Shops -->
-    <loader v-if="isLoading"></loader>
-    <shops
-      v-else
-      :shops="shops.data"
-      :basePath="basePath"
-      :market="market"
-      :floor="floor"
-      :floorId="floorId"
-    ></shops>
+      <!-- Shops -->
+      <loader v-if="isLoading"></loader>
+      <shops
+        v-else
+        :shops="shops.data"
+        :basePath="basePath"
+        :market="market"
+        :floor="floor"
+        :floorId="floorId"
+      ></shops>
 
-    <!-- Paginate -->
-    <!-- <div class="pb-8">
-            <paginate :totalPages="totalPages" :total="total" :currentPage="currentPage" :perPage="perPage" v-on:pagechanged="loadShops" ></paginate>
-        </div> -->
+      <!-- Paginate -->
+      <!-- <div class="pb-8">
+        <paginate :totalPages="totalPages" :total="total" :currentPage="currentPage" :perPage="perPage" v-on:pagechanged="loadShops" ></paginate>
+      </div> -->
+    </div>
   </div>
 </template>
 <script>

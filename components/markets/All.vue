@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- All Markets -->
-        <p class="text-2xl font-bold capitalize">All Markets in {{ this.$route.params.city }} </p>
+        <p class="h2 capitalize">All Markets in {{ this.$route.params.city }} </p>
         <div class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 sm:gap-3 gap-2 pt-6 pb-12">
           <loader v-if="isLoading"></loader>
           <template v-else>

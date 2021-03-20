@@ -121,13 +121,13 @@
               <span>S-Wallet</span>
             </div>
           </n-link>
-          <n-link to="" class="sm:pl-6 pl-2">
+          <n-link to="/earn" class="sm:pl-6 pl-2" :class="currentRouteName == 'earn' ? 'text-orange-1' : ''">
             <div class="flex items-center">
               <i class="ri-hand-coin-line mr-1"></i>
               <span>Earn</span>
             </div>
           </n-link>
-          <n-link to="/my-shop" class="sm:pl-6 pl-2">
+          <!-- <n-link to="/my-shop" class="sm:pl-6 pl-2">
             <div
               class="flex items-center"
               :class="currentRouteName == 'my-shop' ? 'text-orange-1' : ''"
@@ -135,7 +135,7 @@
               <i class="ri-store-fill mr-1"></i>
               <span>My Shop</span>
             </div>
-          </n-link>
+          </n-link> -->
           <n-link to="" class="sm:pl-6 pl-2">
             <div
               class="flex items-center"

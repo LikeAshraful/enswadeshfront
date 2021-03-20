@@ -4,9 +4,9 @@
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
 
         <!-- All Cities -->
-        <div class="h-screen">
-            <p class="title-color md:text-4xl text-2xl font-black">Where do you want to go ?</p>
-            <div style="background-size: cover;" :style="{ backgroundImage: `url(${backgroundImagePath})` }" class="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
+        <div class="h-screen" style="background-size: cover;" :style="{ backgroundImage: `url(${backgroundImagePath})` }">
+            <p class="h1">Where do you want to go ?</p>
+            <div class="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
                 <loader v-if="isLoading"></loader>
                 <template v-else>
                 <div v-for="(city, i) in cities" :key="i">
@@ -16,7 +16,7 @@
                                 <img class="h-24 m-auto" src="~/assets/img/building.png" alt="Image">
                             </div>
                             <div class="flex flex-wrap items-center justify-center">
-                                <p class="font-bold py-3 text-xl">{{ city.name }}</p>
+                                <p class="py-3 h2">{{ city.name }}</p>
                             </div>
                         </div>
                     </NuxtLink>
