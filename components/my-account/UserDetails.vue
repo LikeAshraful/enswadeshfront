@@ -14,7 +14,7 @@
         alt="Image"
       />
       <p class="h3">{{ $auth.user.name }}</p>
-      <p v-if="profile.dob">DOB {{ profile.dob }}</p>
+      <p v-if="profile.dob">DOB {{ dob }}</p>
       <p v-else></p>
       <p>Blood Group {{ profile.blood_group }}</p>
 
@@ -34,6 +34,7 @@ export default {
     return {
       isLoading: true,
       user: {},
+      dob: this.$auth.user.profile.dob,
     }
   },
   computed: {
