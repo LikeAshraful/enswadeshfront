@@ -3,21 +3,26 @@
     <p class="title">Personal Information</p>
     <div class="p-4 bg-white">
       <label for="name" class="input-label">Name</label>
-      <div class="grid grid-cols-2 gap-4 items-center justify-center mb-4">
-        <div>
-          <input
-            type="text"
-            id="name"
-            class="input-field focus:outline-none"
-            placeholder="Adam"
-          />
+      <form v-on:submit.prevent="onSubmit">
+        <div class="grid grid-cols-2 gap-4 items-center justify-center mb-4">
+          <div>
+            <input
+              type="text"
+              id="name"
+              class="input-field focus:outline-none"
+              placeholder="Adam"
+            />
+          </div>
+          <div>
+            <button
+              type="submit"
+              class="focus:outline-none font-bold text-blue-1"
+            >
+              Change name
+            </button>
+          </div>
         </div>
-        <div>
-          <button class="focus:outline-none font-bold text-blue-1">
-            Change name
-          </button>
-        </div>
-      </div>
+      </form>
       <label for="phone" class="input-label">Mobile phone number</label>
       <div class="grid grid-cols-2 gap-4 items-center justify-center mb-4">
         <div>
@@ -115,7 +120,14 @@
 <script>
 export default {
   data() {
-    return
+    return {
+      test: 'BEFORE SUBMIT',
+    }
+  },
+  methods: {
+    onSubmit() {
+      this.test = 'AFTER SUBMIT'
+    },
   },
 }
 </script>
