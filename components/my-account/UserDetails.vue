@@ -14,7 +14,7 @@
         alt="Image"
       />
       <p class="h3">{{ $auth.user.name }}</p>
-      <p v-if="profile.dob">DOB {{ profile.dob | $moment('YYYY-MM') }}</p>
+      <p v-if="profile.dob">DOB {{ profile.dob }}</p>
       <p v-else></p>
       <p>Blood Group {{ profile.blood_group }}</p>
 
@@ -34,12 +34,10 @@ export default {
     return {
       isLoading: true,
       user: {},
-      dob: this.$auth.user.profile.dob,
     }
   },
   computed: {
     profileimg() {
-      console.log(this.$moment)
       return this.$axios.defaults.baseURL + '/storage/' + this.profile.image
     },
     profile() {
