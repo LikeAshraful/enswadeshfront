@@ -254,7 +254,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$auth)
     this.loadNotifications()
   },
   methods: {
