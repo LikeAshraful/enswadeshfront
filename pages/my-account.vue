@@ -15,32 +15,33 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   middleware: ['auth'],
   data() {
-    return {
-
-    }
+    return {}
   },
-   created(){
-  this.myShopsData()
-   },
+  created() {
+    this.myShopsData()
+  },
   components: {
     UserDetails,
   },
   computed: {
-   accountmenu(){
-     var menuList = [
+    accountmenu() {
+      var menuList = [
         { title: 'My Shopping Friends', to: '/my-account/shoppingfriend' },
         { title: 'Shops', to: '/my-account/shops' },
-        { title: 'My shops (' + this.myshops.length + ')', to: '/my-account/myshops' },
+        {
+          title: 'My shops (' + this.myshops.length + ')',
+          to: '/my-account/myshops',
+        },
         { title: 'My orders', to: '/my-account/myorders' },
         { title: 'My wishlist', to: '/my-account/mywishlist' },
         { title: 'My Reviews', to: '/my-account/myreviews' },
       ]
-      return menuList;
-   },
-    ...mapGetters('shops', ['myshops'])
- },
- methods:{
-   ...mapActions('shops', ['myShopsData'])
- }
+      return menuList
+    },
+    ...mapGetters('shops', ['myshops']),
+  },
+  methods: {
+    ...mapActions('shops', ['myShopsData']),
+  },
 }
 </script>
