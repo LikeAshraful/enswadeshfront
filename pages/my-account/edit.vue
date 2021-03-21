@@ -193,9 +193,9 @@ export default {
 
   mounted() {
     this.user = this.$auth.user
-    this.address = this.$auth.user.profile.address
-    this.blood_group = this.$auth.user.profile.blood_group
-    this.dob = this.$auth.user.profile.dob
+    this.address = this.$auth.user.profile?.address
+    this.blood_group = this.$auth.user.profile?.blood_group
+    this.dob = this.$auth.user.profile?.dob
     console.log(this.blood_group)
   },
 
