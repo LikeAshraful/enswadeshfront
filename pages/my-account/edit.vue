@@ -24,28 +24,6 @@
           </div>
         </div>
       </form>
-      <label for="phone" class="input-label">Mobile phone number</label>
-      <form @submit.prevent="changePhoneNumber">
-        <div class="grid grid-cols-2 gap-4 items-center justify-center mb-4">
-          <div>
-            <input
-              type="text"
-              id="phone_number"
-              v-model="user.phone_number"
-              class="input-field focus:outline-none"
-              placeholder="01XXXXXXXXX"
-            />
-          </div>
-          <div>
-            <button
-              type="submit"
-              class="focus:outline-none font-bold text-blue-1"
-            >
-              Change phone number
-            </button>
-          </div>
-        </div>
-      </form>
       <label for="blood_group" class="input-label">Blood Group</label>
       <form @submit.prevent="changeBloodGroup">
         <div class="grid grid-cols-2 gap-4 items-center justify-center mb-4">
@@ -94,18 +72,52 @@
     <p class="title mt-4">Profile Photo</p>
     <div class="p-4 bg-white">
       <div class="grid grid-cols-2 gap-4 items-center justify-center">
-        <div>
-          <img
-            class="avatar"
-            src="~/assets/img/default_market.png"
-            alt="Image"
-          />
-        </div>
-        <div>
-          <button class="focus:outline-none font-bold text-blue-1">
-            Change photo
-          </button>
-        </div>
+        <form @submit.prevent="changeProfileImage">
+          <div>
+            <div class="mb-2">
+              <div
+                class="border border-dashed border-gray-3 rounded text-center"
+              >
+                <div
+                  v-if="!profileUrl"
+                  class="py-10 flex items-center justify-center"
+                >
+                  <i class="ri-attachment-line"></i>
+                  <label
+                    for="profile_image"
+                    class="font-bold text-blue-1 ml-2 inline cursor-pointer mr-2"
+                    >Add file</label
+                  >
+                  <img
+                    class="avatar"
+                    :src="basePath + '/storage/' + image"
+                    alt="Image"
+                  />
+                </div>
+                <label for="profile_image" class="cursor-pointer">
+                  <div
+                    v-if="profileUrl"
+                    style="padding-bottom: 40%"
+                    class="relative flex flex-row justify-center"
+                  >
+                    <img class="absolute p-2 h-full m-auto" :src="profileUrl" />
+                  </div>
+                </label>
+                <input
+                  class="hidden"
+                  @change="profileFile"
+                  type="file"
+                  id="profile_image"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <button class="focus:outline-none font-bold text-blue-1">
+              Change photo
+            </button>
+          </div>
+        </form>
       </div>
     </div>
     <form @submit.prevent="changeProfile">
@@ -127,6 +139,7 @@
         <input
           type="text"
           id="region"
+          v-model="region"
           class="input-field focus:outline-none mb-4"
           placeholder="Dhaka"
         />
@@ -134,6 +147,7 @@
         <input
           type="text"
           id="city"
+          v-model="city"
           class="input-field focus:outline-none mb-4"
           placeholder="Dhaka"
         />
@@ -141,6 +155,7 @@
         <input
           type="text"
           id="area"
+          v-model="area"
           class="input-field focus:outline-none mb-4"
           placeholder="Shahbag"
         />
@@ -155,51 +170,106 @@
         />
       </div>
     </form>
-    <p class="title">Password</p>
-    <div class="p-4 bg-white">
-      <label for="name" class="input-label">Password</label>
-      <div class="grid grid-cols-2 gap-4 items-center justify-center mb-4">
-        <div>
-          <input
-            type="password"
-            id="name"
-            class="input-field focus:outline-none"
-            placeholder="*****"
-          />
-        </div>
+    <form @submit.prevent="changePassword">
+      <div
+        class="grid grid-cols-2 gap-4 items-center justify-center title mt-4"
+      >
+        <p class="title">Password</p>
         <div>
           <button class="focus:outline-none font-bold text-blue-1">
             Change password
           </button>
         </div>
       </div>
-    </div>
+      <div class="p-4 bg-white">
+        <label for="current_password" class="input-label"
+          >Current Password</label
+        >
+        <div class="grid grid-cols-2 gap-4 items-center justify-center mb-4">
+          <div>
+            <input
+              type="password"
+              id="current_password"
+              v-model="current_password"
+              class="input-field focus:outline-none"
+              placeholder="*****"
+            />
+          </div>
+        </div>
+        <label for="password" class="input-label">Password</label>
+        <div class="grid grid-cols-2 gap-4 items-center justify-center mb-4">
+          <div>
+            <input
+              type="password"
+              id="password"
+              v-model="password"
+              class="input-field focus:outline-none"
+              placeholder="*****"
+            />
+          </div>
+        </div>
+        <label for="password-confirm" class="input-label"
+          >Confirm Password</label
+        >
+        <div class="grid grid-cols-2 gap-4 items-center justify-center mb-4">
+          <div>
+            <input
+              type="password"
+              v-model="confirm_password"
+              id="password_confirm"
+              class="input-field focus:outline-none"
+              placeholder="*****"
+            />
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 </template>
 <script>
 export default {
+  middleware: ['auth'],
   data() {
     return {
+      basePath: this.$axios.defaults.baseURL,
       user: {
         name: '',
-        email: '',
-        phone_number: '',
       },
+      region: '',
+      city: '',
+      area: '',
       address: '',
       blood_group: '',
+      image: '',
+      profile_image: '',
       dob: '',
+      url: null,
+      profileUrl: null,
+
+      password: '',
+      current_password: '',
+      confirm_password: '',
     }
   },
 
   mounted() {
     this.user = this.$auth.user
+    this.region = this.$auth.user.profile?.region
+    this.city = this.$auth.user.profile?.city
+    this.area = this.$auth.user.profile?.area
     this.address = this.$auth.user.profile?.address
     this.blood_group = this.$auth.user.profile?.blood_group
     this.dob = this.$auth.user.profile?.dob
-    console.log(this.blood_group)
+    this.image = this.$auth.user.profile?.image
   },
 
   methods: {
+    profileFile(event) {
+      this.profile_image = event.target.files[0]
+      const file = event.target.files[0]
+      this.profileUrl = URL.createObjectURL(file)
+    },
+
     async changeName() {
       var formData = new FormData()
       formData.append('model', 'User')
@@ -213,23 +283,10 @@ export default {
           this.$toast.error('Oops..!-' + error.response.data.message)
         })
     },
-    async changePhoneNumber() {
-      var formData = new FormData()
-      formData.append('model', 'User')
-      formData.append('phone_number', this.user.phone_number)
-      this.$axios
-        .post('api/user-info-update', formData)
-        .then((response) => {
-          this.$toast.success('User phone number change successfully save !')
-        })
-        .catch((error) => {
-          this.$toast.error('Oops..!-' + error.response.data.message)
-        })
-    },
     async changeBloodGroup() {
       var formData = new FormData()
       formData.append('model', 'Profile')
-      formData.append('blood_group', this.user.blood_group)
+      formData.append('blood_group', this.blood_group)
       this.$axios
         .post('api/user-info-update', formData)
         .then((response) => {
@@ -252,14 +309,45 @@ export default {
           this.$toast.error('Oops..!-' + error.response.data.message)
         })
     },
+    async changeProfileImage() {
+      var formData = new FormData()
+      formData.append('model', 'Profile')
+      formData.append('image', this.profile_image)
+      this.$axios
+        .post('api/user-info-update', formData)
+        .then((response) => {
+          this.$toast.success('User profile image change successfully save !')
+        })
+        .catch((error) => {
+          this.$toast.error('Oops..!-' + error.response.data.message)
+        })
+    },
     async changeProfile() {
       var formData = new FormData()
       formData.append('model', 'Profile')
+      formData.append('region', this.region)
+      formData.append('city', this.city)
+      formData.append('area', this.area)
       formData.append('address', this.address)
       this.$axios
         .post('api/user-info-update', formData)
         .then((response) => {
           this.$toast.success('User address change successfully save !')
+        })
+        .catch((error) => {
+          this.$toast.error('Oops..!-' + error.response.data.message)
+        })
+    },
+    async changePassword() {
+      var formData = new FormData()
+      formData.append('current_password', this.current_password)
+      formData.append('password', this.password)
+      formData.append('confirm_password', this.confirm_password)
+      this.$axios
+        .post('api/profile/security', formData)
+        .then((response) => {
+          this.$auth.logout()
+          this.$toast.success('User password change successfully !')
         })
         .catch((error) => {
           this.$toast.error('Oops..!-' + error.response.data.message)
