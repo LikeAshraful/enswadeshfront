@@ -65,7 +65,7 @@
                   ></i>
                   <div class="dropdown-content font-semibold">
                     <p>Edit</p>
-                    <p @click="moveTrash">Move to trash</p>
+                    <p @click="moveTrash(item)">Move to trash</p>
                     <p @click="notify">Notify to subscribers</p>
                     <p @click="flashSale">Add to flash sales</p>
                     <p @click="addFestival">Add to festival</p>
@@ -77,7 +77,7 @@
         </table>
         <!-- End Product tables -->
 
-        <move-trash v-if="move" v-on:moveTrash="moveTrash()"></move-trash>
+        <move-trash :product="product"  v-if="move" v-on:moveTrash="moveTrash()"></move-trash>
         <notify v-if="notification" v-on:notify="notify()"></notify>
         <flash-sale v-if="flash" v-on:flashSale="flashSale()"></flash-sale>
         <festival v-if="festival" v-on:addFestival="addFestival()"></festival>
@@ -132,6 +132,7 @@ export default {
       notification: false,
       flash: false,
       festival: false,
+      product:'',
     }
   },
 
@@ -142,7 +143,9 @@ export default {
   },
 
   methods: {
-    moveTrash() {
+    moveTrash(product) {
+      this.product = product
+      this.loadProducts();
       this.move = !this.move
     },
     notify() {

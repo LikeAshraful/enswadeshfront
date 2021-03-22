@@ -20,7 +20,7 @@
                   <div class="hover-area absolute top-0 left-0 bottom-0 right-0 bg-gray-2 opacity-50"></div>
                   <div class="hover-area absolute top-0 left-0 bottom-0 right-0 flex flex-col items-center justify-center">
                       <button @click="$router.push({ name: 'shop-control-panel-id', params: {id : item.id}})" class="btn-border focus:outline-none bg-green-3 mb-4">Control Room</button>
-                      <button @click="$router.push({ name: 'shop-slug-id', params: {slug:item.slug, id : item.id}})" class="btn-border focus:outline-none">Visit Shop</button>
+                      <NuxtLink :to="'/shop/self/' + item.id" class="btn-border focus:outline-none">Visit Shop</NuxtLink>
                   </div>
               </div>
           </div>

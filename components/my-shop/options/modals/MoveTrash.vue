@@ -9,8 +9,9 @@
                     <div class="cart-tems-center text-center">
                         <p class="title">Move to trash</p>
                         <div class="p-6">
-                            <p class="mb-6">Are you sure you want to move this product to trash?</p>
-                            <button class="btn-border bg-green-3 focus:outline-none">Confirm</button>
+                            <p class="mb-6">Are you sure you want to move <strong class="text-red-600">{{product.name}}</strong> to trash?</p>
+
+                            <button @click="moveToTrash(product.id)" class="btn-border bg-green-3 focus:outline-none">Confirm</button>
                         </div>
                     </div>
                 </div>
@@ -26,19 +27,36 @@ export default {
             close_modal: 'modal',
         }
     },
-    methods: {
-        closeModal()
-        {
-            if(this.close_modal == 'modal')
-            {
-                this.$emit('moveTrash');
-            }
-        },
-        wait()
-        {
-            this.close_modal = 'wait';
-            setTimeout(() => this.close_modal = 'modal', 500);
-        },
+    props:['product'],
+    mounted() {
+
     },
+    methods: {
+      moveToTrash(id)
+      {
+        this.$axios.get(`/api/products/delete/${id}`)
+          .then(response => {
+              // console.log(response.status);
+              this.$toast.success('Product Successfully Moved To Trashed !');
+              this.closeModal();
+          })
+          .catch(error => {
+              this.$toast.error('Oops..! Something wrong...!');
+          });
+      },
+        closeModal()
+      {
+          if(this.close_modal == 'modal')
+          {
+              this.$emit('moveTrash');
+          }
+      },
+      wait()
+      {
+          this.close_modal = 'wait';
+          setTimeout(() => this.close_modal = 'modal', 500);
+      }
+    },
+
 }
 </script>
