@@ -5,6 +5,9 @@
             <div>
                 <div class="list">
                     <ul>
+                        <li class="list-items hover:bg-green-3">
+                          <NuxtLink :to="'/shop/self/'+this.$route.params.id">View Shop</NuxtLink>
+                        </li>
                         <li @click="viewAnalytics" :class="analytics ? 'bg-green-3':''" class="list-items hover:bg-green-3">View analytics</li>
                         <li @click="growBusiness" :class="grow ? 'bg-green-3':''" class="list-items hover:bg-green-3">Grow your business</li>
                         <li @click="shopMember" :class="member ? 'bg-green-3':''" class="list-items hover:bg-green-3">Shop members</li>
@@ -35,7 +38,7 @@ import Cashbox from '~/components/shop-control-panel-menus/cashbox/Cashbox.vue';
 export default {
     data() {
         return {
-            analytics: true,
+            analytics: false,
             grow: false,
             member: false,
             product: false,
