@@ -1,219 +1,405 @@
 <template>
   <div>
-    <div class="bg-yellow-3">
-      <div class="w-full lg:py-5">
-        <div
-          class="max-w-screen-xl xl:px-10 px-2 m-auto grid grid-cols-3 items-center justify-center gap-2"
-        >
-          <div>
+    <div class="hidden md:contents">
+      <div class="bg-yellow-3">
+        <div class="w-full lg:py-5">
+          <div
+            class="max-w-screen-xl xl:px-10 px-2 m-auto grid grid-cols-3 items-center justify-center gap-2"
+          >
+            <div>
+              <n-link
+                to="/"
+                class="text-4xl"
+                :class="currentRouteName == 'index' ? 'text-orange-1' : ''"
+                >
+                Swadesh
+              </n-link>
+            </div>
+            <div class="flex flex-row items-center justify-center">
+              <div class="border border-gray-4 px-2 py-1 rounded-l-full bg-yellow-3">
+                <select
+                  class="focus:outline-none font-semibold bg-yellow-3"
+                  v-model="selectType"
+                >
+                  <option
+                    v-for="(searchdata, keysearchdata) in searchdatas"
+                    :key="keysearchdata"
+                    :value="searchdata.value"
+                    selected
+                  >
+                    {{ searchdata.title }}
+                  </option>
+                </select>
+              </div>
+              <div
+                style="margin-left: -1px"
+                class="flex items-center border border-gray-4 px-2 py-1 rounded-r-full overflow-hidden bg-yellow-3"
+              >
+                <i class="ri-search-line mr-2"></i>
+                <input
+                  @keyup="mainSearchInHearder"
+                  v-model="keyword"
+                  class="focus:outline-none w-full font-semibold bg-yellow-3"
+                  type="text"
+                  placeholder="Search anything"
+                />
+              </div>
+            </div>
+            <div class="flex flex-row justify-end">
+              <div>
+                <button
+                  class="focus:outline-none text-xl mr-2"
+                  v-tooltip="'Chat'"
+                >
+                  <i class="ri-chat-4-fill"></i>
+                </button>
+                <span class="relative">
+                  <button
+                    class="focus:outline-none text-xl mr-2"
+                    v-tooltip="'Notification'"
+                    @click="showNotifyModal"
+                  >
+                    <i class="ri-notification-2-fill"></i>
+                  </button>
+                  <span
+                    v-if="notify_count > 0"
+                    class="bg-orange-1 text-white absolute notify-tooltip rounded-full"
+                    >{{ notify_count }}</span
+                  >
+                </span>
+
+                <div v-if="$auth.loggedIn" class="dropdown">
+                  <i class="dropbtn hover:text-orange-1 text-xl ri-user-fill"></i>
+                  <div
+                    class="dropdown-content w-64 shadow-lg p-2 border border-gray-3 bg-white"
+                  >
+                    <n-link to="/my-account">
+                      <div
+                        class="p-4 flex flex-row items-center justify-center gap-2 hover:bg-purple-1 delay-100"
+                      >
+                        <img
+                          class="avatar"
+                          src="~/assets/img/default_market.png"
+                          alt="Image"
+                        />
+                        <span class="font-bold">{{ $auth.user.name }}</span>
+                      </div>
+                    </n-link>
+                    <div class="divider"></div>
+                    <div class="p-4">
+                      <n-link
+                        to=""
+                        class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                        >My Shopping Friends</n-link
+                      >
+                      <n-link
+                        to=""
+                        class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                        >Shops</n-link
+                      >
+                      <n-link
+                        to=""
+                        class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                        >My shops</n-link
+                      >
+                      <n-link
+                        to=""
+                        class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                        >My orders</n-link
+                      >
+                      <n-link
+                        to=""
+                        class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                        >My wishlist</n-link
+                      >
+                      <span
+                        @click.prevent="logout"
+                        class="font-semibold hover:bg-green-3 block p-1 delay-100 cursor-pointer"
+                        >Sign out</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  v-if="!$auth.loggedIn"
+                  v-tooltip="'Account'"
+                  @click="showLoginModal"
+                  :class="loginModal || registrationModal ? 'text-orange-1' : ''"
+                  class="focus:outline-none text-xl"
+                >
+                  <i class="ri-user-fill"></i>
+                </button>
+
+                <button
+                  v-tooltip="'Cart'"
+                  @click="showCartModal"
+                  :class="
+                    cart ||
+                    currentRouteName == 'cart' ||
+                    currentRouteName == 'checkout'
+                      ? 'text-orange-1'
+                      : ''
+                  "
+                  class="focus:outline-none text-xl ml-2"
+                >
+                  <i class="ri-shopping-bag-2-fill"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="max-w-screen-xl xl:px-10 px-2 pb-2 m-auto sm:font-bold">
+          <div class="flex flex-row items-center justify-center">
+            <n-link to="">
+              <div class="flex items-center">
+                <i class="ri-wallet-3-fill mr-1"></i>
+                <span>S-Wallet</span>
+              </div>
+            </n-link>
             <n-link
+              to="/earn"
+              class="sm:pl-6 pl-2"
+              :class="currentRouteName == 'earn' ? 'text-orange-1' : ''"
+            >
+              <div class="flex items-center">
+                <i class="ri-hand-coin-line mr-1"></i>
+                <span>Earn</span>
+              </div>
+            </n-link>
+            <n-link to="" class="sm:pl-6 pl-2">
+              <div
+                class="flex items-center"
+                :class="currentRouteName == 'flash-sales' ? 'text-orange-1' : ''"
+              >
+                <i class="ri-flashlight-fill"></i>
+                <span>Flash Sales</span>
+              </div>
+            </n-link>
+            <n-link to="" class="sm:pl-6 pl-2">
+              <div
+                class="flex items-center"
+                :class="currentRouteName == 'festivals' ? 'text-orange-1' : ''"
+              >
+                <img
+                  class="inline sm:h-5 h-4 my-1"
+                  src="~/assets/icons/festivals.png"
+                  alt="Icon"
+                />
+                <span>Festivals</span>
+              </div>
+            </n-link>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="md:hidden bg-yellow-3 p-2 flex flex-wrap items-center">
+      <div class="flex-1 flex justify-between items-center">
+          <n-link
               to="/"
               class="text-4xl"
               :class="currentRouteName == 'index' ? 'text-orange-1' : ''"
-              >Swadesh</n-link
-            >
-          </div>
-          <div class="flex flex-row items-center justify-center">
-            <div class="border border-gray-4 px-2 py-1 rounded-l-full bg-white">
-              <select
-                class="focus:outline-none font-semibold"
-                v-model="selectType"
-                name=""
-                id=""
               >
-                <option
-                  v-for="(searchdata, keysearchdata) in searchdatas"
-                  :key="keysearchdata"
-                  :value="searchdata.value"
-                  selected
-                >
-                  {{ searchdata.title }}
-                </option>
-              </select>
-            </div>
-            <div
-              style="margin-left: -1px"
-              class="flex items-center border border-gray-4 px-2 py-1 rounded-r-full overflow-hidden"
-            >
-              <i class="ri-search-line mr-2"></i>
-              <input
-                @keyup="mainSearchInHearder"
-                v-model="keyword"
-                class="focus:outline-none w-full font-semibold bg-yellow-3"
-                type="text"
-                placeholder="Search anything"
-              />
-            </div>
-          </div>
-          <div class="flex flex-row justify-end">
-            <div>
-              <button
-                class="focus:outline-none text-xl mr-2"
-                v-tooltip="'Chat'"
-              >
-                <i class="ri-chat-4-fill"></i>
-              </button>
-              <span class="relative">
-                <button
-                  class="focus:outline-none text-xl mr-2"
-                  v-tooltip="'Notification'"
-                  @click="showNotifyModal"
-                >
-                  <i class="ri-notification-2-fill"></i>
-                </button>
-                <span
-                  v-if="notify_count > 0"
-                  class="bg-orange-1 text-white absolute notify-tooltip rounded-full"
-                  >{{ notify_count }}</span
-                >
-              </span>
-
-              <div v-if="$auth.loggedIn" class="dropdown">
-                <i class="dropbtn hover:text-orange-1 text-xl ri-user-fill"></i>
-                <div
-                  class="dropdown-content w-64 shadow-lg p-2 border border-gray-3 bg-white"
-                >
-                  <n-link to="/my-account">
-                    <div
-                      class="p-4 flex flex-row items-center justify-center gap-2 hover:bg-purple-1 delay-100"
-                    >
-                      <img
-                        class="avatar"
-                        src="~/assets/img/default_market.png"
-                        alt="Image"
-                      />
-                      <span class="font-bold">{{ $auth.user.name }}</span>
-                    </div>
-                  </n-link>
-                  <div class="divider"></div>
-                  <div class="p-4">
-                    <n-link
-                      to=""
-                      class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
-                      >My Shopping Friends</n-link
-                    >
-                    <n-link
-                      to=""
-                      class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
-                      >Shops</n-link
-                    >
-                    <n-link
-                      to=""
-                      class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
-                      >My shops</n-link
-                    >
-                    <n-link
-                      to=""
-                      class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
-                      >My orders</n-link
-                    >
-                    <n-link
-                      to=""
-                      class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
-                      >My wishlist</n-link
-                    >
-                    <span
-                      @click.prevent="logout"
-                      class="font-semibold hover:bg-green-3 block p-1 delay-100 cursor-pointer"
-                      >Sign out</span
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <button
-                v-if="!$auth.loggedIn"
-                v-tooltip="'Account'"
-                @click="showLoginModal"
-                :class="loginModal || registrationModal ? 'text-orange-1' : ''"
-                class="focus:outline-none text-xl"
-              >
-                <i class="ri-user-fill"></i>
-              </button>
-
-              <button
-                v-tooltip="'Cart'"
-                @click="showCartModal"
-                :class="
-                  cart ||
-                  currentRouteName == 'cart' ||
-                  currentRouteName == 'checkout'
-                    ? 'text-orange-1'
-                    : ''
-                "
-                class="focus:outline-none text-xl ml-2"
-              >
-                <i class="ri-shopping-bag-2-fill"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="max-w-screen-xl xl:px-10 px-2 pb-2 m-auto sm:font-bold">
-        <div class="flex flex-row items-center justify-center">
-          <n-link to="">
-            <div class="flex items-center">
-              <i class="ri-wallet-3-fill mr-1"></i>
-              <span>S-Wallet</span>
-            </div>
+              Swadesh
           </n-link>
-          <n-link
-            to="/earn"
-            class="sm:pl-6 pl-2"
-            :class="currentRouteName == 'earn' ? 'text-orange-1' : ''"
+      </div>
+      
+
+
+
+
+      <div class="flex flex-row justify-end">
+        <div>
+          <button
+            class="focus:outline-none text-xl mr-2"
+            v-tooltip="'Chat'"
           >
-            <div class="flex items-center">
-              <i class="ri-hand-coin-line mr-1"></i>
-              <span>Earn</span>
-            </div>
-          </n-link>
-          <n-link to="" class="sm:pl-6 pl-2">
-            <div
-              class="flex items-center"
-              :class="currentRouteName == 'flash-sales' ? 'text-orange-1' : ''"
+            <i class="ri-chat-4-fill"></i>
+          </button>
+          <span class="relative">
+            <button
+              class="focus:outline-none text-xl mr-2"
+              v-tooltip="'Notification'"
+              @click="showNotifyModal"
             >
-              <i class="ri-flashlight-fill"></i>
-              <span>Flash Sales</span>
-            </div>
-          </n-link>
-          <n-link to="" class="sm:pl-6 pl-2">
-            <div
-              class="flex items-center"
-              :class="currentRouteName == 'festivals' ? 'text-orange-1' : ''"
+              <i class="ri-notification-2-fill"></i>
+            </button>
+            <span
+              v-if="notify_count > 0"
+              class="bg-orange-1 text-white absolute notify-tooltip rounded-full"
+              >{{ notify_count }}</span
             >
-              <img
-                class="inline sm:h-5 h-4 my-1"
-                src="~/assets/icons/festivals.png"
-                alt="Icon"
-              />
-              <span>Festivals</span>
+          </span>
+
+          <div v-if="$auth.loggedIn" class="dropdown">
+            <i class="dropbtn hover:text-orange-1 text-xl ri-user-fill"></i>
+            <div
+              class="dropdown-content w-64 shadow-lg p-2 border border-gray-3 bg-white"
+            >
+              <n-link to="/my-account">
+                <div
+                  class="p-4 flex flex-row items-center justify-center gap-2 hover:bg-purple-1 delay-100"
+                >
+                  <img
+                    class="avatar"
+                    src="~/assets/img/default_market.png"
+                    alt="Image"
+                  />
+                  <span class="font-bold">{{ $auth.user.name }}</span>
+                </div>
+              </n-link>
+              <div class="divider"></div>
+              <div class="p-4">
+                <n-link
+                  to=""
+                  class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                  >My Shopping Friends</n-link
+                >
+                <n-link
+                  to=""
+                  class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                  >Shops</n-link
+                >
+                <n-link
+                  to=""
+                  class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                  >My shops</n-link
+                >
+                <n-link
+                  to=""
+                  class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                  >My orders</n-link
+                >
+                <n-link
+                  to=""
+                  class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                  >My wishlist</n-link
+                >
+                <span
+                  @click.prevent="logout"
+                  class="font-semibold hover:bg-green-3 block p-1 delay-100 cursor-pointer"
+                  >Sign out</span
+                >
+              </div>
             </div>
-          </n-link>
+          </div>
+
+          <button
+            v-if="!$auth.loggedIn"
+            v-tooltip="'Account'"
+            @click="showLoginModal"
+            :class="loginModal || registrationModal ? 'text-orange-1' : ''"
+            class="focus:outline-none text-xl"
+          >
+            <i class="ri-user-fill"></i>
+          </button>
+
+          <button
+            v-tooltip="'Cart'"
+            @click="showCartModal"
+            :class="
+              cart ||
+              currentRouteName == 'cart' ||
+              currentRouteName == 'checkout'
+                ? 'text-orange-1'
+                : ''
+            "
+            class="focus:outline-none text-xl ml-2"
+          >
+            <i class="ri-shopping-bag-2-fill"></i>
+          </button>
+
+          <span v-if="!modal" @click="openModal" class="cursor-pointer md:hidden">
+              <i class="font-bold text-xl ml-2 ri-menu-line"></i>
+          </span>
         </div>
       </div>
 
-      <!-- Cart Modal -->
-      <cart v-if="cart" v-on:closeCart="closeCartModal()"></cart>
-      <!-- Notification Modal  -->
-      <notification
-        v-if="notify"
-        v-on:closeNotify="closeNotifyModal()"
-      ></notification>
 
-      <!-- Login Modal -->
-      <login
-        v-if="loginModal"
-        v-on:closeLoginModal="closeLoginModal()"
-        v-on:openRegistrationModal="openRegistrationModal()"
-      ></login>
 
-      <!-- Registration Modal -->
-      <registration
-        v-if="registrationModal"
-        v-on:closeRegistrationModal="closeRegistrationModal()"
-        v-on:openLoginModal="openLoginModal()"
-      ></registration>
+
+      <div v-if="modal">
+          <div @click="closeModal" class="fixed inset-0 z-50">
+              <div class="flex flex-row">
+                  <div class="focus-in max-w-screen-sm shadow-lg bg-green-4 h-screen overflow-auto w-3/4 p-4">
+                      <ul class="font-bold text-gray-5">
+                          <li class="mt-3 px-2 py-1">
+                            <div @click="wait" class="flex flex-row items-center justify-center text-green-4">
+                              <div class="border border-gray-4 px-2 py-1 rounded-l-full bg-white">
+                                <select
+                                  class="focus:outline-none font-semibold bg-white"
+                                  v-model="selectType"
+                                >
+                                  <option
+                                    v-for="(searchdata, keysearchdata) in searchdatas"
+                                    :key="keysearchdata"
+                                    :value="searchdata.value"
+                                    selected
+                                  >
+                                    {{ searchdata.title }}
+                                  </option>
+                                </select>
+                              </div>
+                              <div
+                                style="margin-left: -1px"
+                                class="flex items-center border border-gray-4 px-2 py-1 rounded-r-full overflow-hidden bg-white"
+                              >
+                                <i class="ri-search-line mr-2"></i>
+                                <input
+                                  @keyup="mainSearchInHearder"
+                                  v-model="keyword"
+                                  class="focus:outline-none w-full font-semibold bg-white"
+                                  type="text"
+                                  placeholder="Search anything"
+                                />
+                              </div>
+                            </div>
+                          </li>
+                          <li class="mt-3 px-2 py-1" v-for="(menu, i) in menus" :key="i">
+                              <n-link class="block" :to="menu.url">{{ menu.name }}</n-link>
+                          </li>
+                          <li
+                            v-if="$auth.loggedIn"
+                            @click.prevent="logout"
+                            class="mt-3 px-2 py-1"
+                            >
+                            Sign Out
+                          </li>
+                      </ul>
+                  </div>
+                  <div @click="closeModal" class="font-bold text-3xl text-gray-5">
+                      <button class="focus:outline-none"><i class="ri-close-line"></i></button>
+                  </div>
+              </div>
+          </div>
+          <div @click="closeModal" class="opacity-50 fixed inset-0 z-40 bg-green-4"></div>
+      </div>
     </div>
+
+    <!-- Cart Modal -->
+    <cart 
+      v-if="cart" 
+      v-on:closeCart="closeCartModal()"
+    ></cart>
+    <!-- Notification Modal  -->
+    <notification
+      v-if="notify"
+      v-on:closeNotify="closeNotifyModal()"
+    ></notification>
+    <!-- Login Modal -->
+    <login
+      v-if="loginModal"
+      v-on:closeLoginModal="closeLoginModal()"
+      v-on:openRegistrationModal="openRegistrationModal()"
+    ></login>
+    <!-- Registration Modal -->
+    <registration
+      v-if="registrationModal"
+      v-on:closeRegistrationModal="closeRegistrationModal()"
+      v-on:openLoginModal="openLoginModal()"
+    ></registration>
+
   </div>
 </template>
 
@@ -251,12 +437,33 @@ export default {
       selectType: 0,
       keyword: '',
       notify_count: 0,
+
+      modal:false,
+      close_modal: 'closeModal',
+      menus: [
+          {name: 'S-Wallet', url: ''},
+          {name: 'Earn', url: '/earn'},
+          {name: 'Flash Sales', url: ''},
+          {name: 'Festivals', url: ''},
+      ],
     }
   },
   mounted() {
     this.loadNotifications()
   },
   methods: {
+    openModal(){
+        this.modal = true;
+    },
+    closeModal(){
+        if(this.close_modal == 'closeModal'){
+            this.modal = false;
+        }
+    },
+    wait(){
+        this.close_modal = 'wait';
+        setTimeout(() => this.close_modal = 'closeModal', 500);
+    },
     showCartModal() {
       this.cart = !this.cart
     },
