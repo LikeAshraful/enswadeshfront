@@ -1,7 +1,7 @@
-export const state = {
+export const state = () => ({
   token: process.server ? '' : !!localStorage.getItem("token"),
   user: process.server ? '' : !!JSON.parse(localStorage.getItem("user")),
-};
+})
 
 export const getters = {
   token: (state) => state.token,

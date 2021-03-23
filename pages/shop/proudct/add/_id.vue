@@ -69,6 +69,7 @@
               <div class="grid grid-cols-5 gap-4">
                 <div class="col-span-6">
                   <div class="search-conatiner">
+                    <input type="hidden" v-model="brand_id" />
                     <input
                       type="text"
                       placeholder="Type your query"
@@ -124,6 +125,7 @@
               <div class="grid grid-cols-5 gap-4">
                 <div class="col-span-6">
                   <div class="search-conatiner">
+                    <input type="hidden" v-model="category_id" />
                     <input
                       type="text"
                       placeholder="Type your query"
@@ -175,17 +177,6 @@
               v-if="modelcategory"
               v-on:closeModal="closeModal()"
             ></category>
-
-            <div v-if="simple_format" class="mb-2">
-              <label class="input-label" for="quantity">Quantity</label>
-              <input
-                class="input-field focus:outline-none"
-                id="quantity"
-                type="number"
-                v-model="quantity"
-                placeholder="Quantity"
-              />
-            </div>
           </div>
         </div>
         <div v-if="simple_format" class="bg-white rounded-lg mb-6">
@@ -280,6 +271,16 @@
                 v-model="disCountPrice"
               />
             </div>
+            <div v-if="simple_format" class="mb-2">
+              <label class="input-label" for="quantity">Quantity</label>
+              <input
+                class="input-field focus:outline-none"
+                id="quantity"
+                type="number"
+                v-model="stocks"
+                placeholder="Quantity"
+              />
+            </div>
             <div class="mb-2">
               <label class="input-label" for="offer">Offer</label>
               <input
@@ -292,78 +293,7 @@
             </div>
           </div>
         </div>
-        <div v-if="make_a_list" class="bg-white rounded-lg mb-6">
-          <p class="title">Make a list</p>
-          <div class="p-2">
-            <table class="w-full">
-              <thead>
-                <tr class="font-bold">
-                  <td>Product name</td>
-                  <td>Rate</td>
-                  <td>Per Unit</td>
-                  <td>Discount</td>
-                  <td>Offer</td>
-                  <td></td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(list, i) in lists" :key="i">
-                  <td>
-                    <input
-                      type="text"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="Name"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="0"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="0"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="0"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="0"
-                    />
-                  </td>
-                  <td>
-                    <button
-                      class="focus:outline-none text-orange-1"
-                      v-if="i == lists - 1 && i != 0"
-                      @click="removeList"
-                    >
-                      <i class="ri-close-circle-fill"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <button
-              @click="addList"
-              class="font-bold text-orange-1 focus:outline-none"
-            >
-              Add another
-            </button>
-          </div>
-        </div>
-        <div v-if="weight_wise" class="bg-white rounded-lg mb-6">
+        <!-- <div v-if="weight_wise" class="bg-white rounded-lg mb-6">
           <p class="title">Weight Wise Price Information</p>
           <div class="p-2">
             <table class="w-full">
@@ -417,8 +347,8 @@
               Add another
             </button>
           </div>
-        </div>
-        <div v-if="size_wise" class="bg-white rounded-lg mb-6">
+        </div> -->
+        <!-- <div v-if="size_wise" class="bg-white rounded-lg mb-6">
           <p class="title">Size Wise Price Information</p>
           <div class="p-2">
             <table class="w-full">
@@ -472,7 +402,7 @@
               Add another
             </button>
           </div>
-        </div>
+        </div> -->
         <div class="bg-white rounded-lg mb-6">
           <p class="title">Services</p>
           <div class="p-2">
@@ -524,7 +454,7 @@
                 class="border border-dashed border-gray-3 rounded text-center"
               >
                 <div
-                  v-if="!thumbnail"
+                  v-if="!thumbnail_images"
                   class="py-10 flex items-center justify-center"
                 >
                   <i class="ri-attachment-line"></i>
@@ -537,7 +467,7 @@
                 </div>
                 <label for="thumbnail" class="cursor-pointer">
                   <div
-                    v-if="thumbnail"
+                    v-if="thumbnail_images"
                     style="padding-bottom: 40%"
                     class="relative flex flex-row justify-center"
                   >
@@ -550,9 +480,8 @@
                 <input
                   class="hidden"
                   type="file"
-                  multiple
+                  @change="thumbnailFile"
                   id="thumbnail"
-                  @change="thumbnailFiles"
                 />
               </div>
             </div>
@@ -600,6 +529,7 @@
                 class="input-field focus:outline-none"
                 name=""
                 id="description"
+                v-model="description"
                 rows="4"
                 placeholder="Write here product description"
               ></textarea>
@@ -698,14 +628,12 @@
           <p class="title">Delivery</p>
           <div class="p-2">
             <div class="mb-2">
-              <label class="input-label" for="description"
-                >Delivery offer</label
-              >
+              <label class="input-label" for="delivery">Delivery offer</label>
               <div class="grid grid-cols-5 gap-8">
                 <div class="col-span-4">
                   <input
                     class="input-field focus:outline-none"
-                    id="prices"
+                    id="delivery"
                     type="text"
                     placeholder="Write here"
                   />
@@ -751,7 +679,6 @@ export default {
         { title: 'Simple format', value: 'simple_format', item: true },
         { title: 'Size wise', value: ' size_wise', item: false },
         { title: 'Weight wise', value: 'weight_wise', item: false },
-        { title: 'Make a list', value: 'make_a_list', item: false },
       ],
       ref: '',
       isLoading: false,
@@ -768,7 +695,6 @@ export default {
       user_id: '',
       item: {},
       category_id: '',
-      thumbnail: '',
       can_bargain: false,
       product_type: '',
       return_policy: '',
@@ -789,7 +715,8 @@ export default {
       sku: '',
       quantity: '',
       alert: '',
-      thumbnail_images: '',
+      thumbnail: '',
+      thumbnail_images: null,
 
       url: null,
       bar: '',
@@ -812,17 +739,6 @@ export default {
         { title: 'My Shop', url: '/my-shop' },
         { title: 'Shop name goes to here', url: '' },
       ],
-
-      // currency: [
-      //   {
-      //     symbol: 'BDT',
-      //     name: 'BDT',
-      //   },
-      //   {
-      //     name: 'USD',
-      //     symbol: 'USD',
-      //   },
-      // ],
     }
   },
   created() {
@@ -860,9 +776,10 @@ export default {
         )
       }
     },
-    thumbnailFiles(e) {
-      this.thumbnail = e.target.files[0]
-      this.thumbnail_images = URL.createObjectURL(e.target.files[0])
+    thumbnailFile(event) {
+      console.log(event.target.files[0])
+      this.thumbnail = event.target.files[0]
+      this.thumbnail_images = URL.createObjectURL(event.target.files[0])
     },
     addFeature() {
       this.features.push({
@@ -898,21 +815,31 @@ export default {
       } else {
         formData.append('product_type', 'simple')
       }
-      formData.append('title', this.name)
-      formData.append('name', this.title)
-      formData.append('slug', this.slug)
+      formData.append('name', this.name)
       formData.append('shop_id', this.$route.params.id)
       formData.append('user_id', this.$auth.user.id)
       formData.append('brand_id', this.brand_id)
-      formData.append('can_bargain', this.can_bargain)
-      formData.append('total_stocks', this.total_stocks)
-      formData.append('stocks', this.stocks)
       formData.append('category_id', this.category_id)
+      formData.append('can_bargain', this.can_bargain)
+      formData.append('sku', this.sku)
+      formData.append('price', this.price)
+      formData.append('currency_type', this.currency_type)
+      formData.append('discount', this.discount)
+      formData.append('discount_type', this.discount_type)
+      formData.append('stocks', this.stocks)
+      formData.append('return_policy', this.return_policy)
+      formData.append('warranty', this.warranty)
+      formData.append('guarantee', this.guarantee)
+      formData.append('description', this.description)
       formData.append('thumbnail', this.thumbnail)
-      formData.append('feature[]', this.features)
+      for (let i = 0; i < this.features.length; i++) {
+        for (let key of Object.keys(this.features[i])) {
+          console.log(this.features[i][key])
+          formData.append(`features[${i}][${key}]`, this.features[i][key])
+        }
+      }
       for (const i of Object.keys(this.gallery_images)) {
         formData.append('images[]', this.gallery_images[i])
-        console.log(this.gallery_images[i])
       }
       this.$store.dispatch('products/addProducts', formData)
     },
@@ -969,6 +896,7 @@ export default {
 
     selectResult(brand) {
       this.search = brand.name
+      this.brand_id = brand.id
     },
     brandtoggleclose() {
       this.brandtoggle = false
@@ -991,8 +919,9 @@ export default {
     categoriestoggleopen() {
       this.categoriestoggle = true
     },
-    selectResultcategories(brand) {
-      this.categoriessearch = brand.name
+    selectResultcategories(category) {
+      this.categoriessearch = category.name
+      this.category_id = category.id
     },
     cetegoryModal() {
       this.modelcategory = true
