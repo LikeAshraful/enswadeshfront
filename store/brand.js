@@ -14,17 +14,18 @@ export const getters = {
 export const actions = {
   async BrandData({ commit }) {
     await this.$axios.get('/api/brands').then((response) => {
-      commit('SET_CATEGORIES', response.data.data)
-
+      commit('SET_BRAND', response.data.data)
     })
   },
-
-
+  async brandCreated({ commit }, data) {
+    let response = await this.$axios.post('/api/brands/create', data)
+    commit('CREATED_BRAND', response.data.data)
+  },
 }
 
 export const mutations = {
-  SET_CATEGORIES(state, brands) {
+  SET_BRAND(state, brands) {
     state.brands = brands
   },
- 
+  CREATED_BRAND(state) {},
 }
