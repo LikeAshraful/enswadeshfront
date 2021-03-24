@@ -179,7 +179,7 @@
             ></category>
           </div>
         </div>
-        <div v-if="simple_format" class="bg-white rounded-lg mb-6">
+        <!-- <div v-if="simple_format" class="bg-white rounded-lg mb-6">
           <p class="title">Price</p>
           <div class="p-2">
             <div class="mb-2">
@@ -292,31 +292,62 @@
               />
             </div>
           </div>
-        </div>
-        <!-- <div v-if="weight_wise" class="bg-white rounded-lg mb-6">
+        </div> -->
+        <div v-if="weight_wise" class="bg-white rounded-lg mb-6">
           <p class="title">Weight Wise Price Information</p>
           <div class="p-2">
             <table class="w-full">
               <thead>
                 <tr class="font-bold">
                   <td>Weight</td>
+                  <td>Price</td>
+                  <td>Discount</td>
+                  <td>Type</td>
                   <td>Quantity</td>
-                  <td>Price/Unit</td>
+                  <td>Offer</td>
                   <td></td>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(weight, i) in weights" :key="i">
+                <tr v-for="(wei, i) in weights" :key="i">
                   <td>
                     <input
                       type="text"
+                      v-model="wei.weight"
                       class="input-field focus:outline-none my-1"
                       placeholder="(kg, litre, cm, mm)"
                     />
                   </td>
                   <td>
                     <input
-                      type="text"
+                      type="number"
+                      v-model="wei.price"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="1"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      v-model="wei.discount"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="0"
+                    />
+                  </td>
+                  <td>
+                    <select
+                      class="input-field focus:outline-none my-1"
+                      id="discount_type"
+                      v-model="wei.discount_type"
+                    >
+                      <option value="Percent">Percent(%)</option>
+                      <option value="Number">Number(1)</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      v-model="wei.stocks"
                       class="input-field focus:outline-none my-1"
                       placeholder="1"
                     />
@@ -324,14 +355,15 @@
                   <td>
                     <input
                       type="text"
+                      v-model="wei.offer"
                       class="input-field focus:outline-none my-1"
-                      placeholder="0"
+                      placeholder="Offer"
                     />
                   </td>
                   <td>
                     <button
                       class="focus:outline-none text-orange-1"
-                      v-if="i == weights - 1 && i != 0"
+                      v-if="weights.length - 1 && i != 0"
                       @click="removeWeight"
                     >
                       <i class="ri-close-circle-fill"></i>
@@ -347,31 +379,62 @@
               Add another
             </button>
           </div>
-        </div> -->
-        <!-- <div v-if="size_wise" class="bg-white rounded-lg mb-6">
+        </div>
+        <div v-if="size_wise" class="bg-white rounded-lg mb-6">
           <p class="title">Size Wise Price Information</p>
           <div class="p-2">
             <table class="w-full">
               <thead>
                 <tr class="font-bold">
                   <td>Size</td>
+                  <td>Price</td>
+                  <td>Discount</td>
+                  <td>Type</td>
                   <td>Quantity</td>
-                  <td>Price/Unit</td>
+                  <td>Offer</td>
                   <td></td>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(size, i) in sizes" :key="i">
+                <tr v-for="(siz, i) in sizes" :key="i">
                   <td>
                     <input
                       type="text"
+                      v-model="siz.size"
                       class="input-field focus:outline-none my-1"
                       placeholder="(S/M/L/4/5/6)"
                     />
                   </td>
                   <td>
                     <input
-                      type="text"
+                      type="number"
+                      v-model="siz.price"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="1"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      v-model="siz.discount"
+                      class="input-field focus:outline-none my-1"
+                      placeholder="0"
+                    />
+                  </td>
+                  <td>
+                    <select
+                      class="input-field focus:outline-none my-1"
+                      id="discount_type"
+                      v-model="siz.discount_type"
+                    >
+                      <option value="Percent">Percent(%)</option>
+                      <option value="Number">Number(1)</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      v-model="siz.stocks"
                       class="input-field focus:outline-none my-1"
                       placeholder="1"
                     />
@@ -379,8 +442,9 @@
                   <td>
                     <input
                       type="text"
+                      v-model="siz.offer"
                       class="input-field focus:outline-none my-1"
-                      placeholder="0"
+                      placeholder="Offer"
                     />
                   </td>
                   <td>
@@ -402,7 +466,7 @@
               Add another
             </button>
           </div>
-        </div> -->
+        </div>
         <div class="bg-white rounded-lg mb-6">
           <p class="title">Services</p>
           <div class="p-2">
@@ -594,21 +658,13 @@
               </div>
             </div>
             <div class="mb-4">
-              <label class="input-label">Video description</label>
-              <div
-                class="border border-dashed border-gray-3 rounded text-center"
-              >
-                <div class="py-3 flex items-center justify-center">
-                  <i class="ri-attachment-line"></i>
-                  <label
-                    for="video"
-                    class="font-bold text-blue-1 ml-2 inline cursor-pointer mr-2"
-                    >Add file</label
-                  >
-                  <p class="inline">or drop video files here</p>
-                </div>
-                <input class="hidden" type="file" id="video" />
-              </div>
+              <label class="input-label" for="video">Video description</label>
+              <input
+                class="input-field focus:outline-none"
+                v-model="video_url"
+                type="url"
+                id="video"
+              />
             </div>
             <div class="mb-2">
               <label class="input-label" for="">Bargain</label> <br />
@@ -717,7 +773,7 @@ export default {
       alert: '',
       thumbnail: '',
       thumbnail_images: null,
-
+      video_url: '',
       url: null,
       bar: '',
 
@@ -726,8 +782,26 @@ export default {
       weight_wise: false,
       make_a_list: false,
       features: [{ title: '', feature: '' }],
-      sizes: [{ title: '', feature: '' }],
-      weights: 1,
+      sizes: [
+        {
+          size: '',
+          price: '',
+          discount: '',
+          discount_type: '',
+          stocks: '',
+          offer: '',
+        },
+      ],
+      weights: [
+        {
+          weight: '',
+          price: '',
+          discount: '',
+          discount_type: '',
+          stocks: '',
+          offer: '',
+        },
+      ],
       lists: 1,
       gallery_images: [],
       gallery_images_url: [],
@@ -792,13 +866,32 @@ export default {
     },
     addSize() {
       this.sizes.push({
-        title: '',
-        feature: '',
+        size: '',
+        price: '',
+        discount: '',
+        discount_type: '',
+        stocks: '',
+        offer: '',
       })
     },
-    removeSize(size) {
-      let editedIndex = this.sizes.indexOf(size)
+    removeSize() {
+      let editedIndex = this.sizes.indexOf()
       this.sizes.splice(editedIndex, 1)
+    },
+
+    addWeight() {
+      this.weights.push({
+        weight: '',
+        price: '',
+        discount: '',
+        discount_type: '',
+        stocks: '',
+        offer: '',
+      })
+    },
+    removeWeight() {
+      let delIndex = this.weights.indexOf()
+      this.weights.splice(delIndex, 1)
     },
 
     addProducts() {
@@ -831,24 +924,31 @@ export default {
       formData.append('guarantee', this.guarantee)
       formData.append('description', this.description)
       formData.append('thumbnail', this.thumbnail)
+      for (const i of Object.keys(this.gallery_images)) {
+        formData.append('images[]', this.gallery_images[i])
+      }
+
+      // features
       for (let i = 0; i < this.features.length; i++) {
         for (let key of Object.keys(this.features[i])) {
           formData.append(`features[${i}][${key}]`, this.features[i][key])
         }
       }
-      for (const i of Object.keys(this.gallery_images)) {
-        formData.append('images[]', this.gallery_images[i])
+      // sizes
+      for (let i = 0; i < this.sizes.length; i++) {
+        for (let key of Object.keys(this.sizes[i])) {
+          formData.append(`sizes[${i}][${key}]`, this.sizes[i][key])
+        }
       }
-      this.$store.dispatch('products/addProducts', formData)
-    },
 
-    addWeight() {
-      this.weights += 1
-    },
-    removeWeight() {
-      if (this.weights > 1) {
-        this.weights -= 1
+      // weights
+      for (let i = 0; i < this.weights.length; i++) {
+        for (let key of Object.keys(this.weights[i])) {
+          formData.append(`weights[${i}][${key}]`, this.weights[i][key])
+        }
       }
+
+      this.$store.dispatch('products/addProducts', formData)
     },
 
     addList() {
