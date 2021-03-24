@@ -690,6 +690,7 @@
                   <input
                     class="input-field focus:outline-none"
                     id="delivery"
+                    v-model="delivery_offer"
                     type="text"
                     placeholder="Write here"
                   />
@@ -774,6 +775,7 @@ export default {
       thumbnail: '',
       thumbnail_images: null,
       video_url: '',
+      delivery_offer: '',
       url: null,
       bar: '',
 
@@ -924,6 +926,8 @@ export default {
       formData.append('guarantee', this.guarantee)
       formData.append('description', this.description)
       formData.append('thumbnail', this.thumbnail)
+      formData.append('video_url', this.video_url)
+      formData.append('delivery_offer', this.delivery_offer)
       for (const i of Object.keys(this.gallery_images)) {
         formData.append('images[]', this.gallery_images[i])
       }
