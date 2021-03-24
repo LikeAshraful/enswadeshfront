@@ -2,24 +2,22 @@
   <div>
     <!-- Shops -->
     <div class="">
-      <div class="flex justify-between font-bold mb-4">
-        <div class="left">
+      <div class="grid md:grid-cols-2 mb-4">
+        <div class="">
           <p class="h2">{{ floor }}</p>
         </div>
-        <div class="right flex justify-between gap-4">
-          <div class="flex flex-row items-center justify-center">
-            <div
-              class="search"
-            >
-              <i class="search-icon ri-search-line mr-2"></i>
-              <input
-                @keyup="searchShopByMarket"
-                v-model="keyword"
-                class="search-input focus:outline-none"
-                type="text"
-                placeholder="Search shops"
-              />
-            </div>
+        <div class="flex md:justify-end justify-between gap-4">
+          <div
+            class="search"
+          >
+            <i class="search-icon ri-search-line mr-2"></i>
+            <input
+              @keyup="searchShopByMarket"
+              v-model="keyword"
+              class="search-input focus:outline-none"
+              type="text"
+              placeholder="Search shops"
+            />
           </div>
           <button
             type="button"
@@ -42,7 +40,7 @@
       </div>
       <div
         v-if="shopss.length === 0"
-        class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-3 py-8"
+        class="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-3 md:py-8 py-3"
       >
         <div v-for="(shop, i) in shops" :key="i" class="">
           <div @click="setShop(shop.name, shop.slug, shop.id)">

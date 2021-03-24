@@ -5,7 +5,7 @@
 
         <!-- All Cities -->
         <div class="h-screen" style="background-size: cover;" :style="{ backgroundImage: `url(${backgroundImagePath})` }">
-            <p class="h1">Where do you want to go ?</p>
+            <p class="md:h1 h2">Where do you want to go ?</p>
             <div class="grid lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
                 <loader v-if="isLoading"></loader>
                 <template v-else>
@@ -16,7 +16,7 @@
                                 <img class="h-24 m-auto" src="~/assets/img/building.png" alt="Image">
                             </div>
                             <div class="flex flex-wrap items-center justify-center">
-                                <p class="py-3 h2">{{ city.name }}</p>
+                                <p class="py-3 md:h2 h3">{{ city.name }}</p>
                             </div>
                         </div>
                     </NuxtLink>
@@ -59,7 +59,7 @@ export default {
           '/api/cities'
         ).then((res) => {
           this.cities = res.data;
-          console.log(this.cities);
+          // console.log(this.cities);
           this.isLoading = false;
         })
       },

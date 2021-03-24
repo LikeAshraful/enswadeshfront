@@ -1,9 +1,11 @@
 <template>
     <div>
-        <div class="flex">
-            <img class="h-40 w-2/5 rounded-l-lg" :src="market.icon ? imagepath + '/' + market.icon : require(`~/assets/img/default_market@2x.png`)" alt="Image">
-            <div class="pl-3 w-full">
-                <p class="h2 lg:text-2xl">{{market.name}}</p>
+        <div class="grid md:grid-cols-2">
+            <div class="relative pb-1/2">
+                <img class="absolute object-cover w-full h-full rounded-l-lg" :src="market.icon ? imagepath + '/' + market.icon : require(`~/assets/img/default_market@2x.png`)" alt="Image">
+            </div>
+            <div class="md:pl-3 w-full">
+                <p class="lg:h2 h3">{{market.name}}</p>
                 <div class="flex justify-around gap-2 text-center font-semibold mt-4">
                     <div class="bg-white rounded-md w-full p-2">
                         <p>{{market.shop_count}}</p>

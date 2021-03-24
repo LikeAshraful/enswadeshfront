@@ -4,13 +4,13 @@
         <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
         <!-- Markets Section -->
         <div class="min-h-screen">
-            <div class="grid lg:grid-cols-4 sm:grid-cols-3 gap-4 my-5">
+            <div class="grid lg:grid-cols-4 md:grid-cols-3 gap-4 py-5">
                 <!-- Filter -->
                 <div>
                     <data-filter :filtersData="filtersData" :filterTitle="filterTitle" v-on:filterByData="loadMarket"></data-filter>
                 </div>
 
-                <div class="lg:col-span-3 sm:col-span-2">
+                <div class="lg:col-span-3 md:col-span-2">
                     <!-- Top Markets -->
                     <top-markets :topMarkets="topMarkets" :isLoading="isLoading"></top-markets>
                     <!-- All Markets -->
