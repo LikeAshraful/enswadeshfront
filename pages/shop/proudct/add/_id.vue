@@ -777,7 +777,6 @@ export default {
       }
     },
     thumbnailFile(event) {
-      console.log(event.target.files[0])
       this.thumbnail = event.target.files[0]
       this.thumbnail_images = URL.createObjectURL(event.target.files[0])
     },
@@ -834,7 +833,6 @@ export default {
       formData.append('thumbnail', this.thumbnail)
       for (let i = 0; i < this.features.length; i++) {
         for (let key of Object.keys(this.features[i])) {
-          console.log(this.features[i][key])
           formData.append(`features[${i}][${key}]`, this.features[i][key])
         }
       }
@@ -956,7 +954,8 @@ export default {
 
     disCountPrice() {
       if (this.discount_type === 'Percent') {
-        return this.price - (this.price * this.discount) / 100
+        let dis = this.price - (this.price * this.discount) / 100
+        return dis.toFixed(2)
       } else {
         return this.price - this.discount
       }
