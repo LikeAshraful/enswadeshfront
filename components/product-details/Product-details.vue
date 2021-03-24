@@ -5,12 +5,12 @@
                 <div class="grid sm:grid-cols-2 gap-6 p-6">
                     <div class="">
                         <div class="relative pb-full">
-                            <img class="absolute h-full w-full object-cover" src="~/assets/img/products/img-6.png" alt="Image">
+                            <img class="absolute h-full w-full object-cover"  :src="product.thumbnail ? basePath + '/storage/' + product.thumbnail : require(`~/assets/img/products/default.png`)" alt="Image">
                         </div>
 
                          <div class="grid grid-cols-4 gap-2 mt-2">
-                            <div class="relative pb-3/4" v-for="(photo, i) in photos" :key="i">
-                                <img class="absolute h-full w-full object-cover" :src="require(`~/assets/img/products/${photo}.png`)" alt="">
+                            <div class="relative pb-3/4" v-for="(photo, i) in product.image" :key="i">
+                                <img class="absolute h-full w-full object-cover" :src="photo.src ? basePath + '/storage/' + photo.src : require(`~/assets/img/products/default.png`)" alt="">
                             </div>
                         </div>
                     </div>
@@ -31,37 +31,44 @@
                             <tbody>
                                 <tr>
                                     <td>Price:</td>
-                                    <td class="font-semibold"><span>1000 BDT</span> <span class="text-gray-4 ml-4 line-through">1195 BDT</span></td>
+                                    <td class="font-semibold">
+                                      <span>{{ product.discount_price }} {{product.currency_type}}</span>
+                                      <span v-if="product.discount" class="text-gray-4 ml-4 line-through">{{product.price}} {{product.currency_type}}</span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Stock:</td>
-                                    <td class="font-semibold">Available</td>
+                                    <td v-if="product.stocks > 0" class="font-semibold">Available</td>
+                                    <td v-else class="text-red-500 font-semibold">Unavailable</td>
                                 </tr>
                                 <tr>
                                     <td>Brand:</td>
-                                    <td class="font-semibold">zxy</td>
+                                    <td class="font-semibold">{{ product.brand ? product.brand.name : '' }}</td>
                                 </tr>
                                 <tr>
                                     <td>SKU:</td>
-                                    <td class="font-semibold">VEM00905</td>
+                                    <td class="font-semibold">{{ product.sku }}</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="font-semibold mt-4">Available Offers</p>
-                        <ul>
-                            <li>Offers will be appear here.</li>
-                            <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr</li>
-                        </ul>
+                        <div v-if="product.offers">
+                          <p class="font-semibold mt-4">Available Offers</p>
+                          <ul>
+                              <li>
+                                <p>{{product.offers}}</p>
+                              </li>
+                          </ul>
+                        </div>
                         <p class="font-semibold mt-4 mb-2">Quantity</p>
                         <div class="grid grid-cols-2 gap-2 mb-2">
                             <div class="grid grid-cols-4 rounded border border-gray-3 font-bold">
-                                <button class="focus:outline-none bg-gray-3 rounded-l text-xl flex items-center justify-center">
+                                <button @click="minus" class="focus:outline-none bg-gray-3 rounded-l text-xl flex items-center justify-center">
                                     <i class="ri-subtract-line"></i>
                                 </button>
                                 <div class="col-span-2 text-center py-1">
-                                    0
+                                    {{ quantity }}
                                 </div>
-                                <button class="focus:outline-none bg-gray-3 rounded-r text-xl flex items-center justify-center">
+                                <button @click="plus" class="focus:outline-none bg-gray-3 rounded-r text-xl flex items-center justify-center">
                                     <i class="ri-add-fill"></i>
                                 </button>
                             </div>
@@ -69,7 +76,7 @@
                         </div>
                         <div class="flex gap-2 justify-between">
                             <button class="focus:outline-none border rounded border-gray-3 py-1 font-bold w-full">Add to bag</button>
-                            <button class="focus:outline-none border rounded border-gray-3 py-1 font-bold w-full">Bargain</button>
+                            <button v-if="product.can_bargain" class="focus:outline-none border rounded border-gray-3 py-1 font-bold w-full">Bargain</button>
                             <button class="focus:outline-none border rounded border-gray-3 py-1 font-bold px-2"><i class="ri-heart-line"></i></button>
                         </div>
                     </div>
@@ -85,17 +92,16 @@
 <script>
 export default {
     data(){
-        return {
-            photos:[
-                'img-6',
-                'img-1',
-                'img-2',
-                'img-3',
-            ],
-            close_modal: 'closeModal',
-        }
+      return {
+        quantity: 1,
+        close_modal: 'closeModal',
+      }
     },
     props:['basePath', 'product'],
+
+    mounted() {
+      console.log(this.product)
+    },
 
     methods: {
         closeModal()
@@ -109,6 +115,15 @@ export default {
         {
             this.close_modal = 'wait';
             setTimeout(() => this.close_modal = 'closeModal', 500);
+        },
+        plus()
+        {
+            this.quantity += 1;
+        },
+        minus()
+        {
+            if(this.quantity > 0)
+                this.quantity -= 1;
         },
     },
 }

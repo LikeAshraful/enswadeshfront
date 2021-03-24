@@ -20,13 +20,16 @@
     <div v-else class="grid lg:grid-cols-3 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12">
         <div class="target-area" v-for="(product, i) in products.data" :key="i" >
           <!-- <NuxtLink to="/"> -->
-            <div @click="showModal(product, product.name, product.slug, product.id)" class="h-full mb-10">
+            <div @click="showModal(product, product.name, product.slug, product.id)" class="cursor-pointer h-full mb-10">
                 <div class="">
-                    <img class="h-52 w-full" :src="product.image.src ? basePath + 'storage/' + product.image.src : require(`~/assets/img/products/default.png`)" alt="Image">
+                    <img class="h-52 w-full" :src="product.thumbnail ? basePath + '/storage/' + product.thumbnail : require(`~/assets/img/products/default.png`)" alt="Image">
                 </div>
                 <p class="font-semibold pt-2">{{ product.name }}</p>
                 <p class="">{{ product.color }}</p>
-                <p class="font-bold">{{ product.price }} BDT</p>
+                <p class="font-bold">
+                  <span>{{ product.discount_price }} {{product.currency_type}}</span>
+                  <span v-if="product.discount" class="text-gray-4 ml-4 line-through">{{product.price}} {{product.currency_type}}</span>
+                </p>
             </div>
             <div class="hover-area-btns left-0 bottom-0 right-0">
               <div class="flex justify-between">
@@ -65,7 +68,7 @@ export default {
       modal: false,
       imageUrl: this.$axios.imageURL,
       keyword: null,
-      product:{}
+      product:{},
     }
   },
 
@@ -73,16 +76,10 @@ export default {
     ProductDetails,
   },
 
-  mounted() {
-    // this.showModal();
-  },
-
   methods: {
       showModal(product, name, slug, id){
           this.product = Object.assign({}, product)
           this.modal = true;
-          
-          // console.log(name, slug, id);
           localStorage.setItem('product', name);
           localStorage.setItem('product-url', '/product/'+slug+'/'+id);
       },
@@ -99,6 +96,7 @@ export default {
                   this.perPage = this.products.meta.per_page;
               })
       }, 500),
+
   },
 }
 </script>
