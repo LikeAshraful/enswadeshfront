@@ -1,11 +1,19 @@
 export const state = () => ({
   products: [],
+  similar_product: [],
+  units: [],
   product: {},
 })
 
 export const getters = {
   products: (state) => {
     return state.products
+  },
+  units: (state) => {
+    return state.units
+  },
+  similar_product: (state) => {
+    return state.similar_product
   },
   getProduct: (state) => {
     return state.product
@@ -14,16 +22,20 @@ export const getters = {
 
 export const actions = {
   async addProducts({ commit }, products) {
-    let response = await this.$axios.post(
-      '/api/products/',
-      products,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        }
-      }
-    )
+    let response = await this.$axios.post('/api/products/', products, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
     commit('SET_PRODUCTS', response.data)
+  },
+  async unitsData({ commit }) {
+    let response = await this.$axios.get('/api/units')
+    commit('UNITS_DATA', response.data.data)
+  },
+  async similarProduct({ commit }, id) {
+    let response = await this.$axios.get(`/api/products/similar-product/${id}`)
+    commit('SIMILAR_PRODUCT', response.data.data.data)
   },
 
   async getSingleProduct({ commit }, id) {
@@ -36,6 +48,12 @@ export const actions = {
 export const mutations = {
   SET_PRODUCTS(state, products) {
     state.products = products
+  },
+  UNITS_DATA(state, units) {
+    state.units = units
+  },
+  SIMILAR_PRODUCT(state, similar_product) {
+    state.similar_product = similar_product
   },
   SET_SINGLE_PRODUCT(state, product) {
     state.product = product

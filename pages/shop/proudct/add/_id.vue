@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div class="add_loader" v-if="isLoading">
+      <div class="main-loader"><loader></loader></div>
+    </div>
+
     <!-- Breadcrumbs -->
     <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
     <div class="flex justify-between">
@@ -26,13 +30,19 @@
       <div class="p-2">
         <div class="mb-2">
           <label class="input-label" for="similar">Select product</label>
-          <select class="input-field focus:outline-none" name="" id="similar">
-            <option class="text-gray-4" value="" selected disabled>
-              Choose the product (Show product name, code and SKU - Developer)
+          <select
+            class="input-field focus:outline-none"
+            v-model="similar_product_id"
+            name=""
+            id="similar"
+          >
+            <option
+              v-for="product in similar_product"
+              :key="'product' + product.id"
+              :value="product.id"
+            >
+              {{ product.name }}
             </option>
-            <option value="">01</option>
-            <option value="">02</option>
-            <option value="">03</option>
           </select>
           <p>Write here the benefit of similar product check.</p>
         </div>
@@ -57,28 +67,46 @@
             <div class="mb-2">
               <label class="input-label" for="category">Brand Name</label>
               <div class="grid grid-cols-5 gap-4">
-                <div class="col-span-3">
-                  <select
-                    class="input-field focus:outline-none"
-                    name=""
-                    v-model="brand_id"
-                  >
-                    <option
-                      v-for="brand in brands"
-                      :key="brand.id"
-                      v-bind:value="brand.id"
-                      selected
-                    >
-                      {{ brand.name }}
-                    </option>
-                  </select>
-                </div>
-                <div class="col-span-2">
-                  <input
-                    type="text"
-                    class="input-field focus:outline-none"
-                    placeholder="Create new"
-                  />
+                <div class="col-span-6">
+                  <div class="search-conatiner">
+                    <input type="hidden" v-model="brand_id" />
+                    <input
+                      type="text"
+                      placeholder="Type your query"
+                      v-model="search"
+                      @blur="brandtoggleclose"
+                      @focus="brandtoggleopen"
+                    />
+
+                    <div v-if="filteredList.length">
+                      <div class="results" v-if="brandtoggle">
+                        <div
+                          class="result"
+                          v-for="brand in filteredList"
+                          :key="brand.id"
+                          @click="selectResult(brand)"
+                        >
+                          <span
+                            v-if="brand.name"
+                            @click="selectResult(brand)"
+                            @mousedown.prevent
+                          >
+                            {{ brand.name }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="results" v-else>
+                      <div class="results-flex" @click="addBrand()">
+                        <span @click="addBrand()" @mousedown.prevent>
+                          {{ search }}
+                        </span>
+                        <button class="btn">
+                          <i class="ri-add-circle-fill"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -88,49 +116,67 @@
                 class="input-field focus:outline-none"
                 id="code"
                 type="text"
-                v-model="product_code_sku"
+                v-model="sku"
                 placeholder="Type code hear"
               />
             </div>
             <div class="mb-2">
               <label class="input-label" for="category">Category</label>
               <div class="grid grid-cols-5 gap-4">
-                <div class="col-span-3">
-                  <select
-                    class="input-field focus:outline-none"
-                    name=""
-                    id="category"
-                    v-model="category_id"
-                  >
-                    <option
-                      v-for="category in categorys"
-                      :key="category.id"
-                      v-bind:value="category.id"
-                      selected
-                    >
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-                <div class="col-span-2">
-                  <input
-                    type="text"
-                    class="input-field focus:outline-none"
-                    placeholder="Create new"
-                  />
+                <div class="col-span-6">
+                  <div class="search-conatiner">
+                    <input type="hidden" v-model="category_id" />
+                    <input
+                      type="text"
+                      placeholder="Type your query"
+                      v-model="categoriessearch"
+                      @blur="categoriestoggleclose"
+                      @focus="categoriestoggleopen"
+                    />
+
+                    <div v-if="categoriesList.length">
+                      <div class="results" v-if="categoriestoggle">
+                        <div
+                          class="result"
+                          v-for="categories in categoriesList"
+                          :key="categories.id"
+                          @click="selectResultcategories(categories)"
+                        >
+                          <span
+                            v-if="categories.name"
+                            @click="selectResultcategories(categories)"
+                            @mousedown.prevent
+                          >
+                            {{ categories.name }}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="results" v-else>
+                      <div class="results-flex">
+                        <span>
+                          {{ categoriessearch }}
+                        </span>
+                        <button
+                          class="btn"
+                          @click="cetegoryModal()"
+                          @mousedown.prevent
+                        >
+                          <i class="ri-add-circle-fill"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div v-if="simple_format" class="mb-2">
-              <label class="input-label" for="quantity">Quantity</label>
-              <input
-                class="input-field focus:outline-none"
-                id="quantity"
-                type="number"
-                v-model="quantity"
-                placeholder="Quantity"
-              />
-            </div>
+
+            <category
+              :categories="categoriesbase"
+              :name="categoriessearch"
+              v-if="modelcategory"
+              v-on:closeModal="closeModal()"
+            ></category>
           </div>
         </div>
         <div v-if="simple_format" class="bg-white rounded-lg mb-6">
@@ -139,23 +185,26 @@
             <div class="mb-2">
               <label class="input-label" for="price">Price</label>
               <div class="grid grid-cols-5 gap-8">
-                <div class="col-span-4">
+                <div class="col-span-3">
                   <input
                     class="input-field focus:outline-none"
                     id="price"
-                    type="text"
+                    type="number"
                     v-model="price"
                     placeholder="What is the price for product"
                   />
                 </div>
-                <div>
+                <div class="col-span-2">
+                  <label class="input-label" for="currency_type"
+                    >Select Currency</label
+                  >
                   <select
                     class="input-field focus:outline-none bg-gray-1"
-                    name=""
-                    id=""
-                    v-model="price"
+                    id="currency_type"
+                    v-model="currency_type"
                   >
-                    <option value="">BDT</option>
+                    <option value="BDT">BDT</option>
+                    <option value="USD">USD</option>
                   </select>
                 </div>
               </div>
@@ -163,40 +212,52 @@
             <div class="mb-2">
               <label class="input-label" for="unit">Price Per Unit</label>
               <div class="grid grid-cols-5 gap-4">
-                <div class="col-span-3">
+                <div class="col-span-6">
                   <select
                     class="input-field focus:outline-none"
                     name=""
-                    id="category"
+                    id="unit"
+                    v-model="unit_id"
                   >
-                    <option value="" selected disabled>Select</option>
-                    <option value="">01</option>
-                    <option value="">02</option>
-                    <option value="">03</option>
+                    <option
+                      v-for="unit in units"
+                      :key="unit.id"
+                      :value="unit.id"
+                    >
+                      {{ unit.name }}
+                    </option>
                   </select>
-                </div>
-                <div class="col-span-2">
-                  <input
-                    type="text"
-                    class="input-field focus:outline-none"
-                    placeholder="Create new"
-                  />
                 </div>
               </div>
             </div>
             <div class="mb-2">
               <label class="input-label" for="discount">Discount</label>
-              <select
-                class="input-field focus:outline-none"
-                name=""
-                id="discount"
-                v-model="discount"
-              >
-                <option value="" selected disabled>Select</option>
-                <option value="">...</option>
-                <option value="">...</option>
-              </select>
+              <div class="grid grid-cols-5 gap-8">
+                <div class="col-span-3">
+                  <input
+                    class="input-field focus:outline-none"
+                    id="discount"
+                    type="number"
+                    placeholder="Write here"
+                    v-model="discount"
+                  />
+                </div>
+                <div class="col-span-2">
+                  <label class="input-label" for="discount_type"
+                    >Select Discount Type</label
+                  >
+                  <select
+                    class="input-field focus:outline-none bg-gray-1"
+                    id="discount_type"
+                    v-model="discount_type"
+                  >
+                    <option value="Percent">Percent(%)</option>
+                    <option value="Number">Number(1)</option>
+                  </select>
+                </div>
+              </div>
             </div>
+
             <div class="mb-2">
               <label class="input-label" for="discount-price"
                 >Discount Price</label
@@ -204,8 +265,20 @@
               <input
                 class="input-field focus:outline-none"
                 id="discount-price"
-                type="text"
+                type="number"
                 placeholder="0"
+                readonly
+                v-model="disCountPrice"
+              />
+            </div>
+            <div v-if="simple_format" class="mb-2">
+              <label class="input-label" for="quantity">Quantity</label>
+              <input
+                class="input-field focus:outline-none"
+                id="quantity"
+                type="number"
+                v-model="stocks"
+                placeholder="Quantity"
               />
             </div>
             <div class="mb-2">
@@ -220,78 +293,7 @@
             </div>
           </div>
         </div>
-        <div v-if="make_a_list" class="bg-white rounded-lg mb-6">
-          <p class="title">Make a list</p>
-          <div class="p-2">
-            <table class="w-full">
-              <thead>
-                <tr class="font-bold">
-                  <td>Product name</td>
-                  <td>Rate</td>
-                  <td>Per Unit</td>
-                  <td>Discount</td>
-                  <td>Offer</td>
-                  <td></td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(list, i) in lists" :key="i">
-                  <td>
-                    <input
-                      type="text"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="Name"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="0"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="0"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="0"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="0"
-                    />
-                  </td>
-                  <td>
-                    <button
-                      class="focus:outline-none text-orange-1"
-                      v-if="i == lists - 1 && i != 0"
-                      @click="removeList"
-                    >
-                      <i class="ri-close-circle-fill"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <button
-              @click="addList"
-              class="font-bold text-orange-1 focus:outline-none"
-            >
-              Add another
-            </button>
-          </div>
-        </div>
-        <div v-if="weight_wise" class="bg-white rounded-lg mb-6">
+        <!-- <div v-if="weight_wise" class="bg-white rounded-lg mb-6">
           <p class="title">Weight Wise Price Information</p>
           <div class="p-2">
             <table class="w-full">
@@ -345,8 +347,8 @@
               Add another
             </button>
           </div>
-        </div>
-        <div v-if="size_wise" class="bg-white rounded-lg mb-6">
+        </div> -->
+        <!-- <div v-if="size_wise" class="bg-white rounded-lg mb-6">
           <p class="title">Size Wise Price Information</p>
           <div class="p-2">
             <table class="w-full">
@@ -400,7 +402,7 @@
               Add another
             </button>
           </div>
-        </div>
+        </div> -->
         <div class="bg-white rounded-lg mb-6">
           <p class="title">Services</p>
           <div class="p-2">
@@ -409,7 +411,7 @@
               <textarea
                 class="input-field focus:outline-none"
                 name=""
-                v-model="service_policy"
+                v-model="warranty"
                 id="warranty"
                 rows="3"
                 placeholder="Write details here about warranty"
@@ -421,7 +423,7 @@
                 class="input-field focus:outline-none"
                 name=""
                 id="guarantee"
-                v-model="service_policy"
+                v-model="guarantee"
                 rows="3"
                 placeholder="Write details here about guarantee"
               ></textarea>
@@ -435,7 +437,7 @@
                 name=""
                 id="discount-price"
                 rows="3"
-                v-model="refund_policy"
+                v-model="return_policy"
                 placeholder="Write details here about return policy"
               ></textarea>
             </div>
@@ -452,7 +454,7 @@
                 class="border border-dashed border-gray-3 rounded text-center"
               >
                 <div
-                  v-if="!thumbnail"
+                  v-if="!thumbnail_images"
                   class="py-10 flex items-center justify-center"
                 >
                   <i class="ri-attachment-line"></i>
@@ -465,7 +467,7 @@
                 </div>
                 <label for="thumbnail" class="cursor-pointer">
                   <div
-                    v-if="thumbnail"
+                    v-if="thumbnail_images"
                     style="padding-bottom: 40%"
                     class="relative flex flex-row justify-center"
                   >
@@ -478,9 +480,8 @@
                 <input
                   class="hidden"
                   type="file"
-                  multiple
+                  @change="thumbnailFile"
                   id="thumbnail"
-                  @change="thumbnailFiles"
                 />
               </div>
             </div>
@@ -528,6 +529,7 @@
                 class="input-field focus:outline-none"
                 name=""
                 id="description"
+                v-model="description"
                 rows="4"
                 placeholder="Write here product description"
               ></textarea>
@@ -626,14 +628,12 @@
           <p class="title">Delivery</p>
           <div class="p-2">
             <div class="mb-2">
-              <label class="input-label" for="description"
-                >Delivery offer</label
-              >
+              <label class="input-label" for="delivery">Delivery offer</label>
               <div class="grid grid-cols-5 gap-8">
                 <div class="col-span-4">
                   <input
                     class="input-field focus:outline-none"
-                    id="prices"
+                    id="delivery"
                     type="text"
                     placeholder="Write here"
                   />
@@ -663,10 +663,15 @@
 </template>
 <script>
 import Breadcrumb from '~/components/common/Breadcrumb.vue'
+import category from './category'
 import { mapGetters, mapActions } from 'vuex'
+import Loader from '~/components/lib/Loader.vue'
 export default {
+  middleware: ['auth'],
   components: {
     Breadcrumb,
+    category,
+    Loader,
   },
   data() {
     return {
@@ -674,34 +679,44 @@ export default {
         { title: 'Simple format', value: 'simple_format', item: true },
         { title: 'Size wise', value: ' size_wise', item: false },
         { title: 'Weight wise', value: 'weight_wise', item: false },
-        { title: 'Make a list', value: 'make_a_list', item: false },
       ],
       ref: '',
+      isLoading: false,
+      brandtoggle: false,
+      categoriestoggle: false,
+      modelcategory: false,
       name: '',
       title: 'Simple format',
       slug: '',
       shop_id: '',
-      user_id: '',
       brand_id: '',
+      similar_product_id: '',
+      unit_id: '',
+      user_id: '',
+      item: {},
       category_id: '',
-      thumbnail: '',
       can_bargain: false,
       product_type: '',
-      refund_policy: '',
-      service_policy: '',
+      return_policy: '',
+      warranty: '',
+      guarantee: '',
       description: '',
       offers: '',
       tag: '',
       price: '',
+      currency_type: '',
       sale_price: '',
       discount: '',
+      discount_type: '',
+      discount_price: '',
       stocks: '',
       total_stocks: '',
       vat: '',
-      product_code_sku: '',
+      sku: '',
       quantity: '',
       alert: '',
-      thumbnail_images: '',
+      thumbnail: '',
+      thumbnail_images: null,
 
       url: null,
       bar: '',
@@ -716,7 +731,9 @@ export default {
       lists: 1,
       gallery_images: [],
       gallery_images_url: [],
-
+      newBooks: [],
+      search: '',
+      categoriessearch: '',
       breadCrumbs: [
         { title: 'Home', url: '/' },
         { title: 'My Shop', url: '/my-shop' },
@@ -726,16 +743,27 @@ export default {
   },
   created() {
     this.CategoriesData()
+    this.CategoriesbaseData()
+    this.similarProduct()
     this.BrandData()
+    this.unitsData()
   },
-  computed: {
-    ...mapGetters('category', ['categorys'], 'brand', ['brands']),
-    ...mapGetters('brand', ['brands']),
-  },
+  watch: {},
   methods: {
-    ...mapActions('category', ['CategoriesData'], 'brand', ['BrandData']),
+    ...mapActions('products', ['unitsData']),
+    ...mapActions('category', ['CategoriesData']),
     ...mapActions('brand', ['BrandData']),
-
+    similarProduct() {
+      this.$store.dispatch('products/similarProduct', this.$route.params.id)
+    },
+    CategoriesbaseData() {
+      this.isLoading = true
+      this.$store.dispatch('category/CategoriesbaseData').then(
+        setTimeout(() => {
+          this.isLoading = false
+        }, 2000)
+      )
+    },
     bargainToggle() {
       this.can_bargain = !this.can_bargain
     },
@@ -748,9 +776,9 @@ export default {
         )
       }
     },
-    thumbnailFiles(e) {
-      this.thumbnail = e.target.files[0]
-      this.thumbnail_images = URL.createObjectURL(e.target.files[0])
+    thumbnailFile(event) {
+      this.thumbnail = event.target.files[0]
+      this.thumbnail_images = URL.createObjectURL(event.target.files[0])
     },
     addFeature() {
       this.features.push({
@@ -777,27 +805,39 @@ export default {
       var formData = new FormData()
       if (this.size_wise) {
         formData.append('sizes[]', this.sizes)
+        formData.append('product_type', 'size_base')
       } else if (this.make_a_list) {
         formData.append('make_a_list[]', this.make_a_list)
       } else if (this.weight_wise) {
         formData.append('weight_wise[]', this.weight_wise)
+        formData.append('product_type', 'weight_base')
       } else {
+        formData.append('product_type', 'simple')
       }
-      formData.append('title', this.name)
-      formData.append('name', this.title)
-      formData.append('slug', this.slug)
+      formData.append('name', this.name)
       formData.append('shop_id', this.$route.params.id)
       formData.append('user_id', this.$auth.user.id)
       formData.append('brand_id', this.brand_id)
-      formData.append('can_bargain', this.can_bargain)
-      formData.append('total_stocks', this.total_stocks)
-      formData.append('stocks', this.stocks)
       formData.append('category_id', this.category_id)
+      formData.append('can_bargain', this.can_bargain)
+      formData.append('sku', this.sku)
+      formData.append('price', this.price)
+      formData.append('currency_type', this.currency_type)
+      formData.append('discount', this.discount)
+      formData.append('discount_type', this.discount_type)
+      formData.append('stocks', this.stocks)
+      formData.append('return_policy', this.return_policy)
+      formData.append('warranty', this.warranty)
+      formData.append('guarantee', this.guarantee)
+      formData.append('description', this.description)
       formData.append('thumbnail', this.thumbnail)
-      formData.append('feature[]', this.features)
+      for (let i = 0; i < this.features.length; i++) {
+        for (let key of Object.keys(this.features[i])) {
+          formData.append(`features[${i}][${key}]`, this.features[i][key])
+        }
+      }
       for (const i of Object.keys(this.gallery_images)) {
         formData.append('images[]', this.gallery_images[i])
-        console.log(this.gallery_images[i])
       }
       this.$store.dispatch('products/addProducts', formData)
     },
@@ -850,6 +890,75 @@ export default {
           return (element.item = false)
         }
       })
+    },
+
+    selectResult(brand) {
+      this.search = brand.name
+      this.brand_id = brand.id
+    },
+    brandtoggleclose() {
+      this.brandtoggle = false
+      this.BrandData()
+    },
+    brandtoggleopen() {
+      this.brandtoggle = true
+    },
+    addBrand() {
+      let data = {
+        name: this.search,
+      }
+      this.$store.dispatch('brand/brandCreated', data).then(this.BrandData())
+    },
+
+    categoriestoggleclose() {
+      this.categoriestoggle = false
+      this.CategoriesData()
+    },
+    categoriestoggleopen() {
+      this.categoriestoggle = true
+    },
+    selectResultcategories(category) {
+      this.categoriessearch = category.name
+      this.category_id = category.id
+    },
+    cetegoryModal() {
+      this.modelcategory = true
+    },
+    closeModal() {
+      this.modelcategory = false
+      this.CategoriesbaseData()
+    },
+
+    changeDiscountPrice(e) {},
+  },
+
+  computed: {
+    ...mapGetters('products', ['similar_product']),
+    ...mapGetters('products', ['units']),
+    ...mapGetters('category', ['categories']),
+    ...mapGetters('category', ['categoriesbase']),
+    ...mapGetters('brand', ['brands']),
+
+    filteredList() {
+      return this.brands.filter((brand) => {
+        return brand.name.toLowerCase().includes(this.search.toLowerCase())
+      })
+    },
+    categoriesList() {
+      return this.categories.filter((category) => {
+        return category.name
+          .toLowerCase()
+          .includes(this.categoriessearch.toLowerCase())
+      })
+    },
+
+    disCountPrice() {
+      if (this.discount_type === 'Percent') {
+        let dis = this.price - (this.price * this.discount) / 100
+        return dis.toFixed(2)
+      } else {
+        return this.price - this.discount
+      }
     },
   },
 }
