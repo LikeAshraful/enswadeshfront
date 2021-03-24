@@ -179,7 +179,7 @@
             ></category>
           </div>
         </div>
-        <!-- <div v-if="simple_format" class="bg-white rounded-lg mb-6">
+        <div v-if="simple_format" class="bg-white rounded-lg mb-6">
           <p class="title">Price</p>
           <div class="p-2">
             <div class="mb-2">
@@ -292,7 +292,7 @@
               />
             </div>
           </div>
-        </div> -->
+        </div>
         <div v-if="weight_wise" class="bg-white rounded-lg mb-6">
           <p class="title">Weight Wise Price Information</p>
           <div class="p-2">
