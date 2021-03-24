@@ -7,12 +7,12 @@
         <div class="grid sm:grid-cols-7 lg:gap-12 md:gap-4 sm:gap-2 py-4">
             <div class="sm:col-span-2">
                 <div class="relative pb-full">
-                    <img class="absolute h-full w-full object-cover" src="~/assets/img/products/img-6.png" alt="Image">
+                    <img class="absolute h-full w-full object-cover" :src="getProduct.thumbnail ? basePath + '/storage/' + getProduct.thumbnail : require(`~/assets/img/products/default.png`)" alt="Image">
                 </div>
 
                     <div class="grid grid-cols-4 gap-2 mt-2">
-                    <div class="relative pb-3/4" v-for="(photo, i) in photos" :key="i">
-                        <img class="absolute h-full w-full object-cover" :src="require(`~/assets/img/products/${photo}.png`)" alt="">
+                    <div class="relative pb-3/4" v-for="(photo, i) in getProduct.image" :key="i">
+                        <img class="absolute h-full w-full object-cover" :src="photo.src ? basePath + '/storage/' + photo.src : require(`~/assets/img/products/default.png`)" alt="">
                     </div>
                 </div>
             </div>
@@ -28,27 +28,32 @@
                     <tbody>
                         <tr>
                             <td>Price:</td>
-                            <td class="font-semibold"><span>1000 BDT</span> <span class="text-gray-4 ml-4 line-through">1195 BDT</span></td>
+                            <td class="font-semibold">
+                              <span>{{ getProduct.discount_price }} {{getProduct.currency_type}}</span>
+                              <span v-if="getProduct.discount" class="text-gray-4 ml-4 line-through">{{getProduct.price}} {{getProduct.currency_type}}</span>
+                            </td>
                         </tr>
                         <tr>
                             <td>Stock:</td>
-                            <td class="font-semibold">Available</td>
+                            <td v-if="getProduct.stocks > 0" class="font-semibold">Available</td>
+                            <td v-else class="text-red-500 font-semibold">Unavailable</td>
                         </tr>
                         <tr>
                             <td>Brand:</td>
-                            <td class="font-semibold">zxy</td>
+                            <td class="font-semibold">{{getProduct.brand? getProduct.brand.name : ''}}</td>
                         </tr>
                         <tr>
                             <td>SKU:</td>
-                            <td class="font-semibold">VEM00905</td>
+                            <td class="font-semibold">{{getProduct.sku}}</td>
                         </tr>
                     </tbody>
                 </table>
-                <p class="font-semibold mt-4">Available Offers</p>
-                <ul>
-                    <li>Offers will be appear here.</li>
-                    <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr</li>
-                </ul>
+                <div v-if="getProduct.offers">
+                  <p class="font-semibold mt-4">Available Offers</p>
+                  <ul>
+                      <li><p>{{getProduct.offers}}</p></li>
+                  </ul>
+                </div>
                 <p class="font-semibold mt-4 mb-2">Quantity</p>
 
                 <div class="grid grid-cols-2 gap-3 mb-3">
@@ -67,7 +72,7 @@
                 </div>
                 <div class="flex gap-3 justify-between">
                     <button class="focus:outline-none border rounded border-gray-3 py-1 font-semibold w-full">Add to bag</button>
-                    <button @click="bargainModal" class="focus:outline-none border rounded border-gray-3 py-1 font-semibold w-full">Bargain</button>
+                    <button v-if="getProduct.can_bargain" @click="bargainModal" class="focus:outline-none border rounded border-gray-3 py-1 font-semibold w-full">Bargain</button>
                     <button class="focus:outline-none border rounded border-gray-3 py-1 font-bold px-2"><i class="ri-heart-line"></i></button>
                 </div>
                 <p class="font-semibold text-purple-2 mt-4">Delivery offer shows here</p>
@@ -127,7 +132,8 @@ export default {
     },
     data() {
         return {
-            quantity: 0,
+            basePath: this.$axios.defaults.baseURL,
+            quantity: 1,
             bargain: false,
             photos:[
                 'img-6',
@@ -191,7 +197,6 @@ export default {
             this.breadCrumbs[2].title = localStorage.getItem('shop');
             this.breadCrumbs[2].url = localStorage.getItem('shop-url');
             this.breadCrumbs[3].title = localStorage.getItem('product');
-            // this.breadCrumbs[3].url = localStorage.getItem('product-url');
         }
     },
     computed: {
