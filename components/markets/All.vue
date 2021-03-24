@@ -11,7 +11,7 @@
                   <div class="rounded-t-xl relative">
                       <div class="rounded-t-xl relative pb-2/3">
                           <img class="absolute h-full w-full object-cover rounded-t-xl" :src="market.icon ? basePath + '/' + market.icon : require(`~/assets/img/default_market.png`)" alt="Image">
-                          <p class="absolute bottom-0 mb-2 ml-2 text-white bg-green-5 px-3 py-1 inline">{{ market.shop_count }} Shops</p>
+                          <p class="absolute bottom-0 md:mb-2 md:ml-2 mb-1 ml-1 text-white bg-green-5 md:px-3 px-2 md:py-1 inline">{{ market.shop_count }} Shops</p>
                       </div>
                       <p class="font-bold p-3">{{ market.name }}</p>
                   </div>

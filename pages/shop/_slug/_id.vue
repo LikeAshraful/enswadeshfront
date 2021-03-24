@@ -17,14 +17,14 @@
     ></slider>
 
     <div class="">
-      <div class="grid lg:grid-cols-4 sm:grid-cols-3 gap-4 my-5">
+      <div class="grid md:grid-cols-3 gap-4 my-5">
         <!-- Filter -->
         <dataFilter
           :filtersData="filtersCategory"
           :filterTitle="filterTitle"
           v-on:filterByData="loadProducts"
         />
-        <div class="lg:col-span-3 sm:col-span-2">
+        <div class="md:col-span-2">
           <!-- All Products -->
           <products
             :basePath="basePath"

@@ -1,23 +1,26 @@
 <template>
     <div>
-        <div @click="closeModal" class="fixed inset-0 z-50 flex flex-col justify-center items-center my-12">
+        <div @click="closeModal" class="fixed inset-0 z-50 flex flex-col justify-center items-center md:my-12 m-2">
             <div @click="wait" class="focus-in max-w-screen-sm shadow-lg bg-white overflow-auto">
-                <div class="grid sm:grid-cols-7">
-                    <div class="sm:col-span-3 bg-green-4 text-white p-6 flex flex-col justify-between">
-                        <div>
-                            <p class="font-bold text-3xl">Create account</p>
-                            <p class="font-bold text-gray-4">Lorem ipsum dolor sit amet, sadipscing elitr, sed diam nonumy</p>
-                        </div>
+                <div class="grid md:grid-cols-7">
+                    <div class="hidden md:contents">
+                        <div class="md:col-span-3 bg-green-4 text-white md:p-6 p-2 flex flex-col justify-between">
+                            <div>
+                                <p class="font-bold text-3xl">Create account</p>
+                                <p class="font-bold text-gray-4">Lorem ipsum dolor sit amet, sadipscing elitr, sed diam nonumy</p>
+                            </div>
 
-                        <div class="relative pb-2/3">
-                            <img class="absolute bottom-0 object-cover" src="~/assets/img/auth.png" alt="">
+                            <div class="relative pb-2/3">
+                                <img class="absolute bottom-0 object-cover" src="~/assets/img/auth.png" alt="">
+                            </div>
                         </div>
                     </div>
-                    <div class="sm:col-span-4">
-                        <div class="w-full text-right pr-1">
+                    <div class="md:col-span-4">
+                        <div class="w-full text-right pr-1 md:bg-white bg-green-4 md:text-green-4 text-white">
                             <button @click="closeRegistrationModal" class="text-2xl focus:outline-none"><i class="ri-close-line"></i></button>
                         </div>
-                        <div class="px-6">
+                        <p class="font-bold text-3xl text-center md:hidden md:bg-white bg-green-4 md:text-green-4 text-white md:pb-0 pb-10">Create account</p>
+                        <div class="md:p-6 p-2">
                             <form @submit.prevent="submitForm">
                                 <div class="mb-2">
                                     <label class="font-bold" for="name">Name</label>

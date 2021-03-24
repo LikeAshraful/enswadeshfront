@@ -1,10 +1,10 @@
 <template>
   <div>
     <div>
-      <p class="font-bold text-xl">{{ shop.name }}</p>
-      <p class="text-gray-2">{{ shop.total_subscriber }} Subscribers</p>
-      <p class="text-gray-2">55 Active Customers</p>
-      <div class="flex text-yellow-2">
+      <p class="font-bold md:text-left text-center text-xl">{{ shop.name }}</p>
+      <p class="text-gray-2 md:text-left text-center">{{ shop.total_subscriber }} Subscribers</p>
+      <p class="text-gray-2 md:text-left text-center">55 Active Customers</p>
+      <div class="flex md:justify-start justify-center text-yellow-2">
         <i class="ri-star-fill"></i>
         <i class="ri-star-fill"></i>
         <i class="ri-star-fill"></i>
@@ -12,7 +12,7 @@
         <i class="ri-star-half-line"></i>
         <p class="text-gray-2 ml-2">(4.5)</p>
       </div>
-      <div class="flex text-center gap-4 pt-2">
+      <div class="flex items-center md:justify-start justify-center text-center gap-4 pt-2">
         <n-link to="">
           <i class="rounded-lg bg-green-1 p-2 ri-message-2-fill"></i>
           <p>Text us</p>
@@ -26,7 +26,7 @@
           <p>Video call</p>
         </n-link>
       </div>
-      <div class="md:my-4">
+      <div class="md:my-4 my-2 flex md:justify-start justify-center">
         <a
           href="javascript:void(0);"
           @click="subscribeShopLogin"
