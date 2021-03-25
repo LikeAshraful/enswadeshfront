@@ -56,8 +56,64 @@
               </td>
               <td>{{ item.name }}</td>
               <td>{{ item.category.name }}</td>
-              <td>{{ item.price }}</td>
-              <td>{{ item.total_stocks }}</td>
+              <td v-if="item.sizes.length == 0 && item.weights.length == 0">
+                {{ item.price }}
+              </td>
+              <td v-else-if="item.sizes.length > 0">
+                <div class="dropdown">
+                  <i
+                    class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
+                  ></i>
+                  <div class="dropdown-content font-semibold">
+                    <p>Size-Price</p>
+                    <p v-for="(size, k) in item.sizes" :key="k">
+                      {{ size.size }} - {{ size.price }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td v-else-if="item.weights.length > 0">
+                <div class="dropdown">
+                  <i
+                    class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
+                  ></i>
+                  <div class="dropdown-content font-semibold">
+                    <p>Weight-Price</p>
+                    <p v-for="(weight, l) in item.weights" :key="l">
+                      {{ weight.weight }} - {{ weight.price }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td v-if="item.sizes.length == 0 && item.weights.length == 0">
+                {{ item.stocks }}
+              </td>
+              <td v-else-if="item.sizes.length > 0">
+                <div class="dropdown">
+                  <i
+                    class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
+                  ></i>
+                  <div class="dropdown-content font-semibold">
+                    <p>Size-Stock</p>
+                    <p v-for="(size, m) in item.sizes" :key="m">
+                      {{ size.size }} - {{ size.stocks }}
+                    </p>
+                  </div>
+                </div>
+              </td>
+              <td v-else-if="item.weights.length > 0">
+                <div class="dropdown">
+                  <i
+                    class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
+                  ></i>
+                  <div class="dropdown-content font-semibold">
+                    <p>Weight-Stock</p>
+                    <p v-for="(weight, n) in item.weights" :key="n">
+                      {{ weight.weight }} - {{ weight.stocks }}
+                    </p>
+                  </div>
+                </div>
+              </td>
               <td>
                 <div class="dropdown">
                   <i
@@ -77,7 +133,11 @@
         </table>
         <!-- End Product tables -->
 
-        <move-trash :product="product"  v-if="move" v-on:moveTrash="moveTrash()"></move-trash>
+        <move-trash
+          :product="product"
+          v-if="move"
+          v-on:moveTrash="moveTrash()"
+        ></move-trash>
         <notify v-if="notification" v-on:notify="notify()"></notify>
         <flash-sale v-if="flash" v-on:flashSale="flashSale()"></flash-sale>
         <festival v-if="festival" v-on:addFestival="addFestival()"></festival>
@@ -132,7 +192,7 @@ export default {
       notification: false,
       flash: false,
       festival: false,
-      product:'',
+      product: '',
     }
   },
 
@@ -145,7 +205,7 @@ export default {
   methods: {
     moveTrash(product) {
       this.product = product
-      this.loadProducts();
+      this.loadProducts()
       this.move = !this.move
     },
     notify() {
@@ -183,6 +243,7 @@ export default {
         .then((res) => {
           this.products = res.data.data
           this.isLoading = false
+          console.log(this.products)
         })
     },
 
@@ -198,6 +259,7 @@ export default {
           this.currentPage = this.products.meta.current_page
           this.perPage = this.products.meta.per_page
           this.isLoading = false
+          console.log(this.products)
         })
     },
 

@@ -465,7 +465,7 @@ export default {
     async removeImage(gallery) {
       await this.$axios
         .get('/api/my-shops/media-image/' + gallery.id)
-        .then((res) => {
+        .then((response) => {
           this.loadShop()
         })
         .catch((error) => {
