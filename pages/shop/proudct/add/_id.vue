@@ -896,7 +896,7 @@ export default {
       this.weights.splice(delIndex, 1)
     },
 
-    addProducts() {
+    async addProducts() {
       var formData = new FormData()
       if (this.size_wise) {
         formData.append('sizes[]', this.sizes)
@@ -921,6 +921,7 @@ export default {
       formData.append('discount', this.discount)
       formData.append('discount_type', this.discount_type)
       formData.append('stocks', this.stocks)
+      formData.append('offers', this.offers)
       formData.append('return_policy', this.return_policy)
       formData.append('warranty', this.warranty)
       formData.append('guarantee', this.guarantee)
@@ -951,8 +952,22 @@ export default {
           formData.append(`weights[${i}][${key}]`, this.weights[i][key])
         }
       }
-
-      this.$store.dispatch('products/addProducts', formData)
+      await this.$axios
+        .post('/api/products/', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then((response) => {
+          this.$router.push(`/shop/self/${this.$route.params.id}`)
+          this.$toast.success('Product created successfully !')
+        })
+        .catch((error) => {
+          if (error.response.status == 404) {
+            this.$nuxt.error({ statusCode: 404, message: 'err message' })
+          }
+        })
+      //this.$store.dispatch('products/addProducts', formData)
     },
 
     addList() {

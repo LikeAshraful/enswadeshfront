@@ -1,14 +1,14 @@
 export const state = () => ({
-  products: [],
+  // products: [],
   similar_product: [],
   units: [],
   product: {},
 })
 
 export const getters = {
-  products: (state) => {
-    return state.products
-  },
+  // products: (state) => {
+  //   return state.products
+  // },
   units: (state) => {
     return state.units
   },
@@ -21,14 +21,14 @@ export const getters = {
 }
 
 export const actions = {
-  async addProducts({ commit }, products) {
-    let response = await this.$axios.post('/api/products/', products, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-    commit('SET_PRODUCTS', response.data)
-  },
+  // async addProducts({ commit }, products) {
+  //   let response = await this.$axios.post('/api/products/', products, {
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data',
+  //     },
+  //   })
+  //   commit('SET_PRODUCTS', response.data)
+  // },
   async unitsData({ commit }) {
     let response = await this.$axios.get('/api/units')
     commit('UNITS_DATA', response.data.data)
@@ -46,9 +46,9 @@ export const actions = {
 }
 
 export const mutations = {
-  SET_PRODUCTS(state, products) {
-    state.products = products
-  },
+  // SET_PRODUCTS(state, products) {
+  //   state.products = products
+  // },
   UNITS_DATA(state, units) {
     state.units = units
   },
