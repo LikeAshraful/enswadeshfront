@@ -3,6 +3,7 @@ export const state = () => ({
   similar_product: [],
   units: [],
   product: {},
+  product_preview:{},
 })
 
 export const getters = {
@@ -18,6 +19,9 @@ export const getters = {
   getProduct: (state) => {
     return state.product
   },
+  getProductPreviewData: (state) => {
+    return state.product_preview
+  }
 }
 
 export const actions = {
@@ -43,6 +47,10 @@ export const actions = {
 
     commit('SET_SINGLE_PRODUCT', res.data)
   },
+
+  async productPreview({ commit }, previewData) {
+    commit('SET_PRODUCT_PREVIEW_DATA', previewData)
+  }
 }
 
 export const mutations = {
@@ -58,4 +66,7 @@ export const mutations = {
   SET_SINGLE_PRODUCT(state, product) {
     state.product = product
   },
+  SET_PRODUCT_PREVIEW_DATA(state, previewData) {
+    state.product_preview = previewData
+  }
 }

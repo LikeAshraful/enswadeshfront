@@ -829,12 +829,10 @@ export default {
     this.similarProduct()
     this.BrandData()
     this.unitsData()
+    // this.previewProduct()
   },
   watch: {},
   methods: {
-    preview(){
-      this.addPreview = !this.addPreview;
-    },
     closePreviewModal(){
       this.preview();
     },
@@ -909,7 +907,7 @@ export default {
       this.weights.splice(delIndex, 1)
     },
 
-    async addProducts() {
+    getAllFromData() {
       var formData = new FormData()
       if (this.size_wise) {
         formData.append('sizes[]', this.sizes)
@@ -965,8 +963,15 @@ export default {
           formData.append(`weights[${i}][${key}]`, this.weights[i][key])
         }
       }
+
+      return formData;
+    },
+
+    async addProducts() {
+     let allFormData = this.getAllFromData();
+
       await this.$axios
-        .post('/api/products/', formData, {
+        .post('/api/products/', allFormData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -981,6 +986,23 @@ export default {
           }
         })
       //this.$store.dispatch('products/addProducts', formData)
+    },
+
+    preview(){
+      this.addPreview = !this.addPreview;
+
+      let productData = this.getAllFromData();
+      let data = {};
+      for (const [key, value] of productData.entries()) {
+        data[key] = value
+      }
+
+      data['thumb_url'] = this.thumbnail_images;
+      data['gallary_images_url'] = this.gallery_images_url;
+
+      // localStorage.setItem('previewdata', JSON.stringify(data))
+      this.$store.dispatch('products/productPreview', data)
+
     },
 
     addList() {
