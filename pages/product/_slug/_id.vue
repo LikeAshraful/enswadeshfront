@@ -24,6 +24,7 @@
                     </p>
                     <p class="font-semibold text-blue-1">Rate this product</p>
                 </div>
+                {{getProduct.product_type}}
                 <table class="w-full mt-4">
                     <tbody>
                         <tr>
