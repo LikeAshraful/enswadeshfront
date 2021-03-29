@@ -10,7 +10,7 @@
                         <p class="title">Remove member</p>
                         <div class="p-6">
                             <p class="mb-6">Do you really want to remove this shop member?</p>
-                            <button class="btn-border bg-green-3 focus:outline-none">Yes, Confirm</button>
+                            <button @click="yesRemove" class="btn-border bg-green-3 focus:outline-none">Yes, Confirm</button>
                         </div>
                     </div>
                 </div>
@@ -32,6 +32,13 @@ export default {
             if(this.close_modal == 'closeModal')
             {
                 this.$emit('closeModal');
+            }
+        },
+        yesRemove()
+        {
+            if(this.close_modal == 'closeModal')
+            {
+                this.$emit('yesRemove');
             }
         },
         wait()
