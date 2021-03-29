@@ -97,6 +97,7 @@ import Registration from '~/components/auth/Registration.vue'
 import OrderSummary from '../components/cart/Order-summary.vue'
 import ShippingBillingAddressInput from '../components/cart/Shipping-billing-address-input.vue'
 export default {
+  middleware: ['auth'],
   data() {
     return {
       customer: '',

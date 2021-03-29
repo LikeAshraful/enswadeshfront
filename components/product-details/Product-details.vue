@@ -183,11 +183,27 @@
                   <i class="ri-add-fill"></i>
                 </button>
               </div>
-              <n-link
-                to=""
+              <button
+                v-if="product.product_type === 'simple'"
+                @click="addToBuy(product, quantity)"
                 class="border bg-green-3 border-gray-2 rounded py-1 w-full font-bold text-center"
-                >Buy now</n-link
               >
+                Buy now Sim
+              </button>
+              <button
+                v-if="product.product_type === 'size_base'"
+                @click="addToBuy(quantity)"
+                class="border bg-green-3 border-gray-2 rounded py-1 w-full font-bold text-center"
+              >
+                Buy now
+              </button>
+              <button
+                v-if="product.product_type === 'wieght_base'"
+                @click="addToBuy(quantity)"
+                class="border bg-green-3 border-gray-2 rounded py-1 w-full font-bold text-center"
+              >
+                Buy now
+              </button>
             </div>
             <div class="flex gap-2 justify-between">
               <button
@@ -228,6 +244,7 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -247,6 +264,12 @@ export default {
     //   console.log(this.items)
   },
   methods: {
+    // add to addtobag option
+    ...mapActions({
+      addProduct: 'addtobag/addProduct',
+      removeProduct: 'addtobag/removeProduct',
+    }),
+
     closeModal() {
       if (this.close_modal == 'closeModal') {
         this.$emit('product-modal', false)
@@ -272,6 +295,66 @@ export default {
       this.selectedWeight = weight.weight
       this.weightPrice = weight.price
       this.weightStocks = weight.stocks
+    },
+
+    // add to addtobag option
+    addToBuy(item, qtn) {
+      var item = Object.assign(item, { qtn: qtn })
+      // console.log(item)
+      // console.log(qtn)
+      // if (this.countProduct(item.id) < item.stock_product.stock_quantity - 1) {
+      //   this.addProduct(item, qtn);
+      // } else {
+      //   this.$toasted.error("Product not available in stock!");
+      // }
+      if (qtn > 0) {
+        this.addProduct(item, qtn)
+      } else {
+        this.$toast.error('Please seleted quantity this product!')
+      }
+    },
+
+    // countProduct(id) {
+    //   let pro = this.products;
+    //   if (!pro) {
+    //     return 0;
+    //   }
+    //   for (var i = 0; i < pro.length; i++) {
+    //     if (pro[i].id == id) {
+    //       return pro[i].count;
+    //     }
+    //   }
+    //   return 0;
+    // },
+
+    removeFromCart(item) {
+      this.removeProduct(item)
+    },
+
+    removeProductAll(id) {
+      this.allProductRemove(id)
+    },
+  },
+
+  computed: {
+    ...mapGetters({
+      addproducts: 'addtobag/addproducts',
+    }),
+
+    totalCount() {
+      let sum = 0
+      _.each(this.addproducts, (p) => {
+        sum += p.count
+      })
+      return sum
+    },
+
+    totalPrice() {
+      let sum = 0
+      _.each(this.addproducts, (p) => {
+        sum += p.count * p.price
+      })
+      return sum
     },
   },
 }
