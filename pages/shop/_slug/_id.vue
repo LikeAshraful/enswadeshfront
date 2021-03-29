@@ -99,9 +99,13 @@ export default {
   },
   methods: {
     async loadCategory() {
-      await this.$axios.get('/api/categories/base').then((res) => {
-        this.filtersCategory = res.data
-      }),
+      await this.$axios
+        .get(
+          this.$auth.isLoading ? '/api/categories/base' : '/api/base/categories'
+        )
+        .then((res) => {
+          this.filtersCategory = res.data
+        }),
         await this.$axios
           .get('/api/shops/' + this.$route.params.id)
           .then((res) => {
