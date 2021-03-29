@@ -220,7 +220,9 @@ export default {
 
     async loadCategories() {
       await this.$axios
-        .get('/api/categories/base')
+        .get(
+          this.$auth.isLoading ? '/api/categories/base' : '/api/base/categories'
+        )
         .then((res) => {
           this.filtersData = res.data
         })
@@ -243,7 +245,6 @@ export default {
         .then((res) => {
           this.products = res.data.data
           this.isLoading = false
-          console.log(this.products)
         })
     },
 
@@ -259,7 +260,6 @@ export default {
           this.currentPage = this.products.meta.current_page
           this.perPage = this.products.meta.per_page
           this.isLoading = false
-          console.log(this.products)
         })
     },
 
