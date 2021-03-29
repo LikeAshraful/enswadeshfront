@@ -334,6 +334,7 @@
 <script>
 import Breadcrumb from '~/components/common/Breadcrumb.vue'
 export default {
+  middleware: ['auth'],
   components: {
     Breadcrumb,
   },
