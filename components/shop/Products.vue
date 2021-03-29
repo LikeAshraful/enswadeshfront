@@ -26,7 +26,16 @@
                 </div>
                 <p class="font-semibold pt-2">{{ product.name }}</p>
                 <p class="">{{ product.color }}</p>
-                <p class="font-bold">
+
+                <p v-if="product.sizes.length > 0" class="font-bold">
+                  <span>{{product.lowsizeprice ? product.lowsizeprice.price : ''}} - {{product.highsizeprice ? product.highsizeprice.price : ''}} {{product.currency_type}}</span>
+                </p>
+
+                <p v-else-if="product.weights.length > 0" class="font-bold">
+                  <span>{{product.lowweightprice ? product.lowweightprice.price : ''}} - {{product.highweightprice ? product.highweightprice.price : ''}} {{product.currency_type}}</span>
+                </p>
+
+                <p v-else class="font-bold">
                   <span>{{ product.discount_price }} {{product.currency_type}}</span>
                   <span v-if="product.discount" class="text-gray-4 ml-4 line-through">{{product.price}} {{product.currency_type}}</span>
                 </p>
