@@ -44,7 +44,7 @@
               </button>
             </div>
             <button
-              @click="removeMember"
+              @click="removeMember(mem.user_id)"
               class="mt-4 btn-border hover:bg-green-3 focus:outline-none"
             >
               Remove
@@ -67,18 +67,27 @@
             type="text"
             id="phone_number"
             v-model="phone_number"
+            @keyup="searchMember"
             placeholder="01***"
           />
-          <div class="my-4">
+          <input type="hidden" v-model="user_id" />
+          <div class="my-4 grid grid-cols-5 gap-4" v-if="resultMember">
             <div
-              class="border border-gray-3 rounded-md shadow-md w-1/4 p-2 flex items-center justify-center"
+              v-for="(profile, i) in profiles"
+              :key="i"
+              @click="setProfileData(profile)"
+              class="cursor-pointer"
             >
-              <img
-                class="avatar mr-4"
-                src="~/assets/img/default_market.png"
-                alt="Image"
-              />
-              <p class="h3">Adam</p>
+              <div
+                class="border border-gray-3 rounded-md shadow-md p-2 flex items-center justify-center"
+              >
+                <img
+                  class="h-10 w-10 rounded-full mr-4"
+                  src="~/assets/img/default_market.png"
+                  alt="Image"
+                />
+                <p class="font-bold">{{ profile.name }}</p>
+              </div>
             </div>
           </div>
           <label class="input-label" for="name">Name</label>
@@ -132,25 +141,27 @@
               />
             </div>
           </div>
-          <p class="h3 mb-4">Set password:</p>
-          <label for="password" class="input-label">Password</label>
-          <input
-            type="password"
-            id="password"
-            v-model="password"
-            class="input-field focus:outline-none mb-4"
-            placeholder="*****"
-          />
-          <label for="password-confirm" class="input-label"
-            >Confirm Password</label
-          >
-          <input
-            type="password"
-            v-model="password_confirm"
-            id="password_confirm"
-            class="input-field focus:outline-none mb-4"
-            placeholder="*****"
-          />
+          <div v-if="resultMember">
+            <p class="h3 mb-4">Set password:</p>
+            <label for="password" class="input-label">Password</label>
+            <input
+              type="password"
+              id="password"
+              v-model="password"
+              class="input-field focus:outline-none mb-4"
+              placeholder="*****"
+            />
+            <label for="password-confirm" class="input-label"
+              >Confirm Password</label
+            >
+            <input
+              type="password"
+              v-model="password_confirm"
+              id="password_confirm"
+              class="input-field focus:outline-none mb-4"
+              placeholder="*****"
+            />
+          </div>
           <label class="input-label" for="">Permissions</label>
           <div class="flex flex-row mb-4">
             <div class="flex items-center justify-center mr-4">
@@ -193,20 +204,27 @@
         </form>
       </div>
     </div>
-    <remove-member v-if="remove" v-on:closeModal="closeModal()"></remove-member>
+    <remove-member
+      v-if="remove"
+      v-on:closeModal="closeModal()"
+      v-on:yesRemove="yesRemove()"
+    ></remove-member>
   </div>
 </template>
 <script>
 import RemoveMember from '~/components/shop-control-panel-menus/shop-member/modals/RemoveMember.vue'
 export default {
-  middleware: ['auth'],
   data() {
     return {
       shopMember: true,
       remove: false,
+      removeMemberid: '',
+      confirmRemove: false,
       add: false,
+      resultMember: true,
       rows: ['', '', ''],
       name: '',
+      user_id: '',
       email: '',
       title: '',
       start_time: '',
@@ -216,6 +234,7 @@ export default {
       password_confirm: '',
       shop_member_permission: '',
       member: {},
+      profiles: [],
     }
   },
   mounted() {
@@ -225,8 +244,24 @@ export default {
     RemoveMember,
   },
   methods: {
-    removeMember() {
-      this.remove = true
+    removeMember(id) {
+      this.removeMemberid = id
+      if (this.confirmRemove == true) {
+        this.$axios
+          .get('api/staff/' + id)
+          .then((response) => {
+            this.$toast.success('Member remove successfully !')
+            this.memberList()
+          })
+          .catch((error) => {
+            this.$toast.error('Oops..!-' + error.response.data.message)
+          })
+      } else this.remove = true
+    },
+    yesRemove() {
+      this.confirmRemove = true
+      this.removeMember(this.removeMemberid)
+      this.remove = false
     },
     closeModal() {
       this.remove = false
@@ -234,6 +269,48 @@ export default {
     addNew() {
       this.add = true
     },
+    setProfileData(profile) {
+      if (this.$auth.user.phone_number == profile.phone_number) {
+        this.$toast.error('Oops..!-Your are not execute ')
+      } else {
+        this.name = profile.name
+        this.email = profile.email
+        this.phone_number = profile.phone_number
+        this.user_id = profile.id
+        this.resultMember = false
+      }
+    },
+    searchMember(e) {
+      let phone = e.target.value
+      let phone_len = phone.toString()
+      if (phone_len.length === 10) {
+        var formData = new FormData()
+        formData.append('keyword', e.target.value)
+        this.$axios
+          .post('api/search/shop/member', formData)
+          .then((response) => {
+            this.profiles = response.data.data
+            if (this.profiles != null) this.resultMember = true
+          })
+          .catch((error) => {
+            if (error.response.status == 404) {
+              this.$nuxt.error({ statusCode: 404, message: 'err message' })
+            }
+          })
+      }
+    },
+
+    async memberList() {
+      await this.$axios
+        .get('api/staffs')
+        .then((response) => {
+          this.member = response.data.data
+        })
+        .catch((error) => {
+          this.$toast.error('Oops..!-' + error.response.data.message)
+        })
+    },
+
     async shopMemberCreate() {
       var formData = new FormData()
       formData.append('name', this.name)
@@ -242,26 +319,17 @@ export default {
       formData.append('start_time', this.start_time)
       formData.append('end_time', this.end_time)
       formData.append('email', this.email)
+      formData.append('user_id', this.user_id)
       formData.append('password', this.password)
       formData.append('password_confirm', this.password_confirm)
       formData.append('shop_member_permission', this.shop_member_permission)
       this.$axios
         .post('api/staff-create', formData)
         .then((response) => {
-          this.$toast.success('User name change successfully save !')
+          this.$toast.success('Shop member create successfully!')
           this.add = false
           this.shopMember = true
           this.memberList()
-        })
-        .catch((error) => {
-          this.$toast.error('Oops..!-' + error.response.data.message)
-        })
-    },
-    async memberList() {
-      await this.$axios
-        .get('api/staffs')
-        .then((response) => {
-          this.member = response.data.data
         })
         .catch((error) => {
           this.$toast.error('Oops..!-' + error.response.data.message)
