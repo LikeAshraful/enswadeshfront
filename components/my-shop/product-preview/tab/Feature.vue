@@ -1,10 +1,22 @@
 <template>
     <div>
-        This is Product preview Feature component
+        <div class="grid grid-cols-2 gap-4">
+            <div v-for="(feature, i) in getProductPreviewData.features" :key="i">
+                <p>{{feature.title}} : {{feature.feature}}</p>
+            </div>
+        </div>
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-    
+
+  computed: {
+    ...mapGetters(
+      'products', ['getProductPreviewData']
+    )
+  }
+
 }
 </script>
