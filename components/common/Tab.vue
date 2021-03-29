@@ -58,6 +58,15 @@
                         <reviews></reviews>
                     </div>
 
+
+                    <!-- Product Preview component -->
+                    <div v-if="tab.view == 'Informations'">
+                        <preview-information></preview-information>
+                    </div>
+                    <div v-if="tab.view == 'Feature'">
+                        <preview-feature></preview-feature>
+                    </div>
+
                 </span>
             </div>
         </div>
@@ -81,6 +90,9 @@ import Tutorials from '~/components/my-shop/tabs/Tutorials.vue';
 import Information from '../product-details/tabs/Information.vue';
 import Features from '../product-details/tabs/Features.vue';
 import Reviews from '../product-details/tabs/Reviews.vue';
+// Product Add Preview tabs component
+import PreviewInformation from '../my-shop/product-preview/tab/Informations.vue';
+import PreviewFeature from '../my-shop/product-preview/tab/Feature.vue';
 
 export default {
     data() {
@@ -105,6 +117,9 @@ export default {
         Information,
         Features,
         Reviews,
+        // Product Add Preview
+        PreviewInformation,
+        PreviewFeature,
     },
     props: ['showTab','tabs'],
     

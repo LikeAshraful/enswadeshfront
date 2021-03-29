@@ -710,12 +710,15 @@
         </div>
       </div>
     </div>
-    <div class="mt-4 my-8 flex justify-center gap-6 mb-6">
-      <button class="btn-disabled focus:outline-none">Preview</button>
+    <div class="mt-6  flex justify-center gap-6 pb-12">
+      <button @click="preview" class="btn-disabled hover:bg-green-3 hover:text-green-4 focus:outline-none">Preview</button>
       <button class="btn-disabled focus:outline-none" @click="addProducts">
         Finish & Publish
       </button>
     </div>
+
+
+    <product-preview v-if="addPreview" v-on:closePreviewModal="closePreviewModal"></product-preview>
   </div>
 </template>
 <script>
@@ -723,15 +726,18 @@ import Breadcrumb from '~/components/common/Breadcrumb.vue'
 import category from './category'
 import { mapGetters, mapActions } from 'vuex'
 import Loader from '~/components/lib/Loader.vue'
+import ProductPreview from '../../../../components/my-shop/product-preview/ProductPreview.vue'
 export default {
   middleware: ['auth'],
   components: {
     Breadcrumb,
     category,
     Loader,
+    ProductPreview,
   },
   data() {
     return {
+      addPreview: false,
       formats: [
         { title: 'Simple format', value: 'simple_format', item: true },
         { title: 'Size wise', value: ' size_wise', item: false },
@@ -826,6 +832,13 @@ export default {
   },
   watch: {},
   methods: {
+    preview(){
+      this.addPreview = !this.addPreview;
+    },
+    closePreviewModal(){
+      this.preview();
+    },
+
     ...mapActions('products', ['unitsData']),
     ...mapActions('category', ['CategoriesData']),
     ...mapActions('brand', ['BrandData']),
