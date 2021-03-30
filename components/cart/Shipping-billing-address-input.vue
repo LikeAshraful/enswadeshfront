@@ -51,9 +51,10 @@
       />
     </div>
     <p class="title">Billing Address</p>
-    <div class="p-2 my-6">
+    <div class="p-2 my-2">
       <div class="flex items-center">
         <input
+          @click="closeAnotherAddress"
           class="mr-2 w-4 h-4"
           type="radio"
           name="bill"
@@ -75,8 +76,7 @@
 
 
     <div class="" v-if="billAddress">
-      <p class="title">Billing Address</p>
-      <div class="px-2 py-4">
+      <div class="px-2 pb-4">
         <label for="name" class="font-semibold">Your name</label>
         <input
           id="name"
@@ -139,7 +139,10 @@ export default {
   },
   methods: {
     anotherAddress(){
-      this.billAddress = !this.billAddress
+      this.billAddress = true
+    },
+    closeAnotherAddress(){
+      this.billAddress = false
     }
   }
 }
