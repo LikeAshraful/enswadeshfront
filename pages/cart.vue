@@ -40,6 +40,9 @@
                       <br /><span v-if="product.size" class="text-gray-4"
                         >Size: {{ product.size }}</span
                       >
+                      <br /><span v-if="product.weight" class="text-gray-4"
+                        >Weight: {{ product.weight }}</span
+                      >
                     </p>
                   </div>
 

@@ -59,7 +59,7 @@ export const actions = {
       saveProduct(state.addproducts);
     }
 
-    if (item.product_type === 'wieght_base') {
+    if (item.product_type === 'weight_base') {
       let pro = state.addproducts;
       for (var i = 0; i < pro.length; i++) {
         if (pro[i].id == item.id) {

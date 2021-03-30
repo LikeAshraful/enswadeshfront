@@ -198,7 +198,7 @@
                 Buy now siz
               </button>
               <button
-                v-if="product.product_type === 'wieght_base'"
+                v-if="product.product_type === 'weight_base'"
                 @click="addToBuy(product, quantity)"
                 class="border bg-green-3 border-gray-2 rounded py-1 w-full font-bold text-center"
               >
@@ -221,7 +221,7 @@
                 Add to bag
               </button>
               <button
-                v-if="product.product_type === 'wieght_base'"
+                v-if="product.product_type === 'weight_base'"
                 @click="addToBag(product, quantity)"
                 class="focus:outline-none border rounded border-gray-3 py-1 font-bold w-full"
               >
@@ -267,7 +267,7 @@ export default {
       close_modal: 'closeModal',
       quantity: 1,
       selectedSize: null,
-      selectedWeight: '',
+      selectedWeight: null,
       sizePrice: '',
       sizeStocks: '',
       weightPrice: '',
@@ -315,7 +315,6 @@ export default {
 
     // add to addtobag option
     addToBuy(item, qtn, size = null, weight = null) {
-      console.log(item.product_type)
       var item = Object.assign(item, { qtn: qtn })
       if (item.product_type === 'simple') {
         if (qtn > 0) {
@@ -326,7 +325,6 @@ export default {
         }
       }
       if (item.product_type === 'size_base') {
-        console.log(item)
         var price = this.sizePrice
         var stocks = this.sizeStocks
         var item = Object.assign(item, {
@@ -346,12 +344,24 @@ export default {
           this.$toast.error('Please seleted first Size!')
         }
       }
-      if (item.product_type === 'wieght_base') {
-        if (qtn > 0) {
-          //this.addProduct({ item, qtn, size, weight })
-          //this.$router.push({ name: 'cart' })
+      if (item.product_type === 'weight_base') {
+        var price = this.weightPrice
+        var stocks = this.weightStocks
+        var item = Object.assign(item, {
+          qtn: qtn,
+          price: price,
+          stocks: stocks,
+        })
+        if (this.selectedWeight != null) {
+          var weight = this.selectedWeight
+          if (qtn > 0) {
+            this.addProduct({ item, qtn, size, weight })
+            this.$router.push({ name: 'cart' })
+          } else {
+            this.$toast.error('Please seleted quantity this product!')
+          }
         } else {
-          this.$toast.error('Please seleted quantity this product!')
+          this.$toast.error('Please seleted first Weight!')
         }
       }
     },
@@ -364,19 +374,6 @@ export default {
         this.$toast.error('Please seleted quantity this product!')
       }
     },
-
-    // countProduct(id) {
-    //   let pro = this.products;
-    //   if (!pro) {
-    //     return 0;
-    //   }
-    //   for (var i = 0; i < pro.length; i++) {
-    //     if (pro[i].id == id) {
-    //       return pro[i].count;
-    //     }
-    //   }
-    //   return 0;
-    // },
 
     removeFromCart(item) {
       this.removeProduct(item)
