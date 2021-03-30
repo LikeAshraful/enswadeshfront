@@ -3,7 +3,7 @@
     <!-- Breadcrumbs -->
     <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
 
-    <div class="grid sm:grid-cols-2 sm:gap-8 my-4">
+    <div class="grid sm:grid-cols-2 sm:gap-8 py-4">
       <div class="">
         <p class="title">Contact Information</p>
         <div class="px-2 py-4">
