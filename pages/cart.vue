@@ -3,7 +3,7 @@
     <div class="md:my-6 my-4">
       <p class="font-bold text-3xl">Here's what's in your bag.</p>
       <div class="grid md:grid-cols-3 md:gap-12 mb-8">
-        <div v-if="products.length > 0" class="md:col-span-2">
+        <div v-if="products" class="md:col-span-2">
           <table class="w-full mt-2">
             <tr class="font-semibold">
               <td>Product</td>
@@ -26,8 +26,8 @@
                     <img
                       class="w-16 h-16 mr-2"
                       :src="
-                        product.image
-                          ? basePath + '/storage/' + product.image
+                        product.thumbnail
+                          ? basePath + '/storage/' + product.thumbnail
                           : require(`~/assets/img/products/default.png`)
                       "
                       alt=""
@@ -37,11 +37,15 @@
                       ><br /><span class="text-gray-4"
                         >{{ product.count }} PCS</span
                       >
+                      <br /><span v-if="product.size" class="text-gray-4"
+                        >Size: {{ product.size }}</span
+                      >
                     </p>
                   </div>
 
                   <div class="flex gap-2 mt-2">
                     <button
+                      @click="removeProduct(product.id)"
                       class="focus:outline-none border-2 rounded border-gray-3 py-1 px-2 font-medium"
                     >
                       Remove
@@ -60,14 +64,28 @@
                   class="flex justify-between w-20 rounded border border-gray-3 mr-2 my-1"
                 >
                   <button
-                    @click="removeItemQtn(product)"
+                    @click="
+                      removeItemQtn(
+                        product,
+                        product.count,
+                        product.size,
+                        product.weight
+                      )
+                    "
                     class="focus:outline-none bg-gray-3 rounded-l flex items-center justify-center px-1"
                   >
                     <i class="ri-subtract-line"></i>
                   </button>
                   <p>{{ product.count }}</p>
                   <button
-                    @click="addItemQtn(product, product.count)"
+                    @click="
+                      addItemQtn(
+                        product,
+                        product.count,
+                        product.size,
+                        product.weight
+                      )
+                    "
                     class="focus:outline-none bg-gray-3 rounded-r flex items-center justify-center px-1"
                   >
                     <i class="ri-add-fill"></i>
@@ -160,7 +178,7 @@ export default {
     // add to addtobag option
     ...mapActions({
       addProduct: 'addtobag/addProduct',
-      removeProduct: 'addtobag/removeProduct',
+      productRemove: 'addtobag/productRemove',
     }),
 
     addToBuy() {
@@ -168,19 +186,24 @@ export default {
       for (let index = 0; index < productsadd.length; index++) {
         const item = productsadd[index]
         const qtn = productsadd[index].count
-        this.addProduct({ item, qtn })
+        const size = productsadd[index].size
+        const weight = productsadd[index].weight
+        this.addProduct({ item, qtn, size, weight })
       }
     },
 
-    addItemQtn(item, qt) {
+    addItemQtn(item, qt, size, weight) {
+      console.log(qt)
       const qtn = qt + 1
-      console.log(item)
-      console.log(qtn)
-      this.addProduct({ item, qtn })
-      //this.quantity++
+      this.addProduct({ item, qtn, size, weight })
     },
-    removeItemQtn(item) {
-      //if (this.quantity > 0) this.quantity--
+    removeItemQtn(item, qt, size, weight) {
+      const qtn = qt - 1
+      this.addProduct({ item, qtn, size, weight })
+    },
+
+    removeProduct(id) {
+      this.productRemove(id)
     },
   },
 

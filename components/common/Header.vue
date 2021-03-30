@@ -11,12 +11,14 @@
                 to="/"
                 class="text-4xl"
                 :class="currentRouteName == 'index' ? 'text-orange-1' : ''"
-                >
+              >
                 Swadesh
               </n-link>
             </div>
             <div class="flex flex-row items-center justify-center">
-              <div class="border border-gray-4 px-2 py-1 rounded-l-full bg-yellow-3">
+              <div
+                class="border border-gray-4 px-2 py-1 rounded-l-full bg-yellow-3"
+              >
                 <select
                   class="focus:outline-none font-semibold bg-yellow-3"
                   v-model="selectType"
@@ -69,7 +71,9 @@
                 </span>
 
                 <div v-if="$auth.loggedIn" class="dropdown">
-                  <i class="dropbtn hover:text-orange-1 text-xl ri-user-fill"></i>
+                  <i
+                    class="dropbtn hover:text-orange-1 text-xl ri-user-fill"
+                  ></i>
                   <div
                     class="dropdown-content w-64 shadow-lg p-2 border border-gray-3 bg-white"
                   >
@@ -125,26 +129,33 @@
                   v-if="!$auth.loggedIn"
                   v-tooltip="'Account'"
                   @click="showLoginModal"
-                  :class="loginModal || registrationModal ? 'text-orange-1' : ''"
+                  :class="
+                    loginModal || registrationModal ? 'text-orange-1' : ''
+                  "
                   class="focus:outline-none text-xl"
                 >
                   <i class="ri-user-fill"></i>
                 </button>
-
-                <button
-                  v-tooltip="'Cart'"
-                  @click="showCartModal"
-                  :class="
-                    cart ||
-                    currentRouteName == 'cart' ||
-                    currentRouteName == 'checkout'
-                      ? 'text-orange-1'
-                      : ''
-                  "
-                  class="focus:outline-none text-xl ml-2"
-                >
-                  <i class="ri-shopping-bag-2-fill"></i>
-                </button>
+                <span class="relative">
+                  <button
+                    v-tooltip="'Cart'"
+                    @click="showCartModal"
+                    :class="
+                      cart ||
+                      currentRouteName == 'cart' ||
+                      currentRouteName == 'checkout'
+                        ? 'text-orange-1'
+                        : ''
+                    "
+                    class="focus:outline-none text-xl ml-2"
+                  >
+                    <i class="ri-shopping-bag-2-fill"></i>
+                  </button>
+                  <span
+                    class="bg-orange-1 text-white absolute notify-tooltip rounded-full"
+                    >{{ totalCount }}</span
+                  >
+                </span>
               </div>
             </div>
           </div>
@@ -170,7 +181,9 @@
             <n-link to="" class="sm:pl-6 pl-2">
               <div
                 class="flex items-center"
-                :class="currentRouteName == 'flash-sales' ? 'text-orange-1' : ''"
+                :class="
+                  currentRouteName == 'flash-sales' ? 'text-orange-1' : ''
+                "
               >
                 <i class="ri-flashlight-fill"></i>
                 <span>Flash Sales</span>
@@ -191,30 +204,22 @@
             </n-link>
           </div>
         </div>
-
       </div>
     </div>
     <div class="md:hidden bg-yellow-3 p-2 flex flex-wrap items-center">
       <div class="flex-1 flex justify-between items-center">
-          <n-link
-              to="/"
-              class="text-4xl"
-              :class="currentRouteName == 'index' ? 'text-orange-1' : ''"
-              >
-              Swadesh
-          </n-link>
+        <n-link
+          to="/"
+          class="text-4xl"
+          :class="currentRouteName == 'index' ? 'text-orange-1' : ''"
+        >
+          Swadesh
+        </n-link>
       </div>
-      
-
-
-
 
       <div class="flex flex-row justify-end">
         <div>
-          <button
-            class="focus:outline-none text-xl mr-2"
-            v-tooltip="'Chat'"
-          >
+          <button class="focus:outline-none text-xl mr-2" v-tooltip="'Chat'">
             <i class="ri-chat-4-fill"></i>
           </button>
           <span class="relative">
@@ -310,78 +315,88 @@
             <i class="ri-shopping-bag-2-fill"></i>
           </button>
 
-          <span v-if="!modal" @click="openModal" class="cursor-pointer md:hidden">
-              <i class="font-bold text-xl ml-2 ri-menu-line"></i>
+          <span
+            v-if="!modal"
+            @click="openModal"
+            class="cursor-pointer md:hidden"
+          >
+            <i class="font-bold text-xl ml-2 ri-menu-line"></i>
           </span>
         </div>
       </div>
 
-
-
-
       <div v-if="modal">
-          <div @click="closeModal" class="fixed inset-0 z-50">
-              <div class="flex flex-row">
-                  <div class="focus-in max-w-screen-sm shadow-lg bg-green-4 h-screen overflow-auto w-3/4 p-4">
-                      <ul class="font-bold text-gray-5">
-                          <li class="mt-3 px-2 py-1">
-                            <div @click="wait" class="flex flex-row items-center justify-center text-green-4">
-                              <div class="border border-gray-4 px-2 py-1 rounded-l-full bg-white">
-                                <select
-                                  class="focus:outline-none font-semibold bg-white"
-                                  v-model="selectType"
-                                >
-                                  <option
-                                    v-for="(searchdata, keysearchdata) in searchdatas"
-                                    :key="keysearchdata"
-                                    :value="searchdata.value"
-                                    selected
-                                  >
-                                    {{ searchdata.title }}
-                                  </option>
-                                </select>
-                              </div>
-                              <div
-                                style="margin-left: -1px"
-                                class="flex items-center border border-gray-4 px-2 py-1 rounded-r-full overflow-hidden bg-white"
-                              >
-                                <i class="ri-search-line mr-2"></i>
-                                <input
-                                  @keyup="mainSearchInHearder"
-                                  v-model="keyword"
-                                  class="focus:outline-none w-full font-semibold bg-white"
-                                  type="text"
-                                  placeholder="Search anything"
-                                />
-                              </div>
-                            </div>
-                          </li>
-                          <li class="mt-3 px-2 py-1" v-for="(menu, i) in menus" :key="i">
-                              <n-link class="block" :to="menu.url">{{ menu.name }}</n-link>
-                          </li>
-                          <li
-                            v-if="$auth.loggedIn"
-                            @click.prevent="logout"
-                            class="mt-3 px-2 py-1"
-                            >
-                            Sign Out
-                          </li>
-                      </ul>
+        <div @click="closeModal" class="fixed inset-0 z-50">
+          <div class="flex flex-row">
+            <div
+              class="focus-in max-w-screen-sm shadow-lg bg-green-4 h-screen overflow-auto w-3/4 p-4"
+            >
+              <ul class="font-bold text-gray-5">
+                <li class="mt-3 px-2 py-1">
+                  <div
+                    @click="wait"
+                    class="flex flex-row items-center justify-center text-green-4"
+                  >
+                    <div
+                      class="border border-gray-4 px-2 py-1 rounded-l-full bg-white"
+                    >
+                      <select
+                        class="focus:outline-none font-semibold bg-white"
+                        v-model="selectType"
+                      >
+                        <option
+                          v-for="(searchdata, keysearchdata) in searchdatas"
+                          :key="keysearchdata"
+                          :value="searchdata.value"
+                          selected
+                        >
+                          {{ searchdata.title }}
+                        </option>
+                      </select>
+                    </div>
+                    <div
+                      style="margin-left: -1px"
+                      class="flex items-center border border-gray-4 px-2 py-1 rounded-r-full overflow-hidden bg-white"
+                    >
+                      <i class="ri-search-line mr-2"></i>
+                      <input
+                        @keyup="mainSearchInHearder"
+                        v-model="keyword"
+                        class="focus:outline-none w-full font-semibold bg-white"
+                        type="text"
+                        placeholder="Search anything"
+                      />
+                    </div>
                   </div>
-                  <div @click="closeModal" class="font-bold text-3xl text-gray-5">
-                      <button class="focus:outline-none"><i class="ri-close-line"></i></button>
-                  </div>
-              </div>
+                </li>
+                <li class="mt-3 px-2 py-1" v-for="(menu, i) in menus" :key="i">
+                  <n-link class="block" :to="menu.url">{{ menu.name }}</n-link>
+                </li>
+                <li
+                  v-if="$auth.loggedIn"
+                  @click.prevent="logout"
+                  class="mt-3 px-2 py-1"
+                >
+                  Sign Out
+                </li>
+              </ul>
+            </div>
+            <div @click="closeModal" class="font-bold text-3xl text-gray-5">
+              <button class="focus:outline-none">
+                <i class="ri-close-line"></i>
+              </button>
+            </div>
           </div>
-          <div @click="closeModal" class="opacity-50 fixed inset-0 z-40 bg-green-4"></div>
+        </div>
+        <div
+          @click="closeModal"
+          class="opacity-50 fixed inset-0 z-40 bg-green-4"
+        ></div>
       </div>
     </div>
 
     <!-- Cart Modal -->
-    <cart 
-      v-if="cart" 
-      v-on:closeCart="closeCartModal()"
-    ></cart>
+    <cart v-if="cart" v-on:closeCart="closeCartModal()"></cart>
     <!-- Notification Modal  -->
     <notification
       v-if="notify"
@@ -399,12 +414,12 @@
       v-on:closeRegistrationModal="closeRegistrationModal()"
       v-on:openLoginModal="openLoginModal()"
     ></registration>
-
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
+import { mapActions, mapGetters } from 'vuex'
 import Login from '../auth/Login.vue'
 import Cart from '../cart/Short.vue'
 import Notification from '../common/Notification.vue'
@@ -420,6 +435,7 @@ export default {
 
   data() {
     return {
+      proCount: '',
       alls: [],
       markets: [],
       shops: [],
@@ -438,31 +454,37 @@ export default {
       keyword: '',
       notify_count: 0,
 
-      modal:false,
+      modal: false,
       close_modal: 'closeModal',
       menus: [
-          {name: 'S-Wallet', url: ''},
-          {name: 'Earn', url: '/earn'},
-          {name: 'Flash Sales', url: ''},
-          {name: 'Festivals', url: ''},
+        { name: 'S-Wallet', url: '' },
+        { name: 'Earn', url: '/earn' },
+        { name: 'Flash Sales', url: '' },
+        { name: 'Festivals', url: '' },
       ],
     }
   },
   mounted() {
+    this.addToBuy()
     this.loadNotifications()
   },
   methods: {
-    openModal(){
-        this.modal = true;
+    // add to addtobag option
+    ...mapActions({
+      addProduct: 'addtobag/addProduct',
+    }),
+
+    openModal() {
+      this.modal = true
     },
-    closeModal(){
-        if(this.close_modal == 'closeModal'){
-            this.modal = false;
-        }
+    closeModal() {
+      if (this.close_modal == 'closeModal') {
+        this.modal = false
+      }
     },
-    wait(){
-        this.close_modal = 'wait';
-        setTimeout(() => this.close_modal = 'closeModal', 500);
+    wait() {
+      this.close_modal = 'wait'
+      setTimeout(() => (this.close_modal = 'closeModal'), 500)
     },
     showCartModal() {
       this.cart = !this.cart
@@ -513,9 +535,34 @@ export default {
       this.$toast.success('Successfully logout from your account!')
       this.$router.push('/')
     },
+
+    addToBuy() {
+      var productsadd = JSON.parse(localStorage.getItem('addproducts'))
+      for (let index = 0; index < productsadd.length; index++) {
+        const item = productsadd[index]
+        const qtn = productsadd[index].count
+        this.addProduct({ item, qtn })
+      }
+    },
   },
 
   computed: {
+    ...mapGetters({
+      addproducts: 'addtobag/addproducts',
+    }),
+
+    // totalCount() {
+    //   let sum = 0
+    //   _.each(this.addproducts, (p) => {
+    //     sum += p.count
+    //   })
+    //   return sum
+    // },
+
+    totalCount() {
+      return this.addproducts ? this.addproducts.length : 0
+    },
+
     currentRouteName() {
       return this.$route.name
     },
