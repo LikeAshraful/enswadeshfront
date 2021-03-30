@@ -308,7 +308,7 @@ export default {
       //   this.$toasted.error("Product not available in stock!");
       // }
       if (qtn > 0) {
-        this.addProduct(item, qtn)
+        this.addProduct({ item, qtn })
       } else {
         this.$toast.error('Please seleted quantity this product!')
       }

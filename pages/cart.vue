@@ -67,7 +67,7 @@
                   </button>
                   <p>{{ product.count }}</p>
                   <button
-                    @click="addItemQtn(product)"
+                    @click="addItemQtn(product, product.count)"
                     class="focus:outline-none bg-gray-3 rounded-r flex items-center justify-center px-1"
                   >
                     <i class="ri-add-fill"></i>
@@ -167,12 +167,16 @@ export default {
       var productsadd = JSON.parse(localStorage.getItem('addproducts'))
       for (let index = 0; index < productsadd.length; index++) {
         const item = productsadd[index]
-        this.addProduct(item)
+        const qtn = productsadd[index].count
+        this.addProduct({ item, qtn })
       }
     },
 
-    addItemQtn(item) {
+    addItemQtn(item, qt) {
+      const qtn = qt + 1
       console.log(item)
+      console.log(qtn)
+      this.addProduct({ item, qtn })
       //this.quantity++
     },
     removeItemQtn(item) {

@@ -8,8 +8,9 @@ export const getters = {
 
 export const actions = {
   addProduct({ commit, state }, { item, qtn }) {
-    console.log(qtn);
-    if (item.qtn < 0 || item.qtn === 'undefined') {
+    console.log(item
+    );
+    if (qtn < 0 || qtn === 'undefined') {
       let pro = state.addproducts;
       for (var i = 0; i < pro.length; i++) {
         if (pro[i].id == item.id) {
@@ -20,11 +21,12 @@ export const actions = {
       }
       let p = {
         id: item.id,
-        price: item.stock_product ? item.stock_product.unit_price : 0,
-        discount: item.stock_product ? item.stock_product.discount : 0,
-        stocks: item.stock_product ? item.stock_product.stock_quantity : 0,
+        price: item.price,
+        discount: item.discount,
+        stocks: item.stocks,
         name: item.name,
-        image: item.feature_image,
+        image: item.thumbnail,
+        qtn: item.qtn,
         count: 1,
       };
 
@@ -34,7 +36,7 @@ export const actions = {
       let pro = state.addproducts;
         for (var i = 0; i < pro.length; i++) {
           if (pro[i].id == item.id) {
-            commit("UPDATE_COUNT", { count: item.qtn, index: i });
+            commit("UPDATE_COUNT", { count: qtn, index: i });
             saveProduct(state.addproducts);
             return;
           }
@@ -46,8 +48,8 @@ export const actions = {
           stocks: item.stocks,
           name: item.name,
           image: item.thumbnail,
-          qtn: item.qtn,
-          count: item.qtn,
+          qtn: qtn,
+          count: qtn,
         };
 
         commit("ADD_PRODUCT", p);
