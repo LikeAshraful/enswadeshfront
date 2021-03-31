@@ -251,6 +251,8 @@ export default {
           .get('api/staff/' + id)
           .then((response) => {
             this.$toast.success('Member remove successfully !')
+            this.removeMemberid = ''
+            this.confirmRemove = false
             this.memberList()
           })
           .catch((error) => {

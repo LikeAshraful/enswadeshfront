@@ -267,7 +267,7 @@ export default {
         .then((response) => {
           this.checkWishlist()
           loader.hide()
-          this.$toast.success('Success Subscribe!')
+          this.$toast.success('Add to wishlist!')
         })
         .catch((error) => {
           loader.hide()
