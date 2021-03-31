@@ -147,7 +147,9 @@ export default {
     }),
 
     addToBuy() {
-      var productsadd = JSON.parse(localStorage.getItem('addproducts'))
+      var productsadd = localStorage.getItem('addproducts')
+        ? JSON.parse(localStorage.getItem('addproducts'))
+        : []
       for (let index = 0; index < productsadd.length; index++) {
         const item = productsadd[index]
         const qtn = productsadd[index].count
