@@ -2,7 +2,7 @@
     <div>
         <p class="h2">My Shopping Friends</p>
         <div class="mt-4 bg-white">
-            <div class="p-4 flex">
+            <div class="md:p-4 p-2 flex">
                 <div @click="shoppingFriend" :class="shopping_friend ? 'bg-green-3':''" class="btn-group rounded-l hover:bg-green-3">
                     Friend list
                 </div>

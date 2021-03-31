@@ -57,7 +57,7 @@
       </div>
     </div>
     <!-- use the modal component, pass in the prop -->
-    <div v-if="showModal" @click="$emit('close')">
+    <!-- <div v-if="showModal" @click="$emit('close')">
       <transition name="modal">
         <div class="modal-mask">
           <div class="modal-wrapper">
@@ -92,7 +92,44 @@
           </div>
         </div>
       </transition>
+    </div> -->
+    <div class="" v-if="showModal">
+      <div @click="closeModal" class="fixed inset-0 z-50 flex flex-col justify-center items-center my-12">
+          <div @click="wait">
+              <div @click="closeModal" class="btn-close">
+                  <button class="focus:outline-none"><i class="ri-close-line"></i></button>
+              </div>
+              <div class="focus-in max-w-screen-sm shadow-lg bg-white overflow-auto">
+                  <div class="cart-tems-center text-center">
+                      <p class="title">Subscribe Shop</p>
+                      <div class="p-6">
+                          <form @submit.prevent="subscribeShop(shop.id)">
+                            <div class="flex flex-col items-center">
+                              <input
+                                type="text"
+                                class="focus:outline-none input-field md:pr-6 w-full mb-4"
+                                placeholder="Enter nickname"
+                                v-model="nickname"
+                              />
+
+                              <button
+                                type="submit"
+                                :disabled="!Submit"
+                                :class="!Submit ? ' bg-green-1' : ' bg-green-3'"
+                                class="md:px-6 w-full md:py-1 py-1 font-semibold md:text-xl rounded focus:outline-none"
+                              >
+                                Submit
+                              </button>
+                            </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div @click="closeModal" class="opacity-50 fixed inset-0 z-40 bg-green-4"></div>
     </div>
+
   </div>
 </template>
 <script>
@@ -106,6 +143,7 @@ export default {
       subscribeCheck: null,
       count: 0,
       nickname: '',
+      close_modal: 'closeModal'
     }
   },
 
@@ -119,6 +157,17 @@ export default {
     },
   },
   methods: {
+    closeModal(){
+        if(this.close_modal == 'closeModal')
+        {
+            this.showModal = false;
+        }
+    },
+    wait(){
+        this.close_modal = 'wait';
+        setTimeout(() => this.close_modal = 'closeModal', 500);
+    },
+
     async subscribeShop(id) {
       let loader = this.$loading.show({
         // Optional parameters

@@ -1,14 +1,14 @@
 <template>
   <div>
-      <div class="flex justify-between px-4">
-          <p class="h2">My Shops</p>
+      <div class="flex justify-between md:px-4 px-2">
+          <p class="md:h2 h3">My Shops</p>
           <button @click="$router.push({ name: 'shop-create'})" class="btn-add focus:outline-none">Add Shop</button>
       </div>
 
       <div v-if="isLoading" class="text-center">
         <loader></loader>
       </div>
-      <div v-else class="grid grid-cols-3 gap-4 p-4">
+      <div v-else class="grid md:grid-cols-3 grid-cols-2 md:gap-4 gap-2 md:p-4 p-2">
           <div v-for="(item, index) in myshops" :key="index">
               <div class="relative target-area">
                   <img class="h-16 w-full" :src="item.logo ? basePath + 'storage/' + item.logo

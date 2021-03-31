@@ -17,7 +17,7 @@
             }"
           >
             <div
-              class="border-2 md:border-r-8 border-r-4 md:border-b-8 border-b-4 border-green-4 rounded-xl"
+              class="md:border-2 border md:border-r-8 border-r-4 md:border-b-8 border-b-4 border-green-4 rounded-xl"
             >
               <div class="rounded-t-xl relative">
                 <div class="rounded-t-xl relative pb-2/3">
@@ -36,7 +36,7 @@
                     {{ market.shop_count }} Shops
                   </p>
                 </div>
-                <p class="font-bold p-3">{{ market.name }}</p>
+                <p class="font-bold md:p-3 p-2">{{ market.name }}</p>
               </div>
             </div>
           </NuxtLink>

@@ -26,7 +26,7 @@
     </div>
 
     <div class="md:hidden"> 
-      <select @change="getFilterName()" v-model="filterId" class="border-2 border-green-4 py-1 font-bold w-full focus:outline-none">
+      <select @change="getFilterName()" v-model="filterId" class="md:border-2 border border-green-4 py-1 font-bold w-full focus:outline-none">
         <option class="font-semibold" value="" selected>All</option>
         <option class="font-semibold" v-for="(filter, i) in filtersData.data" :key="i" :value="filter.id">{{ filter.name }}</option>
       </select>

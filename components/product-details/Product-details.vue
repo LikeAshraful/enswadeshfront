@@ -8,7 +8,12 @@
         @click="wait"
         class="max-w-screen-sm shadow-lg bg-white overflow-auto"
       >
-        <div class="grid sm:grid-cols-2 gap-6 p-6">
+        <div class="grid sm:grid-cols-2 gap-6 md:p-6 p-2">
+          <div class="sm:hidden w-full text-right">
+            <button @click="closeModal" class="text-2xl focus:outline-none">
+              <i class="ri-close-line"></i>
+            </button>
+          </div>
           <div class="">
             <div class="relative pb-full">
               <img
@@ -40,12 +45,12 @@
             </div>
           </div>
           <div class="">
-            <div class="w-full text-right">
+            <div class="hidden sm:contents w-full text-right">
               <button @click="closeModal" class="text-2xl focus:outline-none">
                 <i class="ri-close-line"></i>
               </button>
             </div>
-            <p class="font-bold text-2xl mb-2">{{ product.name }}</p>
+            <p class="font-bold md:text-2xl text-xl mb-2">{{ product.name }}</p>
             <div class="flex items-center gap-8">
               <p class="bg-green-4 px-2 py-1 text-white inline">
                 4.5<i class="ri-star-fill ml-2 text-yellow-2"></i>

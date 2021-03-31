@@ -6,7 +6,7 @@
                 <input type="text" class="search-input w-full focus:outline-none" placeholder="Search">
             </div>
         </div>
-        <div class="grid grid-cols-3 gap-4 px-4">
+        <div class="grid md:grid-cols-3 grid-cols-2 md:gap-4 gap-2 md:px-4 px-2">
             <div v-for="(item, index) in items" :key="index">
                 <div class="relative">
                     <img class="h-16 w-full" src="~/assets/img/banner_green.png" alt="Image"/>

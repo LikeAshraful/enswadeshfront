@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="p-4">
-      <div class="flex gap-4">
+    <div class="md:p-4 p-2">
+      <div class="flex md:flex-row flex-col gap-4">
         <div class="search">
           <i class="search-icon ri-search-line"></i>
           <input
             type="text"
-            class="search-input focus:outline-none"
+            class="search-input focus:outline-none w-full"
             placeholder="Search"
           />
         </div>
@@ -15,47 +15,49 @@
         </button>
       </div>
     </div>
-    <table class="w-full">
-      <thead class="bg-gray-3 font-semibold">
-        <tr>
-          <td class="py-1 pl-4">Shops</td>
-          <td>Nick name</td>
-          <td>Notifications</td>
-          <td>Actions</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          class="border-b border-gray-3"
-          v-for="(subscribed, i) in subscribed_shops"
-          :key="i"
-        >
-          <td>
-            <div class="pl-4 my-1">
-              <img
-                class="h-16 w-64"
-                src="~/assets/img/banner_green.png"
-                alt="Image"
-              />
-              <p class="h3">{{ subscribed.subscribe_shop.name }}</p>
-            </div>
-          </td>
-          <td>
-            <p class="h3">{{ subscribed.nickname }}</p>
-          </td>
-          <td><p class="h3">No notification</p></td>
-          <td>
-            <div class="dropdown">
-              <i class="dropbtn border rounded p-2 ri-arrow-down-s-fill"></i>
-              <div class="dropdown-content font-semibold">
-                <p>Unsubscribe</p>
-                <p>Change nick name</p>
+    <div class="overflow-x-auto overflow-y-auto">
+      <table class="">
+        <thead class="bg-gray-3 font-semibold">
+          <tr>
+            <td class="py-1 pl-4"><span class="w-36">Shops</span></td>
+            <td><span class="w-40">Nick name</span></td>
+            <td><span class="w-36">Notifications</span></td>
+            <td><span class="w-36">Actions</span></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="border-b border-gray-3"
+            v-for="(subscribed, i) in subscribed_shops"
+            :key="i"
+          >
+            <td>
+              <div class="pl-4 my-1">
+                <img
+                  class="h-16 w-64"
+                  src="~/assets/img/banner_green.png"
+                  alt="Image"
+                />
+                <p class="h3">{{ subscribed.subscribe_shop.name }}</p>
               </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            </td>
+            <td>
+              <p class="h3">{{ subscribed.nickname }}</p>
+            </td>
+            <td><p class="h3">No notification</p></td>
+            <td>
+              <div class="dropdown">
+                <i class="dropbtn border rounded p-2 ri-arrow-down-s-fill"></i>
+                <div class="dropdown-content font-semibold">
+                  <p>Unsubscribe</p>
+                  <p>Change nick name</p>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div class="p-4 flex justify-center">
       <button class="btn-border hover:bg-green-3 focus:outline-none">
         View more

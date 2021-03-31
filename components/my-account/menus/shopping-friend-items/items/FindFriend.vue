@@ -1,15 +1,15 @@
 <template lang="">
     <div>
-        <div class="p-4">
+        <div class="md:p-4 p-2">
             <div class="search">
                 <i class="search-icon ri-search-line"></i>
                 <input type="text" class="search-input w-full focus:outline-none" placeholder="Search">
             </div>
         </div>
         
-        <div class="px-4">
-            <div class="grid grid-cols-4 gap-4">
-                <div class="flex flex-col items-center border-2 border-r-4 border-b-4 rounded-lg p-2">
+        <div class="md:px-4 px-2">
+            <div class="grid md:grid-cols-4 grid-cols-2 md:gap-4 gap-2">
+                <div class="flex flex-col items-center md:border-2 border border-r-4 border-b-4 rounded-lg p-2">
                     <img class="avatar" src="~/assets/img/default_market.png" alt="Image">
                     <p class="h3 mt-4">Adam</p>
                     <button class="mt-4 btn-border hover:bg-green-3 focus:outline-none">Invite</button>

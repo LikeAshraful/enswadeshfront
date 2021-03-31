@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="sm:col-span-3 sm:mt-0 mt-4">
-        <p class="font-bold text-2xl mb-2">{{ getProduct.name }}</p>
+        <p class="font-bold md:text-2xl text-xl mb-2">{{ getProduct.name }}</p>
         <div class="flex items-center gap-8">
           <p class="bg-green-4 px-2 py-1 text-white inline">
             4.5<i class="ri-star-fill ml-2 text-yellow-2"></i>
