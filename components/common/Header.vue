@@ -152,6 +152,7 @@
                     <i class="ri-shopping-bag-2-fill"></i>
                   </button>
                   <span
+                    v-if="totalCount > 0"
                     class="bg-orange-1 text-white absolute notify-tooltip rounded-full"
                     >{{ totalCount }}</span
                   >
@@ -537,7 +538,9 @@ export default {
     },
 
     addToBuy() {
-      var productsadd = JSON.parse(localStorage.getItem('addproducts'))
+      var productsadd = localStorage.getItem('addproducts')
+        ? JSON.parse(localStorage.getItem('addproducts'))
+        : []
       for (let index = 0; index < productsadd.length; index++) {
         const item = productsadd[index]
         const qtn = productsadd[index].count
