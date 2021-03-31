@@ -19,7 +19,7 @@
       <div v-if="shopMember" class="bg-white p-4">
         <div class="grid grid-cols-4 gap-4">
           <div
-            v-for="(mem, i) in member.staffs"
+            v-for="(mem, i) in member"
             :key="i"
             class="flex flex-col items-center border-2 border-r-4 border-b-4 rounded-lg p-2"
           >
@@ -213,9 +213,15 @@
 </template>
 <script>
 import RemoveMember from '~/components/shop-control-panel-menus/shop-member/modals/RemoveMember.vue'
+import Index from '../../lib/index.vue'
 export default {
+  components: {
+    RemoveMember,
+    Index,
+  },
   data() {
     return {
+      shops: [],
       shopMember: true,
       remove: false,
       removeMemberid: '',
@@ -239,9 +245,6 @@ export default {
   },
   mounted() {
     this.memberList()
-  },
-  components: {
-    RemoveMember,
   },
   methods: {
     removeMember(id) {
@@ -304,7 +307,7 @@ export default {
 
     async memberList() {
       await this.$axios
-        .get('api/staffs')
+        .get('api/staffs/' + this.$route.params.id)
         .then((response) => {
           this.member = response.data.data
         })
@@ -322,6 +325,7 @@ export default {
       formData.append('end_time', this.end_time)
       formData.append('email', this.email)
       formData.append('user_id', this.user_id)
+      formData.append('shop_id', this.$route.params.id)
       formData.append('password', this.password)
       formData.append('password_confirm', this.password_confirm)
       formData.append('shop_member_permission', this.shop_member_permission)
