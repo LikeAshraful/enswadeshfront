@@ -7,51 +7,82 @@ export const getters = {
 };
 
 export const actions = {
-  addProduct({ commit, state }, { item, qtn }) {
-    console.log(qtn);
-    if (item.qtn < 0 || item.qtn === 'undefined') {
+  addProduct({ commit, state }, { item, qtn, size, weight}) {
+    if (item.product_type === 'simple') {
       let pro = state.addproducts;
       for (var i = 0; i < pro.length; i++) {
         if (pro[i].id == item.id) {
-          commit("UPDATE_COUNT", { count: pro[i].count + 1, index: i });
+          commit("UPDATE_COUNT", { count: qtn, index: i });
           saveProduct(state.addproducts);
           return;
         }
       }
       let p = {
         id: item.id,
-        price: item.stock_product ? item.stock_product.unit_price : 0,
-        discount: item.stock_product ? item.stock_product.discount : 0,
-        stocks: item.stock_product ? item.stock_product.stock_quantity : 0,
+        product_type: item.product_type,
+        price: item.price,
+        discount: item.discount,
+        stocks: item.stocks,
         name: item.name,
-        image: item.feature_image,
+        thumbnail: item.thumbnail,
+        qtn: item.qtn,
         count: 1,
       };
 
       commit("ADD_PRODUCT", p);
       saveProduct(state.addproducts);
-    } else {
-      let pro = state.addproducts;
-        for (var i = 0; i < pro.length; i++) {
-          if (pro[i].id == item.id) {
-            commit("UPDATE_COUNT", { count: item.qtn, index: i });
-            saveProduct(state.addproducts);
-            return;
-          }
-        }
-        let p = {
-          id: item.id,
-          price: item.price,
-          discount: item.discount,
-          stocks: item.stocks,
-          name: item.name,
-          image: item.thumbnail,
-          qtn: item.qtn,
-          count: item.qtn,
-        };
+    }
 
-        commit("ADD_PRODUCT", p);
-        saveProduct(state.addproducts);
+    if (item.product_type === 'size_base') {
+      let pro = state.addproducts;
+      for (var i = 0; i < pro.length; i++) {
+        if (pro[i].id == item.id) {
+          commit("UPDATE_COUNT", { count: qtn, index: i });
+          saveProduct(state.addproducts);
+          return;
+        }
+      }
+      let p = {
+        id: item.id,
+        product_type: item.product_type,
+        price: item.price,
+        discount: item.discount,
+        stocks: item.stocks,
+        name: item.name,
+        size: size,
+        thumbnail: item.thumbnail,
+        qtn: item.qtn,
+        count: 1,
+      };
+
+      commit("ADD_PRODUCT", p);
+      saveProduct(state.addproducts);
+    }
+
+    if (item.product_type === 'weight_base') {
+      let pro = state.addproducts;
+      for (var i = 0; i < pro.length; i++) {
+        if (pro[i].id == item.id) {
+          commit("UPDATE_COUNT", { count: qtn, index: i });
+          saveProduct(state.addproducts);
+          return;
+        }
+      }
+      let p = {
+        id: item.id,
+        product_type: item.product_type,
+        price: item.price,
+        discount: item.discount,
+        stocks: item.stocks,
+        name: item.name,
+        weight: weight,
+        thumbnail: item.thumbnail,
+        qtn: item.qtn,
+        count: 1,
+      };
+
+      commit("ADD_PRODUCT", p);
+      saveProduct(state.addproducts);
     }
   },
 
@@ -72,6 +103,17 @@ export const actions = {
   },
 
   allProductRemove({ commit, state }, id) {
+    let pro = state.addproducts;
+    for (var i = 0; i < pro.length; i++) {
+      if (pro[i].id == id) {
+        commit("REMOVE_ITEM", i);
+        saveProduct(state.addproducts);
+        return;
+      }
+    }
+  },
+
+  productRemove({ commit, state }, id) {
     let pro = state.addproducts;
     for (var i = 0; i < pro.length; i++) {
       if (pro[i].id == id) {
