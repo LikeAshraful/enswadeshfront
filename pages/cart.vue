@@ -37,10 +37,10 @@
                       ><br /><span class="text-gray-4"
                         >{{ product.count }} PCS</span
                       >
-                      <br /><span v-if="product.size" class="text-gray-4"
+                      <span v-if="product.size" class="text-gray-4"
                         >Size: {{ product.size }}</span
                       >
-                      <br /><span v-if="product.weight" class="text-gray-4"
+                      <span v-if="product.weight" class="text-gray-4"
                         >Weight: {{ product.weight }}</span
                       >
                     </p>
@@ -188,7 +188,7 @@ export default {
       var productsadd = localStorage.getItem('addproducts')
         ? JSON.parse(localStorage.getItem('addproducts'))
         : []
-      for (let index = 0; index < productsadd.length; index++) {
+      for (let index = 0; index < this.addproducts.length; index++) {
         const item = productsadd[index]
         const qtn = productsadd[index].count
         const size = productsadd[index].size

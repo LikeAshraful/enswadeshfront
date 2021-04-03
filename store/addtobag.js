@@ -8,34 +8,7 @@ export const getters = {
 
 export const actions = {
   addProduct({ commit, state }, { item, qtn, size, weight}) {
-    console.log(item)
-    if (item.product_type === 'simple') {
-      let pro = state.addproducts;
-      for (var i = 0; i < pro.length; i++) {
-        if (pro[i].id == item.id) {
-          commit("UPDATE_COUNT", { count: qtn, index: i });
-          saveProduct(state.addproducts);
-          return;
-        }
-      }
-      let p = {
-        id: item.id,
-        shop_id: item.shop ? item.shop.id : item.shop_id,
-        product_type: item.product_type,
-        price: item.price,
-        discount: item.discount,
-        stocks: item.stocks,
-        name: item.name,
-        thumbnail: item.thumbnail,
-        qtn: item.qtn,
-        count: qtn,
-      };
-
-      commit("ADD_PRODUCT", p);
-      saveProduct(state.addproducts);
-    }
-
-    if (item.product_type === 'size_base') {
+   if (item.product_type === 'size_base') {
       let pro = state.addproducts;
       for (var i = 0; i < pro.length; i++) {
         if (pro[i].id == item.id) {
@@ -53,6 +26,7 @@ export const actions = {
         stocks: item.stocks,
         name: item.name,
         size: size,
+        weight: weight,
         thumbnail: item.thumbnail,
         qtn: item.qtn,
         count: qtn,
@@ -79,6 +53,35 @@ export const actions = {
         discount: item.discount,
         stocks: item.stocks,
         name: item.name,
+        size: size,
+        weight: weight,
+        thumbnail: item.thumbnail,
+        qtn: item.qtn,
+        count: qtn,
+      };
+
+      commit("ADD_PRODUCT", p);
+      saveProduct(state.addproducts);
+    }
+
+    if (item.product_type === 'simple') {
+      let pro = state.addproducts;
+      for (var i = 0; i < pro.length; i++) {
+        if (pro[i].id == item.id) {
+          commit("UPDATE_COUNT", { count: qtn, index: i });
+          saveProduct(state.addproducts);
+          return;
+        }
+      }
+      let p = {
+        id: item.id,
+        shop_id: item.shop ? item.shop.id : item.shop_id,
+        product_type: item.product_type,
+        price: item.price,
+        discount: item.discount,
+        stocks: item.stocks,
+        name: item.name,
+        size: size,
         weight: weight,
         thumbnail: item.thumbnail,
         qtn: item.qtn,

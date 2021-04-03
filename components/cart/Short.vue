@@ -39,6 +39,12 @@
                   ><br /><span class="text-gray-4"
                     >{{ product.count }} PCS</span
                   >
+                  <span v-if="product.size" class="text-gray-4"
+                    >Size: {{ product.size }}</span
+                  >
+                  <span v-if="product.weight" class="text-gray-4"
+                    >Weight: {{ product.weight }}</span
+                  >
                 </p>
               </div>
             </td>
@@ -47,14 +53,28 @@
                 class="flex flex-col rounded border border-gray-3 w-8 text-center m-auto my-1"
               >
                 <button
-                  @click="removeItemQtn(product, product.count)"
+                  @click="
+                    removeItemQtn(
+                      product,
+                      product.count,
+                      product.size,
+                      product.weight
+                    )
+                  "
                   class="focus:outline-none bg-gray-3 rounded-t flex items-center justify-center"
                 >
                   <i class="ri-subtract-line"></i>
                 </button>
                 <p>{{ product.count }}</p>
                 <button
-                  @click="addItemQtn(product, product.count)"
+                  @click="
+                    addItemQtn(
+                      product,
+                      product.count,
+                      product.size,
+                      product.weight
+                    )
+                  "
                   class="focus:outline-none bg-gray-3 rounded-b flex items-center justify-center"
                 >
                   <i class="ri-add-fill"></i>
@@ -153,17 +173,20 @@ export default {
       for (let index = 0; index < productsadd.length; index++) {
         const item = productsadd[index]
         const qtn = productsadd[index].count
-        this.addProduct({ item, qtn })
+        const size = productsadd[index].size
+        const weight = productsadd[index].weight
+        this.addProduct({ item, qtn, size, weight })
       }
     },
 
-    addItemQtn(item, qt) {
+    addItemQtn(item, qt, size, weight) {
+      console.log(qt)
       const qtn = qt + 1
-      this.addProduct({ item, qtn })
+      this.addProduct({ item, qtn, size, weight })
     },
-    removeItemQtn(item, qt) {
+    removeItemQtn(item, qt, size, weight) {
       const qtn = qt - 1
-      this.addProduct({ item, qtn })
+      this.addProduct({ item, qtn, size, weight })
     },
     removeProduct(id) {
       this.productRemove(id)
