@@ -19,9 +19,11 @@
             <div class="pb-full relative">
               <img
                 :src="
-                  wishList.product_of_wishlist ? (wishList.product_of_wishlist.thumbnail
-                    ? require(`${basePath} + '/storage/' + ${wishList.product_of_wishlist.thumbnail}`)
-                    : require(`~/assets/img/products/default.png`)) : require(`~/assets/img/products/default.png`)
+                  wishList.product_of_wishlist
+                    ? wishList.product_of_wishlist.thumbnail
+                      ? require(`${basePath} + '/storage/' + ${wishList.product_of_wishlist.thumbnail}`)
+                      : require(`~/assets/img/products/default.png`)
+                    : require(`~/assets/img/products/default.png`)
                 "
                 alt="Image"
                 class="absolute w-full h-full object-cover"
