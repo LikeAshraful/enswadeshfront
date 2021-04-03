@@ -12,7 +12,11 @@
                 class="text-4xl"
                 :class="currentRouteName == 'index' ? 'text-orange-1' : ''"
               >
-                Swadesh
+                <img
+                  class="h-20"
+                  src="~/assets/img/logo.png"
+                  alt="Logo"
+                />
               </n-link>
             </div>
             <div class="flex flex-row items-center justify-center">
@@ -63,11 +67,12 @@
                   >
                     <i class="ri-notification-2-fill"></i>
                   </button>
-                  <span
+                  <div
                     v-if="notify_count > 0"
-                    class="bg-orange-1 text-white absolute notify-tooltip rounded-full"
-                    >{{ notify_count }}</span
+                    class="bg-orange-1 text-white absolute notify-tooltip rounded-full flex items-center justify-center"
                   >
+                    <span>{{ notify_count }}</span>
+                  </div>
                 </span>
 
                 <div v-if="$auth.loggedIn" class="dropdown">
@@ -75,9 +80,9 @@
                     class="dropbtn hover:text-orange-1 text-xl ri-user-fill"
                   ></i>
                   <div
-                    class="dropdown-content w-64 shadow-lg p-2 border border-gray-3 bg-white"
+                    class="dropdown-content w-64 shadow-lg border border-gray-3 bg-white"
                   >
-                    <n-link to="/my-account">
+                    <n-link to="/my-account/shops">
                       <div
                         class="p-4 flex flex-row items-center justify-center gap-2 hover:bg-purple-1 delay-100"
                       >
@@ -92,33 +97,41 @@
                     <div class="divider"></div>
                     <div class="p-4">
                       <n-link
-                        to=""
-                        class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
-                        >My Shopping Friends</n-link
-                      >
-                      <n-link
-                        to=""
-                        class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                        to="/my-account/shops"
+                        class="font-semibold hover:bg-green-3 block p-1 delay-100"
                         >Shops</n-link
                       >
                       <n-link
-                        to=""
-                        class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                        to="/my-account/shoppingfriend"
+                        class="font-semibold hover:bg-green-3 block p-1 delay-100"
+                        >My Shopping Friends</n-link
+                      >
+                      <n-link
+                        to="/my-account/myshops"
+                        class="font-semibold hover:bg-green-3 block p-1 delay-100"
                         >My shops</n-link
                       >
                       <n-link
-                        to=""
-                        class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                        to="/my-account/myorders"
+                        class="font-semibold hover:bg-green-3 block p-1 delay-100"
                         >My orders</n-link
                       >
                       <n-link
-                        to=""
-                        class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                        to="/my-account/mywishlist"
+                        class="font-semibold hover:bg-green-3 block p-1 delay-100"
                         >My wishlist</n-link
                       >
+                      <n-link
+                        to="/my-account/myreviews"
+                        class="font-semibold hover:bg-green-3 block p-1 delay-100"
+                        >My Reviews</n-link
+                      >
+                    </div>
+                    <div class="divider"></div>
+                    <div class="p-4">
                       <span
                         @click.prevent="logout"
-                        class="font-semibold hover:bg-green-3 block p-1 delay-100 cursor-pointer"
+                        class="font-bold hover:bg-green-3 block p-1 delay-100 cursor-pointer"
                         >Sign out</span
                       >
                     </div>
@@ -161,7 +174,7 @@
             </div>
           </div>
         </div>
-        <div class="max-w-screen-xl xl:px-10 px-2 pb-2 m-auto sm:font-bold">
+        <div class="max-w-screen-xl xl:px-10 py-2 m-auto sm:font-bold">
           <div class="flex flex-row items-center justify-center">
             <n-link to="">
               <div class="flex items-center">
@@ -214,7 +227,11 @@
           class="text-4xl"
           :class="currentRouteName == 'index' ? 'text-orange-1' : ''"
         >
-          Swadesh
+          <img
+            class="h-16"
+            src="~/assets/img/logo.png"
+            alt="Logo"
+          />
         </n-link>
       </div>
 
@@ -241,9 +258,9 @@
           <div v-if="$auth.loggedIn" class="dropdown">
             <i class="dropbtn hover:text-orange-1 text-xl ri-user-fill"></i>
             <div
-              class="dropdown-content w-64 shadow-lg p-2 border border-gray-3 bg-white"
+              class="dropdown-content w-64 shadow-lg border border-gray-3 bg-white"
             >
-              <n-link to="/my-account">
+              <n-link to="/my-account/shops">
                 <div
                   class="p-4 flex flex-row items-center justify-center gap-2 hover:bg-purple-1 delay-100"
                 >
@@ -258,33 +275,41 @@
               <div class="divider"></div>
               <div class="p-4">
                 <n-link
-                  to=""
-                  class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
-                  >My Shopping Friends</n-link
-                >
-                <n-link
-                  to=""
-                  class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                  to="/my-account/shops"
+                  class="font-semibold hover:bg-green-3 block p-1 delay-100"
                   >Shops</n-link
                 >
                 <n-link
-                  to=""
-                  class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                  to="/my-account/shoppingfriend"
+                  class="font-semibold hover:bg-green-3 block p-1 delay-100"
+                  >My Shopping Friends</n-link
+                >
+                <n-link
+                  to="/my-account/myshops"
+                  class="font-semibold hover:bg-green-3 block p-1 delay-100"
                   >My shops</n-link
                 >
                 <n-link
-                  to=""
-                  class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                  to="/my-account/myorders"
+                  class="font-semibold hover:bg-green-3 block p-1 delay-100"
                   >My orders</n-link
                 >
                 <n-link
-                  to=""
-                  class="font-semibold hover:bg-green-3 block mb-2 p-1 delay-100"
+                  to="/my-account/mywishlist"
+                  class="font-semibold hover:bg-green-3 block p-1 delay-100"
                   >My wishlist</n-link
                 >
+                <n-link
+                  to="/my-account/myreviews"
+                  class="font-semibold hover:bg-green-3 block p-1 delay-100"
+                  >My Reviews</n-link
+                >
+              </div>
+              <div class="divider"></div>
+              <div class="p-4">
                 <span
                   @click.prevent="logout"
-                  class="font-semibold hover:bg-green-3 block p-1 delay-100 cursor-pointer"
+                  class="font-bold hover:bg-green-3 block p-1 delay-100 cursor-pointer"
                   >Sign out</span
                 >
               </div>
@@ -330,7 +355,7 @@
         <div @click="closeModal" class="fixed inset-0 z-50">
           <div class="flex flex-row">
             <div
-              class="focus-in max-w-screen-sm shadow-lg bg-green-4 h-screen overflow-auto w-3/4 p-4"
+              class="focus-in max-w-screen-sm shadow-lg bg-green-4 h-screen overflow-auto w-3/4 md:p-4"
             >
               <ul class="font-bold text-gray-5">
                 <li class="mt-3 px-2 py-1">
@@ -370,13 +395,13 @@
                     </div>
                   </div>
                 </li>
-                <li class="mt-3 px-2 py-1" v-for="(menu, i) in menus" :key="i">
+                <li class="mt-3 px-4 py-1" v-for="(menu, i) in menus" :key="i">
                   <n-link class="block" :to="menu.url">{{ menu.name }}</n-link>
                 </li>
                 <li
                   v-if="$auth.loggedIn"
                   @click.prevent="logout"
-                  class="mt-3 px-2 py-1"
+                  class="mt-3 px-4 py-1"
                 >
                   Sign Out
                 </li>

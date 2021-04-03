@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="md:my-6 my-4">
+    <div class="md:py-6 py-4">
       <p class="font-bold text-3xl">Here's what's in your bag.</p>
       <div class="grid md:grid-cols-3 md:gap-12 mb-8">
         <div v-if="products" class="md:col-span-2">
