@@ -17,12 +17,10 @@ export const getters = {
 export const actions = {
   async setMyShop({ commit }, ) {
     let res = await this.$axios.$get(`/api/my-shops/${this.$auth.user.id}`)
-    console.log(res)
     commit('SET_MY_SHOP', res.data)
   },
   async myShopsData({ commit }, ) {
     let res = await this.$axios.$get(`/api/my-shops/self`)
-    console.log(res)
     commit('MY_SHOPS', res.data)
   },
 }

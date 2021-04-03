@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Breadcrumbs -->
-    <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
+    <!-- <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb> -->
 
     <!-- Product Details -->
     <div class="grid sm:grid-cols-7 lg:gap-12 md:gap-4 sm:gap-2 py-4">
@@ -110,14 +110,46 @@
               <i class="ri-add-fill"></i>
             </button>
           </div>
-          <n-link
-            to=""
+          <button
+            v-if="getProduct.product_type === 'simple'"
+            @click="addToBuy(getProduct, quantity)"
             class="border bg-green-3 border-gray-2 rounded py-1 w-full font-semibold text-center"
-            >Buy now</n-link
           >
+            Buy now
+          </button>
+          <button
+            v-if="getProduct.product_type === 'size_base'"
+            @click="addToBuy(getProduct, quantity)"
+            class="border bg-green-3 border-gray-2 rounded py-1 w-full font-semibold text-center"
+          >
+            Buy now
+          </button>
+          <button
+            v-if="getProduct.product_type === 'weight_base'"
+            @click="addToBuy(getProduct, quantity)"
+            class="border bg-green-3 border-gray-2 rounded py-1 w-full font-semibold text-center"
+          >
+            Buy now
+          </button>
         </div>
         <div class="flex gap-3 justify-between">
           <button
+            v-if="getProduct.product_type === 'simple'"
+            @click="addToBag(getProduct, quantity)"
+            class="focus:outline-none border rounded border-gray-3 py-1 font-semibold w-full"
+          >
+            Add to bag
+          </button>
+          <button
+            v-if="getProduct.product_type === 'size_base'"
+            @click="addToBag(getProduct, quantity)"
+            class="focus:outline-none border rounded border-gray-3 py-1 font-semibold w-full"
+          >
+            Add to bag
+          </button>
+          <button
+            v-if="getProduct.product_type === 'weight_base'"
+            @click="addToBag(getProduct, quantity)"
             class="focus:outline-none border rounded border-gray-3 py-1 font-semibold w-full"
           >
             Add to bag
@@ -202,15 +234,16 @@
   </div>
 </template>
 <script>
-import Breadcrumb from '~/components/common/Breadcrumb.vue'
+import _ from 'lodash'
+//import Breadcrumb from '~/components/common/Breadcrumb.vue'
 import Tab from '~/components/common/Tab.vue'
 import Bargain from '~/components/product-details/Bargain.vue'
 import SimilarProduct from '~/components/product-details/Similar-product.vue'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   components: {
-    Breadcrumb,
+    //Breadcrumb,
     Tab,
     Bargain,
     SimilarProduct,
@@ -223,12 +256,12 @@ export default {
       disable: false,
       bargain: false,
       photos: ['img-6', 'img-1', 'img-2', 'img-3'],
-      breadCrumbs: [
-        { title: 'Home', url: '/' },
-        { title: '...', url: '' },
-        { title: '', url: '' },
-        { title: '', url: '' },
-      ],
+      // breadCrumbs: [
+      //   { title: 'Home', url: '/' },
+      //   { title: '...', url: '' },
+      //   { title: '', url: '' },
+      //   { title: '', url: '' },
+      // ],
 
       showTab: 'Information',
       tabs: [
@@ -249,10 +282,16 @@ export default {
     this.getSingleProduct()
   },
   mounted() {
-    this.getBreadCrumbItems()
+    //this.getBreadCrumbItems()
     this.checkWishlist()
   },
   methods: {
+    // add to addtobag option
+    ...mapActions({
+      addProduct: 'addtobag/addProduct',
+      removeProduct: 'addtobag/removeProduct',
+    }),
+
     requestWishlistProduct(id) {
       let loader = this.$loading.show({
         // Optional parameters
@@ -308,28 +347,186 @@ export default {
     bargainModal() {
       this.bargain = !this.bargain
     },
-    plus() {
-      this.quantity += 1
-    },
-    minus() {
-      if (this.quantity > 0) this.quantity -= 1
-    },
 
-    // ...mapActions(
-    //   'products', ['getSingleProduct']
-    // )
     getSingleProduct() {
       this.$store.dispatch('products/getSingleProduct', this.$route.params.id)
     },
-    getBreadCrumbItems() {
-      this.breadCrumbs[1].url = localStorage.getItem('market-url')
-      this.breadCrumbs[2].title = localStorage.getItem('shop')
-      this.breadCrumbs[2].url = localStorage.getItem('shop-url')
-      this.breadCrumbs[3].title = localStorage.getItem('product')
+
+    plus() {
+      this.quantity++
     },
+    minus() {
+      if (this.quantity > 0) this.quantity--
+    },
+    selectSize(size) {
+      this.selectedSize = size.size
+      this.sizePrice = size.price
+      this.sizeStocks = size.stocks
+      // alert(size.size)
+    },
+    selectWeight(weight) {
+      this.selectedWeight = weight.weight
+      this.weightPrice = weight.price
+      this.weightStocks = weight.stocks
+    },
+
+    // add to buy option
+    addToBuy(item, qtn, size = null, weight = null) {
+      if (this.checkShop == item.shop.id || this.checkShop == null) {
+        var item = Object.assign(item, { qtn: qtn })
+        if (item.product_type === 'simple') {
+          if (qtn > 0) {
+            this.addProduct({ item, qtn, size, weight })
+            this.$router.push({ name: 'cart' })
+            this.$toast.success('Product add to buy successfullay add!')
+          } else {
+            this.$toast.error('Please seleted quantity this product!')
+          }
+        }
+        if (item.product_type === 'size_base') {
+          var price = this.sizePrice
+          var stocks = this.sizeStocks
+          var item = Object.assign(item, {
+            qtn: qtn,
+            price: price,
+            stocks: stocks,
+          })
+          if (this.selectedSize != null) {
+            var size = this.selectedSize
+            if (qtn > 0) {
+              this.addProduct({ item, qtn, size, weight })
+              this.$router.push({ name: 'cart' })
+              this.$toast.success('Product add to buy successfullay add!')
+            } else {
+              this.$toast.error('Please seleted quantity this product!')
+            }
+          } else {
+            this.$toast.error('Please seleted first Size!')
+          }
+        }
+        if (item.product_type === 'weight_base') {
+          var price = this.weightPrice
+          var stocks = this.weightStocks
+          var item = Object.assign(item, {
+            qtn: qtn,
+            price: price,
+            stocks: stocks,
+          })
+          if (this.selectedWeight != null) {
+            var weight = this.selectedWeight
+            if (qtn > 0) {
+              this.addProduct({ item, qtn, size, weight })
+              this.$router.push({ name: 'cart' })
+              this.$toast.success('Product add to buy successfullay add!')
+            } else {
+              this.$toast.error('Please seleted quantity this product!')
+            }
+          } else {
+            this.$toast.error('Please seleted first Weight!')
+          }
+        }
+      } else {
+        this.$toast.error('Please continue shopping single shop at a time!')
+      }
+    },
+
+    // add to bag option
+    addToBag(item, qtn, size = null, weight = null) {
+      if (this.checkShop == item.shop.id || this.checkShop == null) {
+        var item = Object.assign(item, { qtn: qtn })
+        if (item.product_type === 'simple') {
+          if (qtn > 0) {
+            this.addProduct({ item, qtn, size, weight })
+            this.$toast.success('Product add to bag successfullay add!')
+          } else {
+            this.$toast.error('Please seleted quantity this product!')
+          }
+        }
+        if (item.product_type === 'size_base') {
+          var price = this.sizePrice
+          var stocks = this.sizeStocks
+          var item = Object.assign(item, {
+            qtn: qtn,
+            price: price,
+            stocks: stocks,
+          })
+          if (this.selectedSize != null) {
+            var size = this.selectedSize
+            if (qtn > 0) {
+              this.addProduct({ item, qtn, size, weight })
+              this.$toast.success('Product add to bag successfullay add!')
+            } else {
+              this.$toast.error('Please seleted quantity this product!')
+            }
+          } else {
+            this.$toast.error('Please seleted first Size!')
+          }
+        }
+        if (item.product_type === 'weight_base') {
+          var price = this.weightPrice
+          var stocks = this.weightStocks
+          var item = Object.assign(item, {
+            qtn: qtn,
+            price: price,
+            stocks: stocks,
+          })
+          if (this.selectedWeight != null) {
+            var weight = this.selectedWeight
+            if (qtn > 0) {
+              this.addProduct({ item, qtn, size, weight })
+              this.$toast.success('Product add to bag successfullay add!')
+            } else {
+              this.$toast.error('Please seleted quantity this product!')
+            }
+          } else {
+            this.$toast.error('Please seleted first Weight!')
+          }
+        }
+      } else {
+        this.$toast.error('Please continue shopping single shop at a time!')
+      }
+    },
+
+    removeFromCart(item) {
+      this.removeProduct(item)
+    },
+
+    removeProductAll(id) {
+      this.allProductRemove(id)
+    },
+
+    // getBreadCrumbItems() {
+    //   this.breadCrumbs[1].url = localStorage.getItem('market-url')
+    //   this.breadCrumbs[2].title = localStorage.getItem('shop')
+    //   this.breadCrumbs[2].url = localStorage.getItem('shop-url')
+    //   this.breadCrumbs[3].title = localStorage.getItem('product')
+    // },
   },
   computed: {
-    ...mapGetters('products', ['getProduct']),
+    ...mapGetters({
+      getProduct: 'products/getProduct',
+      addproducts: 'addtobag/addproducts',
+    }),
+
+    checkShop() {
+      return this.addproducts.length > 0 ? this.addproducts[0].shop_id : null
+    },
+
+    totalCount() {
+      let sum = 0
+      _.each(this.addproducts, (p) => {
+        sum += p.count
+      })
+      return sum
+    },
+
+    totalPrice() {
+      let sum = 0
+      _.each(this.addproducts, (p) => {
+        sum += p.count * p.price
+      })
+      return sum
+    },
   },
 }
 </script>
