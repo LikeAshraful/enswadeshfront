@@ -5,7 +5,13 @@
       <div>
         <div class="list">
           <ul>
-            <li class="list-items hover:bg-green-3">
+            <li
+              class="list-items hover:bg-green-3"
+              v-if="
+                $auth.user.shop_member_permission == 1 ||
+                $auth.user.shop_member_permission == 0
+              "
+            >
               <NuxtLink :to="'/shop/self/' + this.$route.params.id"
                 >View Shop</NuxtLink
               >
@@ -46,6 +52,10 @@
               Sales report
             </li>
             <li
+              v-if="
+                $auth.user.shop_member_permission == 3 ||
+                $auth.user.shop_member_permission == 0
+              "
               @click="shopCashbox"
               :class="cashbox ? 'bg-green-3' : ''"
               class="list-items hover:bg-green-3"

@@ -1,4 +1,4 @@
-<template lang="">
+<template>
     <div>
         <div class="grid grid-cols-4 gap-4">
             <div class="bg-white flex flex-col items-center justify-center py-8">
@@ -37,9 +37,9 @@
 </template>
 <script>
 export default {
-    
+
 }
 </script>
-<style lang="">
-    
+<style>
+
 </style>
