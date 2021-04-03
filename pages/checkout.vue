@@ -391,6 +391,7 @@ export default {
     ...mapActions({
       addProduct: 'addtobag/addProduct',
       productRemove: 'addtobag/productRemove',
+      cartRemove: 'addtobag/allProductRemoveCart',
     }),
 
     addToBuy() {
@@ -499,8 +500,9 @@ export default {
           },
         })
         .then((response) => {
-          // this.$router.push(`/shop/self/${this.$route.params.id}`)
           this.$toast.success('Order Placed Successfully !')
+          this.cartRemove()
+          this.$router.push('/order-complete')
         })
         .catch((error) => {
           if (error.response.status == 404) {
