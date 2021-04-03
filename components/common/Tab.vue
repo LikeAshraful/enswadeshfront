@@ -8,7 +8,7 @@
                 </span>
             </div>
             <div class="md:hidden">
-                <select @change="getTabName()" v-model="tabName" class="border-2 border-green-4 py-1 font-bold w-full focus:outline-none">
+                <select @change="getTabName()" v-model="tabName" class="border border-green-4 py-1 font-bold w-full focus:outline-none">
                     <option class="font-semibold" v-for="(tab, i) in tabs" :key="i">{{ tab.name }}</option>
                 </select>
             </div>

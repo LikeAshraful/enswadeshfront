@@ -12,14 +12,14 @@
             </div>
         </div>
         <div v-if="order">
-            <div class="flex justify-between items-center bg-green-1 p-4">
+            <div class="flex md:flex-row flex-col justify-between items-center bg-green-1 p-4">
                 <div>
                     <p class="h3">My Orders</p>
                     <p>Total Order: 2</p>
                 </div>
                 <div class="flex items-center justify-center">
                     <p class="h2 mr-2">Status:</p>
-                    <select class="input-field bg-green-1 font-semibold">
+                    <select class="input-field focus:outline-none bg-green-1 font-semibold">
                         <option selected disabled>Select Any</option>
                         <option>Approved</option>
                         <option>Cancelled</option>
@@ -34,7 +34,7 @@
             <div class="bg-white p-4">
                 <p class="h3 mb-4">Your order ID: <span class="text-orange-1">123456789</span> (4 Items)</p>
                 <p :class="order" class="warning-alart inline mb-4">Processing</p>
-                <div class='grid grid-cols-4 gap-4 mb-4'>
+                <div class='grid md:grid-cols-4 grid-cols-2 md:gap-4 gap-2 md:mb-4 mb-2'>
                     <div v-for="(item, index) in items" :key="index">
                         <div class="pb-full relative mt-4">
                             <img src="~/assets/img/products/default.png" alt="Image" class="absolute w-full h-full object-cover">
@@ -47,7 +47,7 @@
                 <div class="divider mb-4"></div>
                 <p class="h3 mb-4">Your order ID: <span class="text-orange-1">1234567810</span> (2 Items)</p>
                 <p :class="order" class="success-alart inline mb-4">Success</p>
-                <div class='grid grid-cols-4 gap-4 mb-4'>
+                <div class='grid md:grid-cols-4 grid-cols-2 md:gap-4 gap-2 md:mb-4 mb-2'>
                     <div v-for="(item, index) in items2" :key="index">
                         <div class="pb-full relative mt-4">
                             <img src="~/assets/img/products/default.png" alt="Image" class="absolute w-full h-full object-cover">
