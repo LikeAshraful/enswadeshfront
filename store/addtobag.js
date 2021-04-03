@@ -8,6 +8,7 @@ export const getters = {
 
 export const actions = {
   addProduct({ commit, state }, { item, qtn, size, weight}) {
+    console.log(item)
     if (item.product_type === 'simple') {
       let pro = state.addproducts;
       for (var i = 0; i < pro.length; i++) {
@@ -19,6 +20,7 @@ export const actions = {
       }
       let p = {
         id: item.id,
+        shop_id: item.shop ? item.shop.id : item.shop_id,
         product_type: item.product_type,
         price: item.price,
         discount: item.discount,
@@ -26,7 +28,7 @@ export const actions = {
         name: item.name,
         thumbnail: item.thumbnail,
         qtn: item.qtn,
-        count: 1,
+        count: qtn,
       };
 
       commit("ADD_PRODUCT", p);
@@ -44,6 +46,7 @@ export const actions = {
       }
       let p = {
         id: item.id,
+        shop_id: item.shop ? item.shop.id : item.shop_id,
         product_type: item.product_type,
         price: item.price,
         discount: item.discount,
@@ -52,7 +55,7 @@ export const actions = {
         size: size,
         thumbnail: item.thumbnail,
         qtn: item.qtn,
-        count: 1,
+        count: qtn,
       };
 
       commit("ADD_PRODUCT", p);
@@ -70,6 +73,7 @@ export const actions = {
       }
       let p = {
         id: item.id,
+        shop_id: item.shop ? item.shop.id : item.shop_id,
         product_type: item.product_type,
         price: item.price,
         discount: item.discount,
@@ -78,7 +82,7 @@ export const actions = {
         weight: weight,
         thumbnail: item.thumbnail,
         qtn: item.qtn,
-        count: 1,
+        count: qtn,
       };
 
       commit("ADD_PRODUCT", p);

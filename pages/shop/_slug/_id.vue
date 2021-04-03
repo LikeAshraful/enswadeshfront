@@ -95,7 +95,7 @@ export default {
     this.loadProductsPaginate()
   },
   mounted() {
-    this.getBreadCrumbItems()
+    // this.getBreadCrumbItems()
   },
   methods: {
     async loadCategory() {
@@ -144,15 +144,15 @@ export default {
           this.isLoading = false
         })
     },
-    getBreadCrumbItems() {
-      this.breadCrumbs[2].title = localStorage.getItem('city')
-      this.breadCrumbs[2].url = localStorage.getItem('city-url')
-      this.breadCrumbs[3].title = localStorage.getItem('market')
-      this.breadCrumbs[3].url = localStorage.getItem('market-url')
-      this.breadCrumbs[4].title = localStorage.getItem('floor')
-      this.breadCrumbs[4].url = localStorage.getItem('market-url')
-      this.breadCrumbs[5].title = localStorage.getItem('shop')
-    },
+    // getBreadCrumbItems() {
+    //   this.breadCrumbs[2].title = localStorage.getItem('city')
+    //   this.breadCrumbs[2].url = localStorage.getItem('city-url')
+    //   this.breadCrumbs[3].title = localStorage.getItem('market')
+    //   this.breadCrumbs[3].url = localStorage.getItem('market-url')
+    //   this.breadCrumbs[4].title = localStorage.getItem('floor')
+    //   this.breadCrumbs[4].url = localStorage.getItem('market-url')
+    //   this.breadCrumbs[5].title = localStorage.getItem('shop')
+    // },
   },
 }
 </script>

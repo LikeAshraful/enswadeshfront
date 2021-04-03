@@ -11,7 +11,7 @@
       <div v-else class="grid grid-cols-3 gap-4 p-4">
           <div v-for="(item, index) in myshops" :key="index">
               <div class="relative target-area">
-                  <img class="h-16 w-full" :src="item.logo ? basePath + 'storage/' + item.logo
+                  <img class="h-16 w-full" :src="item.logo ? basePath + '/storage/' + item.logo
                     : require(`~/assets/img/banner_green.png`)" alt="Image"/>
                   <p class="absolute top-0 mt-4 w-full text-center font-bold text-white text-xl mb-5" >{{item.shop_no}}</p>
                   <img class="sm:h-56 h-40 w-full" src="~/assets/img/shutter.png" alt="Image" />
