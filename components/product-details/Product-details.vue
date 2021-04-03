@@ -313,13 +313,14 @@ export default {
       this.weightStocks = weight.stocks
     },
 
-    // add to addtobag option
+    // add to buy option
     addToBuy(item, qtn, size = null, weight = null) {
       var item = Object.assign(item, { qtn: qtn })
       if (item.product_type === 'simple') {
         if (qtn > 0) {
           this.addProduct({ item, qtn, size, weight })
           this.$router.push({ name: 'cart' })
+          this.$toast.success('Product add to buy successfullay add!')
         } else {
           this.$toast.error('Please seleted quantity this product!')
         }
@@ -337,6 +338,7 @@ export default {
           if (qtn > 0) {
             this.addProduct({ item, qtn, size, weight })
             this.$router.push({ name: 'cart' })
+            this.$toast.success('Product add to buy successfullay add!')
           } else {
             this.$toast.error('Please seleted quantity this product!')
           }
@@ -357,6 +359,7 @@ export default {
           if (qtn > 0) {
             this.addProduct({ item, qtn, size, weight })
             this.$router.push({ name: 'cart' })
+            this.$toast.success('Product add to buy successfullay add!')
           } else {
             this.$toast.error('Please seleted quantity this product!')
           }
@@ -366,12 +369,56 @@ export default {
       }
     },
 
-    addToBag(item, qtn) {
+    // add to bag option
+    addToBag(item, qtn, size = null, weight = null) {
       var item = Object.assign(item, { qtn: qtn })
-      if (qtn > 0) {
-        this.addProduct({ item, qtn })
-      } else {
-        this.$toast.error('Please seleted quantity this product!')
+      if (item.product_type === 'simple') {
+        if (qtn > 0) {
+          this.addProduct({ item, qtn, size, weight })
+          this.$toast.success('Product add to bag successfullay add!')
+        } else {
+          this.$toast.error('Please seleted quantity this product!')
+        }
+      }
+      if (item.product_type === 'size_base') {
+        var price = this.sizePrice
+        var stocks = this.sizeStocks
+        var item = Object.assign(item, {
+          qtn: qtn,
+          price: price,
+          stocks: stocks,
+        })
+        if (this.selectedSize != null) {
+          var size = this.selectedSize
+          if (qtn > 0) {
+            this.addProduct({ item, qtn, size, weight })
+            this.$toast.success('Product add to bag successfullay add!')
+          } else {
+            this.$toast.error('Please seleted quantity this product!')
+          }
+        } else {
+          this.$toast.error('Please seleted first Size!')
+        }
+      }
+      if (item.product_type === 'weight_base') {
+        var price = this.weightPrice
+        var stocks = this.weightStocks
+        var item = Object.assign(item, {
+          qtn: qtn,
+          price: price,
+          stocks: stocks,
+        })
+        if (this.selectedWeight != null) {
+          var weight = this.selectedWeight
+          if (qtn > 0) {
+            this.addProduct({ item, qtn, size, weight })
+            this.$toast.success('Product add to bag successfullay add!')
+          } else {
+            this.$toast.error('Please seleted quantity this product!')
+          }
+        } else {
+          this.$toast.error('Please seleted first Weight!')
+        }
       }
     },
 
