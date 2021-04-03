@@ -1,13 +1,7 @@
-<template lang="">
-    <div>
-        this is cashbox page
-    </div>
+<template>
+  <div>this is cashbox page</div>
 </template>
 <script>
-export default {
-    
-}
+export default {}
 </script>
-<style lang="">
-    
-</style>
+<style></style>
