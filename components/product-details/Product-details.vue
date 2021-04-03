@@ -92,6 +92,17 @@
                       >{{ product.price }} {{ product.currency_type }}</span
                     >
                   </td>
+                  <td
+                    v-if="product.lowweightprice && !weightPrice"
+                    class="font-semibold"
+                  >
+                    <span>{{ product.lowweightprice.price }}</span>
+                    <span
+                      v-if="product.discount"
+                      class="text-gray-4 ml-4 line-through"
+                      >{{ product.price }} {{ product.currency_type }}</span
+                    >
+                  </td>
                 </tr>
                 <tr v-if="product.sizes.length > 0">
                   <td>Stock:</td>
@@ -105,7 +116,10 @@
                 </tr>
                 <tr v-else-if="product.weights.length > 0">
                   <td>Stock:</td>
-                  <td v-if="product.stocks > 0" class="font-semibold">
+                  <td
+                    v-if="product.lowweightprice.stocks > 0 || weightStocks > 0"
+                    class="font-semibold"
+                  >
                     Available
                   </td>
                   <td v-else class="text-red-500 font-semibold">Unavailable</td>
@@ -144,7 +158,7 @@
                 <tr class="my-3" v-if="product.weights.length > 0">
                   <td>Select Weight:</td>
                   <td>
-                    <span v-for="(weight, k) in product.weights" :key="k">
+                    <span v-for="(weight, l) in product.weights" :key="l">
                       <span
                         @click="selectWeight(weight)"
                         :class="
@@ -311,7 +325,6 @@ export default {
       this.selectedSize = size.size
       this.sizePrice = size.price
       this.sizeStocks = size.stocks
-      // alert(size.size)
     },
     selectWeight(weight) {
       this.selectedWeight = weight.weight

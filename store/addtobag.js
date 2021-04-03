@@ -11,7 +11,7 @@ export const actions = {
    if (item.product_type === 'size_base') {
       let pro = state.addproducts;
       for (var i = 0; i < pro.length; i++) {
-        if (pro[i].id == item.id) {
+        if (pro[i].id == item.id && pro[i].size == item.size) {
           commit("UPDATE_COUNT", { count: qtn, index: i });
           saveProduct(state.addproducts);
           return;
@@ -39,7 +39,7 @@ export const actions = {
     if (item.product_type === 'weight_base') {
       let pro = state.addproducts;
       for (var i = 0; i < pro.length; i++) {
-        if (pro[i].id == item.id) {
+        if (pro[i].id == item.id && pro[i].weight == item.weight) {
           commit("UPDATE_COUNT", { count: qtn, index: i });
           saveProduct(state.addproducts);
           return;
