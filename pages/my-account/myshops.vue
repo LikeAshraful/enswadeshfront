@@ -3,6 +3,7 @@
     <div class="flex justify-between md:px-4 px-2">
       <p class="md:h2 h3">My Shops</p>
       <button
+        v-if="$auth.user.owner_id == 1"
         @click="$router.push({ name: 'shop-create' })"
         class="btn-add focus:outline-none"
       >

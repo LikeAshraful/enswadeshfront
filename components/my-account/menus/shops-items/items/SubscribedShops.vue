@@ -15,8 +15,8 @@
         </button>
       </div>
     </div>
-    <div class="overflow-x-auto overflow-y-auto">
-      <table class="">
+    <div class="">
+      <table class="w-full">
         <thead class="bg-gray-3 font-semibold">
           <tr>
             <td class="py-1 pl-4"><span class="w-36">Shops</span></td>
