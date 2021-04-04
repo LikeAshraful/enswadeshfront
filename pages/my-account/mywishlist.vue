@@ -15,7 +15,7 @@
       <p class="title">My Wishlist ({{ wishlists.length }})</p>
       <div class="bg-white p-4">
         <div v-for="(wishlist, i) in wishlists" :key="i">
-          <div class="grid grid-cols-3 gap-4 items-center justify-center">
+          <div class="grid md:grid-cols-3 grid-cols-1 gap-4 items-center justify-center">
             <div class="pb-full relative">
               <img
                 :src="
@@ -35,11 +35,11 @@
                 {{ wishlist.product_of_wishlist.price }}
                 {{ wishlist.product_of_wishlist.currency_type }}
               </p>
-              <div class="flex flex-col w-2/3">
-                <button class="btn-border bg-green-3 focus:outline-none mt-4">
+              <div class="flex md:flex-col flex-row md:w-2/3">
+                <button class="btn-border bg-green-3 focus:outline-none mt-4 w-full md:mr-0 mr-2">
                   Buy now
                 </button>
-                <button class="btn-border focus:outline-none mt-4">
+                <button class="btn-border focus:outline-none mt-4 w-full">
                   Add to bag
                 </button>
               </div>
@@ -113,7 +113,6 @@ export default {
         .get('api/wishlists')
         .then((response) => {
           this.wishlists = response.data.data
-          console.log(this.wishlists)
         })
         .catch((error) => {
           this.$toast.error('Oops..!-' + error.response.data.message)

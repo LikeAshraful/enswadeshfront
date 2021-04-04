@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="bg-green-4 w-full lg:py-20 md:py-10 py-6">
-      <div class="max-w-screen-xl xl:px-10 px-2 m-auto grid lg:grid-cols-6 sm:grid-cols-2 gap-3 text-white">
+      <div class="max-w-screen-xl xl:px-10 px-2 m-auto grid lg:grid-cols-6 grid-cols-2 gap-3 text-white">
         <div class="py-3 lg:py-0">
           <p class="block font-bold">Menu Name</p>
           <n-link :to="menu.url" class="block" v-for="(menu, i) in menus" :key="i">{{ menu.name }}</n-link>
@@ -18,8 +18,8 @@
           <p class="block font-bold">Stay in touch</p>
           <div class="flex border-b-2 border-white">
             <input class="bg-green-4 w-full focus:outline-none" type="email" placeholder="Email Address">
-            <div class="border-2 border-orange-1 px-3 mb-2 rounded">
-              <img class="h-6" src="~/assets/icons/right_arrow.png" alt="Button">
+            <div class="md:border-2 border border-orange-1 md:px-3 px-2 mb-2 rounded">
+              <img class="md:h-6 h-4" src="~/assets/icons/right_arrow.png" alt="Button">
             </div>
           </div>
         </div>
@@ -37,7 +37,7 @@
           <n-link to=""><span class="border-b-2 border-orange-1">Facebook</span></n-link>
           <n-link to="" class="pl-3"><span class="border-b-2 border-orange-1">Instagram</span></n-link>
           <n-link to="" class="pl-3"><span class="border-b-2 border-orange-1">Twitter</span></n-link>
-          <n-link to="" class="ml-auto bg-green-3 text-green-4 font-bold py-2 px-5 rounded-3xl">
+          <n-link to="" class="ml-auto bg-green-3 text-green-4 font-bold md:py-2 py-1 md:px-5 px-3 rounded-3xl">
             <div class="flex">
               <i class="ri-question-line"></i>
               <span class="pl-2">Help</span>

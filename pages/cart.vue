@@ -1,104 +1,106 @@
 <template>
   <div>
-    <div class="md:my-6 my-4">
-      <p class="font-bold text-3xl">Here's what's in your bag.</p>
+    <div class="md:py-6 py-4">
+      <p class="md:h1 h2">Here's what's in your bag.</p>
       <div class="grid md:grid-cols-3 md:gap-12 mb-8">
-        <div v-if="products" class="md:col-span-2">
+        <div v-if="products" class="md:col-span-2 overflow-x-scroll">
           <table class="w-full mt-2">
-            <tr class="font-semibold">
-              <td>Product</td>
-              <td><div class="w-16">Price</div></td>
+            <thead class="font-bold">
+              <td><div class="w-64">Product</div></td>
+              <td><div class="w-20">Price</div></td>
               <td><div class="w-20">Quantity</div></td>
               <td>
-                <div class="w-32">
+                <div class="w-40">
                   Subtotal <span class="text-gray-4">(vat inc.)</span>
                 </div>
               </td>
-            </tr>
-            <tr
-              v-for="(product, i) in products"
-              :key="i"
-              class="border-t border-gray-3"
-            >
-              <td>
-                <div class="my-1">
-                  <div class="flex">
-                    <img
-                      class="w-16 h-16 mr-2"
-                      :src="
-                        product.thumbnail
-                          ? basePath + '/storage/' + product.thumbnail
-                          : require(`~/assets/img/products/default.png`)
-                      "
-                      alt=""
-                    />
-                    <p>
-                      <span class="">{{ product.name }}</span
-                      ><br /><span class="text-gray-4"
-                        >{{ product.count }} PCS</span
-                      >
-                      <span v-if="product.size" class="text-gray-4"
-                        >Size: {{ product.size }}</span
-                      >
-                      <span v-if="product.weight" class="text-gray-4"
-                        >Weight: {{ product.weight }}</span
-                      >
-                    </p>
-                  </div>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(product, i) in products"
+                :key="i"
+                class="border-t border-gray-3"
+              >
+                <td>
+                  <div class="my-1">
+                    <div class="flex md:flex-row flex-col">
+                      <img
+                        class="w-16 h-16 mr-2"
+                        :src="
+                          product.thumbnail
+                            ? basePath + '/storage/' + product.thumbnail
+                            : require(`~/assets/img/products/default.png`)
+                        "
+                        alt=""
+                      />
+                      <p>
+                        <span class="">{{ product.name }}</span
+                        ><br /><span class="text-gray-4"
+                          >{{ product.count }} PCS</span
+                        >
+                        <br /><span v-if="product.size" class="text-gray-4"
+                          >Size: {{ product.size }}</span
+                        >
+                        <br /><span v-if="product.weight" class="text-gray-4"
+                          >Weight: {{ product.weight }}</span
+                        >
+                      </p>
+                    </div>
 
-                  <div class="flex gap-2 mt-2">
+                    <div class="flex gap-2 mb-2">
+                      <button
+                        @click="removeProduct(product.id)"
+                        class="focus:outline-none border-2 rounded border-gray-3 py-1 px-2 font-medium"
+                      >
+                        Remove
+                      </button>
+                      <button
+                        class="focus:outline-none border-2 rounded border-gray-3 py-1 px-2 font-medium"
+                      >
+                        <i class="ri-heart-line"></i>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+                <td class="font-semibold text-orange-1">৳ {{ product.price }}</td>
+                <td>
+                  <div
+                    class="flex justify-between w-20 rounded border border-gray-3 mr-2 my-1"
+                  >
                     <button
-                      @click="removeProduct(product.id)"
-                      class="focus:outline-none border-2 rounded border-gray-3 py-1 px-2 font-medium"
+                      @click="
+                        removeItemQtn(
+                          product,
+                          product.count,
+                          product.size,
+                          product.weight
+                        )
+                      "
+                      class="focus:outline-none bg-gray-3 rounded-l flex items-center justify-center px-1"
                     >
-                      Remove
+                      <i class="ri-subtract-line"></i>
                     </button>
+                    <p>{{ product.count }}</p>
                     <button
-                      class="focus:outline-none border-2 rounded border-gray-3 py-1 px-2 font-medium"
+                      @click="
+                        addItemQtn(
+                          product,
+                          product.count,
+                          product.size,
+                          product.weight
+                        )
+                      "
+                      class="focus:outline-none bg-gray-3 rounded-r flex items-center justify-center px-1"
                     >
-                      <i class="ri-heart-line"></i>
+                      <i class="ri-add-fill"></i>
                     </button>
                   </div>
-                </div>
-              </td>
-              <td class="font-semibold text-orange-1">৳ {{ product.price }}</td>
-              <td>
-                <div
-                  class="flex justify-between w-20 rounded border border-gray-3 mr-2 my-1"
-                >
-                  <button
-                    @click="
-                      removeItemQtn(
-                        product,
-                        product.count,
-                        product.size,
-                        product.weight
-                      )
-                    "
-                    class="focus:outline-none bg-gray-3 rounded-l flex items-center justify-center px-1"
-                  >
-                    <i class="ri-subtract-line"></i>
-                  </button>
-                  <p>{{ product.count }}</p>
-                  <button
-                    @click="
-                      addItemQtn(
-                        product,
-                        product.count,
-                        product.size,
-                        product.weight
-                      )
-                    "
-                    class="focus:outline-none bg-gray-3 rounded-r flex items-center justify-center px-1"
-                  >
-                    <i class="ri-add-fill"></i>
-                  </button>
-                </div>
-              </td>
-              <td class="font-semibold text-orange-1">
-                ৳ {{ product.price * product.count }}
-              </td>
-            </tr>
+                </td>
+                <td class="font-semibold text-orange-1">
+                  ৳ {{ product.price * product.count }}
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
         <div v-else>

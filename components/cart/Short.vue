@@ -2,16 +2,21 @@
   <div>
     <div
       @click="closeCart"
-      class="fixed inset-0 z-50 flex flex-col items-end max-w-screen-xl xl:px-10 px-2 m-auto mt-24"
+      class="fixed inset-0 z-50 flex flex-col items-end max-w-screen-xl xl:px-10 px-2 m-auto py-12 mt-4"
     >
       <div
         @click="wait"
-        class="focus-in max-w-sm shadow-lg p-4 border border-gray-3 bg-white"
+        class="focus-in max-w-sm shadow-lg p-4 border border-gray-3 bg-white overflow-auto"
       >
+        <div class="w-full text-right">
+          <button @click="closeCart" class="text-2xl focus:outline-none">
+            <i class="ri-close-line"></i>
+          </button>
+        </div>
         <p class="font-bold text-xl mb-6 text-center">
           Here's what's in your bag.
         </p>
-        <table v-if="!emplty">
+        <table v-if="products.length > 0">
           <tr class="font-semibold">
             <td>Product</td>
             <td><div class="mx-2">Quantity</div></td>
@@ -121,7 +126,7 @@
             </td>
           </tr>
         </table>
-        <div v-if="emplty">
+        <div v-else>
           <img class="m-auto h-24" src="~/assets/img/empty.png" alt="Image" />
           <p class="font-bold text-center">
             Your shopping bag is currently empty
@@ -138,7 +143,6 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      emplty: false,
       close_modal: 'closeModal',
       basePath: null,
     }

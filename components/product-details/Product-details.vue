@@ -260,7 +260,7 @@
             </div>
           </div>
         </div>
-        <div class="border-t text-gray-3 mx-6 py-6 text-center">
+        <div class="border-t text-gray-3 mt-4 mx-2 py-6 text-center">
           <n-link
             :to="{
               name: 'product-slug-id',
