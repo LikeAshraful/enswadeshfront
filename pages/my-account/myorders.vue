@@ -1,21 +1,10 @@
-<template lang="">
+<template>
     <div>
-        <!-- <p class="h2">My Order</p> -->
-
-        <div v-if="!order">
-            <p class="title">My Orders</p>
-            <div class="list-items-center">
-                <div class="text-6xl w-32 h-32 mt-10 rounded-full bg-gray-3 text-gray-4 flex items-center justify-center">
-                    <i class="ri-shopping-bag-2-fill"></i>
-                </div>
-                <p class="h2 text-gray-4 mb-10">You have no order</p>
-            </div>
-        </div>
-        <div v-if="order">
+        <div v-if="orders.length > 0">
             <div class="flex md:flex-row flex-col justify-between items-center bg-green-1 p-4">
                 <div>
                     <p class="h3">My Orders</p>
-                    <p>Total Order: 2</p>
+                    <p>Total Order: {{orders.length}}</p>
                 </div>
                 <div class="flex items-center justify-center">
                     <p class="h2 mr-2">Status:</p>
@@ -31,21 +20,22 @@
                     </select>
                 </div>
             </div>
-            <div class="bg-white p-4">
-                <p class="h3 mb-4">Your order ID: <span class="text-orange-1">123456789</span> (4 Items)</p>
-                <p :class="order" class="warning-alart inline mb-4">Processing</p>
+            <div class="bg-white p-4" v-for="order in orders" :key="order.index">
+                <p class="h3 mb-4">Your order ID: <span class="text-orange-1">{{order.order_no}}</span> ({{order.order_items ? order.order_items.length : ''}} Items)</p>
+                <p :class="order" class="warning-alart inline mb-4">{{order.status}}</p>
                 <div class='grid md:grid-cols-4 grid-cols-2 md:gap-4 gap-2 md:mb-4 mb-2'>
-                    <div v-for="(item, index) in items" :key="index">
+                    <div v-for="(item, index) in order.order_items" :key="index">
                         <div class="pb-full relative mt-4">
                             <img src="~/assets/img/products/default.png" alt="Image" class="absolute w-full h-full object-cover">
                         </div>
-                        <p class="font-bold">Product name here</p>
-                        <p class="text-gray-2">Red</p>
-                        <p class="h3">1195 BDT</p>
+                        <p class="font-bold">{{item.product ? item.product.name : ''}}</p>
+                        <p v-if="item.size" class="text-gray-2">Size: {{item.size}}</p>
+                        <p v-if="item.weight" class="text-gray-2">Weight: {{item.weight}}</p>
+                        <p class="h3">{{item.price}} BDT</p>
                     </div>
                 </div>
                 <div class="divider mb-4"></div>
-                <p class="h3 mb-4">Your order ID: <span class="text-orange-1">1234567810</span> (2 Items)</p>
+                <!-- <p class="h3 mb-4">Your order ID: <span class="text-orange-1">1234567810</span> (2 Items)</p>
                 <p :class="order" class="success-alart inline mb-4">Success</p>
                 <div class='grid md:grid-cols-4 grid-cols-2 md:gap-4 gap-2 md:mb-4 mb-2'>
                     <div v-for="(item, index) in items2" :key="index">
@@ -56,7 +46,16 @@
                         <p class="text-gray-2">Red</p>
                         <p class="h3">1195 BDT</p>
                     </div>
+                </div> -->
+            </div>
+        </div>
+        <div v-else>
+            <p class="title">My Orders</p>
+            <div class="list-items-center">
+                <div class="text-6xl w-32 h-32 mt-10 rounded-full bg-gray-3 text-gray-4 flex items-center justify-center">
+                    <i class="ri-shopping-bag-2-fill"></i>
                 </div>
+                <p class="h2 text-gray-4 mb-10">You have no order</p>
             </div>
         </div>
     </div>
@@ -66,6 +65,7 @@ export default {
     data() {
         return {
             order: true,
+            orders:[],
             items: [
                 '',
                 '',
@@ -77,6 +77,20 @@ export default {
                 '',
             ],
         }
+    },
+    mounted() {
+      this.loadOrders();
+    },
+
+    methods: {
+      async loadOrders() {
+        await this.$axios.$get(
+          '/api/orders/self'
+        ).then((res) => {
+          this.orders = res.data;
+          console.log(this.orders)
+        })
+      },
     }
 }
 </script>

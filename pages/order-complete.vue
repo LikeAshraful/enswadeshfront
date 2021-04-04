@@ -129,8 +129,6 @@ export default {
           '/api/orders/last-order'
         ).then((res) => {
           this.order = res.data;
-          console.log(this.order);
-          // this.isLoading = false;
         })
       },
     }
