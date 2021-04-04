@@ -44,24 +44,74 @@
           </p>
           <p class="font-semibold text-blue-1">Rate this product</p>
         </div>
-        {{ getProduct.product_type }}
         <table class="w-full mt-4">
           <tbody>
             <tr>
               <td>Price:</td>
-              <td class="font-semibold">
-                <span
-                  >{{ getProduct.discount_price }}
-                  {{ getProduct.currency_type }}</span
+              <td
+                  v-if="sizePrice || weightPrice || getProduct.discount_price"
+                  class="font-semibold"
                 >
-                <span
-                  v-if="getProduct.discount"
-                  class="text-gray-4 ml-4 line-through"
-                  >{{ getProduct.price }} {{ getProduct.currency_type }}</span
+                  <span
+                    >{{
+                      sizePrice
+                        ? sizePrice
+                        : weightPrice
+                        ? weightPrice
+                        : getProduct.discount_price
+                    }}
+                    {{ getProduct.currency_type }}</span
+                  >
+                  <span
+                    v-if="getProduct.discount"
+                    class="text-gray-4 ml-4 line-through"
+                    >{{ getProduct.price }} {{ getProduct.currency_type }}</span
+                  >
+                </td>
+                <td
+                  v-if="getProduct.lowsizeprice && !sizePrice"
+                  class="font-semibold"
                 >
-              </td>
+                  <span>{{ getProduct.lowsizeprice.price }}</span>
+                  <span
+                    v-if="getProduct.discount"
+                    class="text-gray-4 ml-4 line-through"
+                    >{{ getProduct.price }} {{ getProduct.currency_type }}</span
+                  >
+                </td>
+                <td
+                  v-if="getProduct.lowweightprice && !weightPrice"
+                  class="font-semibold"
+                >
+                  <span>{{ getProduct.lowweightprice.price }}</span>
+                  <span
+                    v-if="getProduct.discount"
+                    class="text-gray-4 ml-4 line-through"
+                    >{{ getProduct.price }} {{ getProduct.currency_type }}</span
+                  >
+                </td>
             </tr>
-            <tr>
+            <tr v-if="getProduct.sizes ? getProduct.sizes.length : 0 > 0">
+              <td>Stock:</td>
+              <td
+                v-if="getProduct.lowsizeprice.stocks > 0 || sizeStocks > 0"
+                class="font-semibold"
+              >
+                Available
+              </td>
+              <td v-else class="text-red-500 font-semibold">Unavailable</td>
+            </tr>
+            <tr v-else-if="getProduct.weights ? getProduct.weights.length : 0 > 0">
+              <td>Stock:</td>
+              <td
+                v-if="getProduct.lowweightprice ? getProduct.lowweightprice.stocks : 0 > 0 || weightStocks > 0"
+                class="font-semibold"
+              >
+                Available
+              </td>
+              <td v-else class="text-red-500 font-semibold">Unavailable</td>
+            </tr>
+            <tr v-else>
               <td>Stock:</td>
               <td v-if="getProduct.stocks > 0" class="font-semibold">
                 Available
@@ -77,6 +127,36 @@
             <tr>
               <td>SKU:</td>
               <td class="font-semibold">{{ getProduct.sku }}</td>
+            </tr>
+            <tr class="my-3" v-if="getProduct.sizes ? getProduct.sizes.length : 0 > 0">
+                <td>Select Size:</td>
+                <td>
+                  <span v-for="(size, k) in getProduct.sizes" :key="k">
+                    <span
+                      @click="selectSize(size)"
+                      :class="size.size == selectedSize ? 'bg-green-3' : ''"
+                      class="p-1 text-center cursor-pointer border mr-3"
+                    >
+                      {{ size.size }}
+                    </span>
+                  </span>
+                </td>
+            </tr>
+            <tr class="my-3" v-if="getProduct.weights ? getProduct.weights.length : 0 > 0">
+              <td>Select Weight:</td>
+              <td>
+                <span v-for="(weight, l) in getProduct.weights" :key="l">
+                  <span
+                    @click="selectWeight(weight)"
+                    :class="
+                      weight.weight == selectedWeight ? 'bg-green-3' : ''
+                    "
+                    class="p-1 text-center cursor-pointer border mr-3"
+                  >
+                    {{ weight.weight }}
+                  </span>
+                </span>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -192,23 +272,10 @@
           <i class="ri-play-circle-fill mr-2 text-orange-1 text-xl"></i>
           <p>Audio file name goes to here</p>
         </div>
-        <p class="font-bold mt-4">Video Description</p>
-        <div class="border-2 border-green-4">
-          <div class="relative pb-3/5">
-            <img
-              class="absolute h-full w-full object-cover"
-              src="~/assets/videos/img-two.png"
-              alt="Image"
-            />
-            <p
-              class="absolute bottom-0 mb-2 ml-2 text-white bg-green-5 px-3 py-1 inline"
-            >
-              10:00
-            </p>
-          </div>
-          <div class="p-2">
-            <p class="font-bold lg:text-lg">Video name goes here</p>
-            <p class="text-gray-2">512 views • 7 min ago</p>
+        <div v-if="getProduct.video_url">
+          <p class="font-bold mt-4">Video Description</p>
+          <div class="border-2 border-green-4">
+              <iframe width="300" height="250" :src="getProduct.video_url" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
         <button
@@ -251,6 +318,7 @@ export default {
   data() {
     return {
       basePath: this.$axios.defaults.baseURL,
+      // getProduct: {},
       quantity: 1,
       wishlistCheck: null,
       disable: false,
@@ -275,15 +343,19 @@ export default {
         { name: 'Product name gose here', color: 'Red', price: '1200' },
         { name: 'Product name gose here', color: 'Red', price: '1200' },
       ],
+      selectedSize: null,
+      selectedWeight: null,
+      sizePrice: '',
+      sizeStocks: '',
+      weightPrice: '',
+      weightStocks: '',
     }
   },
 
-  created() {
-    this.getSingleProduct()
-  },
   mounted() {
     //this.getBreadCrumbItems()
     this.checkWishlist()
+    this.getSingleProduct()
   },
   methods: {
     // add to addtobag option
@@ -348,7 +420,22 @@ export default {
       this.bargain = !this.bargain
     },
 
-    getSingleProduct() {
+    // async getSingleProduct() {
+    //   await this.$axios
+    //     .get('/api/products/' + this.$route.params.id)
+    //     .then((res) => {
+    //       this.getProduct = res.data.data
+    //       console.log(this.getProduct)
+    //     })
+    //     .catch((error) => {
+    //       if (error.response.status == 404) {
+    //         this.$nuxt.error({ statusCode: 404, message: 'err message' })
+    //       }
+    //     })
+    // },
+
+    async getSingleProduct() {
+      await
       this.$store.dispatch('products/getSingleProduct', this.$route.params.id)
     },
 
