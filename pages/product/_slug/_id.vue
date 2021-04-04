@@ -49,47 +49,47 @@
             <tr>
               <td>Price:</td>
               <td
-                  v-if="sizePrice || weightPrice || getProduct.discount_price"
-                  class="font-semibold"
+                v-if="sizePrice || weightPrice || getProduct.discount_price"
+                class="font-semibold"
+              >
+                <span
+                  >{{
+                    sizePrice
+                      ? sizePrice
+                      : weightPrice
+                      ? weightPrice
+                      : getProduct.discount_price
+                  }}
+                  {{ getProduct.currency_type }}</span
                 >
-                  <span
-                    >{{
-                      sizePrice
-                        ? sizePrice
-                        : weightPrice
-                        ? weightPrice
-                        : getProduct.discount_price
-                    }}
-                    {{ getProduct.currency_type }}</span
-                  >
-                  <span
-                    v-if="getProduct.discount"
-                    class="text-gray-4 ml-4 line-through"
-                    >{{ getProduct.price }} {{ getProduct.currency_type }}</span
-                  >
-                </td>
-                <td
-                  v-if="getProduct.lowsizeprice && !sizePrice"
-                  class="font-semibold"
+                <span
+                  v-if="getProduct.discount"
+                  class="text-gray-4 ml-4 line-through"
+                  >{{ getProduct.price }} {{ getProduct.currency_type }}</span
                 >
-                  <span>{{ getProduct.lowsizeprice.price }}</span>
-                  <span
-                    v-if="getProduct.discount"
-                    class="text-gray-4 ml-4 line-through"
-                    >{{ getProduct.price }} {{ getProduct.currency_type }}</span
-                  >
-                </td>
-                <td
-                  v-if="getProduct.lowweightprice && !weightPrice"
-                  class="font-semibold"
+              </td>
+              <td
+                v-if="getProduct.lowsizeprice && !sizePrice"
+                class="font-semibold"
+              >
+                <span>{{ getProduct.lowsizeprice.price }}</span>
+                <span
+                  v-if="getProduct.discount"
+                  class="text-gray-4 ml-4 line-through"
+                  >{{ getProduct.price }} {{ getProduct.currency_type }}</span
                 >
-                  <span>{{ getProduct.lowweightprice.price }}</span>
-                  <span
-                    v-if="getProduct.discount"
-                    class="text-gray-4 ml-4 line-through"
-                    >{{ getProduct.price }} {{ getProduct.currency_type }}</span
-                  >
-                </td>
+              </td>
+              <td
+                v-if="getProduct.lowweightprice && !weightPrice"
+                class="font-semibold"
+              >
+                <span>{{ getProduct.lowweightprice.price }}</span>
+                <span
+                  v-if="getProduct.discount"
+                  class="text-gray-4 ml-4 line-through"
+                  >{{ getProduct.price }} {{ getProduct.currency_type }}</span
+                >
+              </td>
             </tr>
             <tr v-if="getProduct.sizes ? getProduct.sizes.length : 0 > 0">
               <td>Stock:</td>
@@ -101,10 +101,16 @@
               </td>
               <td v-else class="text-red-500 font-semibold">Unavailable</td>
             </tr>
-            <tr v-else-if="getProduct.weights ? getProduct.weights.length : 0 > 0">
+            <tr
+              v-else-if="getProduct.weights ? getProduct.weights.length : 0 > 0"
+            >
               <td>Stock:</td>
               <td
-                v-if="getProduct.lowweightprice ? getProduct.lowweightprice.stocks : 0 > 0 || weightStocks > 0"
+                v-if="
+                  getProduct.lowweightprice
+                    ? getProduct.lowweightprice.stocks
+                    : 0 > 0 || weightStocks > 0
+                "
                 class="font-semibold"
               >
                 Available
@@ -128,29 +134,33 @@
               <td>SKU:</td>
               <td class="font-semibold">{{ getProduct.sku }}</td>
             </tr>
-            <tr class="my-3" v-if="getProduct.sizes ? getProduct.sizes.length : 0 > 0">
-                <td>Select Size:</td>
-                <td>
-                  <span v-for="(size, k) in getProduct.sizes" :key="k">
-                    <span
-                      @click="selectSize(size)"
-                      :class="size.size == selectedSize ? 'bg-green-3' : ''"
-                      class="p-1 text-center cursor-pointer border mr-3"
-                    >
-                      {{ size.size }}
-                    </span>
+            <tr
+              class="my-3"
+              v-if="getProduct.sizes ? getProduct.sizes.length : 0 > 0"
+            >
+              <td>Select Size:</td>
+              <td>
+                <span v-for="(size, k) in getProduct.sizes" :key="k">
+                  <span
+                    @click="selectSize(size)"
+                    :class="size.size == selectedSize ? 'bg-green-3' : ''"
+                    class="p-1 text-center cursor-pointer border mr-3"
+                  >
+                    {{ size.size }}
                   </span>
-                </td>
+                </span>
+              </td>
             </tr>
-            <tr class="my-3" v-if="getProduct.weights ? getProduct.weights.length : 0 > 0">
+            <tr
+              class="my-3"
+              v-if="getProduct.weights ? getProduct.weights.length : 0 > 0"
+            >
               <td>Select Weight:</td>
               <td>
                 <span v-for="(weight, l) in getProduct.weights" :key="l">
                   <span
                     @click="selectWeight(weight)"
-                    :class="
-                      weight.weight == selectedWeight ? 'bg-green-3' : ''
-                    "
+                    :class="weight.weight == selectedWeight ? 'bg-green-3' : ''"
                     class="p-1 text-center cursor-pointer border mr-3"
                   >
                     {{ weight.weight }}
@@ -275,7 +285,15 @@
         <div v-if="getProduct.video_url">
           <p class="font-bold mt-4">Video Description</p>
           <div class="border-2 border-green-4">
-              <iframe width="300" height="250" :src="getProduct.video_url" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe
+              width="300"
+              height="250"
+              :src="getProduct.video_url"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
           </div>
         </div>
         <button
@@ -420,23 +438,11 @@ export default {
       this.bargain = !this.bargain
     },
 
-    // async getSingleProduct() {
-    //   await this.$axios
-    //     .get('/api/products/' + this.$route.params.id)
-    //     .then((res) => {
-    //       this.getProduct = res.data.data
-    //       console.log(this.getProduct)
-    //     })
-    //     .catch((error) => {
-    //       if (error.response.status == 404) {
-    //         this.$nuxt.error({ statusCode: 404, message: 'err message' })
-    //       }
-    //     })
-    // },
-
     async getSingleProduct() {
-      await
-      this.$store.dispatch('products/getSingleProduct', this.$route.params.id)
+      await this.$store.dispatch(
+        'products/getSingleProduct',
+        this.$route.params.id
+      )
     },
 
     plus() {
@@ -459,9 +465,26 @@ export default {
 
     // add to buy option
     addToBuy(item, qtn, size = null, weight = null) {
-      if (this.checkShop == item.shop.id || this.checkShop == null) {
-        var item = Object.assign(item, { qtn: qtn })
-        if (item.product_type === 'simple') {
+      var item = Object.assign(item, { qtn: qtn })
+      if (item.product_type === 'simple') {
+        if (qtn > 0) {
+          this.addProduct({ item, qtn, size, weight })
+          this.$router.push({ name: 'cart' })
+          this.$toast.success('Product add to buy successfullay add!')
+        } else {
+          this.$toast.error('Please seleted quantity this product!')
+        }
+      }
+      if (item.product_type === 'size_base') {
+        var price = this.sizePrice
+        var stocks = this.sizeStocks
+        var item = Object.assign(item, {
+          qtn: qtn,
+          price: price,
+          stocks: stocks,
+        })
+        if (this.selectedSize != null) {
+          var size = this.selectedSize
           if (qtn > 0) {
             this.addProduct({ item, qtn, size, weight })
             this.$router.push({ name: 'cart' })
@@ -469,108 +492,83 @@ export default {
           } else {
             this.$toast.error('Please seleted quantity this product!')
           }
+        } else {
+          this.$toast.error('Please seleted first Size!')
         }
-        if (item.product_type === 'size_base') {
-          var price = this.sizePrice
-          var stocks = this.sizeStocks
-          var item = Object.assign(item, {
-            qtn: qtn,
-            price: price,
-            stocks: stocks,
-          })
-          if (this.selectedSize != null) {
-            var size = this.selectedSize
-            if (qtn > 0) {
-              this.addProduct({ item, qtn, size, weight })
-              this.$router.push({ name: 'cart' })
-              this.$toast.success('Product add to buy successfullay add!')
-            } else {
-              this.$toast.error('Please seleted quantity this product!')
-            }
+      }
+      if (item.product_type === 'weight_base') {
+        var price = this.weightPrice
+        var stocks = this.weightStocks
+        var item = Object.assign(item, {
+          qtn: qtn,
+          price: price,
+          stocks: stocks,
+        })
+        if (this.selectedWeight != null) {
+          var weight = this.selectedWeight
+          if (qtn > 0) {
+            this.addProduct({ item, qtn, size, weight })
+            this.$router.push({ name: 'cart' })
+            this.$toast.success('Product add to buy successfullay add!')
           } else {
-            this.$toast.error('Please seleted first Size!')
+            this.$toast.error('Please seleted quantity this product!')
           }
+        } else {
+          this.$toast.error('Please seleted first Weight!')
         }
-        if (item.product_type === 'weight_base') {
-          var price = this.weightPrice
-          var stocks = this.weightStocks
-          var item = Object.assign(item, {
-            qtn: qtn,
-            price: price,
-            stocks: stocks,
-          })
-          if (this.selectedWeight != null) {
-            var weight = this.selectedWeight
-            if (qtn > 0) {
-              this.addProduct({ item, qtn, size, weight })
-              this.$router.push({ name: 'cart' })
-              this.$toast.success('Product add to buy successfullay add!')
-            } else {
-              this.$toast.error('Please seleted quantity this product!')
-            }
-          } else {
-            this.$toast.error('Please seleted first Weight!')
-          }
-        }
-      } else {
-        this.$toast.error('Please continue shopping single shop at a time!')
       }
     },
 
     // add to bag option
     addToBag(item, qtn, size = null, weight = null) {
-      if (this.checkShop == item.shop.id || this.checkShop == null) {
-        var item = Object.assign(item, { qtn: qtn })
-        if (item.product_type === 'simple') {
+      var item = Object.assign(item, { qtn: qtn })
+      if (item.product_type === 'simple') {
+        if (qtn > 0) {
+          this.addProduct({ item, qtn, size, weight })
+          this.$toast.success('Product add to bag successfullay add!')
+        } else {
+          this.$toast.error('Please seleted quantity this product!')
+        }
+      }
+      if (item.product_type === 'size_base') {
+        var price = this.sizePrice
+        var stocks = this.sizeStocks
+        var item = Object.assign(item, {
+          qtn: qtn,
+          price: price,
+          stocks: stocks,
+        })
+        if (this.selectedSize != null) {
+          var size = this.selectedSize
           if (qtn > 0) {
             this.addProduct({ item, qtn, size, weight })
             this.$toast.success('Product add to bag successfullay add!')
           } else {
             this.$toast.error('Please seleted quantity this product!')
           }
+        } else {
+          this.$toast.error('Please seleted first Size!')
         }
-        if (item.product_type === 'size_base') {
-          var price = this.sizePrice
-          var stocks = this.sizeStocks
-          var item = Object.assign(item, {
-            qtn: qtn,
-            price: price,
-            stocks: stocks,
-          })
-          if (this.selectedSize != null) {
-            var size = this.selectedSize
-            if (qtn > 0) {
-              this.addProduct({ item, qtn, size, weight })
-              this.$toast.success('Product add to bag successfullay add!')
-            } else {
-              this.$toast.error('Please seleted quantity this product!')
-            }
+      }
+      if (item.product_type === 'weight_base') {
+        var price = this.weightPrice
+        var stocks = this.weightStocks
+        var item = Object.assign(item, {
+          qtn: qtn,
+          price: price,
+          stocks: stocks,
+        })
+        if (this.selectedWeight != null) {
+          var weight = this.selectedWeight
+          if (qtn > 0) {
+            this.addProduct({ item, qtn, size, weight })
+            this.$toast.success('Product add to bag successfullay add!')
           } else {
-            this.$toast.error('Please seleted first Size!')
+            this.$toast.error('Please seleted quantity this product!')
           }
+        } else {
+          this.$toast.error('Please seleted first Weight!')
         }
-        if (item.product_type === 'weight_base') {
-          var price = this.weightPrice
-          var stocks = this.weightStocks
-          var item = Object.assign(item, {
-            qtn: qtn,
-            price: price,
-            stocks: stocks,
-          })
-          if (this.selectedWeight != null) {
-            var weight = this.selectedWeight
-            if (qtn > 0) {
-              this.addProduct({ item, qtn, size, weight })
-              this.$toast.success('Product add to bag successfullay add!')
-            } else {
-              this.$toast.error('Please seleted quantity this product!')
-            }
-          } else {
-            this.$toast.error('Please seleted first Weight!')
-          }
-        }
-      } else {
-        this.$toast.error('Please continue shopping single shop at a time!')
       }
     },
 
