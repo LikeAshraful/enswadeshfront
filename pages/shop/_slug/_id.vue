@@ -5,7 +5,7 @@
 
     <div class="lg:py-6 py-3 grid sm:grid-cols-2 gap-3">
       <!-- Shop thumbnail -->
-      <shop-thumbnail></shop-thumbnail>
+      <shop-thumbnail :shop="shop" :basePath="basePath"></shop-thumbnail>
       <!-- Shop Details -->
       <shopDetails :shop="shop"></shopDetails>
     </div>

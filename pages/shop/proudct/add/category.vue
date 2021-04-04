@@ -68,7 +68,7 @@
 </template>
 <script>
 export default {
-  props: ['categories', 'name'],
+  props: ['categories', 'name', 'shopId'],
   data() {
     return {
       parent_id: '',
@@ -90,6 +90,7 @@ export default {
         parent_id: this.parent_id,
         name: this.popsname,
         description: this.description,
+        shop_id: this.shopId,
       }
       this.$store
         .dispatch('category/CategoriesbaseAdd', data)
