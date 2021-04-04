@@ -174,6 +174,7 @@
             <category
               :categories="categoriesbase"
               :name="categoriessearch"
+              :shopId="shopIdForCategory"
               v-if="modelcategory"
               v-on:closeModal="closeModal()"
             ></category>
@@ -710,15 +711,22 @@
         </div>
       </div>
     </div>
-    <div class="mt-6  flex justify-center gap-6 pb-12">
-      <button @click="preview" class="btn-disabled hover:bg-green-3 hover:text-green-4 focus:outline-none">Preview</button>
+    <div class="mt-6 flex justify-center gap-6 pb-12">
+      <button
+        @click="preview"
+        class="btn-disabled hover:bg-green-3 hover:text-green-4 focus:outline-none"
+      >
+        Preview
+      </button>
       <button class="btn-disabled focus:outline-none" @click="addProducts">
         Finish & Publish
       </button>
     </div>
 
-
-    <product-preview v-if="addPreview" v-on:closePreviewModal="closePreviewModal"></product-preview>
+    <product-preview
+      v-if="addPreview"
+      v-on:closePreviewModal="closePreviewModal"
+    ></product-preview>
   </div>
 </template>
 <script>
@@ -744,6 +752,7 @@ export default {
         { title: 'Weight wise', value: 'weight_wise', item: false },
       ],
       ref: '',
+      shopIdForCategory: this.$route.params.id,
       isLoading: false,
       brandtoggle: false,
       categoriestoggle: false,
@@ -833,8 +842,8 @@ export default {
   },
   watch: {},
   methods: {
-    closePreviewModal(){
-      this.preview();
+    closePreviewModal() {
+      this.preview()
     },
 
     ...mapActions('products', ['unitsData']),
@@ -964,11 +973,11 @@ export default {
         }
       }
 
-      return formData;
+      return formData
     },
 
     async addProducts() {
-     let allFormData = this.getAllFromData();
+      let allFormData = this.getAllFromData()
 
       await this.$axios
         .post('/api/products/', allFormData, {
@@ -988,21 +997,20 @@ export default {
       //this.$store.dispatch('products/addProducts', formData)
     },
 
-    preview(){
-      this.addPreview = !this.addPreview;
+    preview() {
+      this.addPreview = !this.addPreview
 
-      let productData = this.getAllFromData();
-      let data = {};
+      let productData = this.getAllFromData()
+      let data = {}
       for (const [key, value] of productData.entries()) {
         data[key] = value
       }
 
-      data['thumb_url'] = this.thumbnail_images;
-      data['gallary_images_url'] = this.gallery_images_url;
+      data['thumb_url'] = this.thumbnail_images
+      data['gallary_images_url'] = this.gallery_images_url
 
       // localStorage.setItem('previewdata', JSON.stringify(data))
       this.$store.dispatch('products/productPreview', data)
-
     },
 
     addList() {

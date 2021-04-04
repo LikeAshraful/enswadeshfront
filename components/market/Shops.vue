@@ -7,9 +7,7 @@
           <p class="h2">{{ floor }}</p>
         </div>
         <div class="flex md:justify-end justify-between gap-4">
-          <div
-            class="search"
-          >
+          <div class="search">
             <i class="search-icon ri-search-line mr-2"></i>
             <input
               @keyup="searchShopByMarket"
@@ -54,7 +52,7 @@
                 class="h-16 w-full"
                 :src="
                   shop.logo
-                    ? basePath + 'storage/' + shop.logo
+                    ? basePath + '/storage/' + shop.logo
                     : require(`~/assets/img/banner_green.png`)
                 "
                 alt="Image"
@@ -90,7 +88,7 @@
               class="h-16 w-full"
               :src="
                 shop.logo
-                  ? basePath + 'storage/' + shop.logo
+                  ? basePath + '/storage/' + shop.logo
                   : require(`~/assets/img/banner_green.png`)
               "
               alt="Image"
@@ -147,11 +145,10 @@ export default {
             })
     }, 500),
 
-    setShop(name, slug, id)
-    {
-      localStorage.setItem('shop', name);
-      localStorage.setItem('shop-url', '/shop/'+slug+"/"+id);
-    }
+    setShop(name, slug, id) {
+      localStorage.setItem('shop', name)
+      localStorage.setItem('shop-url', '/shop/' + slug + '/' + id)
+    },
   },
 
   computed: {

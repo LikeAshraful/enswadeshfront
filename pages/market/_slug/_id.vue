@@ -60,7 +60,7 @@ export default {
       floorName: '',
       shopCountByFloor: [],
       shops: [],
-      market: [],
+      market: {},
       breadCrumbs: [
         { title: 'Home', url: '/' },
         { title: 'Go To Market', url: '/cities' },
@@ -72,9 +72,9 @@ export default {
   },
 
   mounted() {
-    this.loadFloors();
-    this.loadMarket();
-    this.getBreadCrumbItems();
+    this.loadFloors()
+    this.loadMarket()
+    this.getBreadCrumbItems()
   },
 
   methods: {
@@ -87,11 +87,17 @@ export default {
           this.floorName = this.floors.data[0].floor
           const floor = this.floors.data[0].floor
           const id = this.floors.data[0].id
-          setTimeout(function () { 
-            // console.log(floor, id)
-            localStorage.setItem('floor', floor);
-            localStorage.setItem('floor-url', '/shops/shops-by-market-by-floors/'+id);
-          }.bind(this), 1000);
+          setTimeout(
+            function () {
+              // console.log(floor, id)
+              localStorage.setItem('floor', floor)
+              localStorage.setItem(
+                'floor-url',
+                '/shops/shops-by-market-by-floors/' + id
+              )
+            }.bind(this),
+            1000
+          )
           this.loadShops()
         })
     },
@@ -103,7 +109,7 @@ export default {
         })
     },
     async loadShops(value, floor) {
-      localStorage.setItem('floor', floor);
+      localStorage.setItem('floor', floor)
       await this.$axios
         .get(
           value
@@ -129,13 +135,12 @@ export default {
           this.market = res.data
         })
     },
-    getBreadCrumbItems()
-    {
-      this.breadCrumbs[2].title = localStorage.getItem('city');
-      this.breadCrumbs[2].url = localStorage.getItem('city-url');
-      this.breadCrumbs[3].title = localStorage.getItem('market');
+    getBreadCrumbItems() {
+      this.breadCrumbs[2].title = localStorage.getItem('city')
+      this.breadCrumbs[2].url = localStorage.getItem('city-url')
+      this.breadCrumbs[3].title = localStorage.getItem('market')
       // this.breadCrumbs[3].url = localStorage.getItem('market-url');
-    }
+    },
   },
 }
 </script>

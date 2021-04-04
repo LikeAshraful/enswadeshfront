@@ -3,7 +3,7 @@
     <div class="md:py-6 py-4">
       <p class="md:h1 h2">Here's what's in your bag.</p>
       <div class="grid md:grid-cols-3 md:gap-12 mb-8">
-        <div v-if="products" class="md:col-span-2 overflow-x-scroll">
+        <div v-if="products.length > 0" class="md:col-span-2 overflow-x-scroll">
           <table class="w-full mt-2">
             <thead class="font-bold">
               <td><div class="w-64">Product</div></td>
@@ -62,7 +62,9 @@
                     </div>
                   </div>
                 </td>
-                <td class="font-semibold text-orange-1">৳ {{ product.price }}</td>
+                <td class="font-semibold text-orange-1">
+                  ৳ {{ product.price }}
+                </td>
                 <td>
                   <div
                     class="flex justify-between w-20 rounded border border-gray-3 mr-2 my-1"
@@ -103,8 +105,11 @@
             </tbody>
           </table>
         </div>
-        <div v-else>
-          <P class="text-red-500">No Product add to Bag!</P>
+        <div v-else class="md:col-span-2">
+          <img class="m-auto h-64" src="~/assets/img/empty.png" alt="Image" />
+          <p class="font-bold text-center">
+            Your shopping bag is currently empty
+          </p>
         </div>
         <div class="mt-6">
           <p class="font-bold text-lg">Summary</p>
