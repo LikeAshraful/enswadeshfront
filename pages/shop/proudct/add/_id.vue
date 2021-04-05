@@ -655,7 +655,19 @@
                   >
                   <p class="inline">or drop audio files here</p>
                 </div>
-                <input class="hidden" type="file" id="audio" />
+                <label for="audio" class="cursor-pointer">
+                  <div
+                    v-if="audio_url"
+                    style="padding-bottom: 20px"
+                    class="relative flex flex-row justify-center"
+                  >
+                    <audio controls>
+                      <source :src="audio_url">
+                    Your browser does not support the audio element.
+                    </audio>
+                  </div>
+                <input class="hidden" @change="audioFile" type="file" id="audio" />
+                </label>
               </div>
             </div>
             <div class="mb-4">
@@ -668,10 +680,11 @@
               />
             </div>
             <div class="mb-2">
-              <label class="input-label" for="">Bargain</label> <br />
+              <label class="input-label" for="bargain">Bargain</label> <br />
+                  <input type="hidden" v-model="can_bargain" id="bargain">
               <span
                 @click="bargainToggle"
-                class="input-label cursor-pointer text-3xl"
+                class="input-label cursor-pointer text-5xl"
                 :class="can_bargain ? 'text-blue-1' : 'text-gray-2'"
                 for="bargain-opt"
                 ><i
@@ -789,6 +802,8 @@ export default {
       alert: '',
       thumbnail: '',
       thumbnail_images: null,
+      audio: '',
+      audio_url: null,
       video_url: '',
       delivery_offer: '',
       url: null,
@@ -876,6 +891,10 @@ export default {
       this.thumbnail = event.target.files[0]
       this.thumbnail_images = URL.createObjectURL(event.target.files[0])
     },
+    audioFile(e) {
+      this.audio = e.target.files[0]
+      this.audio_url = URL.createObjectURL(e.target.files[0])
+    },
     addFeature() {
       this.features.push({
         title: '',
@@ -947,7 +966,9 @@ export default {
       formData.append('guarantee', this.guarantee)
       formData.append('description', this.description)
       formData.append('thumbnail', this.thumbnail)
+      formData.append('audio', this.audio)
       formData.append('video_url', this.video_url)
+      formData.append('can_bargain', this.can_bargain)
       formData.append('delivery_offer', this.delivery_offer)
       for (const i of Object.keys(this.gallery_images)) {
         formData.append('images[]', this.gallery_images[i])
@@ -1008,6 +1029,7 @@ export default {
 
       data['thumb_url'] = this.thumbnail_images
       data['gallary_images_url'] = this.gallery_images_url
+      data['audio_url'] = this.audio_url
 
       // localStorage.setItem('previewdata', JSON.stringify(data))
       this.$store.dispatch('products/productPreview', data)
