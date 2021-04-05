@@ -277,10 +277,16 @@
         </p>
       </div>
       <div class="sm:col-span-2 sm:mt-0 mt-4">
-        <p class="font-bold">Audio Description</p>
-        <div class="flex items-center">
-          <i class="ri-play-circle-fill mr-2 text-orange-1 text-xl"></i>
-          <p>Audio file name goes to here</p>
+        <div v-if="getProduct.audio">
+            <p class="font-bold">Audio Description</p>
+            <div class="flex items-center">
+              <i class="ri-play-circle-fill mr-2 text-orange-1 text-xl"></i>
+              <!-- <p>Audio file name goes to here</p> -->
+              <audio controls>
+                  <source :src="basePath + '/storage/' + getProduct.audio[0].src">
+                  Your browser does not support the audio element.
+              </audio>
+            </div>
         </div>
         <div v-if="getProduct.video_url">
           <p class="font-bold mt-4">Video Description</p>
