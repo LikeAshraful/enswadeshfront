@@ -684,7 +684,7 @@
                   <input type="hidden" v-model="can_bargain" id="bargain">
               <span
                 @click="bargainToggle"
-                class="input-label cursor-pointer text-5xl"
+                class="input-label cursor-pointer text-6xl"
                 :class="can_bargain ? 'text-blue-1' : 'text-gray-2'"
                 for="bargain-opt"
                 ><i
@@ -953,7 +953,6 @@ export default {
       formData.append('user_id', this.$auth.user.id)
       formData.append('brand_id', this.brand_id)
       formData.append('category_id', this.category_id)
-      formData.append('can_bargain', this.can_bargain)
       formData.append('sku', this.sku)
       formData.append('price', this.price)
       formData.append('currency_type', this.currency_type)
@@ -968,7 +967,11 @@ export default {
       formData.append('thumbnail', this.thumbnail)
       formData.append('audio', this.audio)
       formData.append('video_url', this.video_url)
-      formData.append('can_bargain', this.can_bargain)
+      if(this.can_bargain === true){
+      formData.append('can_bargain', 1)
+      }else {
+      formData.append('can_bargain', 0)
+      }
       formData.append('delivery_offer', this.delivery_offer)
       for (const i of Object.keys(this.gallery_images)) {
         formData.append('images[]', this.gallery_images[i])
