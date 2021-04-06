@@ -26,7 +26,7 @@
           <p>Video call</p>
         </n-link>
       </div>
-      <div class="md:my-4 my-2 flex md:justify-start justify-center">
+      <div class="md:my-4 my-2 grid grid-cols-2 text-center">
         <a
           href="javascript:void(0);"
           @click="subscribeShopLogin"

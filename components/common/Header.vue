@@ -2,7 +2,7 @@
   <div>
     <div class="hidden md:contents">
       <div class="bg-yellow-3">
-        <div class="w-full lg:py-5">
+        <div class="w-full lg:pt-2">
           <div
             class="max-w-screen-xl xl:px-10 px-2 m-auto grid grid-cols-3 items-center justify-center gap-2"
           >
@@ -174,7 +174,7 @@
             </div>
           </div>
         </div>
-        <div class="max-w-screen-xl xl:px-10 py-2 m-auto sm:font-bold">
+        <div class="max-w-screen-xl xl:px-10 pb-2 m-auto sm:font-bold">
           <div class="flex flex-row items-center justify-center">
             <n-link to="">
               <div class="flex items-center">
