@@ -252,8 +252,22 @@
               >
                 Bargain
               </button>
-              <button
+              <a
+                href="javascript:void(0);"
+                @click="wishlistLogin"
+                v-if="!$auth.loggedIn"
                 class="focus:outline-none border rounded border-gray-3 py-1 font-bold px-2"
+                ><i class="ri-heart-line"></i
+              ></a>
+              <button
+                @click="requestWishlistProduct(product.id)"
+                v-if="$auth.loggedIn"
+                :disabled="proWishlist || wishlistCheck ? true : false"
+                :class="
+                  proWishlist == null && wishlistCheck == null
+                    ? ' focus:outline-none border rounded border-gray-3 py-1 font-bold px-2'
+                    : ' focus:outline-none border rounded border-gray-3 py-1 font-bold px-2 text-red-500'
+                "
               >
                 <i class="ri-heart-line"></i>
               </button>
@@ -292,19 +306,65 @@ export default {
       sizeStocks: '',
       weightPrice: '',
       weightStocks: '',
+      wishlistCheck: null,
     }
   },
   props: ['basePath', 'product'],
   mounted() {
-    // this.quantity_ = this.product.sizes
-    //   console.log(this.items)
+    this.checkWishlist()
   },
   methods: {
     // add to addtobag option
     ...mapActions({
       addProduct: 'addtobag/addProduct',
       removeProduct: 'addtobag/removeProduct',
+      wishlistProduct: 'wishlist/wishlistProduct',
     }),
+    requestWishlistProduct(id) {
+      let loader = this.$loading.show({
+        // Optional parameters
+        container: this.fullPage ? null : this.$refs.formContainer,
+        canCancel: true,
+        onCancel: this.onCancel,
+        zIndex: 2000,
+        opacity: 0.5,
+      })
+      this.$axios
+        .get('api/wishlist-request/' + id)
+        .then((response) => {
+          this.wishlistProduct(this.product.id)
+          loader.hide()
+          this.$toast.success('Add to wishlist!')
+        })
+        .catch((error) => {
+          loader.hide()
+          this.$toast.error('Oops..!-' + error.response.data.message)
+        })
+    },
+    async checkWishlist() {
+      let loader = this.$loading.show({
+        container: this.fullPage ? null : this.$refs.formContainer,
+        canCancel: true,
+        onCancel: this.onCancel,
+        zIndex: 2000,
+        opacity: 2,
+      })
+      await this.$axios
+        .$get('/api/wishlist-check-by-product/' + this.product.id)
+        .then((res) => {
+          this.wishlistCheck = res.data
+          loader.hide()
+          if (this.wishlistCheck != null) {
+            this.disable = true
+          }
+        })
+        .catch((error) => {
+          loader.hide()
+        })
+    },
+    wishlistLogin() {
+      this.$router.push({ name: 'login' })
+    },
 
     closeModal() {
       if (this.close_modal == 'closeModal') {
@@ -453,6 +513,7 @@ export default {
   computed: {
     ...mapGetters({
       addproducts: 'addtobag/addproducts',
+      productWishlist: 'wishlist/product',
     }),
 
     checkShop() {
@@ -473,6 +534,10 @@ export default {
         sum += p.count * p.price
       })
       return sum
+    },
+
+    proWishlist() {
+      return this.productWishlist
     },
   },
 }
