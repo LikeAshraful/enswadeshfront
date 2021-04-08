@@ -655,19 +655,7 @@
                   >
                   <p class="inline">or drop audio files here</p>
                 </div>
-                <label for="audio" class="cursor-pointer">
-                  <div
-                    v-if="audio_url"
-                    style="padding-bottom: 20px"
-                    class="relative flex flex-row justify-center"
-                  >
-                    <audio controls>
-                      <source :src="audio_url">
-                    Your browser does not support the audio element.
-                    </audio>
-                  </div>
-                <input class="hidden" @change="audioFile" type="file" id="audio" />
-                </label>
+                <input class="hidden" type="file" id="audio" />
               </div>
             </div>
             <div class="mb-4">
@@ -680,11 +668,10 @@
               />
             </div>
             <div class="mb-2">
-              <label class="input-label" for="bargain">Bargain</label> <br />
-                  <input type="hidden" v-model="can_bargain" id="bargain">
+              <label class="input-label" for="">Bargain</label> <br />
               <span
                 @click="bargainToggle"
-                class="input-label cursor-pointer text-6xl"
+                class="input-label cursor-pointer text-3xl"
                 :class="can_bargain ? 'text-blue-1' : 'text-gray-2'"
                 for="bargain-opt"
                 ><i
@@ -744,7 +731,7 @@
 </template>
 <script>
 import Breadcrumb from '~/components/common/Breadcrumb.vue'
-import category from './category'
+import category from '../add/category'
 import { mapGetters, mapActions } from 'vuex'
 import Loader from '~/components/lib/Loader.vue'
 import ProductPreview from '../../../../components/my-shop/product-preview/ProductPreview.vue'
@@ -802,8 +789,6 @@ export default {
       alert: '',
       thumbnail: '',
       thumbnail_images: null,
-      audio: '',
-      audio_url: null,
       video_url: '',
       delivery_offer: '',
       url: null,
@@ -813,7 +798,12 @@ export default {
       size_wise: false,
       weight_wise: false,
       make_a_list: false,
-      features: [{ title: '', feature: '' }],
+      features: [
+        { 
+          title: '', 
+          feature: '' 
+        }
+      ],
       sizes: [
         {
           size: '',
@@ -854,6 +844,7 @@ export default {
     this.BrandData()
     this.unitsData()
     // this.previewProduct()
+    this.showProduct()
   },
   watch: {},
   methods: {
@@ -890,10 +881,6 @@ export default {
     thumbnailFile(event) {
       this.thumbnail = event.target.files[0]
       this.thumbnail_images = URL.createObjectURL(event.target.files[0])
-    },
-    audioFile(e) {
-      this.audio = e.target.files[0]
-      this.audio_url = URL.createObjectURL(e.target.files[0])
     },
     addFeature() {
       this.features.push({
@@ -953,6 +940,7 @@ export default {
       formData.append('user_id', this.$auth.user.id)
       formData.append('brand_id', this.brand_id)
       formData.append('category_id', this.category_id)
+      formData.append('can_bargain', this.can_bargain)
       formData.append('sku', this.sku)
       formData.append('price', this.price)
       formData.append('currency_type', this.currency_type)
@@ -965,13 +953,7 @@ export default {
       formData.append('guarantee', this.guarantee)
       formData.append('description', this.description)
       formData.append('thumbnail', this.thumbnail)
-      formData.append('audio', this.audio)
       formData.append('video_url', this.video_url)
-      if(this.can_bargain === true){
-      formData.append('can_bargain', 1)
-      }else {
-      formData.append('can_bargain', 0)
-      }
       formData.append('delivery_offer', this.delivery_offer)
       for (const i of Object.keys(this.gallery_images)) {
         formData.append('images[]', this.gallery_images[i])
@@ -1032,7 +1014,6 @@ export default {
 
       data['thumb_url'] = this.thumbnail_images
       data['gallary_images_url'] = this.gallery_images_url
-      data['audio_url'] = this.audio_url
 
       // localStorage.setItem('previewdata', JSON.stringify(data))
       this.$store.dispatch('products/productPreview', data)
@@ -1117,6 +1098,60 @@ export default {
     },
 
     changeDiscountPrice(e) {},
+
+
+
+    showProduct() {
+      console.log('show Product')
+      this.$axios.$get(
+        'api/products/'+this.$route.params.id
+      )
+      .then((res) => {
+        const product = res.data;
+        this.product_type = product.product_type
+        if(product.product_type == 'simple'){
+          this.simple_format = true
+          this.size_wise = false
+          this.weight_wise = false
+        }
+        if(product.product_type == 'size_base'){
+          this.simple_format = false
+          this.size_wise = true
+          this.weight_wise = false
+        }
+        if(product.product_type == 'weight_base'){
+          this.simple_format = false
+          this.size_wise = false
+          this.weight_wise = true
+        }
+
+        this.name = product.name
+        this.search = product.brand.name
+        this.sku = product.sku
+        this.categoriessearch = product.category.name
+        this.price = product.price
+        this.currency_type = product.currency_type
+        this.unit_id = product.stocks
+        this.discount = product.discount
+        this.discount_type = product.discount_type
+        this.discount_price = product.discount_price
+        this.stocks = product.stocks
+        this.offers = product.offers
+        this.sizes = product.sizes
+        this.weights = product.weights
+        this.features = product.features
+        this.warranty = product.warranty
+        this.guarantee = product.guarantee
+        this.gallery_images_url = product.image
+        this.thumbnail_images = product.thumbnail
+        this.return_policy = product.return_policy
+        this.description = product.description
+        this.delivery_offer = product.delivery_offer
+      })
+      .catch((error) => {
+        console.log('Error..!')
+      })
+    }
   },
 
   computed: {

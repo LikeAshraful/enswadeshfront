@@ -35,18 +35,6 @@
                     </div>
                 </div>
                 <div class="divider mb-4"></div>
-                <!-- <p class="h3 mb-4">Your order ID: <span class="text-orange-1">1234567810</span> (2 Items)</p>
-                <p :class="order" class="success-alart inline mb-4">Success</p>
-                <div class='grid md:grid-cols-4 grid-cols-2 md:gap-4 gap-2 md:mb-4 mb-2'>
-                    <div v-for="(item, index) in items2" :key="index">
-                        <div class="pb-full relative mt-4">
-                            <img src="~/assets/img/products/default.png" alt="Image" class="absolute w-full h-full object-cover">
-                        </div>
-                        <p class="font-bold">Product name here</p>
-                        <p class="text-gray-2">Red</p>
-                        <p class="h3">1195 BDT</p>
-                    </div>
-                </div> -->
             </div>
         </div>
         <div v-else>
@@ -66,16 +54,6 @@ export default {
         return {
             order: true,
             orders:[],
-            items: [
-                '',
-                '',
-                '',
-                '',
-            ],
-            items2: [
-                '',
-                '',
-            ],
         }
     },
     mounted() {

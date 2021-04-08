@@ -128,7 +128,10 @@
                     <p class="font-bold">Audio Description</p>
                     <div class="flex items-center">
                         <i class="ri-play-circle-fill mr-2 text-orange-1 text-xl"></i>
-                        <p>Audio file name goes to here</p>
+                        <audio controls>
+                            <source :src="getProductPreviewData.audio_url">
+                            Your browser does not support the audio element.
+                        </audio>
                     </div>
                     <p class="font-bold mt-4">Video Description</p>
                     <div class="border-2 border-green-4">
