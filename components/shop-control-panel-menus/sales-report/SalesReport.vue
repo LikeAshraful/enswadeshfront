@@ -2,15 +2,15 @@
   <div>
     <div class="grid md:grid-cols-3 gap-4 mb-4">
       <div class="py-4 text-center bg-white">
-        <p class="h2">BDT 30,225</p>
+        <p class="h2">BDT {{sales_report.todays_sales}}</p>
         <p class="text-gray-4">Todays sales</p>
       </div>
       <div class="py-4 text-center bg-white">
-        <p class="h2">100</p>
+        <p class="h2">{{sales_report.todays_orders}}</p>
         <p class="text-gray-4">Todays orders</p>
       </div>
       <div class="py-4 text-center bg-white">
-        <p class="h2">47</p>
+        <p class="h2">{{sales_report.todays_delivery}}</p>
         <p class="text-gray-4">Todays delivered</p>
       </div>
     </div>
@@ -32,13 +32,13 @@
         </div>
         <div class="search">
           <i class="search-icon ri-search-line mr-2"></i>
-          <input
+          <!-- <input
             @keyup="searchShopByMarket"
             v-model="keyword"
             class="search-input focus:outline-none"
             type="text"
             placeholder="Search"
-          />
+          /> -->
         </div>
         <div class="flex items-center gap-4">
           <span class="font-bold">Status:</span>
@@ -55,22 +55,22 @@
         <table class="w-full">
           <thead class="bg-green-1 font-bold">
             <td><div class="py-1">Order Id</div></td>
-            <td>Product</td>
+            <!-- <td>Product</td> -->
             <td>Payment Method</td>
             <td>Order Status</td>
             <td>Date</td>
             <td>Total</td>
           </thead>
           <tbody class="px-4">
-            <tr v-for="(item, index) in items" :key="index">
+            <tr v-for="(item, index) in getOrdersByShop" :key="index">
               <td>
                 <n-link
-                  :to="`/shop/control-panel/view-order/${index}`"
+                  :to="`/shop/control-panel/view-order/${item.id}`"
                   class="font-bold text-blue-1"
-                  >#000{{ index }}</n-link
+                  >{{item.order_no}}</n-link
                 >
               </td>
-              <td>
+              <!-- <td>
                 <div class="flex gap-1">
                   <img
                     class="h-10 w-12"
@@ -83,35 +83,67 @@
                     alt=""
                   />
                 </div>
-              </td>
-              <td>COD</td>
-              <td>Delivered</td>
-              <td>25 Mar, 21</td>
-              <td>৳ 825.00</td>
+              </td> -->
+              <td class="uppercase">{{ item.payment_gateway }}</td>
+              <td>{{ item.status }}</td>
+              <td>{{ item.created_at }}</td>
+              <td>৳ {{ item.total_price }}</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="flex justify-between p-4">
+      <!-- <div class="flex justify-between p-4">
         <p class="font-bold">Showing 1 to 10 of 57 entries</p>
-        <!-- <paginate></paginate>
-  -->
+        <paginate></paginate>
+
         <p>Paginate here...</p>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 <script>
 import Paginate from '~/components/common/Paginate'
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
-      items: ['', '', '', '', '', ''],
+      sales_report : '',
     }
   },
   components: {
     Paginate,
   },
+  mounted() {
+    this.setOrdersByShop()
+    this.loadSalesReport()
+  },
+  methods: {
+    async setOrdersByShop() {
+      await this.$store.dispatch(
+        'orders/setOrdersByShop',
+        this.$route.params.id
+      )
+    },
+    async loadSalesReport() {
+      await this.$axios
+        .get('/api/orders/shop/' + this.$route.params.id + '/sales-report')
+        .then((res) => {
+          this.sales_report = res.data.data
+          console.log(this.sales_report)
+        })
+        .catch((error) => {
+          if (error.response.status == 404) {
+            this.$nuxt.error({ statusCode: 404, message: 'err message' })
+          }
+        })
+    },
+  },
+  computed: {
+    ...mapGetters({
+      getOrdersByShop: 'orders/getOrdersByShop',
+    }),
+  }
 }
 </script>
-<style lang=""></style>
+<style></style>
