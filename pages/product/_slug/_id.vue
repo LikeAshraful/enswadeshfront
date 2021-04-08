@@ -427,11 +427,7 @@ export default {
       // simulate AJAX
 
       await this.$axios
-        .$get(
-          this.$auth.loggedIn
-            ? '/api/wishlist-check-by-product/' + this.$route.params.id
-            : '/api/shops/' + this.$route.params.id
-        )
+        .$get('/api/wishlist-check-by-product/' + this.$route.params.id)
         .then((res) => {
           this.wishlistCheck = res.data
           loader.hide()
