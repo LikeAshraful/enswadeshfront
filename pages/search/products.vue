@@ -5,23 +5,34 @@
       v-if="products.data.length > 0"
       class="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12"
     >
-      <div class="mb-8" v-for="(product, i) in products.data" :key="i">
-        <div @click="showModal" class="h-full">
-          <div class="">
-            <img
-              class="h-52 w-full"
-              :src="
-                product.image.src
-                  ? basePath + '/storage/' + product.image.src
-                  : require(`~/assets/img/products/default.png`)
-              "
-              alt="Image"
-            />
+      <div
+        class="mb-8 cursor-pointer"
+        v-for="(product, i) in products.data"
+        :key="i"
+      >
+        <n-link
+          :to="{
+            name: 'product-slug-id',
+            params: { slug: product.slug, id: product.id },
+          }"
+        >
+          <div class="h-full">
+            <div class="">
+              <img
+                class="h-52 w-full"
+                :src="
+                  product.image.src
+                    ? basePath + '/storage/' + product.image.src
+                    : require(`~/assets/img/products/default.png`)
+                "
+                alt="Image"
+              />
+            </div>
+            <p class="font-bold pt-2">{{ product.name }}</p>
+            <p class="">{{ product.color }}</p>
+            <p class="font-bold">{{ product.price }} BDT</p>
           </div>
-          <p class="font-bold pt-2">{{ product.name }}</p>
-          <p class="">{{ product.color }}</p>
-          <p class="font-bold">{{ product.price }} BDT</p>
-        </div>
+        </n-link>
         <div class="flex justify-between">
           <button class="btn bg-green-3 focus:outline-none">Buy Now</button>
           <button class="btn border-orange-1 focus:outline-none">
@@ -35,15 +46,9 @@
         No result found!
       </h1>
     </div>
-    <!-- Product Details -->
-    <product-details
-      v-if="modal"
-      v-on:product-modal="closeModal($event)"
-    ></product-details>
   </div>
 </template>
 <script>
-import ProductDetails from '~/components/product-details/Product-details.vue'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
@@ -53,10 +58,6 @@ export default {
       imageUrl: this.$axios.imageURL,
       basePath: null,
     }
-  },
-
-  components: {
-    ProductDetails,
   },
 
   created() {

@@ -12,7 +12,11 @@
     </div>
 
     <!-- Photos -->
-    <slider :slider_images="slider_images" :basePath="basePath" class="mb-8 mt-8"></slider>
+    <slider
+      :slider_images="slider_images"
+      :basePath="basePath"
+      class="mb-8 mt-8"
+    ></slider>
 
     <!-- Tabs -->
     <tab :showTab="showTab" :tabs="tabs"></tab>
@@ -27,10 +31,7 @@ import MyShopDetails from '~/components/my-shop/MyShopDetails.vue'
 import Tab from '~/components/common/Tab.vue'
 
 export default {
-  middleware: [
-    'auth',
-    // 'shop-verification'
-  ],
+  middleware: ['auth'],
 
   components: {
     Breadcrumb,
