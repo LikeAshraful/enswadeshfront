@@ -21,111 +21,26 @@
           <thead>
             <tr class="bg-green-1 h-10">
               <th>#</th>
-              <th>Image</th>
-              <th>Product Name</th>
-              <th>Category</th>
-              <th>Price (BDT)</th>
-              <th>Avl. Quantity</th>
+              <th>Order No</th>
+              <th>Payment Method</th>
+              <th>Order Status</th>
+              <th>Date</th>
+              <th>Total Price</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(item, i) in products.data" :key="i">
               <td>{{ currentPage * 4 - 4 + i + 1 }}</td>
-              <td>
-                <img
-                  class="w-12 h-12"
-                  :src="require(`~/assets/img/products/default.png`)"
-                  alt="Image"
-                />
-              </td>
-              <td>{{ item.name }}</td>
-              <td>{{ item.category.name }}</td>
-              <td v-if="item.sizes.length == 0 && item.weights.length == 0">
-                {{ item.price }}
-              </td>
-              <td v-else-if="item.sizes.length > 0">
-                <div class="dropdown">
-                  <i
-                    class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
-                  ></i>
-                  <div class="dropdown-content font-semibold">
-                    <p>Size-Price</p>
-                    <p v-for="(size, k) in item.sizes" :key="k">
-                      {{ size.size }} - {{ size.price }}
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td v-else-if="item.weights.length > 0">
-                <div class="dropdown">
-                  <i
-                    class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
-                  ></i>
-                  <div class="dropdown-content font-semibold">
-                    <p>Weight-Price</p>
-                    <p v-for="(weight, l) in item.weights" :key="l">
-                      {{ weight.weight }} - {{ weight.price }}
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td v-if="item.sizes.length == 0 && item.weights.length == 0">
-                {{ item.stocks }}
-              </td>
-              <td v-else-if="item.sizes.length > 0">
-                <div class="dropdown">
-                  <i
-                    class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
-                  ></i>
-                  <div class="dropdown-content font-semibold">
-                    <p>Size-Stock</p>
-                    <p v-for="(size, m) in item.sizes" :key="m">
-                      {{ size.size }} - {{ size.stocks }}
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td v-else-if="item.weights.length > 0">
-                <div class="dropdown">
-                  <i
-                    class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
-                  ></i>
-                  <div class="dropdown-content font-semibold">
-                    <p>Weight-Stock</p>
-                    <p v-for="(weight, n) in item.weights" :key="n">
-                      {{ weight.weight }} - {{ weight.stocks }}
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="dropdown">
-                  <i
-                    class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
-                  ></i>
-                  <div class="dropdown-content font-semibold w-56">
-                    <nuxt-link :to="`/shop/proudct/edit/${item.id}`"
-                      ><p>Edit</p></nuxt-link
-                    >
-                    <p @click="moveTrash(item)">Move to trash</p>
-                  </div>
-                </div>
-              </td>
+              <td>0282032932</td>
+              <td>COD</td>
+              <td>Pending</td>
+              <td>08-April-20121</td>
+              <td>720</td>
+              <td></td>
             </tr>
           </tbody>
         </table>
-        <!-- End Product tables -->
-
-        <move-trash
-          :product="product"
-          v-if="move"
-          v-on:moveTrash="moveTrash()"
-        ></move-trash>
-        <notify v-if="notification" v-on:notify="notify()"></notify>
-        <flash-sale v-if="flash" v-on:flashSale="flashSale()"></flash-sale>
-        <festival v-if="festival" v-on:addFestival="addFestival()"></festival>
-
         <!-- Paginate -->
         <div class="px-3 pb-8">
           <Paginate
