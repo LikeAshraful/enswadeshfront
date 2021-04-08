@@ -1,6 +1,6 @@
 <template lang="">
     <div>
-        <div class="h-screen">
+        <div class="min-h-screen">
             <p class="h1">View Order</p>
             <div class="mb-4 pt-4">
                 <p class="title">Receipient</p>
@@ -67,5 +67,5 @@ export default {
 }
 </script>
 <style lang="">
-    
+
 </style>
