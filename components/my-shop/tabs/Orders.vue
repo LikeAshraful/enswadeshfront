@@ -1,172 +1,113 @@
 <template>
   <div>
-    <!-- Products Section -->
-    <div class="grid lg:grid-cols md:grid-cols-3 gap-4 my-5">
-      <div class="lg:col-span-3 md:col-span-2">
-        <!-- Product tables -->
-        <div class="flex justify-between font-bold mb-4">
-          <div class="search">
-            <i class="search-icon ri-search-line mr-2"></i>
-            <input
-              class="search-input bg-gray-5 focus:outline-none"
-              type="text"
-              @keyup="getProductsSearchResults"
-              v-model="keyword"
-              placeholder="Search products"
-            />
-          </div>
+    <div class="bg-white">
+      <div class="p-4 grid md:grid-cols-3 gap-4 items-center">
+        <div class="flex items-center gap-4">
+          <span class="font-bold">Show</span>
+          <select
+            class="w-16 border border-gray-4 rounded focus:outline-none py-1 px-2"
+          >
+            <option>5</option>
+            <option selected>10</option>
+            <option>25</option>
+            <option>50</option>
+            <option>100</option>
+            <option>ALL</option>
+          </select>
+          <span class="font-bold">entries</span>
         </div>
-        <loader v-if="isLoading"></loader>
-        <table v-else class="w-full text-left mb-6">
-          <thead>
-            <tr class="bg-green-1 h-10">
-              <th>#</th>
-              <th>Order No</th>
-              <th>Payment Method</th>
-              <th>Order Status</th>
-              <th>Date</th>
-              <th>Total Price</th>
-              <th>Action</th>
-            </tr>
+        <div class="search">
+          <i class="search-icon ri-search-line mr-2"></i>
+          <input
+            @keyup="searchShopByMarket"
+            v-model="keyword"
+            class="search-input focus:outline-none"
+            type="text"
+            placeholder="Search"
+          />
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="font-bold">Status:</span>
+          <select class="input-field focus:outline-none">
+            <option disabled selected>Select Any</option>
+            <option>Delivered</option>
+            <option>Processing</option>
+            <option>Canceled</option>
+            <option>Refund</option>
+          </select>
+        </div>
+      </div>
+      <div class="p-4 mb-4">
+        <table class="w-full">
+          <thead class="bg-green-1 font-bold">
+            <td><div class="py-1">Order No</div></td>
+            <td>Payment Method</td>
+            <td>Order Status</td>
+            <td>Date</td>
+            <!-- <td>Change Status</td> -->
+            <td>Total</td>
+            <td>Action</td>
           </thead>
-          <tbody>
-            <tr v-for="(item, i) in products.data" :key="i">
-              <td>{{ currentPage * 4 - 4 + i + 1 }}</td>
-              <td>0282032932</td>
+          <tbody class="px-4">
+            <tr v-for="(item, index) in items" :key="index">
+              <td>
+                <n-link
+                  :to="`/shop/control-panel/view-order/${index}`"
+                  class="font-bold text-blue-1"
+                  >#000{{ index }}</n-link
+                >
+              </td>
               <td>COD</td>
-              <td>Pending</td>
-              <td>08-April-20121</td>
-              <td>720</td>
-              <td></td>
+              <td>Delivered</td>
+              <td>25 Mar, 21</td>
+              <td>৳ 825.00</td>
+              <td>
+                <n-link
+                  :to="`/shop/control-panel/view-order/${index}`"
+                  class="font-bold text-blue-1"
+                  ><i class="ri-eye-line"></i
+                ></n-link>
+              </td>
+              <!-- <td>
+                <div class="dropdown">
+                  <i
+                    class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
+                  ></i>
+                  <div class="dropdown-content font-semibold w-56">
+                    <p>Pending payment</p>
+                    <p>Failed</p>
+                    <p>Processing</p>
+                    <p>Completed</p>
+                    <p>On hold</p>
+                    <p>Canceled</p>
+                    <p>Refunded</p>
+                    <p>Authentication required</p>
+                  </div>
+                </div>
+              </td> -->
             </tr>
           </tbody>
         </table>
-        <!-- Paginate -->
-        <div class="px-3 pb-8">
-          <Paginate
-            :totalPages="totalPages"
-            :total="total"
-            :currentPage="currentPage"
-            :perPage="perPage"
-            v-on:pagechanged="loadProductsPaginate"
-          />
-        </div>
-        <!-- End Paginate -->
+      </div>
+      <div class="flex justify-between p-4">
+        <p class="font-bold">Showing 1 to 10 of 57 entries</p>
+        <!-- <paginate></paginate>
+  -->
+        <p>Paginate here...</p>
       </div>
     </div>
-    <!-- End Products Section -->
   </div>
 </template>
 <script>
-import _ from 'lodash'
-import Paginate from '~/components/common/Paginate.vue'
-
+import Paginate from '~/components/common/Paginate'
 export default {
-  components: {
-    Paginate,
-  },
   data() {
     return {
-      filterTitle: 'Categories',
-      keyword: '',
-      filtersData: [],
-      totalPages: 0,
-      total: 0,
-      currentPage: 0,
-      perPage: 0,
-      products: [],
-      keyword: '',
-      isLoading: true,
-      move: false,
-      notification: false,
-      flash: false,
-      festival: false,
-      product: '',
+      items: ['', '', '', '', '', ''],
     }
   },
-
-  mounted() {
-    this.loadCategories()
-    this.loadProducts()
-    this.loadProductsPaginate()
-  },
-
-  methods: {
-    moveTrash(product) {
-      this.product = product
-      this.loadProducts()
-      this.move = !this.move
-    },
-    notify() {
-      this.notification = !this.notification
-    },
-    flashSale() {
-      this.flash = !this.flash
-    },
-    addFestival() {
-      this.festival = !this.festival
-    },
-
-    async loadCategories() {
-      await this.$axios
-        .get(
-          this.$auth.isLoading ? '/api/categories/base' : '/api/base/categories'
-        )
-        .then((res) => {
-          this.filtersData = res.data
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    },
-
-    async loadProducts(id, isLoading) {
-      this.isLoading = isLoading
-      await this.$axios
-        .get(
-          id
-            ? '/api/products-by-shop/category/' +
-                this.$route.params.id +
-                '/' +
-                id
-            : '/api/products-by-shop/' + this.$route.params.id
-        )
-        .then((res) => {
-          this.products = res.data.data
-          this.isLoading = false
-        })
-    },
-
-    async loadProductsPaginate(value) {
-      await this.$axios
-        .get(
-          '/api/products-by-shop/' + this.$route.params.id + '?page=' + value
-        )
-        .then((res) => {
-          this.products = res.data.data
-          this.total = this.products.meta.total
-          this.totalPages = this.products.meta.last_page
-          this.currentPage = this.products.meta.current_page
-          this.perPage = this.products.meta.per_page
-          this.isLoading = false
-        })
-    },
-
-    getProductsSearchResults: _.debounce(function (e) {
-      this.isLoading = true
-      this.$axios
-        .post('/api/search/products/', {
-          params: { keyword: this.keyword, id: this.$route.params.id },
-        })
-        .then((res) => {
-          this.products = res.data.data
-          this.total = this.products.meta.total
-          this.totalPages = this.products.meta.last_page
-          this.currentPage = this.products.meta.current_page
-          this.perPage = this.products.meta.per_page
-          this.isLoading = false
-        })
-    }, 500),
+  components: {
+    Paginate,
   },
 }
 </script>

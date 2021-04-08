@@ -455,7 +455,7 @@ export default {
         .post(`/api/my-shops/update/${this.$route.params.id}`, formData)
         .then((response) => {
           this.loadShop()
-          this.$router.push(`/shop/edit/${this.$route.params.id}`)
+          this.$router.push(`/shop/self/${this.$route.params.id}`)
           this.$toast.success('Your shop is update successfully !')
         })
         .catch((error) => {
