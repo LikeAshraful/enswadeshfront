@@ -98,6 +98,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      basePath: '',
       modal: false,
       cols: 'lg:grid-cols-4',
       imageUrl: this.$axios.imageURL,

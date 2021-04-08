@@ -281,9 +281,9 @@
           <p class="font-bold">Audio Description</p>
           <div class="flex items-center">
             <i class="ri-play-circle-fill mr-2 text-orange-1 text-xl"></i>
-            <!-- <p>Audio file name goes to here</p> -->
             <audio controls>
               <source
+                type="audio/mpeg"
                 :src="
                   basePath + '/storage/' + getProduct.audio[0] != null
                     ? getProduct.audio[0].src
