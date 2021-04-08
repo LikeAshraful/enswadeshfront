@@ -15,14 +15,17 @@
       <p class="title">My Wishlist ({{ wishlists.length }})</p>
       <div class="bg-white p-4">
         <div v-for="(wishlist, i) in wishlists" :key="i">
-          <div class="grid md:grid-cols-3 grid-cols-1 gap-4 items-center justify-center">
+          <div
+            class="grid md:grid-cols-3 grid-cols-1 gap-4 items-center justify-center"
+          >
             <div class="pb-full relative">
               <img
                 :src="
-                  wishList.product_of_wishlist
-                    ? wishList.product_of_wishlist.thumbnail
-                      ? require(`${basePath} + '/storage/' + ${wishList.product_of_wishlist.thumbnail}`)
-                      : require(`~/assets/img/products/default.png`)
+                  wishList.product_of_wishlist &&
+                  wishList.product_of_wishlist.thumbnail
+                    ? basePath +
+                      '/storage/' +
+                      wishList.product_of_wishlist.thumbnail
                     : require(`~/assets/img/products/default.png`)
                 "
                 alt="Image"
@@ -36,7 +39,9 @@
                 {{ wishlist.product_of_wishlist.currency_type }}
               </p>
               <div class="flex md:flex-col flex-row md:w-2/3">
-                <button class="btn-border bg-green-3 focus:outline-none mt-4 w-full md:mr-0 mr-2">
+                <button
+                  class="btn-border bg-green-3 focus:outline-none mt-4 w-full md:mr-0 mr-2"
+                >
                   Buy now
                 </button>
                 <button class="btn-border focus:outline-none mt-4 w-full">
