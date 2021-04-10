@@ -3,14 +3,14 @@
     <div>
       <markets
         :cols="cols"
-        :markets="alls[0].data"
+        :markets="alls[0].data ? alls[0].data : []"
         :isLoading="isLoading"
       ></markets>
     </div>
     <div>
       <p class="text-2xl font-bold">Shops search result</p>
       <div
-        v-if="alls[1].data.length > 0"
+        v-if="alls[1].data ? alls[1].data.length > 0 : 0"
         class="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 lg:gap-6 md:gap-4 gap-3 py-8"
       >
         <div v-for="(shop, i) in alls[1].data" :key="i" class="">
@@ -51,17 +51,17 @@
     <div>
       <p class="text-2xl font-bold">Products search result</p>
       <div
-        v-if="alls[2].data.length > 0"
+        v-if="alls[2].data ? alls[2].data.length > 0 : 0"
         class="grid lg:grid-cols-4 grid-cols-2 lg:gap-6 gap-3 pt-6 pb-12"
       >
         <div class="mb-8" v-for="(product, i) in alls[2].data" :key="i">
-          <div @click="showModal" class="h-full">
+          <div @click="showModal(product)" class="cursor-pointer h-full mb-10">
             <div class="">
               <img
                 class="h-52 w-full"
                 :src="
-                  product.image.src
-                    ? basePath + '/storage/' + product.image.src
+                  product.thumbnail
+                    ? basePath + '/storage/' + product.thumbnail
                     : require(`~/assets/img/products/default.png`)
                 "
                 alt="Image"
@@ -71,12 +71,6 @@
             <p class="">{{ product.color }}</p>
             <p class="font-bold">{{ product.price }} BDT</p>
           </div>
-          <div class="flex justify-between">
-            <button class="btn bg-green-3 focus:outline-none">Buy Now</button>
-            <button class="btn border-orange-1 focus:outline-none">
-              Add to bag
-            </button>
-          </div>
         </div>
       </div>
       <div v-else>
@@ -85,6 +79,8 @@
       <!-- Product Details -->
       <product-details
         v-if="modal"
+        :product="productm"
+        :basePath="basePath"
         v-on:product-modal="closeModal($event)"
       ></product-details>
     </div>
@@ -98,6 +94,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      productm: {},
       basePath: '',
       modal: false,
       cols: 'lg:grid-cols-4',
@@ -120,7 +117,8 @@ export default {
 
   methods: {
     ...mapActions('search', ['loadSearch']),
-    showModal() {
+    showModal(product) {
+      this.productm = Object.assign({}, product)
       this.modal = true
     },
     closeModal(e) {

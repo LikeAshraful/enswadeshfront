@@ -6,14 +6,16 @@
         <div v-if="products.length > 0" class="md:col-span-2 overflow-x-scroll">
           <table class="w-full mt-2">
             <thead class="font-bold">
-              <td><div class="w-64">Product</div></td>
-              <td><div class="w-20">Price</div></td>
-              <td><div class="w-20">Quantity</div></td>
-              <td>
-                <div class="w-40">
-                  Subtotal <span class="text-gray-4">(vat inc.)</span>
-                </div>
-              </td>
+              <tr>
+                <th><div class="w-64">Product</div></th>
+                <th><div class="w-20">Price</div></th>
+                <th><div class="w-20">Quantity</div></th>
+                <th>
+                  <div class="w-40">
+                    Subtotal <span class="text-gray-4">(vat inc.)</span>
+                  </div>
+                </th>
+              </tr>
             </thead>
             <tbody>
               <tr
