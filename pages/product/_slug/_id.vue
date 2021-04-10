@@ -284,11 +284,7 @@
             <audio controls>
               <source
                 type="audio/mpeg"
-                :src="
-                  basePath + '/storage/' + getProduct.audio[0] != null
-                    ? getProduct.audio[0].src
-                    : ''
-                "
+                :src="basePath + '/storage/' + getProduct.audio[0].src"
               />
               Your browser does not support the audio element.
             </audio>
