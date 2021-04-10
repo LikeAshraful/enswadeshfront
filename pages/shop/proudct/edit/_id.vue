@@ -531,6 +531,18 @@
                   <p class="inline">or drop images here</p>
                 </div>
                 <label for="thumbnail" class="cursor-pointer">
+                  <div class="relative pb-full">
+                    <img
+                      v-if="productImage != null"
+                      class="absolute h-full w-full object-cover"
+                      :src="
+                        productImage
+                          ? basePath + '/storage/' + productImage
+                          : require(`~/assets/img/products/default.png`)
+                      "
+                      alt="Image"
+                    />
+                  </div>
                   <div
                     v-if="thumbnail_images"
                     style="padding-bottom: 40%"
@@ -579,6 +591,21 @@
                   @change="galleryFiles"
                   id="gallery"
                 />
+              </div>
+              <div class="grid grid-cols-4 gap-2 justify-center">
+                <div
+                  v-for="(image, i) in galleryImage"
+                  :key="i"
+                  class="relative"
+                >
+                  <img :src="basePath + '/storage/' + image.src" alt="Image" />
+                  <span
+                    @click="removeImage(image)"
+                    class="product-delete cursor-pointer"
+                  >
+                    <i class="text-red-500 ri-close-circle-line"></i>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -655,7 +682,24 @@
                   >
                   <p class="inline">or drop audio files here</p>
                 </div>
-                <input class="hidden" type="file" id="audio" />
+                <label for="audio" class="cursor-pointer">
+                  <div
+                    v-if="audio_url"
+                    style="padding-bottom: 20px"
+                    class="relative flex flex-row justify-center"
+                  >
+                    <audio controls>
+                      <source :src="audio_url" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </div>
+                  <input
+                    class="hidden"
+                    @change="audioFile"
+                    type="file"
+                    id="audio"
+                  />
+                </label>
               </div>
             </div>
             <div class="mb-4">
@@ -668,10 +712,11 @@
               />
             </div>
             <div class="mb-2">
-              <label class="input-label" for="">Bargain</label> <br />
+              <label class="input-label" for="bargain">Bargain</label> <br />
+              <input type="hidden" v-model="can_bargain" id="bargain" />
               <span
                 @click="bargainToggle"
-                class="input-label cursor-pointer text-3xl"
+                class="input-label cursor-pointer text-6xl"
                 :class="can_bargain ? 'text-blue-1' : 'text-gray-2'"
                 for="bargain-opt"
                 ><i
@@ -745,6 +790,7 @@ export default {
   },
   data() {
     return {
+      basePath: null,
       addPreview: false,
       formats: [
         { title: 'Simple format', value: 'simple_format', item: true },
@@ -787,6 +833,7 @@ export default {
       sku: '',
       quantity: '',
       alert: '',
+      productImage: null,
       thumbnail: '',
       thumbnail_images: null,
       video_url: '',
@@ -799,10 +846,10 @@ export default {
       weight_wise: false,
       make_a_list: false,
       features: [
-        { 
-          title: '', 
-          feature: '' 
-        }
+        {
+          title: '',
+          feature: '',
+        },
       ],
       sizes: [
         {
@@ -825,8 +872,10 @@ export default {
         },
       ],
       lists: 1,
+      galleryImage: [],
       gallery_images: [],
       gallery_images_url: [],
+      audio_url: '',
       newBooks: [],
       search: '',
       categoriessearch: '',
@@ -837,13 +886,13 @@ export default {
       ],
     }
   },
-  created() {
+  mounted() {
+    this.basePath = this.$axios.defaults.baseURL
     this.CategoriesData()
     this.CategoriesbaseData()
     this.similarProduct()
     this.BrandData()
     this.unitsData()
-    // this.previewProduct()
     this.showProduct()
   },
   watch: {},
@@ -881,6 +930,10 @@ export default {
     thumbnailFile(event) {
       this.thumbnail = event.target.files[0]
       this.thumbnail_images = URL.createObjectURL(event.target.files[0])
+    },
+    audioFile(e) {
+      this.audio = e.target.files[0]
+      this.audio_url = URL.createObjectURL(e.target.files[0])
     },
     addFeature() {
       this.features.push({
@@ -1099,59 +1152,70 @@ export default {
 
     changeDiscountPrice(e) {},
 
-
-
     showProduct() {
-      console.log('show Product')
-      this.$axios.$get(
-        'api/products/'+this.$route.params.id
-      )
-      .then((res) => {
-        const product = res.data;
-        this.product_type = product.product_type
-        if(product.product_type == 'simple'){
-          this.simple_format = true
-          this.size_wise = false
-          this.weight_wise = false
-        }
-        if(product.product_type == 'size_base'){
-          this.simple_format = false
-          this.size_wise = true
-          this.weight_wise = false
-        }
-        if(product.product_type == 'weight_base'){
-          this.simple_format = false
-          this.size_wise = false
-          this.weight_wise = true
-        }
+      this.$axios
+        .$get('api/products/' + this.$route.params.id + '/edit')
+        .then((res) => {
+          const product = res.data
+          this.product_type = product.product_type
+          if (product.product_type == 'simple') {
+            this.simple_format = true
+            this.size_wise = false
+            this.weight_wise = false
+          }
+          if (product.product_type == 'size_base') {
+            this.simple_format = false
+            this.size_wise = true
+            this.weight_wise = false
+          }
+          if (product.product_type == 'weight_base') {
+            this.simple_format = false
+            this.size_wise = false
+            this.weight_wise = true
+          }
 
-        this.name = product.name
-        this.search = product.brand.name
-        this.sku = product.sku
-        this.categoriessearch = product.category.name
-        this.price = product.price
-        this.currency_type = product.currency_type
-        this.unit_id = product.stocks
-        this.discount = product.discount
-        this.discount_type = product.discount_type
-        this.discount_price = product.discount_price
-        this.stocks = product.stocks
-        this.offers = product.offers
-        this.sizes = product.sizes
-        this.weights = product.weights
-        this.features = product.features
-        this.warranty = product.warranty
-        this.guarantee = product.guarantee
-        this.gallery_images_url = product.image
-        this.thumbnail_images = product.thumbnail
-        this.return_policy = product.return_policy
-        this.description = product.description
-        this.delivery_offer = product.delivery_offer
-      })
-      .catch((error) => {
-        console.log('Error..!')
-      })
-    }
+          this.name = product.name
+          this.search = product.brand.name
+          this.sku = product.sku
+          this.categoriessearch = product.category.name
+          this.price = product.price
+          this.currency_type = product.currency_type
+          this.unit_id = product.stocks
+          this.discount = product.discount
+          this.discount_type = product.discount_type
+          this.discount_price = product.discount_price
+          this.stocks = product.stocks
+          this.offers = product.offers
+          this.sizes = product.sizes
+          this.weights = product.weights
+          this.features = product.features
+          this.warranty = product.warranty
+          this.guarantee = product.guarantee
+          this.galleryImage = product.image
+          this.productImage = product.thumbnail
+          this.thumbnail_images = product.thumbnail
+          this.return_policy = product.return_policy
+          this.description = product.description
+          this.delivery_offer = product.delivery_offer
+        })
+        .catch((error) => {
+          console.log('Error..!')
+        })
+    },
+
+    async removeImage(image) {
+      await this.$axios
+        .get('/api/products/remove-image-gallery/' + image.id)
+        .then((response) => {
+          this.showProduct()
+          this.$toast.success(response.data)
+        })
+        .catch((error) => {
+          if (error.response.status == 404) {
+            this.$nuxt.error({ statusCode: 404, message: 'err message' })
+          }
+        })
+    },
   },
 
   computed: {
