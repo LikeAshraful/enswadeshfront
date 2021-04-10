@@ -120,7 +120,9 @@
                     class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
                   ></i>
                   <div class="dropdown-content font-semibold w-56">
-                    <nuxt-link :to="`/shop/proudct/edit/${item.id}`"><p>Edit</p></nuxt-link>
+                    <nuxt-link :to="`/shop/proudct/edit/${item.id}`"
+                      ><p>Edit</p></nuxt-link
+                    >
                     <p @click="moveTrash(item)">Move to trash</p>
                     <p @click="notify">Notify to subscribers</p>
                     <p @click="flashSale">Add to flash sales</p>
@@ -179,7 +181,6 @@ export default {
   data() {
     return {
       filterTitle: 'Categories',
-      keyword: '',
       filtersData: [],
       totalPages: 0,
       total: 0,

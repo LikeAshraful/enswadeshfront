@@ -19,8 +19,6 @@
         <div class="search">
           <i class="search-icon ri-search-line mr-2"></i>
           <input
-            @keyup="searchShopByMarket"
-            v-model="keyword"
             class="search-input focus:outline-none"
             type="text"
             placeholder="Search"
@@ -49,42 +47,21 @@
             <td>Action</td>
           </thead>
           <tbody class="px-4">
-            <tr v-for="(item, index) in items" :key="index">
+            <tr v-for="(order, index) in orders" :key="index">
               <td>
-                <n-link
-                  :to="`/shop/control-panel/view-order/${index}`"
-                  class="font-bold text-blue-1"
-                  >#000{{ index }}</n-link
-                >
+                {{ order.order_no }}
               </td>
-              <td>COD</td>
-              <td>Delivered</td>
-              <td>25 Mar, 21</td>
-              <td>৳ 825.00</td>
+              <td class="uppercase">{{ order.payment_gateway }}</td>
+              <td>{{ order.status }}</td>
+              <td>{{ order.created_at }}</td>
+              <td>৳ {{ order.total_price }}</td>
               <td>
                 <n-link
-                  :to="`/shop/control-panel/view-order/${index}`"
+                  :to="`/shop/control-panel/view-order/${order.id}`"
                   class="font-bold text-blue-1"
                   ><i class="ri-eye-line"></i
                 ></n-link>
               </td>
-              <!-- <td>
-                <div class="dropdown">
-                  <i
-                    class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
-                  ></i>
-                  <div class="dropdown-content font-semibold w-56">
-                    <p>Pending payment</p>
-                    <p>Failed</p>
-                    <p>Processing</p>
-                    <p>Completed</p>
-                    <p>On hold</p>
-                    <p>Canceled</p>
-                    <p>Refunded</p>
-                    <p>Authentication required</p>
-                  </div>
-                </div>
-              </td> -->
             </tr>
           </tbody>
         </table>
@@ -93,21 +70,54 @@
         <p class="font-bold">Showing 1 to 10 of 57 entries</p>
         <!-- <paginate></paginate>
   -->
-        <p>Paginate here...</p>
+        <Paginate
+          :totalPages="totalPages"
+          :total="total"
+          :currentPage="currentPage"
+          :perPage="perPage"
+          v-on:pagechanged="setOrdersByShop"
+        />
       </div>
     </div>
   </div>
 </template>
 <script>
 import Paginate from '~/components/common/Paginate'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      items: ['', '', '', '', '', ''],
+      totalPages: 2,
+      total: 0,
+      currentPage: 0,
+      perPage: 0,
     }
   },
   components: {
     Paginate,
+  },
+
+  mounted() {
+    this.setOrdersByShop()
+  },
+
+  methods: {
+    async setOrdersByShop() {
+      await this.$store.dispatch(
+        'orders/setOrdersByShop',
+        this.$route.params.id
+      )
+      // this.total = this.orders.meta.total
+      // this.totalPages = this.orders.meta.last_page
+      // this.currentPage = this.orders.meta.current_page
+      // this.perPage = this.orders.meta.per_page
+    },
+  },
+
+  computed: {
+    ...mapGetters({
+      orders: 'orders/getOrdersByShop',
+    }),
   },
 }
 </script>
