@@ -125,8 +125,8 @@
                     >
                     <p @click="moveTrash(item)">Move to trash</p>
                     <p @click="notify">Notify to subscribers</p>
-                    <p @click="flashSale">Add to flash sales</p>
-                    <p @click="addFestival">Add to festival</p>
+                    <p @click="flashSale(item)">Add to flash sales</p>
+                    <p @click="addFestival(item)">Add to festival</p>
                   </div>
                 </div>
               </td>
@@ -141,8 +141,8 @@
           v-on:moveTrash="moveTrash()"
         ></move-trash>
         <notify v-if="notification" v-on:notify="notify()"></notify>
-        <flash-sale v-if="flash" v-on:flashSale="flashSale()"></flash-sale>
-        <festival v-if="festival" v-on:addFestival="addFestival()"></festival>
+        <flash-sale :product="product" v-if="flash" v-on:flashSale="flashSale()"></flash-sale>
+        <festival :product="product" v-if="festival" v-on:addFestival="addFestival()"></festival>
 
         <!-- Paginate -->
         <div class="px-3 pb-8">
@@ -212,10 +212,12 @@ export default {
     notify() {
       this.notification = !this.notification
     },
-    flashSale() {
+    flashSale(product) {
+      this.product = product
       this.flash = !this.flash
     },
-    addFestival() {
+    addFestival(product) {
+      this.product = product
       this.festival = !this.festival
     },
 
