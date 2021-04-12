@@ -84,7 +84,7 @@
 
       <p @click="openRegistrationModal" class="text-center">
         Don't have an account?
-        <n-link to="/shop-create" class="ml-2 text-orange-1 font-bold"
+        <n-link to="#" class="ml-2 text-orange-1 font-bold"
           >Create account</n-link
         >
       </p>

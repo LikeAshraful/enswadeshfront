@@ -107,12 +107,9 @@ export default {
     Markets,
   },
 
-  created() {
-    this.loadSearch()
-  },
-
   mounted() {
     this.basePath = this.$axios.defaults.baseURL
+    this.loadSearch()
   },
 
   methods: {

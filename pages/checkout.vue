@@ -16,7 +16,6 @@
               class="input-field focus:outline-none mt-1 mb-4"
               placeholder="Type your mobile phone number"
             />
-
           </div>
           <!-- Shipping Billing Address Input -->
           <div>
@@ -47,7 +46,7 @@
                 type="text"
                 class="input-field focus:outline-none mb-2 mt-1"
                 placeholder="Type your Region"
-              >
+              />
               <!-- <select id="region" class="input-field focus:outline-none mb-2 mt-1">
                 <option value="" selected disabled>Select your region</option>
                 <option value="">...</option>
@@ -62,7 +61,7 @@
                 type="text"
                 class="input-field focus:outline-none mb-2 mt-1"
                 placeholder="Type your City"
-              >
+              />
               <!-- <select id="region" class="input-field focus:outline-none mb-2 mt-1">
                 <option value="" selected disabled>Select your city</option>
                 <option value="">...</option>
@@ -77,7 +76,7 @@
                 type="text"
                 class="input-field focus:outline-none mb-2 mt-1"
                 placeholder="Type your Area"
-              >
+              />
               <!-- <select id="region" class="input-field focus:outline-none mb-2 mt-1">
                 <option value="" selected disabled>Select your area</option>
                 <option value="">...</option>
@@ -113,7 +112,8 @@
                   class="mr-2 w-4 h-4"
                   type="radio"
                   name="bill"
-                  id="another" />
+                  id="another"
+                />
                 <label for="another">Bill to the another address</label>
               </div>
             </div>
@@ -145,7 +145,7 @@
                   type="text"
                   class="input-field focus:outline-none mb-2 mt-1"
                   placeholder="Type your Region"
-                >
+                />
                 <!-- <select id="region" class="input-field focus:outline-none mb-2 mt-1">
                   <option value="" selected disabled>Select your region</option>
                   <option value="">...</option>
@@ -160,7 +160,7 @@
                   type="text"
                   class="input-field focus:outline-none mb-2 mt-1"
                   placeholder="Type your City"
-                >
+                />
                 <!-- <select id="region" class="input-field focus:outline-none mb-2 mt-1">
                   <option value="" selected disabled>Select your city</option>
                   <option value="">...</option>
@@ -175,7 +175,7 @@
                   type="text"
                   class="input-field focus:outline-none mb-2 mt-1"
                   placeholder="Type your Area"
-                >
+                />
                 <!-- <select id="region" class="input-field focus:outline-none mb-2 mt-1">
                   <option value="" selected disabled>Select your area</option>
                   <option value="">...</option>
@@ -193,8 +193,6 @@
                 />
               </div>
             </div>
-
-
           </div>
         </div>
         <div>
@@ -215,18 +213,23 @@
                     <tr
                       v-for="(product, i) in products"
                       :key="i"
-                      class="border-t border-gray-3">
+                      class="border-t border-gray-3"
+                    >
                       <td>
                         <div class="flex my-1">
                           <img
                             class="w-12 h-12 mr-2"
-                            :src="product.thumbnail
-                              ? basePath + '/storage/' + product.thumbnail
-                              : require(`~/assets/img/products/default.png`)"
+                            :src="
+                              product.thumbnail
+                                ? basePath + '/storage/' + product.thumbnail
+                                : require(`~/assets/img/products/default.png`)
+                            "
                             alt=""
                           />
                           <p>
-                            <span class="font-semibold">{{ product.name }}</span>
+                            <span class="font-semibold">{{
+                              product.name
+                            }}</span>
                           </p>
                         </div>
                       </td>
@@ -237,9 +240,11 @@
                     </tr>
                     <tr class="border-t border-gray-3">
                       <td colspan="2" class="text-gray-2">
-                        <p class="mt-2">Subtotal ({{totalCount}} items)</p>
+                        <p class="mt-2">Subtotal ({{ totalCount }} items)</p>
                       </td>
-                      <td><p class="mt-2">৳ {{totalPrice}}</p></td>
+                      <td>
+                        <p class="mt-2">৳ {{ totalPrice }}</p>
+                      </td>
                     </tr>
                     <tr>
                       <td colspan="2" class="text-gray-2">
@@ -249,7 +254,9 @@
                     </tr>
                     <tr class="border-t border-b border-gray-3 font-semibold">
                       <td colspan="2"><p class="my-2">Total</p></td>
-                      <td><p class="my-2">৳ {{totalPrice + 50}}</p></td>
+                      <td>
+                        <p class="my-2">৳ {{ totalPrice + 50 }}</p>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -301,20 +308,22 @@
           </div>
           <!-- <n-link to="/order-complete" class="bg-green-3 btn block" >Place Order</n-link> -->
           <div class="flex justify-center mt-4">
-            <button class="bg-green-3 btn block" @click="addOrder"> Place Order </button>
+            <button class="bg-green-3 btn block" @click="addOrder">
+              Place Order
+            </button>
           </div>
+        </div>
       </div>
-    </div>
 
-    <!-- Login Modal -->
-    <!-- <login
+      <!-- Login Modal -->
+      <!-- <login
       v-if="loginModal"
       v-on:closeLoginModal="closeLoginModal()"
       v-on:openRegistrationModal="openRegistrationModal()"
     ></login> -->
 
-    <!-- Registration Modal -->
-    <!-- <registration
+      <!-- Registration Modal -->
+      <!-- <registration
       v-if="registrationModal"
       v-on:closeRegistrationModal="closeRegistrationModal()"
       v-on:openLoginModal="openLoginModal()"
@@ -341,10 +350,10 @@ export default {
       customer: '',
       loginModal: false,
       registrationModal: false,
-      areas:'',
-      cities:'',
+      areas: '',
+      cities: '',
       billAddress: false,
-      shop_id:'',
+      shop_id: '',
       phone_number: '',
       shipping_fee: 50,
       shipping_name: '',
@@ -353,8 +362,8 @@ export default {
       city: '',
       area: '',
       address: '',
-      billing_name : '',
-      billing_email : '',
+      billing_name: '',
+      billing_email: '',
       billing_region: '',
       billing_city: '',
       billing_area: '',
@@ -380,15 +389,13 @@ export default {
     // this.loadShippingUser()
     this.loadArea()
     this.loadCities()
-
-    this.phone_number = this.$auth.user.phone_number,
-    this.shipping_name = this.$auth.user.name
+    ;(this.phone_number = this.$auth.user.phone_number),
+      (this.shipping_name = this.$auth.user.name)
     this.shipping_email = this.$auth.user.email
     this.region = this.$auth.user.profile?.region
     this.city = this.$auth.user.profile?.city
     this.area = this.$auth.user.profile?.area
     this.address = this.$auth.user.profile?.address
-
   },
   methods: {
     // add to addtobag option
@@ -449,60 +456,59 @@ export default {
     //   })
     // },
     async loadArea() {
-          await this.$axios.$get('/api/areas')
-          .then(function( response ){
-              this.areas = response.data;
-          }.bind(this));
-      },
-      async loadCities() {
-          await this.$axios.$get('/api/cities')
-          .then(function( response ){
-              this.cities = response.data;
-          }.bind(this));
-      },
-      anotherAddress(){
-        this.billAddress = true
-      },
-      closeAnotherAddress(){
-        this.billAddress = false
-      },
+      await this.$axios.$get('/api/areas').then(
+        function (response) {
+          this.areas = response.data
+        }.bind(this)
+      )
+    },
+    async loadCities() {
+      await this.$axios.$get('/api/cities').then(
+        function (response) {
+          this.cities = response.data
+        }.bind(this)
+      )
+    },
+    anotherAddress() {
+      this.billAddress = true
+    },
+    closeAnotherAddress() {
+      this.billAddress = false
+    },
 
-      addOrder() {
-        var formData = new FormData()
+    async addOrder() {
+      var formData = new FormData()
 
-        formData.append('shop_id', this.shopId)
-        formData.append('customer_id', this.$auth.user.id)
-        formData.append('total_quantity', this.totalCount)
-        formData.append('total_price', this.totalPrice + this.shipping_fee)
-        formData.append('sub_total_price', this.totalPrice)
-        formData.append('shipping_fee', this.shipping_fee)
-        formData.append('shipping_email', this.shipping_email)
-        formData.append('shipping_phone', this.phone_number)
-        formData.append('shipping_name', this.shipping_name)
-        formData.append('shipping_region', this.region)
-        formData.append('shipping_city', this.city)
-        formData.append('shipping_area', this.area)
-        formData.append('shipping_address', this.address)
-        formData.append('billing_email', this.billing_email)
-        formData.append('billing_name', this.billing_name)
-        formData.append('billing_region', this.billing_region)
-        formData.append('billing_city', this.billing_city)
-        formData.append('billing_area', this.billing_area)
-        formData.append('billing_address', this.billing_address)
-        formData.append('payment_gateway', this.payment_gateway)
+      formData.append('shop_id', this.shopId)
+      formData.append('customer_id', this.$auth.user.id)
+      formData.append('total_quantity', this.totalCount)
+      formData.append('total_price', this.totalPrice + this.shipping_fee)
+      formData.append('sub_total_price', this.totalPrice)
+      formData.append('shipping_fee', this.shipping_fee)
+      formData.append('shipping_email', this.shipping_email)
+      formData.append('shipping_phone', this.phone_number)
+      formData.append('shipping_name', this.shipping_name)
+      formData.append('shipping_region', this.region)
+      formData.append('shipping_city', this.city)
+      formData.append('shipping_area', this.area)
+      formData.append('shipping_address', this.address)
+      formData.append('billing_email', this.billing_email)
+      formData.append('billing_name', this.billing_name)
+      formData.append('billing_region', this.billing_region)
+      formData.append('billing_city', this.billing_city)
+      formData.append('billing_area', this.billing_area)
+      formData.append('billing_address', this.billing_address)
+      formData.append('payment_gateway', this.payment_gateway)
 
-        // prodcuts
-        for (let i = 0; i < this.products.length; i++) {
-          for (let key of Object.keys(this.products[i])) {
-            formData.append(`products[${i}][${key}]`, this.products[i][key])
-          }
+      // prodcuts
+      for (let i = 0; i < this.products.length; i++) {
+        for (let key of Object.keys(this.products[i])) {
+          formData.append(`products[${i}][${key}]`, this.products[i][key])
         }
+      }
 
-        this.$axios.post('/api/orders/', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
+      await this.$axios
+        .post('/api/orders/', formData)
         .then((response) => {
           this.$toast.success('Order Placed Successfully !')
           this.cartRemove()
@@ -513,7 +519,7 @@ export default {
             this.$nuxt.error({ statusCode: 404, message: 'err message' })
           }
         })
-      }
+    },
   },
   computed: {
     ...mapGetters({
@@ -540,6 +546,6 @@ export default {
       })
       return sum
     },
-  }
+  },
 }
 </script>

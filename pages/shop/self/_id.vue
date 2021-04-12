@@ -46,7 +46,7 @@ export default {
       basePath: this.$axios.defaults.baseURL,
       breadCrumbs: [
         { title: 'Home', url: '/' },
-        { title: 'My Shop', url: '/my-shop' },
+        { title: 'My Shop', url: '' },
         { title: 'Shop name goes to here', url: '' },
       ],
       showTab: 'Products',

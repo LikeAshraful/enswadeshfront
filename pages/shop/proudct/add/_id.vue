@@ -10,732 +10,738 @@
       <p class="font-bold text-3xl">Add Product</p>
       <n-link to="#" class="text-blue-1 font-bold">Need help?</n-link>
     </div>
-    <p class="title">Choose an appropriate format</p>
-    <div class="p-2">
-      <div class="flex my-4">
-        <button
-          v-for="(format, i) in formats"
-          :key="i"
-          :class="format.item ? 'bg-green-3' : 'bg-white'"
-          @click="simpleFormat(format)"
-          class="font-bold border border-gray-3 hover:bg-green-3 py-1 px-4 focus:outline-none"
-        >
-          {{ format.title }}
-        </button>
-      </div>
-      <p class="mb-4">Write here why use this format as a helper text</p>
-    </div>
-    <div class="bg-white rounded-lg mb-6">
-      <p class="title">Similarity</p>
+    <form @submit.prevent="addProducts">
+      <p class="title">Choose an appropriate format</p>
       <div class="p-2">
-        <div class="mb-2">
-          <label class="input-label" for="similar">Select product</label>
-          <select
-            class="input-field focus:outline-none"
-            v-model="similar_product_id"
-            name=""
-            id="similar"
+        <div class="flex my-4">
+          <button
+            v-for="(format, i) in formats"
+            :key="i"
+            :class="format.item ? 'bg-green-3' : 'bg-white'"
+            @click="simpleFormat(format)"
+            class="font-bold border border-gray-3 hover:bg-green-3 py-1 px-4 focus:outline-none"
           >
-            <option
-              v-for="product in similar_product"
-              :key="'product' + product.id"
-              :value="product.id"
+            {{ format.title }}
+          </button>
+        </div>
+        <p class="mb-4">Write here why use this format as a helper text</p>
+      </div>
+      <div class="bg-white rounded-lg mb-6">
+        <p class="title">Similarity</p>
+        <div class="p-2">
+          <div class="mb-2">
+            <label class="input-label" for="similar">Select product</label>
+            <select
+              class="input-field focus:outline-none"
+              v-model="similar_product_id"
+              name=""
+              id="similar"
             >
-              {{ product.name }}
-            </option>
-          </select>
-          <p>Write here the benefit of similar product check.</p>
+              <option
+                v-for="product in similar_product"
+                :key="'product' + product.id"
+                :value="product.id"
+              >
+                {{ product.name }}
+              </option>
+            </select>
+            <p>Write here the benefit of similar product check.</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="grid grid-cols-2 gap-12 mb-6">
-      <div class="">
-        <div class="bg-white rounded-lg mb-6">
-          <p class="title">Basic Information</p>
-          <div class="p-2">
-            <div class="mb-2">
-              <label class="input-label" for="name">Product Name</label>
-              <input
-                class="input-field focus:outline-none"
-                id="name"
-                type="text"
-                v-model="name"
-                placeholder="Type your product title"
-              />
-            </div>
-            <div class="mb-2">
-              <label class="input-label" for="category">Brand Name</label>
-              <div class="grid grid-cols-5 gap-4">
-                <div class="col-span-6">
-                  <div class="search-conatiner">
-                    <input type="hidden" v-model="brand_id" />
-                    <input
-                      type="text"
-                      placeholder="Type your query"
-                      v-model="search"
-                      @blur="brandtoggleclose"
-                      @focus="brandtoggleopen"
-                    />
+      <div class="grid grid-cols-2 gap-12 mb-6">
+        <div class="">
+          <div class="bg-white rounded-lg mb-6">
+            <p class="title">Basic Information</p>
+            <div class="p-2">
+              <div class="mb-2">
+                <label class="input-label" for="name">Product Name</label>
+                <input
+                  class="input-field focus:outline-none"
+                  id="name"
+                  type="text"
+                  v-model="name"
+                  placeholder="Type your product title"
+                />
+              </div>
+              <div class="mb-2">
+                <label class="input-label" for="category">Brand Name</label>
+                <div class="grid grid-cols-5 gap-4">
+                  <div class="col-span-6">
+                    <div class="search-conatiner">
+                      <input type="hidden" v-model="brand_id" />
+                      <input
+                        type="text"
+                        placeholder="Type your query"
+                        v-model="search"
+                        @blur="brandtoggleclose"
+                        @focus="brandtoggleopen"
+                      />
 
-                    <div v-if="filteredList.length">
-                      <div class="results" v-if="brandtoggle">
-                        <div
-                          class="result"
-                          v-for="brand in filteredList"
-                          :key="brand.id"
-                          @click="selectResult(brand)"
-                        >
-                          <span
-                            v-if="brand.name"
+                      <div v-if="filteredList.length">
+                        <div class="results" v-if="brandtoggle">
+                          <div
+                            class="result"
+                            v-for="brand in filteredList"
+                            :key="brand.id"
                             @click="selectResult(brand)"
-                            @mousedown.prevent
                           >
-                            {{ brand.name }}
-                          </span>
+                            <span
+                              v-if="brand.name"
+                              @click="selectResult(brand)"
+                              @mousedown.prevent
+                            >
+                              {{ brand.name }}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="results" v-else>
-                      <div class="results-flex" @click="addBrand()">
-                        <span @click="addBrand()" @mousedown.prevent>
-                          {{ search }}
-                        </span>
-                        <button class="btn">
-                          <i class="ri-add-circle-fill"></i>
-                        </button>
+                      <div class="results" v-else>
+                        <div class="results-flex" @click="addBrand()">
+                          <span @click="addBrand()" @mousedown.prevent>
+                            {{ search }}
+                          </span>
+                          <button class="btn">
+                            <i class="ri-add-circle-fill"></i>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="mb-2">
-              <label class="input-label" for="code">Product code/SKU</label>
-              <input
-                class="input-field focus:outline-none"
-                id="code"
-                type="text"
-                v-model="sku"
-                placeholder="Type code hear"
-              />
-            </div>
-            <div class="mb-2">
-              <label class="input-label" for="category">Category</label>
-              <div class="grid grid-cols-5 gap-4">
-                <div class="col-span-6">
-                  <div class="search-conatiner">
-                    <input type="hidden" v-model="category_id" />
-                    <input
-                      type="text"
-                      placeholder="Type your query"
-                      v-model="categoriessearch"
-                      @blur="categoriestoggleclose"
-                      @focus="categoriestoggleopen"
-                    />
+              <div class="mb-2">
+                <label class="input-label" for="code">Product code/SKU</label>
+                <input
+                  class="input-field focus:outline-none"
+                  id="code"
+                  type="text"
+                  v-model="sku"
+                  placeholder="Type code hear"
+                />
+              </div>
+              <div class="mb-2">
+                <label class="input-label" for="category">Category</label>
+                <div class="grid grid-cols-5 gap-4">
+                  <div class="col-span-6">
+                    <div class="search-conatiner">
+                      <input type="hidden" v-model="category_id" />
+                      <input
+                        type="text"
+                        placeholder="Type your query"
+                        v-model="categoriessearch"
+                        @blur="categoriestoggleclose"
+                        @focus="categoriestoggleopen"
+                      />
 
-                    <div v-if="categoriesList.length">
-                      <div class="results" v-if="categoriestoggle">
-                        <div
-                          class="result"
-                          v-for="categories in categoriesList"
-                          :key="categories.id"
-                          @click="selectResultcategories(categories)"
-                        >
-                          <span
-                            v-if="categories.name"
+                      <div v-if="categoriesList.length">
+                        <div class="results" v-if="categoriestoggle">
+                          <div
+                            class="result"
+                            v-for="categories in categoriesList"
+                            :key="categories.id"
                             @click="selectResultcategories(categories)"
+                          >
+                            <span
+                              v-if="categories.name"
+                              @click="selectResultcategories(categories)"
+                              @mousedown.prevent
+                            >
+                              {{ categories.name }}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="results" v-else>
+                        <div class="results-flex">
+                          <span>
+                            {{ categoriessearch }}
+                          </span>
+                          <button
+                            class="btn"
+                            @click="cetegoryModal()"
                             @mousedown.prevent
                           >
-                            {{ categories.name }}
-                          </span>
+                            <i class="ri-add-circle-fill"></i>
+                          </button>
                         </div>
                       </div>
                     </div>
-                    <div class="results" v-else>
-                      <div class="results-flex">
-                        <span>
-                          {{ categoriessearch }}
-                        </span>
-                        <button
-                          class="btn"
-                          @click="cetegoryModal()"
-                          @mousedown.prevent
-                        >
-                          <i class="ri-add-circle-fill"></i>
-                        </button>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <category
-              :categories="categoriesbase"
-              :name="categoriessearch"
-              :shopId="shopIdForCategory"
-              v-if="modelcategory"
-              v-on:closeModal="closeModal()"
-            ></category>
-          </div>
-        </div>
-        <div v-if="simple_format" class="bg-white rounded-lg mb-6">
-          <p class="title">Price</p>
-          <div class="p-2">
-            <div class="mb-2">
-              <label class="input-label" for="price">Price</label>
-              <div class="grid grid-cols-5 gap-8">
-                <div class="col-span-3">
-                  <input
-                    class="input-field focus:outline-none"
-                    id="price"
-                    type="number"
-                    v-model="price"
-                    placeholder="What is the price for product"
-                  />
-                </div>
-                <div class="col-span-2">
-                  <label class="input-label" for="currency_type"
-                    >Select Currency</label
-                  >
-                  <select
-                    class="input-field focus:outline-none bg-gray-1"
-                    id="currency_type"
-                    v-model="currency_type"
-                  >
-                    <option value="BDT">BDT</option>
-                    <option value="USD">USD</option>
-                  </select>
-                </div>
-              </div>
+              <category
+                :categories="categoriesbase"
+                :name="categoriessearch"
+                :shopId="shopIdForCategory"
+                v-if="modelcategory"
+                v-on:closeModal="closeModal()"
+              ></category>
             </div>
-            <div class="mb-2">
-              <label class="input-label" for="unit">Price Per Unit</label>
-              <div class="grid grid-cols-5 gap-4">
-                <div class="col-span-6">
-                  <select
-                    class="input-field focus:outline-none"
-                    name=""
-                    id="unit"
-                    v-model="unit_id"
-                  >
-                    <option
-                      v-for="unit in units"
-                      :key="unit.id"
-                      :value="unit.id"
+          </div>
+          <div v-if="simple_format" class="bg-white rounded-lg mb-6">
+            <p class="title">Price</p>
+            <div class="p-2">
+              <div class="mb-2">
+                <label class="input-label" for="price">Price</label>
+                <div class="grid grid-cols-5 gap-8">
+                  <div class="col-span-3">
+                    <input
+                      class="input-field focus:outline-none"
+                      id="price"
+                      type="number"
+                      v-model="price"
+                      placeholder="What is the price for product"
+                    />
+                  </div>
+                  <div class="col-span-2">
+                    <label class="input-label" for="currency_type"
+                      >Select Currency</label
                     >
-                      {{ unit.name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="mb-2">
-              <label class="input-label" for="discount">Discount</label>
-              <div class="grid grid-cols-5 gap-8">
-                <div class="col-span-3">
-                  <input
-                    class="input-field focus:outline-none"
-                    id="discount"
-                    type="number"
-                    placeholder="Write here"
-                    v-model="discount"
-                  />
-                </div>
-                <div class="col-span-2">
-                  <label class="input-label" for="discount_type"
-                    >Select Discount Type</label
-                  >
-                  <select
-                    class="input-field focus:outline-none bg-gray-1"
-                    id="discount_type"
-                    v-model="discount_type"
-                  >
-                    <option value="Percent">Percent(%)</option>
-                    <option value="Number">Number(1)</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <div class="mb-2">
-              <label class="input-label" for="discount-price"
-                >Discount Price</label
-              >
-              <input
-                class="input-field focus:outline-none"
-                id="discount-price"
-                type="number"
-                placeholder="0"
-                readonly
-                v-model="disCountPrice"
-              />
-            </div>
-            <div v-if="simple_format" class="mb-2">
-              <label class="input-label" for="quantity">Quantity</label>
-              <input
-                class="input-field focus:outline-none"
-                id="quantity"
-                type="number"
-                v-model="stocks"
-                placeholder="Quantity"
-              />
-            </div>
-            <div class="mb-2">
-              <label class="input-label" for="offer">Offer</label>
-              <input
-                class="input-field focus:outline-none"
-                id="offer"
-                type="text"
-                v-model="offers"
-                placeholder="Type here"
-              />
-            </div>
-          </div>
-        </div>
-        <div v-if="weight_wise" class="bg-white rounded-lg mb-6">
-          <p class="title">Weight Wise Price Information</p>
-          <div class="p-2">
-            <table class="w-full">
-              <thead>
-                <tr class="font-bold">
-                  <td>Weight</td>
-                  <td>Price</td>
-                  <td>Discount</td>
-                  <td>Type</td>
-                  <td>Quantity</td>
-                  <td>Offer</td>
-                  <td></td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(wei, i) in weights" :key="i">
-                  <td>
-                    <input
-                      type="text"
-                      v-model="wei.weight"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="(kg, litre, cm, mm)"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      v-model="wei.price"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="1"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      v-model="wei.discount"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="0"
-                    />
-                  </td>
-                  <td>
                     <select
-                      class="input-field focus:outline-none my-1"
+                      class="input-field focus:outline-none bg-gray-1"
+                      id="currency_type"
+                      v-model="currency_type"
+                    >
+                      <option value="BDT">BDT</option>
+                      <option value="USD">USD</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-2">
+                <label class="input-label" for="unit">Price Per Unit</label>
+                <div class="grid grid-cols-5 gap-4">
+                  <div class="col-span-6">
+                    <select
+                      class="input-field focus:outline-none"
+                      name=""
+                      id="unit"
+                      v-model="unit_id"
+                    >
+                      <option
+                        v-for="unit in units"
+                        :key="unit.id"
+                        :value="unit.id"
+                      >
+                        {{ unit.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-2">
+                <label class="input-label" for="discount">Discount</label>
+                <div class="grid grid-cols-5 gap-8">
+                  <div class="col-span-3">
+                    <input
+                      class="input-field focus:outline-none"
+                      id="discount"
+                      type="number"
+                      placeholder="Write here"
+                      v-model="discount"
+                    />
+                  </div>
+                  <div class="col-span-2">
+                    <label class="input-label" for="discount_type"
+                      >Select Discount Type</label
+                    >
+                    <select
+                      class="input-field focus:outline-none bg-gray-1"
                       id="discount_type"
-                      v-model="wei.discount_type"
+                      v-model="discount_type"
                     >
                       <option value="Percent">Percent(%)</option>
                       <option value="Number">Number(1)</option>
                     </select>
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      v-model="wei.stocks"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="1"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      v-model="wei.offer"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="Offer"
-                    />
-                  </td>
-                  <td>
-                    <button
-                      class="focus:outline-none text-orange-1"
-                      v-if="weights.length - 1 && i != 0"
-                      @click="removeWeight"
-                    >
-                      <i class="ri-close-circle-fill"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <button
-              @click="addWeight"
-              class="font-bold text-orange-1 focus:outline-none"
-            >
-              Add another
-            </button>
-          </div>
-        </div>
-        <div v-if="size_wise" class="bg-white rounded-lg mb-6">
-          <p class="title">Size Wise Price Information</p>
-          <div class="p-2">
-            <table class="w-full">
-              <thead>
-                <tr class="font-bold">
-                  <td>Size</td>
-                  <td>Price</td>
-                  <td>Discount</td>
-                  <td>Type</td>
-                  <td>Quantity</td>
-                  <td>Offer</td>
-                  <td></td>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(siz, i) in sizes" :key="i">
-                  <td>
-                    <input
-                      type="text"
-                      v-model="siz.size"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="(S/M/L/4/5/6)"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      v-model="siz.price"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="1"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      v-model="siz.discount"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="0"
-                    />
-                  </td>
-                  <td>
-                    <select
-                      class="input-field focus:outline-none my-1"
-                      id="discount_type"
-                      v-model="siz.discount_type"
-                    >
-                      <option value="Percent">Percent(%)</option>
-                      <option value="Number">Number(1)</option>
-                    </select>
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      v-model="siz.stocks"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="1"
-                    />
-                  </td>
-                  <td>
-                    <input
-                      type="text"
-                      v-model="siz.offer"
-                      class="input-field focus:outline-none my-1"
-                      placeholder="Offer"
-                    />
-                  </td>
-                  <td>
-                    <button
-                      class="focus:outline-none text-orange-1"
-                      v-if="sizes.length - 1 && i != 0"
-                      @click="removeSize"
-                    >
-                      <i class="ri-close-circle-fill"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <button
-              @click="addSize"
-              class="font-bold text-orange-1 focus:outline-none"
-            >
-              Add another
-            </button>
-          </div>
-        </div>
-        <div class="bg-white rounded-lg mb-6">
-          <p class="title">Services</p>
-          <div class="p-2">
-            <div class="mb-2">
-              <label class="input-label" for="warranty">Warranty</label>
-              <textarea
-                class="input-field focus:outline-none"
-                name=""
-                v-model="warranty"
-                id="warranty"
-                rows="3"
-                placeholder="Write details here about warranty"
-              ></textarea>
-            </div>
-            <div class="mb-2">
-              <label class="input-label" for="guarantee">Guarantee</label>
-              <textarea
-                class="input-field focus:outline-none"
-                name=""
-                id="guarantee"
-                v-model="guarantee"
-                rows="3"
-                placeholder="Write details here about guarantee"
-              ></textarea>
-            </div>
-            <div class="mb-2">
-              <label class="input-label" for="discount-price"
-                >Return option</label
-              >
-              <textarea
-                class="input-field focus:outline-none"
-                name=""
-                id="discount-price"
-                rows="3"
-                v-model="return_policy"
-                placeholder="Write details here about return policy"
-              ></textarea>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="bg-white rounded-lg mb-6">
-          <p class="title">Product Image</p>
-          <div class="p-2">
-            <div class="mb-2">
-              <label class="input-label">Product Thumbnail</label>
-              <div
-                class="border border-dashed border-gray-3 rounded text-center"
-              >
-                <div
-                  v-if="!thumbnail_images"
-                  class="py-10 flex items-center justify-center"
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-2">
+                <label class="input-label" for="discount-price"
+                  >Discount Price</label
                 >
-                  <i class="ri-attachment-line"></i>
-                  <label
-                    for="thumbnail"
-                    class="font-bold text-blue-1 ml-2 inline cursor-pointer mr-2"
-                    >Add file</label
-                  >
-                  <p class="inline">or drop images here</p>
-                </div>
-                <label for="thumbnail" class="cursor-pointer">
-                  <div
-                    v-if="thumbnail_images"
-                    style="padding-bottom: 40%"
-                    class="relative flex flex-row justify-center"
-                  >
-                    <img
-                      class="absolute p-2 h-full m-auto"
-                      :src="thumbnail_images"
-                    />
-                  </div>
-                </label>
                 <input
-                  class="hidden"
-                  type="file"
-                  @change="thumbnailFile"
-                  id="thumbnail"
+                  class="input-field focus:outline-none"
+                  id="discount-price"
+                  type="number"
+                  placeholder="0"
+                  readonly
+                  v-model="disCountPrice"
                 />
               </div>
-            </div>
-            <div class="col-span-2">
-              <label class="input-label">Gallery images</label>
-              <div
-                class="border border-dashed border-gray-3 rounded text-center"
-              >
-                <div class="py-3">
-                  <label class="cursor-pointer" for="gallery"
-                    ><i
-                      class="ri-add-line text-blue-1 font-bold text-4xl"
-                    ></i></label
-                  ><br />
-                  <p class="text-gray-4">Minimum: 4, Maximum: 10</p>
-                  <div class="flex flex-row gap-2 justify-center">
-                    <span
-                      class="h-6 w-12 bg-gray-3"
-                      v-for="(gallery, i) in gallery_images_url"
-                      :key="i"
-                    >
-                      <img :src="gallery" class="w-100" alt="Image" />
-                    </span>
-                  </div>
-                </div>
+              <div v-if="simple_format" class="mb-2">
+                <label class="input-label" for="quantity">Quantity</label>
                 <input
-                  class="hidden"
-                  type="file"
-                  multiple
-                  @change="galleryFiles"
-                  id="gallery"
+                  class="input-field focus:outline-none"
+                  id="quantity"
+                  type="number"
+                  v-model="stocks"
+                  placeholder="Quantity"
+                />
+              </div>
+              <div class="mb-2">
+                <label class="input-label" for="offer">Offer</label>
+                <input
+                  class="input-field focus:outline-none"
+                  id="offer"
+                  type="text"
+                  v-model="offers"
+                  placeholder="Type here"
                 />
               </div>
             </div>
           </div>
-        </div>
-        <div class="bg-white rounded-lg">
-          <p class="title">More Information</p>
-          <div class="p-2">
-            <div class="mb-2">
-              <label class="input-label" for="description"
-                >Details information</label
-              >
-              <textarea
-                class="input-field focus:outline-none"
-                name=""
-                id="description"
-                v-model="description"
-                rows="4"
-                placeholder="Write here product description"
-              ></textarea>
-            </div>
-            <div class="mb-2">
-              <label class="input-label" for="feature">Features</label>
+          <div v-if="weight_wise" class="bg-white rounded-lg mb-6">
+            <p class="title">Weight Wise Price Information</p>
+            <div class="p-2">
               <table class="w-full">
+                <thead>
+                  <tr class="font-bold">
+                    <td>Weight</td>
+                    <td>Price</td>
+                    <td>Discount</td>
+                    <td>Type</td>
+                    <td>Quantity</td>
+                    <td>Offer</td>
+                    <td></td>
+                  </tr>
+                </thead>
                 <tbody>
-                  <tr v-for="(feature, i) in features" :key="i">
+                  <tr v-for="(wei, i) in weights" :key="i">
                     <td>
                       <input
-                        class="input-field focus:outline-none my-1"
-                        id="feature"
-                        v-model="feature.title"
                         type="text"
-                        placeholder="Write feature title"
+                        v-model="wei.weight"
+                        class="input-field focus:outline-none my-1"
+                        placeholder="(kg, litre, cm, mm)"
                       />
                     </td>
                     <td>
                       <input
+                        type="number"
+                        v-model="wei.price"
                         class="input-field focus:outline-none my-1"
-                        id="feature"
-                        v-model="feature.feature"
-                        type="text"
-                        placeholder="Write details here"
+                        placeholder="1"
                       />
                     </td>
                     <td>
-                      <button
-                        class="focus:outline-none text-orange-1"
-                        v-if="i === features.length - 1 && i != 0"
-                        @click="removeFeature(feature)"
+                      <input
+                        type="number"
+                        v-model="wei.discount"
+                        class="input-field focus:outline-none my-1"
+                        placeholder="0"
+                      />
+                    </td>
+                    <td>
+                      <select
+                        class="input-field focus:outline-none my-1"
+                        id="discount_type"
+                        v-model="wei.discount_type"
+                      >
+                        <option value="Percent">Percent(%)</option>
+                        <option value="Number">Number(1)</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        v-model="wei.stocks"
+                        class="input-field focus:outline-none my-1"
+                        placeholder="1"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        v-model="wei.offer"
+                        class="input-field focus:outline-none my-1"
+                        placeholder="Offer"
+                      />
+                    </td>
+                    <td>
+                      <a
+                        class="focus:outline-none text-orange-1 cursor-pointer"
+                        v-if="weights.length - 1 && i != 0"
+                        @click="removeWeight"
                       >
                         <i class="ri-close-circle-fill"></i>
-                      </button>
+                      </a>
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <button
-                @click="addFeature"
-                class="font-bold text-orange-1 focus:outline-none"
+              <a
+                @click="addWeight"
+                class="font-bold text-orange-1 focus:outline-none cursor-pointer"
               >
                 Add another
-              </button>
+              </a>
             </div>
-            <div class="mb-2">
-              <label class="input-label">Audio description</label>
-              <div
-                class="border border-dashed border-gray-3 rounded text-center"
+          </div>
+          <div v-if="size_wise" class="bg-white rounded-lg mb-6">
+            <p class="title">Size Wise Price Information</p>
+            <div class="p-2">
+              <table class="w-full">
+                <thead>
+                  <tr class="font-bold">
+                    <td>Size</td>
+                    <td>Price</td>
+                    <td>Discount</td>
+                    <td>Type</td>
+                    <td>Quantity</td>
+                    <td>Offer</td>
+                    <td></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(siz, i) in sizes" :key="i">
+                    <td>
+                      <input
+                        type="text"
+                        v-model="siz.size"
+                        class="input-field focus:outline-none my-1"
+                        placeholder="(S/M/L/4/5/6)"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        v-model="siz.price"
+                        class="input-field focus:outline-none my-1"
+                        placeholder="1"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        v-model="siz.discount"
+                        class="input-field focus:outline-none my-1"
+                        placeholder="0"
+                      />
+                    </td>
+                    <td>
+                      <select
+                        class="input-field focus:outline-none my-1"
+                        id="discount_type"
+                        v-model="siz.discount_type"
+                      >
+                        <option value="Percent">Percent(%)</option>
+                        <option value="Number">Number(1)</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        v-model="siz.stocks"
+                        class="input-field focus:outline-none my-1"
+                        placeholder="1"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        v-model="siz.offer"
+                        class="input-field focus:outline-none my-1"
+                        placeholder="Offer"
+                      />
+                    </td>
+                    <td>
+                      <a
+                        class="focus:outline-none text-orange-1 cursor-pointer"
+                        v-if="sizes.length - 1 && i != 0"
+                        @click="removeSize"
+                      >
+                        <i class="ri-close-circle-fill"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <a
+                @click="addSize"
+                class="font-bold text-orange-1 focus:outline-none cursor-pointer"
               >
-                <div class="py-3 flex items-center justify-center">
-                  <i class="ri-attachment-line"></i>
-                  <label
-                    for="audio"
-                    class="font-bold text-blue-1 ml-2 inline cursor-pointer mr-2"
-                    >Add file</label
-                  >
-                  <p class="inline">or drop audio files here</p>
-                </div>
-                <label for="audio" class="cursor-pointer">
-                  <div
-                    v-if="audio_url"
-                    style="padding-bottom: 20px"
-                    class="relative flex flex-row justify-center"
-                  >
-                    <audio controls>
-                      <source :src="audio_url">
-                    Your browser does not support the audio element.
-                    </audio>
-                  </div>
-                <input class="hidden" @change="audioFile" type="file" id="audio" />
-                </label>
+                Add another
+              </a>
+            </div>
+          </div>
+          <div class="bg-white rounded-lg mb-6">
+            <p class="title">Services</p>
+            <div class="p-2">
+              <div class="mb-2">
+                <label class="input-label" for="warranty">Warranty</label>
+                <textarea
+                  class="input-field focus:outline-none"
+                  name=""
+                  v-model="warranty"
+                  id="warranty"
+                  rows="3"
+                  placeholder="Write details here about warranty"
+                ></textarea>
               </div>
-            </div>
-            <div class="mb-4">
-              <label class="input-label" for="video">Video description</label>
-              <input
-                class="input-field focus:outline-none"
-                v-model="video_url"
-                type="url"
-                id="video"
-              />
-            </div>
-            <div class="mb-2">
-              <label class="input-label" for="bargain">Bargain</label> <br />
-                  <input type="hidden" v-model="can_bargain" id="bargain">
-              <span
-                @click="bargainToggle"
-                class="input-label cursor-pointer text-6xl"
-                :class="can_bargain ? 'text-blue-1' : 'text-gray-2'"
-                for="bargain-opt"
-                ><i
-                  :class="can_bargain ? 'ri-toggle-fill' : 'ri-toggle-line'"
-                ></i
-              ></span>
+              <div class="mb-2">
+                <label class="input-label" for="guarantee">Guarantee</label>
+                <textarea
+                  class="input-field focus:outline-none"
+                  name=""
+                  id="guarantee"
+                  v-model="guarantee"
+                  rows="3"
+                  placeholder="Write details here about guarantee"
+                ></textarea>
+              </div>
+              <div class="mb-2">
+                <label class="input-label" for="discount-price"
+                  >Return option</label
+                >
+                <textarea
+                  class="input-field focus:outline-none"
+                  name=""
+                  id="discount-price"
+                  rows="3"
+                  v-model="return_policy"
+                  placeholder="Write details here about return policy"
+                ></textarea>
+              </div>
             </div>
           </div>
         </div>
-        <div class="bg-white rounded-lg">
-          <p class="title">Delivery</p>
-          <div class="p-2">
-            <div class="mb-2">
-              <label class="input-label" for="delivery">Delivery offer</label>
-              <div class="grid grid-cols-5 gap-8">
-                <div class="col-span-4">
+        <div>
+          <div class="bg-white rounded-lg mb-6">
+            <p class="title">Product Image</p>
+            <div class="p-2">
+              <div class="mb-2">
+                <label class="input-label">Product Thumbnail</label>
+                <div
+                  class="border border-dashed border-gray-3 rounded text-center"
+                >
+                  <div
+                    v-if="!thumbnail_images"
+                    class="py-10 flex items-center justify-center"
+                  >
+                    <i class="ri-attachment-line"></i>
+                    <label
+                      for="thumbnail"
+                      class="font-bold text-blue-1 ml-2 inline cursor-pointer mr-2"
+                      >Add file</label
+                    >
+                    <p class="inline">or drop images here</p>
+                  </div>
+                  <label for="thumbnail" class="cursor-pointer">
+                    <div
+                      v-if="thumbnail_images"
+                      style="padding-bottom: 40%"
+                      class="relative flex flex-row justify-center"
+                    >
+                      <img
+                        class="absolute p-2 h-full m-auto"
+                        :src="thumbnail_images"
+                      />
+                    </div>
+                  </label>
                   <input
-                    class="input-field focus:outline-none"
-                    id="delivery"
-                    v-model="delivery_offer"
-                    type="text"
-                    placeholder="Write here"
+                    class="hidden"
+                    type="file"
+                    @change="thumbnailFile"
+                    id="thumbnail"
                   />
                 </div>
-                <div>
-                  <select
-                    class="input-field focus:outline-none bg-gray-1"
-                    name=""
-                    id=""
-                  >
-                    <option value="">%</option>
-                  </select>
+              </div>
+              <div class="col-span-2">
+                <label class="input-label">Gallery images</label>
+                <div
+                  class="border border-dashed border-gray-3 rounded text-center"
+                >
+                  <div class="py-3">
+                    <label class="cursor-pointer" for="gallery"
+                      ><i
+                        class="ri-add-line text-blue-1 font-bold text-4xl"
+                      ></i></label
+                    ><br />
+                    <p class="text-gray-4">Minimum: 4, Maximum: 10</p>
+                    <div class="flex flex-row gap-2 justify-center">
+                      <span
+                        class="h-6 w-12 bg-gray-3"
+                        v-for="(gallery, i) in gallery_images_url"
+                        :key="i"
+                      >
+                        <img :src="gallery" class="w-100" alt="Image" />
+                      </span>
+                    </div>
+                  </div>
+                  <input
+                    class="hidden"
+                    type="file"
+                    multiple
+                    @change="galleryFiles"
+                    id="gallery"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-lg">
+            <p class="title">More Information</p>
+            <div class="p-2">
+              <div class="mb-2">
+                <label class="input-label" for="description"
+                  >Details information</label
+                >
+                <textarea
+                  class="input-field focus:outline-none"
+                  name=""
+                  id="description"
+                  v-model="description"
+                  rows="4"
+                  placeholder="Write here product description"
+                ></textarea>
+              </div>
+              <div class="mb-2">
+                <label class="input-label" for="feature">Features</label>
+                <table class="w-full">
+                  <tbody>
+                    <tr v-for="(feature, i) in features" :key="i">
+                      <td>
+                        <input
+                          class="input-field focus:outline-none my-1"
+                          id="feature"
+                          v-model="feature.title"
+                          type="text"
+                          placeholder="Write feature title"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          class="input-field focus:outline-none my-1"
+                          id="feature"
+                          v-model="feature.feature"
+                          type="text"
+                          placeholder="Write details here"
+                        />
+                      </td>
+                      <td>
+                        <a
+                          class="focus:outline-none text-orange-1 cursor-pointer"
+                          v-if="i === features.length - 1 && i != 0"
+                          @click="removeFeature(feature)"
+                        >
+                          <i class="ri-close-circle-fill"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <a
+                  @click="addFeature"
+                  class="font-bold text-orange-1 focus:outline-none cursor-pointer"
+                >
+                  Add another
+                </a>
+              </div>
+              <div class="mb-2">
+                <label class="input-label">Audio description</label>
+                <div
+                  class="border border-dashed border-gray-3 rounded text-center"
+                >
+                  <div class="py-3 flex items-center justify-center">
+                    <i class="ri-attachment-line"></i>
+                    <label
+                      for="audio"
+                      class="font-bold text-blue-1 ml-2 inline cursor-pointer mr-2"
+                      >Add file</label
+                    >
+                    <p class="inline">or drop audio files here</p>
+                  </div>
+                  <label for="audio" class="cursor-pointer">
+                    <div
+                      v-if="audio_url"
+                      style="padding-bottom: 20px"
+                      class="relative flex flex-row justify-center"
+                    >
+                      <audio controls>
+                        <source :src="audio_url" />
+                        Your browser does not support the audio element.
+                      </audio>
+                    </div>
+                    <input
+                      class="hidden"
+                      @change="audioFile"
+                      type="file"
+                      id="audio"
+                    />
+                  </label>
+                </div>
+              </div>
+              <div class="mb-4">
+                <label class="input-label" for="video">Video description</label>
+                <input
+                  class="input-field focus:outline-none"
+                  v-model="video_url"
+                  type="url"
+                  id="video"
+                />
+              </div>
+              <div class="mb-2">
+                <label class="input-label" for="bargain">Bargain</label> <br />
+                <input type="hidden" v-model="can_bargain" id="bargain" />
+                <span
+                  @click="bargainToggle"
+                  class="input-label cursor-pointer text-6xl"
+                  :class="can_bargain ? 'text-blue-1' : 'text-gray-2'"
+                  for="bargain-opt"
+                  ><i
+                    :class="can_bargain ? 'ri-toggle-fill' : 'ri-toggle-line'"
+                  ></i
+                ></span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-lg">
+            <p class="title">Delivery</p>
+            <div class="p-2">
+              <div class="mb-2">
+                <label class="input-label" for="delivery">Delivery offer</label>
+                <div class="grid grid-cols-5 gap-8">
+                  <div class="col-span-4">
+                    <input
+                      class="input-field focus:outline-none"
+                      id="delivery"
+                      v-model="delivery_offer"
+                      type="text"
+                      placeholder="Write here"
+                    />
+                  </div>
+                  <div>
+                    <select
+                      class="input-field focus:outline-none bg-gray-1"
+                      name=""
+                      id=""
+                    >
+                      <option value="">%</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="mt-6 flex justify-center gap-6 pb-12">
-      <button
-        @click="preview"
-        class="btn-disabled hover:bg-green-3 hover:text-green-4 focus:outline-none"
-      >
-        Preview
-      </button>
-      <button class="btn-disabled focus:outline-none" @click="addProducts">
-        Finish & Publish
-      </button>
-    </div>
-
+      <div class="mt-6 flex justify-center gap-6 pb-12">
+        <button
+          @click="preview"
+          class="btn-disabled hover:bg-green-3 hover:text-green-4 focus:outline-none"
+        >
+          Preview
+        </button>
+        <button class="btn-disabled focus:outline-none">
+          Finish & Publish
+        </button>
+      </div>
+    </form>
     <product-preview
       v-if="addPreview"
       v-on:closePreviewModal="closePreviewModal"
@@ -842,7 +848,7 @@ export default {
       categoriessearch: '',
       breadCrumbs: [
         { title: 'Home', url: '/' },
-        { title: 'My Shop', url: '/my-shop' },
+        { title: 'My Shop', url: '' },
         { title: 'Shop name goes to here', url: '' },
       ],
     }
@@ -855,7 +861,7 @@ export default {
     this.unitsData()
     // this.previewProduct()
   },
-  watch: {},
+
   methods: {
     closePreviewModal() {
       this.preview()
@@ -967,10 +973,10 @@ export default {
       formData.append('thumbnail', this.thumbnail)
       formData.append('audio', this.audio)
       formData.append('video_url', this.video_url)
-      if(this.can_bargain === true){
-      formData.append('can_bargain', 1)
-      }else {
-      formData.append('can_bargain', 0)
+      if (this.can_bargain === true) {
+        formData.append('can_bargain', 1)
+      } else {
+        formData.append('can_bargain', 0)
       }
       formData.append('delivery_offer', this.delivery_offer)
       for (const i of Object.keys(this.gallery_images)) {
@@ -1000,25 +1006,20 @@ export default {
       return formData
     },
 
-    async addProducts() {
+    addProducts() {
       let allFormData = this.getAllFromData()
 
-      await this.$axios
-        .post('/api/products/', allFormData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
+      this.$axios
+        .post('/api/products/', allFormData)
         .then((response) => {
           this.$router.push(`/shop/self/${this.$route.params.id}`)
           this.$toast.success('Product created successfully !')
         })
         .catch((error) => {
-          if (error.response.status == 404) {
+          if (error.response.statusCode == 404) {
             this.$nuxt.error({ statusCode: 404, message: 'err message' })
           }
         })
-      //this.$store.dispatch('products/addProducts', formData)
     },
 
     preview() {
