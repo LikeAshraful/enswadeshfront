@@ -1,5 +1,6 @@
 export const state = () => ({
-  addproducts: process.server ? [] : !!JSON.parse(localStorage.getItem("addproducts"))
+  addproducts: localStorage.getItem("addproducts") ? JSON.parse(localStorage.getItem("addproducts")) : [] // for static rendering where target: static
+  //addproducts: process.server ? [] : !!JSON.parse(localStorage.getItem("addproducts")) // for sever rendering where target: server
 });
 
 export const getters = {
@@ -157,5 +158,6 @@ export const mutations = {
 };
 
 function saveProduct(addproducts) {
-  process.server ? '' : !!localStorage.setItem("addproducts", JSON.stringify(addproducts));
+  localStorage.setItem("addproducts", JSON.stringify(addproducts)); // for static rendering where target: static
+  //process.server ? '' : !!localStorage.setItem("addproducts", JSON.stringify(addproducts)); // for sever rendering where target: server
 }

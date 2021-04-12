@@ -12,7 +12,7 @@ export default {
   },
 
   head: {
-    title: 'enSwadesFront',
+    title: 'Swadesh Bangladesh',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -76,7 +76,7 @@ export default {
   axios: {
     // proxy: true
     baseURL: process.env.BASE_URL,
-    imageURL:'/storage/',
+    imageURL: '/storage/',
   },
 
   // Register custom toasts

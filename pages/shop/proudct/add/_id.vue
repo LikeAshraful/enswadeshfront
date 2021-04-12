@@ -1008,15 +1008,22 @@ export default {
 
     addProducts() {
       let allFormData = this.getAllFromData()
-
       this.$axios
-        .post('/api/products/', allFormData)
+        //.post('/api/products/', allFormData)
+        .post('/api/products/', allFormData, {
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/json',
+          },
+        })
         .then((response) => {
+          console.log(response.data + 'sqwqwqwqwqwq')
           this.$router.push(`/shop/self/${this.$route.params.id}`)
           this.$toast.success('Product created successfully !')
         })
         .catch((error) => {
-          if (error.response.statusCode == 404) {
+          console.log(error.response.data.errors)
+          if (error.data) {
             this.$nuxt.error({ statusCode: 404, message: 'err message' })
           }
         })
