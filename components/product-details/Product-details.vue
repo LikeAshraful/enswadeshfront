@@ -114,7 +114,9 @@
                   </td>
                   <td v-else class="text-red-500 font-semibold">Unavailable</td>
                 </tr>
-                <tr v-else-if="product.weights ? product.weights.length > 0 : 0">
+                <tr
+                  v-else-if="product.weights ? product.weights.length > 0 : 0"
+                >
                   <td>Stock:</td>
                   <td
                     v-if="product.lowweightprice.stocks > 0 || weightStocks > 0"
@@ -141,7 +143,10 @@
                   <td>SKU:</td>
                   <td class="font-semibold">{{ product.sku }}</td>
                 </tr>
-                <tr class="my-3" v-if="product.sizes ? product.sizes.length > 0 : 0">
+                <tr
+                  class="my-3"
+                  v-if="product.sizes ? product.sizes.length > 0 : 0"
+                >
                   <td>Select Size:</td>
                   <td>
                     <span v-for="(size, k) in product.sizes" :key="k">
@@ -155,7 +160,10 @@
                     </span>
                   </td>
                 </tr>
-                <tr class="my-3" v-if="product.weights ? product.weights.length > 0 : 0">
+                <tr
+                  class="my-3"
+                  v-if="product.weights ? product.weights.length > 0 : 0"
+                >
                   <td>Select Weight:</td>
                   <td>
                     <span v-for="(weight, l) in product.weights" :key="l">

@@ -145,7 +145,6 @@ export default {
             this.$store.dispatch('authcheck/setUser', this.$auth.user)
             this.$store.dispatch('authcheck/setToken', this.$auth.token)
             this.$toast.success('Successfully login your account!')
-            this.closeLoginModal()
           })
           .catch((error) => {
             this.btnAction = false
