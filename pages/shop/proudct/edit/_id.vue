@@ -881,7 +881,7 @@ export default {
       categoriessearch: '',
       breadCrumbs: [
         { title: 'Home', url: '/' },
-        { title: 'My Shop', url: '/my-shop' },
+        { title: 'My Shop', url: '' },
         { title: 'Shop name goes to here', url: '' },
       ],
     }
