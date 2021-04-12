@@ -1,8 +1,8 @@
 require("dotenv").config();
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
-  target: 'static',
-  ssr: false,
+  // target: 'static',
+  // ssr: false,
   generate: {
     cache: {
       ignore: ['renovate.json'] // ignore changes applied on this file

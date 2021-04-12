@@ -329,14 +329,6 @@ export default {
       wishlistProduct: 'wishlist/wishlistProduct',
     }),
     requestWishlistProduct(id) {
-      let loader = this.$loading.show({
-        // Optional parameters
-        container: this.fullPage ? null : this.$refs.formContainer,
-        canCancel: true,
-        onCancel: this.onCancel,
-        zIndex: 2000,
-        opacity: 0.5,
-      })
       this.$axios
         .get('api/wishlist-request/' + id)
         .then((response) => {
@@ -350,13 +342,7 @@ export default {
         })
     },
     async checkWishlist() {
-      let loader = this.$loading.show({
-        container: this.fullPage ? null : this.$refs.formContainer,
-        canCancel: true,
-        onCancel: this.onCancel,
-        zIndex: 2000,
-        opacity: 2,
-      })
+
       await this.$axios
         .$get('/api/wishlist-check-by-product/' + this.product.id)
         .then((res) => {
