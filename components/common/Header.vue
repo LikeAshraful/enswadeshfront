@@ -192,7 +192,7 @@
                 <span>Earn</span>
               </div>
             </n-link>
-            <n-link to="" class="sm:pl-6 pl-2">
+            <n-link to="/flash-sale" class="sm:pl-6 pl-2">
               <div
                 class="flex items-center"
                 :class="
@@ -203,7 +203,7 @@
                 <span>Flash Sales</span>
               </div>
             </n-link>
-            <n-link to="" class="sm:pl-6 pl-2">
+            <n-link to="/festival-sale" class="sm:pl-6 pl-2">
               <div
                 class="flex items-center"
                 :class="currentRouteName == 'festivals' ? 'text-orange-1' : ''"
@@ -485,8 +485,8 @@ export default {
       menus: [
         { name: 'S-Wallet', url: '' },
         { name: 'Earn', url: '/earn' },
-        { name: 'Flash Sales', url: '' },
-        { name: 'Festivals', url: '' },
+        { name: 'Flash Sales', url: '/flash-sale' },
+        { name: 'Festivals', url: '/festival-sale' },
       ],
     }
   },

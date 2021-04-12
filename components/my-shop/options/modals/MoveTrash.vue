@@ -44,7 +44,7 @@ export default {
               this.$toast.error('Oops..! Something wrong...!');
           });
       },
-        closeModal()
+      closeModal()
       {
           if(this.close_modal == 'modal')
           {
