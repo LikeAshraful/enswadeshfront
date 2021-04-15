@@ -176,7 +176,7 @@
         </div>
         <div class="max-w-screen-xl xl:px-10 pb-2 m-auto sm:font-bold">
           <div class="flex flex-row items-center justify-center">
-            <n-link to="">
+            <n-link to="/s-wallet">
               <div class="flex items-center">
                 <i class="ri-wallet-3-fill mr-1"></i>
                 <span>S-Wallet</span>
