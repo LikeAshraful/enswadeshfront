@@ -1009,15 +1009,8 @@ export default {
     addProducts() {
       let allFormData = this.getAllFromData()
       this.$axios
-        //.post('/api/products/', allFormData)
-        .post('/api/products/', allFormData, {
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'application/json',
-          },
-        })
+        .post('/api/products/productadd', allFormData)
         .then((response) => {
-          console.log(response.data + 'sqwqwqwqwqwq')
           this.$router.push(`/shop/self/${this.$route.params.id}`)
           this.$toast.success('Product created successfully !')
         })
