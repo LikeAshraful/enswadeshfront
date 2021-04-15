@@ -2,7 +2,7 @@
     <div>
         <div @click="closeModal" class="fixed inset-0 z-50 flex flex-col justify-center items-center my-12">
             <div @click="wait">
-                <div class="focus-in max-w-screen-sm shadow-lg bg-white overflow-auto">
+                <div v-if="product.total_stocks > 30" class="focus-in max-w-screen-sm shadow-lg bg-white overflow-auto">
                     <div class="">
                         <p class="title text-center">Add To Festivals</p>
                         <form @submit.prevent="addToFestivaleSale">
@@ -38,6 +38,16 @@
                               </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+                <!-- When quantity less then 30 then show this modal -->
+                <div v-else class="focus-in max-w-screen-sm shadow-lg bg-white overflow-auto">
+                    <div class="cart-tems-center text-center">
+                        <p class="title">Add To Flash Sales</p>
+                        <div class="p-6">
+                            <p class="mb-6">Sorry, You do not have sufficient quantity <br> to add this product in Flash Sales</p>
+                            <p class="note">Note: You have to need minimum 30 quantity for flash sales</p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -2,18 +2,9 @@
     <div>
         <div @click="closeModal" class="fixed inset-0 z-50 flex flex-col justify-center items-center my-12">
             <div @click="wait">
-                <!-- When quantity less then 30 then show this modal -->
-                <div v-if="!quantity" class="focus-in max-w-screen-sm shadow-lg bg-white overflow-auto">
-                    <div class="cart-tems-center text-center">
-                        <p class="title">Add To Flash Sales</p>
-                        <div class="p-6">
-                            <p class="mb-6">Sorry, You do not have sufficient quantity <br> to add this product in Flash Sales</p>
-                            <p class="note">Note: You have to need minimum 30 quantity for flash sales</p>
-                        </div>
-                    </div>
-                </div>
+
                 <!-- When quantity greater than equal 30 then show this modal -->
-                <div v-if="quantity" class="focus-in max-w-screen-sm shadow-lg bg-white overflow-auto">
+                <div v-if="product.total_stocks > 30" class="focus-in max-w-screen-sm shadow-lg bg-white overflow-auto">
                     <div class="">
                         <p class="title text-center">Add To Flash Sales</p>
                         <form @submit.prevent="addToFlashSale">
@@ -51,6 +42,16 @@
                         </form>
                     </div>
                 </div>
+                 <!-- When quantity less then 30 then show this modal -->
+                <div v-else class="focus-in max-w-screen-sm shadow-lg bg-white overflow-auto">
+                    <div class="cart-tems-center text-center">
+                        <p class="title">Add To Flash Sales</p>
+                        <div class="p-6">
+                            <p class="mb-6">Sorry, You do not have sufficient quantity <br> to add this product in Flash Sales</p>
+                            <p class="note">Note: You have to need minimum 30 quantity for flash sales</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div @click="closeModal" class="opacity-50 fixed inset-0 z-40 bg-green-4"></div>
@@ -61,7 +62,6 @@ export default {
     data() {
         return {
             close_modal: 'modal',
-            quantity:true,
             start_date: '',
             start_time: '',
             end_date: '',
@@ -69,17 +69,7 @@ export default {
         }
     },
     props:['product'],
-
     methods: {
-      // setQuantity () {
-      //   let item = this.product
-      //   if(item.sizes.length == 0 && item.weights.length == 0){
-      //     this.quantity = item.stocks
-      //   } else if(item.sizes.length > 0) {
-      //     this.quantity =
-      //   }
-      // },
-
       addToFlashSale()
       {
         var formData = new FormData()
