@@ -508,7 +508,7 @@ export default {
       }
 
       await this.$axios
-        .post('/api/orders/', formData)
+        .post('/api/orders/storeOrder', formData)
         .then((response) => {
           this.$toast.success('Order Placed Successfully !')
           this.cartRemove()

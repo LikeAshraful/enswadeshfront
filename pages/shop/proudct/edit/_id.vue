@@ -975,6 +975,58 @@ export default {
       this.weights.splice(delIndex, 1)
     },
 
+    showProduct() {
+      this.$axios
+        .$get('api/products/' + this.$route.params.id + '/edit')
+        .then((res) => {
+          const product = res.data
+          this.product_type = product.product_type
+          if (product.product_type == 'simple') {
+            this.simple_format = true
+            this.size_wise = false
+            this.weight_wise = false
+          }
+          if (product.product_type == 'size_base') {
+            this.simple_format = false
+            this.size_wise = true
+            this.weight_wise = false
+          }
+          if (product.product_type == 'weight_base') {
+            this.simple_format = false
+            this.size_wise = false
+            this.weight_wise = true
+          }
+
+          this.name = product.name
+          this.shop_id = product.shop.id
+          this.search = product.brand.name
+          this.sku = product.sku
+          this.categoriessearch = product.category.name
+          this.price = product.price
+          this.currency_type = product.currency_type
+          this.unit_id = product.stocks
+          this.discount = product.discount
+          this.discount_type = product.discount_type
+          this.discount_price = product.discount_price
+          this.stocks = product.stocks
+          this.offers = product.offers
+          this.sizes = product.sizes
+          this.weights = product.weights
+          this.features = product.features
+          this.warranty = product.warranty
+          this.guarantee = product.guarantee
+          this.galleryImage = product.image
+          this.productImage = product.thumbnail
+          this.thumbnail_images = product.thumbnail
+          this.return_policy = product.return_policy
+          this.description = product.description
+          this.delivery_offer = product.delivery_offer
+        })
+        .catch((error) => {
+          console.log('Error..!')
+        })
+    },
+
     getAllFromData() {
       var formData = new FormData()
       if (this.size_wise) {
@@ -989,7 +1041,6 @@ export default {
         formData.append('product_type', 'simple')
       }
       formData.append('name', this.name)
-      formData.append('shop_id', this.$route.params.id)
       formData.append('user_id', this.$auth.user.id)
       formData.append('brand_id', this.brand_id)
       formData.append('category_id', this.category_id)
@@ -1035,25 +1086,20 @@ export default {
       return formData
     },
 
-    async addProducts() {
+    addProducts() {
       let allFormData = this.getAllFromData()
-
-      await this.$axios
-        .post('/api/products/', allFormData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
+      this.$axios
+        .post(`/api/products/update/${this.$route.params.id}`, allFormData)
         .then((response) => {
-          this.$router.push(`/shop/self/${this.$route.params.id}`)
-          this.$toast.success('Product created successfully !')
+          console.log(this.shop_id)
+          this.$router.push(`/shop/self/${this.shop_id}`)
+          this.$toast.success('Product update successfully !')
         })
         .catch((error) => {
           if (error.response.status == 404) {
             this.$nuxt.error({ statusCode: 404, message: 'err message' })
           }
         })
-      //this.$store.dispatch('products/addProducts', formData)
     },
 
     preview() {
@@ -1148,59 +1194,6 @@ export default {
     closeModal() {
       this.modelcategory = false
       this.CategoriesbaseData()
-    },
-
-    changeDiscountPrice(e) {},
-
-    showProduct() {
-      this.$axios
-        .$get('api/products/' + this.$route.params.id + '/edit')
-        .then((res) => {
-          const product = res.data
-          this.product_type = product.product_type
-          if (product.product_type == 'simple') {
-            this.simple_format = true
-            this.size_wise = false
-            this.weight_wise = false
-          }
-          if (product.product_type == 'size_base') {
-            this.simple_format = false
-            this.size_wise = true
-            this.weight_wise = false
-          }
-          if (product.product_type == 'weight_base') {
-            this.simple_format = false
-            this.size_wise = false
-            this.weight_wise = true
-          }
-
-          this.name = product.name
-          this.search = product.brand.name
-          this.sku = product.sku
-          this.categoriessearch = product.category.name
-          this.price = product.price
-          this.currency_type = product.currency_type
-          this.unit_id = product.stocks
-          this.discount = product.discount
-          this.discount_type = product.discount_type
-          this.discount_price = product.discount_price
-          this.stocks = product.stocks
-          this.offers = product.offers
-          this.sizes = product.sizes
-          this.weights = product.weights
-          this.features = product.features
-          this.warranty = product.warranty
-          this.guarantee = product.guarantee
-          this.galleryImage = product.image
-          this.productImage = product.thumbnail
-          this.thumbnail_images = product.thumbnail
-          this.return_policy = product.return_policy
-          this.description = product.description
-          this.delivery_offer = product.delivery_offer
-        })
-        .catch((error) => {
-          console.log('Error..!')
-        })
     },
 
     async removeImage(image) {
