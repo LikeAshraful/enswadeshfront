@@ -1,6 +1,6 @@
 <template lang="">
     <div>
-        <p class="title">How to ... ? (5)</p>
+        <p class="title">How to ... ? ({{videos.length}})</p>
         <div class="p-4 bg-white mb-4">
             <div class="grid md:grid-cols-4 grid-cols-2 md:gap-4 gap-2">
                 <div v-for="(video, i) in videos" :key="i" class="md:border-2 border border-green-4">
@@ -24,14 +24,27 @@
 export default {
     data() {
         return {
-            videos: [
-                '',
-                '',
-                '',
-                '',
-                '',
-            ],
+            videos: [],
         }
-    }
+    },
+
+    mounted() {
+      this.loadTutorial();
+    },
+
+    methods: {
+    async loadTutorial() {
+      await this.$axios
+        .get('/api/product-tutorial/')
+        .then((res) => {
+          this.videos = res.data.data
+        })
+        .catch((error) => {
+          if (error.response.status == 404) {
+            this.$nuxt.error({ statusCode: 404, message: 'err message' })
+          }
+        })
+    },
+  },
 }
 </script>
