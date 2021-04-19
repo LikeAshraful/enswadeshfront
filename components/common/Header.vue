@@ -112,6 +112,11 @@
                         >My shops</n-link
                       >
                       <n-link
+                        to="/my-wallet"
+                        class="font-semibold hover:bg-green-3 block p-1 delay-100"
+                        >My Wallet</n-link
+                      >
+                      <n-link
                         to="/my-account/myorders"
                         class="font-semibold hover:bg-green-3 block p-1 delay-100"
                         >My orders</n-link
@@ -125,6 +130,11 @@
                         to="/my-account/myreviews"
                         class="font-semibold hover:bg-green-3 block p-1 delay-100"
                         >My Reviews</n-link
+                      >
+                      <n-link
+                        to="/my-account/my-contributions"
+                        class="font-semibold hover:bg-green-3 block p-1 delay-100"
+                        >My Contributions</n-link
                       >
                     </div>
                     <div class="divider"></div>
@@ -176,15 +186,8 @@
         </div>
         <div class="max-w-screen-xl xl:px-10 pb-2 m-auto sm:font-bold">
           <div class="flex flex-row items-center justify-center">
-            <n-link to="/s-wallet">
-              <div class="flex items-center">
-                <i class="ri-wallet-3-fill mr-1"></i>
-                <span>S-Wallet</span>
-              </div>
-            </n-link>
             <n-link
               to="/earn"
-              class="sm:pl-6 pl-2"
               :class="currentRouteName == 'earn' ? 'text-orange-1' : ''"
             >
               <div class="flex items-center">
@@ -290,6 +293,11 @@
                   >My shops</n-link
                 >
                 <n-link
+                  to="/my-wallet"
+                  class="font-semibold hover:bg-green-3 block p-1 delay-100"
+                  >My Wallet</n-link
+                >
+                <n-link
                   to="/my-account/myorders"
                   class="font-semibold hover:bg-green-3 block p-1 delay-100"
                   >My orders</n-link
@@ -303,6 +311,11 @@
                   to="/my-account/myreviews"
                   class="font-semibold hover:bg-green-3 block p-1 delay-100"
                   >My Reviews</n-link
+                >
+                <n-link
+                  to="/my-account/my-contributions"
+                  class="font-semibold hover:bg-green-3 block p-1 delay-100"
+                  >My Contributions</n-link
                 >
               </div>
               <div class="divider"></div>
