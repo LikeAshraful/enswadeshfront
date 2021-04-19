@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div class="add_loader" v-if="isLoading">
+      <div class="main-loader"><loader></loader></div>
+    </div>
+
     <div class="min-h-screen">
       <p class="h1">View Order</p>
       <div class="mb-4 pt-4">
@@ -81,12 +85,18 @@
   </div>
 </template>
 <script>
+import Loader from '~/components/lib/Loader.vue'
 import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
-      order_status:'',
+      order_status: '',
+      isLoading: false,
     }
+  },
+  components: {
+    Loader
   },
   mounted () {
     this.setOrder()
@@ -99,10 +109,12 @@ export default {
       )
     },
     updateStaus(e) {
+      this.isLoading = true
       let status = e.target.value;
       this.$axios
         .$get('/api/orders/status-update/' + status + '/' + this.$route.params.id)
         .then((res) => {
+          this.isLoading = false
           this.$toast.success('Status Updated Successfully')
       })
     }
