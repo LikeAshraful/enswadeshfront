@@ -1,18 +1,25 @@
 <template>
   <div>
     <!-- Products Section -->
-    <div class="grid lg:grid-cols-4 md:grid-cols-3 gap-4 my-5">
+    <div class="my-5">
       <!-- Filter -->
-      <dataFilter
+      <!-- <dataFilter
         :filtersData="filtersData"
         :filterTitle="filterTitle"
         v-on:filterByData="loadProducts"
-      />
+      /> -->
 
-      <div class="lg:col-span-3 md:col-span-2">
+      <div class="">
         <!-- Product tables -->
-        <div class="flex justify-between font-bold mb-4">
-          <div class="search">
+        <div class="flex md:flex-row flex-col justify-between font-bold mb-4">
+          <div>
+            <dataFilter
+              :filtersData="filtersData"
+              :filterTitle="filterTitle"
+              v-on:filterByData="loadProducts"
+            />
+          </div>
+          <div class="search my-4 md:my-0">
             <i class="search-icon ri-search-line mr-2"></i>
             <input
               class="search-input bg-gray-5 focus:outline-none"
@@ -27,7 +34,7 @@
               name: 'shop-proudct-add-id',
               params: { id: $route.params.id },
             }"
-            class="bg-orange-1 text-white rounded-lg py-2 px-4 focus:outline-none"
+            class="btn-add focus:outline-none"
             >Add Product {{ $router.params }}</n-link
           >
         </div>

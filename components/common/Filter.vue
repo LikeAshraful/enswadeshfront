@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="hidden md:contents">
+    <!-- <div class="hidden md:contents">
       <p class="rounded-t-lg title">{{ filterTitle }}</p>
       <div class="rounded-b-lg py-2">
         <a
@@ -25,10 +25,12 @@
       </div>
     </div>
 
-    <div class="md:hidden"> 
-      <select @change="getFilterName()" v-model="filterId" class="md:border-2 border border-green-4 py-1 font-bold w-full focus:outline-none">
-        <option class="font-semibold" value="" selected>All</option>
-        <option class="font-semibold" v-for="(filter, i) in filtersData.data" :key="i" :value="filter.id">{{ filter.name }}</option>
+    <div class="md:hidden">  -->
+    <div class=""> 
+      <select @change="getFilterName()" v-model="filterId" class="border border-gray-4 px-4 rounded-full font-semibold py-1 w-full focus:outline-none">
+        <option value="" selected disabled>Filter by category</option>
+        <option value="">All</option>
+        <option v-for="(filter, i) in filtersData.data" :key="i" :value="filter.id">{{ filter.name }}</option>
       </select>
     </div>
     
