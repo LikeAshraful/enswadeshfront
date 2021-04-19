@@ -11,9 +11,15 @@ export const getters = {
 export const actions = {
   async loadSearch({ commit }, data) {
     if (data) {
-        let datares = await this.$axios.post('api/search-all-header/', {
-          params: { keyword: data.keyword, selectType: data.selectType },
-        })
+      if (data.keyword !== null) {
+        var key = data.keyword;
+      } else {
+        var key = null;
+      }
+        let datares = await this.$axios.get('/api/searchallheader/' + data.selectType + '/' + key)
+        // let datares = this.$axios.post('/api/searchallheader/', {
+        //   params: { keyword: data.keyword, selectType: data.selectType },
+        // })
       if (data.selectType == 1) {
         commit('SET_SEARCH_DATA', datares.data.data)
         this.$router.push({ path: '/search/markets' })
