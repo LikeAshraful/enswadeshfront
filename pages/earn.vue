@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="my-4 flex justify-around gap-1">
-                <nuxt-link v-for="(menu, i) in menus" :class="$route.path == menu.url ? 'bg-green-3' : ''" class="bg-white font-semibold py-4 w-full text-center border border-gray-3 hover:bg-green-3" :to="menu.url">{{ menu.name }}</nuxt-link>
+                <nuxt-link v-for="(menu, i) in menus" :key="i" :class="$route.path == menu.url ? 'bg-green-3' : ''" class="bg-white font-semibold py-4 w-full text-center border border-gray-3 hover:bg-green-3" :to="menu.url">{{ menu.name }}</nuxt-link>
             </div>
 
             <NuxtChild />
