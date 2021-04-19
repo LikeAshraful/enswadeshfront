@@ -120,7 +120,7 @@
                     class="dropbtn border rounded p-2 ri-arrow-down-s-fill"
                   ></i>
                   <div class="dropdown-content font-semibold w-56">
-                    <nuxt-link :to="`/shop/proudct/edit/${item.id}`"
+                    <nuxt-link :to="`/shop/product/edit/${item.id}`"
                       ><p>Edit</p></nuxt-link
                     >
                     <p @click="moveTrash(item)">Move to trash</p>
@@ -164,6 +164,7 @@
 import _ from 'lodash'
 import DataFilter from '~/components/common/Filter.vue'
 import Paginate from '~/components/common/Paginate.vue'
+import Loader from '~/components/lib/Loader.vue'
 import MoveTrash from '~/components/my-shop/options/modals/MoveTrash.vue'
 import Notify from '~/components/my-shop/options/modals/Notify.vue'
 import FlashSale from '~/components/my-shop/options/modals/FlashSale.vue'
@@ -173,6 +174,7 @@ export default {
   components: {
     Paginate,
     DataFilter,
+    Loader,
     MoveTrash,
     Notify,
     FlashSale,
