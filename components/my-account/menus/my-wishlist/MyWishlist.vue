@@ -66,7 +66,6 @@ export default {
         .get('api/wishlists')
         .then((response) => {
           this.wishlists = response.data.data
-          console.log('hfsd')
         })
         .catch((error) => {
           this.$toast.error('Oops..!-' + error.response.data.message)

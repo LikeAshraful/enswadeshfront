@@ -124,7 +124,7 @@
                       ><p>Edit</p></nuxt-link
                     >
                     <p @click="moveTrash(item)">Move to trash</p>
-                    <p @click="notify">Notify to subscribers</p>
+                    <p @click="notify(item)">Notify to subscribers</p>
                     <p @click="flashSale(item)">Add to flash sales</p>
                     <p @click="addFestival(item)">Add to festival</p>
                   </div>
@@ -140,7 +140,7 @@
           v-if="move"
           v-on:moveTrash="moveTrash()"
         ></move-trash>
-        <notify v-if="notification" v-on:notify="notify()"></notify>
+        <notify :product="product" v-if="notification" v-on:notify="notify()"></notify>
         <flash-sale :product="product" v-if="flash" v-on:flashSale="flashSale()"></flash-sale>
         <festival :product="product" v-if="festival" v-on:addFestival="addFestival()"></festival>
 
@@ -209,7 +209,8 @@ export default {
       this.loadProducts()
       this.move = !this.move
     },
-    notify() {
+    notify(product) {
+      this.product = product
       this.notification = !this.notification
     },
     flashSale(product) {

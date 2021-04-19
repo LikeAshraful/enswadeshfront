@@ -40,7 +40,6 @@
 <script>
 export default {
   props: ['shop'],
-
   methods: {
     editShop(id) {
       this.$router.push({ path: '/shop/edit/' + id })

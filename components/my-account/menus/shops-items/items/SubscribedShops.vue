@@ -41,20 +41,62 @@
                 <p class="h3">{{ subscribed.subscribe_shop.name }}</p>
               </div>
             </td>
-            <td>
+            <td>         
               <p class="h3">{{ subscribed.nickname }}</p>
             </td>
-            <td><p class="h3">No notification</p></td>
+            <td>
+              <!-- <div class="border-b p-2" v-for="(notification, i) in notifications" :key="i">
+                  <h2 class="text-xl font-semibold pb-3">{{notification.data.data.name}}</h2>
+              </div> -->
+              <p class="h3">No notifications</p>
+            </td>
             <td>
               <div class="dropdown">
                 <i class="dropbtn border rounded p-2 ri-arrow-down-s-fill"></i>
                 <div class="dropdown-content font-semibold">
-                  <p>Unsubscribe</p>
-                  <p>Change nick name</p>
+                  <p @click="unsubscribe(subscribed.id)">Unsubscribe</p>
+                  <p @click="changeName(subscribed.id, subscribed.nickname)">Change nick name</p>
                 </div>
+              </div>
+
+              <div class="" v-if="showModal">
+                <div @click="closeModal" class="fixed inset-0 z-50 flex flex-col justify-center items-center my-12">
+                    <div @click="wait">
+                        <div @click="closeModal" class="btn-close">
+                            <button class="focus:outline-none"><i class="ri-close-line"></i></button>
+                        </div>
+                        <div class="focus-in max-w-screen-sm shadow-lg bg-white overflow-auto">
+                            <div class="cart-tems-center text-center">
+                                <p class="title">Change nickname</p>
+                                <div class="p-6">
+                                    <form @submit.prevent="changenickname(id)">
+                                      <div class="flex flex-col items-center">
+                                        <input
+                                          type="text"
+                                          class="focus:outline-none input-field md:pr-6 w-full mb-4"
+                                          placeholder="Enter nickname"
+                                          v-model="nickname"
+                                        />
+                                        <button
+                                          type="submit"
+                                          :disabled="!Submit"
+                                          :class="!Submit ? ' bg-green-1' : ' bg-green-3'"
+                                          class="md:px-6 w-full md:py-1 py-1 font-semibold md:text-xl rounded focus:outline-none"
+                                        >
+                                          Submit
+                                        </button>
+                                      </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div @click="closeModal" class="opacity-50 fixed inset-0 z-40 bg-green-4"></div>
               </div>
             </td>
           </tr>
+
         </tbody>
       </table>
     </div>
@@ -63,9 +105,15 @@
         View more
       </button>
     </div>
+    <remove-subscribe
+      v-if="remove"
+      v-on:closeModal="closeModal()"
+      v-on:yesRemove="yesRemove()"
+    ></remove-subscribe>
   </div>
 </template>
 <script>
+import RemoveSubscribe from '~/components/my-account/modals/RemoveSubscribe.vue'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   head: {
@@ -79,16 +127,105 @@ export default {
     ],
   },
   data() {
-    return {}
+    return {
+      id: '',
+      unsubscribeid:'',
+      confirmRemove:'',
+      remove: false,
+      showModal: false,
+      nickname: '',
+      notifications:{},
+      close_modal: 'closeModal'
+    }
   },
-  created() {
-    this.SetsubscribedData()
+  mounted() {
+      this.SetsubscribedData()
+      this.newProductNotification();
+    },
+  components: {
+    RemoveSubscribe
   },
   computed: {
     ...mapGetters('subscribed_shops', ['subscribed_shops']),
+    Submit() {
+      return this.nickname
+    },
   },
   methods: {
     ...mapActions('subscribed_shops', ['SetsubscribedData']),
+    closeModal(){
+        if(this.close_modal == 'closeModal')
+        {
+            this.showModal = false;
+        }
+    },
+    wait(){
+        this.close_modal = 'wait';
+        setTimeout(() => this.close_modal = 'closeModal', 500);
+    },
+    async newProductNotification()
+      {
+        await this.$axios.get('/api/notifications/product-notification')
+          .then((res) => {
+            this.notifications = res.data.data;
+            // console.log(Object.keys(this.notifications).length)
+            this.isLoading = false;
+          })
+      },
+    async changenickname(id) {
+      let loader = this.$loading.show({
+        // Optional parameters
+        container: this.fullPage ? null : this.$refs.formContainer,
+        canCancel: true,
+        onCancel: this.onCancel,
+        zIndex: 2000,
+        opacity: 0.5,
+      })
+      var formData = new FormData()
+      formData.append('nickname', this.nickname)
+      formData.append('id', id)
+      await this.$axios
+        .post('api/rename-nickname', formData)
+        .then((response) => {
+          loader.hide()
+          this.$toast.success('Success change nickname!')
+          this.showModal = false
+          this.SetsubscribedData()
+        })
+        .catch((error) => {
+          loader.hide()
+          this.$toast.error('Oops..!-' + error.response.data.message)
+        })
+    },
+    changeName(id,name){
+      this.showModal = true
+      this.id = id
+      this.nickname = name
+    },
+    unsubscribe(id){
+      this.unsubscribeid=id
+        if (this.confirmRemove == true) {
+        this.$axios
+          .get('api/unsubscribe/' + id)
+          .then((response) => {
+            this.$toast.success('Remove successfully !')
+            this.unsubscribeid = ''
+            this.confirmRemove = false
+            this.SetsubscribedData()
+          })
+          .catch((error) => {
+            this.$toast.error('Oops..!-' + error.response.data.message)
+          })
+      } else this.remove = true
+    },
+    yesRemove() {
+      this.confirmRemove = true
+      this.unsubscribe(this.unsubscribeid)
+      this.remove = false
+    },
+    closeModal() {
+      this.remove = false
+    },
   },
 }
 </script>
