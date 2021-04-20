@@ -9,12 +9,22 @@
                   <!-- {{ notifications }} -->
                 <div v-else class="">
                     <div class="border-b p-2" v-for="(notification, i) in notifications" :key="i">
-                        <h2 class="text-xl font-semibold pb-3">{{notification.data.shop_verify_data.title}}</h2>
-                        <!-- <p class="text-sm">{{notification.data.shop_verify_data.body}}</p> -->
-                        <div class="flex justify-between">
-                            <NuxtLink @click="closeNotifyBox" class="btn bg-green-3 focus:outline-none" :to="notification.data.shop_verify_data.action_url">{{notification.data.shop_verify_data.action_button}}</NuxtLink>
-                            <button @click="readNotification" class="btn bg-red-5 focus:outline-none" :data-id="notification.id">Done</button>
+                        <div v-if="notification.data.data">
+                            <h2 class="text-xl font-semibold pb-3">{{notification.data.data.title}}</h2>
+                          <!-- <p class="text-sm">{{notification.data.data.body}}</p> -->
+                          <div class="flex justify-between">
+                              <NuxtLink @click="closeNotifyBox" class="btn bg-green-3 focus:outline-none" :to="notification.data.data.action_url">{{notification.data.data.action_button}}</NuxtLink>
+                              <button @click="readNotification" class="btn bg-red-5 focus:outline-none" :data-id="notification.id">Mark as Read</button>
+                          </div>
                         </div>
+                        <!-- <div v-if="notification.data.order_data">
+                            <h2 class="text-xl font-semibold pb-3">{{notification.data.order_data.title}}</h2>
+                            <div class="flex justify-between">
+                              <NuxtLink @click="closeNotifyBox" class="btn bg-green-3 focus:outline-none" :to="notification.data.order_data.action_url">{{notification.data.order_data.action_button}}</NuxtLink>
+                              <button @click="readNotification" class="btn bg-red-5 focus:outline-none" :data-id="notification.id">Mark as Read</button>
+                          </div>
+                        </div> -->
+
                     </div>
                 </div>
                 <!-- <div v-else>

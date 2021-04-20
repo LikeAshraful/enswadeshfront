@@ -43,6 +43,7 @@ export default {
         { title: 'My orders', to: '/my-account/myorders' },
         { title: 'My wishlist', to: '/my-account/mywishlist' },
         { title: 'My Reviews', to: '/my-account/myreviews' },
+        { title: 'My Contributions', to: '/my-account/my-contributions' },
       ]
       return menuList
     },

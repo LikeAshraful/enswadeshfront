@@ -6,7 +6,7 @@
         v-for="(item, i) in products"
         :key="i"
       >
-        <div @click="showModal(item.product)" class="cursor-pointer h-full mb-10">
+        <div @click="showModal(item.product, item.product.name, item.product.slug, item.product.id)" class="cursor-pointer h-full mb-10">
           <div class="h-full">
             <div class="">
               <img
@@ -21,7 +21,32 @@
             </div>
             <p class="font-bold pt-2">{{ item.product.name }}</p>
             <p class="">{{ item.product.color }}</p>
-            <p class="font-bold">{{ item.product.price }} BDT</p>
+
+            <p v-if="item.product.sizes.length > 0" class="font-bold">
+            <span
+              >{{ item.product.lowsizeprice ? item.product.lowsizeprice.price : '' }} -
+              {{ item.product.highsizeprice ? item.product.highsizeprice.price : '' }}
+              {{ item.product.currency_type }}</span
+            >
+          </p>
+
+          <p v-else-if="item.product.weights.length > 0" class="font-bold">
+            <span
+              >{{ item.product.lowweightprice ? item.product.lowweightprice.price : '' }}
+              -
+              {{ item.product.highweightprice ? item.product.highweightprice.price : '' }}
+              {{ item.product.currency_type }}</span
+            >
+          </p>
+
+          <p v-else class="font-bold">
+            <span
+              >{{ item.product.discount_price }} {{ item.product.currency_type }}</span
+            >
+            <span v-if="item.product.discount" class="text-gray-4 ml-4 line-through"
+              >{{ item.product.price }} {{ item.product.currency_type }}</span
+            >
+          </p>
           </div>
         </div>
       </div>
@@ -51,9 +76,11 @@
     props:['products', 'basePath'],
 
     methods: {
-      showModal(product) {
+      showModal(product, name, slug, id) {
         this.productm = Object.assign({}, product)
         this.modal = true
+        localStorage.setItem('product', name)
+        localStorage.setItem('product-url', '/product/' + slug + '/' + id)
       },
       closeModal(e) {
         this.modal = e

@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div class="add_loader" v-if="isLoading">
+      <div class="main-loader"><loader></loader></div>
+    </div>
+
     <div class="min-h-screen">
       <!-- Breadcrumbs -->
       <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
@@ -333,6 +337,7 @@
 </template>
 <script>
 import Breadcrumb from '~/components/common/Breadcrumb.vue'
+import Loader from '~/components/lib/Loader.vue'
 // import Login from '~/components/auth/Login.vue'
 // import Registration from '~/components/auth/Registration.vue'
 // import OrderSummary from '../components/cart/Order-summary.vue'
@@ -345,6 +350,7 @@ export default {
 
   data() {
     return {
+      isLoading:false,
       basePath: null,
       qtn: 0,
       customer: '',
@@ -378,6 +384,7 @@ export default {
   },
   components: {
     Breadcrumb,
+    Loader
     // Login,
     // Registration,
     // OrderSummary,
@@ -477,6 +484,7 @@ export default {
     },
 
     async addOrder() {
+      this.isLoading = true
       var formData = new FormData()
 
       formData.append('shop_id', this.shopId)
@@ -510,6 +518,7 @@ export default {
       await this.$axios
         .post('/api/orders/storeOrder', formData)
         .then((response) => {
+          this.isLoading = false
           this.$toast.success('Order Placed Successfully !')
           this.cartRemove()
           this.$router.push('/order-complete')

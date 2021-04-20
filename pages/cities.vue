@@ -59,7 +59,6 @@ export default {
           '/api/cities'
         ).then((res) => {
           this.cities = res.data;
-          // console.log(this.cities);
           this.isLoading = false;
         })
       },

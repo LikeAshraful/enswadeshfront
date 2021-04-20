@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="add_loader" v-if="isLoading">
+    <!-- <div class="add_loader" v-if="isLoading">
       <div class="main-loader"><loader></loader></div>
-    </div>
+    </div> -->
 
     <!-- Breadcrumbs -->
     <breadcrumb :breadCrumbs="breadCrumbs"></breadcrumb>
@@ -778,14 +778,14 @@
 import Breadcrumb from '~/components/common/Breadcrumb.vue'
 import category from '../add/category'
 import { mapGetters, mapActions } from 'vuex'
-import Loader from '~/components/lib/Loader.vue'
+// import Loader from '~/components/lib/Loader.vue'
 import ProductPreview from '../../../../components/my-shop/product-preview/ProductPreview.vue'
 export default {
   middleware: ['auth'],
   components: {
     Breadcrumb,
     category,
-    Loader,
+    // Loader,
     ProductPreview,
   },
   data() {
@@ -1092,8 +1092,8 @@ export default {
         .post(`/api/products/update/${this.$route.params.id}`, allFormData)
         .then((response) => {
           console.log(this.shop_id)
-          this.$router.push(`/shop/self/${this.shop_id}`)
-          this.$toast.success('Product update successfully !')
+          // this.$router.push(`/shop/self/${this.shop_id}`)
+          // this.$toast.success('Product update successfully !')
         })
         .catch((error) => {
           if (error.response.status == 404) {
