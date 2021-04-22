@@ -52,10 +52,10 @@
 export default {
   data: () => ({
     menus: [
-      {name: 'Additional Menu', url: ''},
-      {name: 'About Company', url: ''},
-      {name: 'FAQ', url: ''},
-      {name: 'Media', url: ''},
+      {name: 'About Company', url: '/about'},
+      {name: 'Terms & Conditions', url: '/terms-conditions'},
+      {name: 'FAQ', url: '/faq'},
+      {name: 'Privacy and Confidentiality', url: '/privacy-confidentiality'},
     ],
     abouts: [
       {name: 'FAQ', url: ''},
