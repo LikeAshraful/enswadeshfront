@@ -55,7 +55,7 @@
               <p class="bg-green-4 px-2 py-1 text-white inline">
                 4.5<i class="ri-star-fill ml-2 text-yellow-2"></i>
               </p>
-              <p class="font-semibold text-blue-1">Rate this product</p>
+              <!-- <p class="font-semibold text-blue-1 cursor-pointer">Rate this product</p> -->
             </div>
             <table class="w-full mt-4">
               <tbody>
