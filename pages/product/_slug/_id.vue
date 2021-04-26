@@ -42,7 +42,7 @@
           <p class="bg-green-4 px-2 py-1 text-white inline">
             4.5<i class="ri-star-fill ml-2 text-yellow-2"></i>
           </p>
-          <p class="font-semibold text-blue-1">Rate this product</p>
+          <p @click="ratingModal" class="font-semibold text-blue-1 cursor-pointer">Rate this product</p>
         </div>
         <table class="w-full mt-4">
           <tbody>
@@ -324,6 +324,9 @@
 
     <!-- Bargain modal -->
     <bargain v-if="bargain" v-on:bargainModal="bargainModal"></bargain>
+
+    <!-- Rating modal -->
+    <rating v-if="modal" v-on:ratingModal="ratingModal"></rating>
   </div>
 </template>
 <script>
@@ -333,6 +336,7 @@ import Tab from '~/components/common/Tab.vue'
 import Bargain from '~/components/product-details/Bargain.vue'
 import SimilarProduct from '~/components/product-details/Similar-product.vue'
 import { mapActions, mapGetters } from 'vuex'
+import Rating from '~/components/product-details/Rating.vue'
 
 export default {
   components: {
@@ -340,9 +344,11 @@ export default {
     Tab,
     Bargain,
     SimilarProduct,
+    Rating,
   },
   data() {
     return {
+      modal: false,
       basePath: this.$axios.defaults.baseURL,
       // getProduct: {},
       quantity: 1,
@@ -384,6 +390,12 @@ export default {
     this.getSingleProduct()
   },
   methods: {
+
+    ratingModal(){
+      this.modal = !this.modal;
+    },
+
+
     // add to addtobag option
     ...mapActions({
       addProduct: 'addtobag/addProduct',
