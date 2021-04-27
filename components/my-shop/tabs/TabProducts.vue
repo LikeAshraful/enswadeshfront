@@ -31,7 +31,7 @@
           </div>
           <n-link
             :to="{
-              name: 'shop-proudct-add-id',
+              name: 'shop-product-add-id',
               params: { id: $route.params.id },
             }"
             class="btn-add focus:outline-none"
