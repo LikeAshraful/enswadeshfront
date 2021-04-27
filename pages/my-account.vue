@@ -38,7 +38,7 @@ export default {
     accountmenu() {
       var menuList = [
         { title: 'Shops', to: '/my-account/shops' },
-        { title: 'My Shopping Friends', to: '/my-account/shoppingfriend' },
+        { title: 'My Shopping Friends', to: '/my-account/shopping-friend' },
         { title: 'My shops (' + this.myshops.length + ')', to: '/my-account/myshops', },
         { title: 'My orders', to: '/my-account/myorders' },
         { title: 'My wishlist', to: '/my-account/mywishlist' },
