@@ -32,6 +32,7 @@
           <div class="mb-2">
             <label class="input-label" for="similar">Select product</label>
             <select
+              @change="getSimilarProduct"
               class="input-field focus:outline-none"
               v-model="similar_product_id"
               name=""
@@ -42,7 +43,7 @@
                 :key="'product' + product.id"
                 :value="product.id"
               >
-                {{ product.name }}
+                {{ product.sku }}
               </option>
             </select>
             <p>Write here the benefit of similar product check.</p>
@@ -781,6 +782,7 @@ export default {
       slug: '',
       shop_id: '',
       brand_id: '',
+      get_similar_product: '',
       similar_product_id: '',
       unit_id: '',
       user_id: '',
@@ -873,6 +875,28 @@ export default {
     similarProduct() {
       this.$store.dispatch('products/similarProduct', this.$route.params.id)
     },
+
+    async getSimilarProduct(e) {
+      console.log(e.target.value)
+      await this.$axios
+        .get('/api/products/similar-by-product/' + e.target.value + '/' + this.$route.params.id)
+        .then((res) => {
+          let similarProduct = res.data.data
+          this.name = similarProduct.name
+          this.sku = similarProduct.sku
+          this.return_policy = similarProduct.return_policy
+          this.warranty = similarProduct.warranty
+          this.guarantee = similarProduct.guarantee
+          this.description = similarProduct.description
+          this.offers = similarProduct.offers
+        })
+        .catch((error) => {
+          if (error.response.status == 404) {
+            this.$nuxt.error({ statusCode: 404, message: 'err message' })
+          }
+        })
+    },
+
     CategoriesbaseData() {
       this.isLoading = true
       this.$store.dispatch('category/CategoriesbaseData').then(

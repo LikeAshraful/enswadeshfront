@@ -14,7 +14,7 @@ export const actions = {
       if (data.keyword !== null) {
         var key = data.keyword;
       } else {
-        var key = null;
+        var key = a;
       }
         let datares = await this.$axios.get('/api/searchallheader/' + data.selectType + '/' + key)
         // let datares = this.$axios.post('/api/searchallheader/', {
