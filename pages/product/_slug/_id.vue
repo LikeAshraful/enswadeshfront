@@ -273,7 +273,7 @@
           </button>
         </div>
         <p class="font-semibold text-purple-2 mt-4">
-          Delivery offer shows here
+            {{getProduct.delivery_offer ? getProduct.delivery_offer : ''}}
         </p>
       </div>
       <div class="sm:col-span-2 sm:mt-0 mt-4">
@@ -307,10 +307,18 @@
         <button
           class="block font-semibold py-2 bg-blue-2 text-white rounded w-full mt-4 focus:outline-none"
         >
-          <div class="flex items-center justify-center">
+          <a class="flex items-center justify-center" :href="'https://www.facebook.com/sharer/sharer.php?u=https://www.project.projectswadesh.com/product/'+ getProduct.slug + '/' + getProduct.id + '&display=popup'" target="_blank">
             <i class="ri-facebook-fill mr-2"></i>
             Share on Facebook
-          </div>
+          </a>
+        </button>
+        <button
+          class="block font-semibold py-2 bg-blue-1 text-white rounded w-full mt-4 focus:outline-none"
+        >
+          <a class="flex items-center justify-center" :href="'https://twitter.com/intent/tweet?url=https://www.project.projectswadesh.com/product/'+ getProduct.slug + '/' + getProduct.id + '&text=' + getProduct.name" target="_blank">
+            <i class="ri-twitter-fill mr-2"></i>
+            Share on Twitter
+          </a>
         </button>
       </div>
     </div>
