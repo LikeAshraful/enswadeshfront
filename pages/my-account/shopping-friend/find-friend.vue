@@ -3,22 +3,24 @@
         <div class="p-4">
             <div class="search">
                 <i class="search-icon ri-search-line"></i>
-                <input type="text" class="search-input w-full focus:outline-none" placeholder="Search">
+                <input type="text" v-on:keyup="searchFriendData" v-model="keydata" class="search-input w-full focus:outline-none" placeholder="Search">
             </div>
         </div>
 
         <div class="px-4">
-            <div class="grid grid-cols-4 gap-4">
-                <div class="flex flex-col items-center border-2 border-r-4 border-b-4 rounded-lg p-2">
-                    <img class="avatar" src="~/assets/img/default_market.png" alt="Image">
-                    <p class="h3 mt-4">Adam</p>
-                    <button class="mt-4 btn-border hover:bg-green-3 focus:outline-none">Invite</button>
-                </div>
-                <div class="flex flex-col items-center border-2 border-r-4 border-b-4 rounded-lg p-2">
-                    <img class="avatar" src="~/assets/img/default_market.png" alt="Image">
-                    <p class="h3 mt-4">Adam</p>
-                    <button class="mt-4 btn-border hover:bg-green-3 focus:outline-none">Send Request</button>
-                </div>
+            <div v-if="friends.length > 0" class="grid grid-cols-4 gap-4">
+              <div v-for="(friend, i) in friends" :key="i" class="flex flex-col items-center border-2 border-r-4 border-b-4 rounded-lg p-2">
+                  <img class="avatar" src="~/assets/img/default_market.png" alt="Image">
+                  <p class="h3 mt-4">Adam</p>
+                  <button class="mt-4 btn-border hover:bg-green-3 focus:outline-none">Send Request</button>
+              </div>
+            </div>
+            <div v-else class="grid grid-cols-4 gap-4">
+              <div v-if="keydata != null" class="flex flex-col items-center border-2 border-r-4 border-b-4 rounded-lg p-2">
+                  <img class="avatar" src="~/assets/img/default_market.png" alt="Image">
+                  <p class="h3 mt-4">Test</p>
+                  <button class="mt-4 btn-border hover:bg-green-3 focus:outline-none">Invite</button>
+              </div>
             </div>
         </div>
         <div class="p-4 flex justify-center">
@@ -29,9 +31,32 @@
 <script>
 export default {
     data() {
-        return {
-
-        }
+    return {
+      keydata: null,
+      friends: []
     }
+  },
+
+  methods: {
+    async searchFriendData(e)
+    {
+      let keyword = e.target.value;
+      if (!keyword) {
+        this.$router.push({path: 'find-friend'});
+        this.friends = [];
+      }else{
+        await this.$axios.get('/api/search/shoping-friend/' + keyword)
+        .then((response) => {
+          this.friends = response.data.data;
+          console.log(this.friends);
+        })
+        .catch((error) => {
+          if (error.response.status == 404) {
+            this.$nuxt.error({ statusCode: 404, message: 'err message' })
+          }
+        })
+      }
+    }
+  },
 }
 </script>
