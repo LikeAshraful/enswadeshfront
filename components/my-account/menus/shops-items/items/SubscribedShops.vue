@@ -45,10 +45,20 @@
               <p class="h3">{{ subscribed.nickname }}</p>
             </td>
             <td>
-              <!-- <div class="border-b p-2" v-for="(notification, i) in notifications" :key="i">
-                  <h2 class="text-xl font-semibold pb-3">{{notification.data.data.name}}</h2>
-              </div> -->
-              <p class="h3">No notifications</p>
+              <span class="relative">
+                <button
+                  class="focus:outline-none text-xl mr-2"
+                  v-tooltip="'New Produt Notification'"
+                  @click="showNotifyModal"
+                >
+                  <i class="ri-notification-2-fill"></i>
+                </button>
+                <span
+                  v-if="count_notification > 0"
+                  class="bg-orange-1 text-white absolute notify-tooltip rounded-full"
+                  >{{ count_notification }}</span
+                >
+              </span>
             </td>
             <td>
               <div class="dropdown">
@@ -110,10 +120,15 @@
       v-on:closeModal="closeModal()"
       v-on:yesRemove="yesRemove()"
     ></remove-subscribe>
+    <product-notification
+      v-if="notify"
+      v-on:closeNotify="closeNotifyModal()"
+    ></product-notification>
   </div>
 </template>
 <script>
 import RemoveSubscribe from '~/components/my-account/modals/RemoveSubscribe.vue'
+import ProductNotification from '~/components/common/ProductNotification.vue'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   head: {
@@ -135,6 +150,8 @@ export default {
       showModal: false,
       nickname: '',
       notifications:{},
+      count_notification:0,
+      notify: false,
       close_modal: 'closeModal'
     }
   },
@@ -143,7 +160,8 @@ export default {
       this.newProductNotification();
     },
   components: {
-    RemoveSubscribe
+    RemoveSubscribe,
+    ProductNotification
   },
   computed: {
     ...mapGetters('subscribed_shops', ['subscribed_shops']),
@@ -168,11 +186,20 @@ export default {
         await this.$axios.get('/api/notifications/product-notification')
           .then((res) => {
             this.notifications = res.data.data;
-            // console.log(Object.keys(this.notifications).length)
+            this.count_notification=Object.keys(this.notifications).length
             this.isLoading = false;
           })
       },
-    async changenickname(id) {
+    showNotifyModal() 
+    {
+      this.notify = !this.notify
+    },
+    closeNotifyModal(value) 
+    {
+      this.notify = false
+    },
+    async changenickname(id) 
+    {
       let loader = this.$loading.show({
         // Optional parameters
         container: this.fullPage ? null : this.$refs.formContainer,
@@ -197,12 +224,14 @@ export default {
           this.$toast.error('Oops..!-' + error.response.data.message)
         })
     },
-    changeName(id,name){
+    changeName(id,name)
+    {
       this.showModal = true
       this.id = id
       this.nickname = name
     },
-    unsubscribe(id){
+    unsubscribe(id)
+    {
       this.unsubscribeid=id
         if (this.confirmRemove == true) {
         this.$axios
@@ -218,12 +247,14 @@ export default {
           })
       } else this.remove = true
     },
-    yesRemove() {
+    yesRemove() 
+    {
       this.confirmRemove = true
       this.unsubscribe(this.unsubscribeid)
       this.remove = false
     },
-    closeModal() {
+    closeModal() 
+    {
       this.remove = false
     },
   },
