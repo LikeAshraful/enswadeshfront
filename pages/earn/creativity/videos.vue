@@ -14,29 +14,33 @@
                         <div class="">
                             <p class="title">Upload your video</p>
                             <p class="p-4 font-semibold"><strong>Topics:</strong> {{topic.title}}</p>
-                            <form action="">
+                            <form @submit.prevent="uploadVideo(topic.id)">
                                 <div class="p-4 grid md:grid-cols-2 gap-4">
-                                <div>
+                                  <div>
                                     <div class="mb-4">
-                                        <label class="input-label" for="file">Upload File (MP4, up to 100 MB)</label>
-                                        <input id="file" type="file"/>
-                                    </div>
-                                    <nuxt-link class="font-bold text-blue-1" to="">Read guideline and instructions.</nuxt-link>
-                                </div>
-                                <div>
-                                    <div class="mb-4">
-                                        <label class="input-label" for="title">Title</label>
-                                        <input class="input-field focus:outline-none" id="title" type="text"  placeholder="Write video title here" />
-                                    </div>
-                                    <div class="mb-4">
-                                        <label class="input-label" for="description">Description</label>
-                                        <textarea class="input-field focus:outline-none" id="description" rows="4" placeholder="Write here video description"></textarea>
-                                    </div>
-                                    <div class="mb-4">
-                                        <label class="input-label" for="references">References</label>
-                                        <textarea class="input-field focus:outline-none" id="references" rows="4" placeholder="Share main video link or others here"></textarea>
-                                    </div>
-                                </div>
+                                          <label class="input-label" for="thumbnail">Thumbnail (JPEG, PNG, JPG)</label>
+                                          <input id="thumbnail" @change="thumbFile" type="file"/>
+                                      </div>
+                                      <div class="mb-4">
+                                          <label class="input-label" for="file">Upload Video File (MP4, up to 100 MB)</label>
+                                          <input id="file" @change="videoFile" type="file"/>
+                                      </div>
+                                      <nuxt-link class="font-bold text-blue-1" to="">Read guideline and instructions.</nuxt-link>
+                                  </div>
+                                  <div>
+                                      <div class="mb-4">
+                                          <label class="input-label" for="title">Title</label>
+                                          <input class="input-field focus:outline-none" id="title" type="text" v-model="title" placeholder="Write video title here" />
+                                      </div>
+                                      <div class="mb-4">
+                                          <label class="input-label" for="description">Description</label>
+                                          <textarea class="input-field focus:outline-none" id="description" rows="4" v-model="description" placeholder="Write here video description"></textarea>
+                                      </div>
+                                      <div class="mb-4">
+                                          <label class="input-label" for="references">References</label>
+                                          <textarea class="input-field focus:outline-none" id="references" rows="4" placeholder="Share main video link or others here"></textarea>
+                                      </div>
+                                  </div>
                                 </div>
                                 <div class="divider"></div>
                                 <div class="p-4 flex items-center justify-center">
@@ -53,30 +57,47 @@
 </template>
 <script>
 export default {
+  middleware: ['auth'],
     data() {
         return {
             modal: false,
             close_modal: 'modal',
             topics:[],
             topic:'',
+            title:'',
+            description:'',
+            thumbnail: '',
+            video: '',
+            file_type: '',
         }
     },
     mounted() {
       this.loadData();
     },
     methods: {
-      async loadData() {
+      async loadData()
+      {
         await this.$axios.$get(
           '/api/topics/category/1'
         ).then((res) => {
           this.topics = res.data;
         })
       },
+      videoFile(e) {
+        this.video = e.target.files[0]
+        // this.audio_url = URL.createObjectURL(e.target.files[0])
+        // console.log(this.video)
+      },
+      thumbFile(e) {
+        this.thumbnail = e.target.files[0]
+        // console.log(this.thumbnail)
+      },
       uploadModal(topicsId)
       {
         this.topic = this.topics.filter((obj)=>{
           return obj.id === topicsId;
         }).pop();
+
 
         if(this.close_modal == 'modal')
         {
@@ -88,7 +109,39 @@ export default {
           this.close_modal = 'wait';
           setTimeout(() => this.close_modal = 'modal', 500);
       },
+      async uploadVideo(topicsId)
+      {
+        var formData = new FormData()
+
+        formData.append('topic_id', topicsId)
+        formData.append('user_id', this.$auth.user.id)
+        formData.append('interaction_category_id', 1)
+        formData.append('title', this.title)
+        formData.append('description', this.description)
+        formData.append('thumbnail', this.thumbnail)
+        formData.append('file_path', this.video)
+        formData.append('file_type', 'Video')
+
+        const config = {
+              headers: {
+                  'content-type': 'multipart/form-data'
+              }
+          }
+
+        await this.$axios
+          .post('/api/interaction/store', formData, config)
+          .then((response) => {
+            this.$toast.success('Video Uploaded Successfully !')
+            this.uploadModal()
+            this.$router.push('/my-account/my-contributions')
+          })
+          .catch((error) => {
+            if (error.response.status == 404) {
+              this.$nuxt.error({ statusCode: 404, message: 'err message' })
+            }
+          })
+      }
 
     },
-}
+  }
 </script>
